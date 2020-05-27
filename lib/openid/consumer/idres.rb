@@ -1,8 +1,8 @@
-require 'openid/message'
-require 'openid/protocolerror'
-require 'openid/kvpost'
-require 'openid/consumer/discovery'
-require 'openid/urinorm'
+require "openid/message"
+require "openid/protocolerror"
+require "openid/kvpost"
+require "openid/consumer/discovery"
+require "openid/urinorm"
 
 module OpenID
   class TypeURIMismatch < ProtocolError
@@ -22,12 +22,7 @@ module OpenID
     # to thread a nonce through an OpenID 1 transaction. It will be
     # appended to the return_to URL.
     class << self
-      attr_writer :openid1_return_to_nonce_name
-    end
-
-    # See openid1_return_to_nonce_name= documentation
-    class << self
-      attr_reader :openid1_return_to_nonce_name
+      attr_accessor :openid1_return_to_nonce_name
     end
 
     # Set the name of the query parameter that this library will use
@@ -35,12 +30,7 @@ module OpenID
     # use when verifying discovered information). It will be appended
     # to the return_to URL.
     class << self
-      attr_writer :openid1_return_to_claimed_id_name
-    end
-
-    # See openid1_return_to_claimed_id_name=
-    class << self
-      attr_reader :openid1_return_to_claimed_id_name
+      attr_accessor :openid1_return_to_claimed_id_name
     end
 
     # Handles an openid.mode=id_res response. This object is
@@ -197,6 +187,21 @@ module OpenID
 
       # Raises ProtocolError if the signature is bad
       def check_signature
+        # ----------------------------------------------------------------------
+        # The server url must be defined within the endpoint instance for the
+        # OpenID2 namespace in order for the signature check to complete
+        # successfully.
+        #
+        # This fix corrects issue #125 - Unable to complete OpenID login
+        #                                with ruby-openid 2.9.0/2.9.1
+        # ---------------------------------------------------------------------
+        set_endpoint_flag = false
+        if @endpoint.nil? && openid_namespace == OPENID2_NS
+          @endpoint = OpenIDServiceEndpoint.new
+          @endpoint.server_url = fetch('op_endpoint')
+          set_endpoint_flag = true
+        end
+
         assoc = if @store.nil?
                   nil
                 else
@@ -215,6 +220,7 @@ module OpenID
         elsif !assoc.check_message_signature(@message)
           raise ProtocolError, "Bad signature in response from #{server_url}"
         end
+        @endpoint = nil if set_endpoint_flag  # Clear endpoint if we defined it.
       end
 
       def check_auth
