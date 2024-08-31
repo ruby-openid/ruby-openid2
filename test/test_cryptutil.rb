@@ -8,14 +8,14 @@ class CryptUtilTestCase < Minitest::Test
 
   def test_rand
     # If this is not true, the rest of our test won't work
-    assert(BIG.is_a?(Bignum))
+    assert(BIG.is_a?(Integer))
 
     # It's possible that these will be small enough for fixnums, but
     # extraorindarily unlikely.
     a = OpenID::CryptUtil.rand(BIG)
     b = OpenID::CryptUtil.rand(BIG)
-    assert(a.is_a?(Bignum))
-    assert(b.is_a?(Bignum))
+    assert(a.is_a?(Integer))
+    assert(b.is_a?(Integer))
     refute_equal(a, b)
   end
 
