@@ -18,7 +18,6 @@ module OpenID
     # URL for the user to login with.
     SETUP_NEEDED = :setup_needed
 
-
     module Response
       attr_reader :endpoint
 
@@ -82,12 +81,10 @@ module OpenID
 
       # Return the specified signed field if available, otherwise
       # return default
-      def get_signed(ns_uri, ns_key, default=nil)
-        if signed?(ns_uri, ns_key)
-          return @message.get_arg(ns_uri, ns_key, default)
-        else
-          return default
-        end
+      def get_signed(ns_uri, ns_key, default = nil)
+        return @message.get_arg(ns_uri, ns_key, default) if signed?(ns_uri, ns_key)
+
+        default
       end
 
       # Get signed arguments from the response message.  Return a dict
@@ -96,11 +93,9 @@ module OpenID
       def get_signed_ns(ns_uri)
         msg_args = @message.get_args(ns_uri)
         msg_args.each_key do |key|
-          if !signed?(ns_uri, key)
-            return nil
-          end
+          return nil unless signed?(ns_uri, key)
         end
-        return msg_args
+        msg_args
       end
 
       # Return response arguments in the specified namespace.
@@ -120,7 +115,8 @@ module OpenID
       STATUS = FAILURE
 
       attr_reader :message, :contact, :reference
-      def initialize(endpoint, message, contact=nil, reference=nil)
+
+      def initialize(endpoint, message, contact = nil, reference = nil)
         @endpoint = endpoint
         @message = message
         @contact = contact
@@ -141,6 +137,7 @@ module OpenID
       STATUS = SETUP_NEEDED
 
       attr_reader :setup_url
+
       def initialize(endpoint, setup_url)
         @endpoint = endpoint
         @setup_url = setup_url

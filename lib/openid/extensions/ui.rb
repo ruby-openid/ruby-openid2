@@ -4,12 +4,12 @@
 require 'openid/extension'
 
 module OpenID
-
   module UI
-    NS_URI = "http://specs.openid.net/extensions/ui/1.0"
+    NS_URI = 'http://specs.openid.net/extensions/ui/1.0'
 
     class Request < Extension
       attr_accessor :lang, :icon, :mode, :ns_alias, :ns_uri
+
       def initialize(mode = nil, icon = nil, lang = nil)
         @ns_alias = 'ui'
         @ns_uri = NS_URI
@@ -23,7 +23,7 @@ module OpenID
         ns_args['lang'] = @lang if @lang
         ns_args['icon'] = @icon if @icon
         ns_args['mode'] = @mode if @mode
-        return ns_args
+        ns_args
       end
 
       # Instantiate a Request object from the arguments in a
@@ -32,22 +32,18 @@ module OpenID
       def self.from_openid_request(oid_req)
         ui_req = new
         args = oid_req.message.get_args(NS_URI)
-        if args == {}
-          return nil
-        end
+        return nil if args == {}
+
         ui_req.parse_extension_args(args)
-        return ui_req
+        ui_req
       end
 
       # Set UI extension parameters
       def parse_extension_args(args)
-        @lang = args["lang"]
-        @icon = args["icon"]
-        @mode = args["mode"]
+        @lang = args['lang']
+        @icon = args['icon']
+        @mode = args['mode']
       end
-
     end
-
   end
-
 end

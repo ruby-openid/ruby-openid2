@@ -1,16 +1,15 @@
 RailsOpenid::Application.routes.draw do
-  root :controller => 'login', :action => :index
-  match 'server/xrds', :controller => 'server', :action => 'idp_xrds'
-  match 'user/:username', :controller => 'server', :action => 'user_page'
-  match 'user/:username/xrds', :controller => 'server', :action => 'user_xrds'
+  root controller: 'login', action: :index
+  match 'server/xrds', controller: 'server', action: 'idp_xrds'
+  match 'user/:username', controller: 'server', action: 'user_page'
+  match 'user/:username/xrds', controller: 'server', action: 'user_xrds'
 
   # Allow downloading Web Service WSDL as a file with an extension
   # instead of a file named 'wsdl'
-  match ':controller/service.wsdl', :action => 'wsdl'
+  match ':controller/service.wsdl', action: 'wsdl'
 
   # Install the default route as the lowest priority.
   match ':controller/:action/:id'
-
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

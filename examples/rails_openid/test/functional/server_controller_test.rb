@@ -2,7 +2,10 @@ require File.dirname(__FILE__) + '/../test_helper'
 require 'server_controller'
 
 # Re-raise errors caught by the controller.
-class ServerController; def rescue_action(e) raise e end; end
+class ServerController
+  def rescue_action(e)
+    raise e
+  end; end
 
 class ServerControllerTest < Test::Unit::TestCase
   def setup

@@ -6,10 +6,9 @@ require 'rexml/document'
 
 module OpenID
   module GetArgsMixin
-
     # Tests a standard set of behaviors of Message.get_arg with
     # variations on handling defaults.
-    def get_arg_tests(ns, key, expected=nil)
+    def get_arg_tests(ns, key, expected = nil)
       if expected.nil?
         assert_nil(@m.get_arg(ns, key))
 
@@ -21,9 +20,7 @@ module OpenID
         assert_equal(@m.get_arg(ns, key, :a_default), expected)
         assert_equal(@m.get_arg(ns, key, NO_DEFAULT), expected)
       end
-
     end
-
   end
 
   class EmptyMessageTestCase < Minitest::Test
@@ -38,7 +35,7 @@ module OpenID
         @m.get_aliased_arg('ns.pork', NO_DEFAULT)
       end
 
-      ns_uri = "urn:pork"
+      ns_uri = 'urn:pork'
       @m.namespaces.add_alias(ns_uri, 'pork_alias')
 
       # Should return ns_uri.
@@ -59,7 +56,7 @@ module OpenID
 
     def test_from_kvform
       kvform = "foo:bar\none:two\n"
-      args = {'foo' => 'bar', 'one' => 'two'}
+      args = { 'foo' => 'bar', 'one' => 'two' }
       expected_result = Message.from_openid_args(args)
 
       assert_equal(expected_result, Message.from_kvform(kvform))
@@ -79,9 +76,9 @@ module OpenID
     end
 
     def test_get_key_openid
-      assert_raises(UndefinedOpenIDNamespace) {
+      assert_raises(UndefinedOpenIDNamespace) do
         @m.get_key(OPENID_NS, nil)
-      }
+      end
     end
 
     def test_get_key_bare
@@ -101,9 +98,9 @@ module OpenID
     end
 
     def test_has_key
-      assert_raises(UndefinedOpenIDNamespace) {
+      assert_raises(UndefinedOpenIDNamespace) do
         @m.has_key?(OPENID_NS, 'foo')
-      }
+      end
     end
 
     def test_has_key_bare
@@ -123,9 +120,9 @@ module OpenID
     end
 
     def test_get_arg
-      assert_raises(UndefinedOpenIDNamespace) {
+      assert_raises(UndefinedOpenIDNamespace) do
         @m.get_args(OPENID_NS)
-      }
+      end
     end
 
     def test_get_arg_bare
@@ -145,9 +142,9 @@ module OpenID
     end
 
     def test_get_args
-      assert_raises(UndefinedOpenIDNamespace) {
+      assert_raises(UndefinedOpenIDNamespace) do
         @m.get_args(OPENID_NS)
-      }
+      end
     end
 
     def test_get_args_bare
@@ -167,9 +164,9 @@ module OpenID
     end
 
     def test_update_args
-      assert_raises(UndefinedOpenIDNamespace) {
-        @m.update_args(OPENID_NS, {'does not'=>'matter'})
-      }
+      assert_raises(UndefinedOpenIDNamespace) do
+        @m.update_args(OPENID_NS, { 'does not' => 'matter' })
+      end
     end
 
     def _test_update_args_ns(ns)
@@ -185,20 +182,23 @@ module OpenID
     def test_update_args_bare
       _test_update_args_ns(BARE_NS)
     end
+
     def test_update_args_ns1
       _test_update_args_ns(OPENID1_NS)
     end
+
     def test_update_args_ns2
       _test_update_args_ns(OPENID2_NS)
     end
+
     def test_update_args_ns3
       _test_update_args_ns('urn:xxx')
     end
 
     def test_set_arg
-      assert_raises(UndefinedOpenIDNamespace) {
-        @m.set_arg(OPENID_NS,'does not','matter')
-      }
+      assert_raises(UndefinedOpenIDNamespace) do
+        @m.set_arg(OPENID_NS, 'does not', 'matter')
+      end
     end
 
     def _test_set_arg_ns(ns)
@@ -212,20 +212,23 @@ module OpenID
     def test_set_arg_bare
       _test_set_arg_ns(BARE_NS)
     end
+
     def test_set_arg_ns1
       _test_set_arg_ns(OPENID1_NS)
     end
+
     def test_set_arg_ns2
       _test_set_arg_ns(OPENID2_NS)
     end
+
     def test_set_arg_ns3
       _test_set_arg_ns('urn:xxx')
     end
 
     def test_del_arg
-      assert_raises(UndefinedOpenIDNamespace) {
+      assert_raises(UndefinedOpenIDNamespace) do
         @m.set_arg(OPENID_NS, 'does not', 'matter')
-      }
+      end
     end
 
     def _test_del_arg_ns(ns)
@@ -236,12 +239,15 @@ module OpenID
     def test_del_arg_bare
       _test_del_arg_ns(BARE_NS)
     end
+
     def test_del_arg_ns1
       _test_del_arg_ns(OPENID1_NS)
     end
+
     def test_del_arg_ns2
       _test_del_arg_ns(OPENID2_NS)
     end
+
     def test_del_arg_ns3
       _test_del_arg_ns('urn:xxx')
     end
@@ -255,9 +261,9 @@ module OpenID
     end
 
     def test_set_openid_namespace
-      assert_raises(InvalidOpenIDNamespace) {
+      assert_raises(InvalidOpenIDNamespace) do
         @m.set_openid_namespace('http://invalid/', false)
-      }
+      end
     end
   end
 
@@ -265,8 +271,8 @@ module OpenID
     include GetArgsMixin
 
     def setup
-      @m = Message.from_post_args({'openid.mode' => 'error',
-                                            'openid.error' => 'unit test'})
+      @m = Message.from_post_args({ 'openid.mode' => 'error',
+                                    'openid.error' => 'unit test' })
     end
 
     def test_has_openid_ns
@@ -285,12 +291,12 @@ module OpenID
 
     def test_get_aliased_arg_with_ns
       @m = Message.from_post_args(
-          {'openid.mode' => 'error',
-           'openid.error' => 'unit test',
-           'openid.ns.invalid' => 'http://invalid/',
-           'openid.invalid.stuff' => 'things',
-           'openid.invalid.stuff.blinky' => 'powerplant',
-          })
+        { 'openid.mode' => 'error',
+          'openid.error' => 'unit test',
+          'openid.ns.invalid' => 'http://invalid/',
+          'openid.invalid.stuff' => 'things',
+          'openid.invalid.stuff.blinky' => 'powerplant' }
+      )
       assert_equal('http://invalid/', @m.get_aliased_arg('ns.invalid'))
       assert_equal('things', @m.get_aliased_arg('invalid.stuff'))
       assert_equal('powerplant', @m.get_aliased_arg('invalid.stuff.blinky'))
@@ -298,12 +304,12 @@ module OpenID
 
     def test_get_aliased_arg_with_ns_default
       @m = Message.from_post_args({})
-      assert_equal('monkeys!', @m.get_aliased_arg('ns.invalid', "monkeys!"))
+      assert_equal('monkeys!', @m.get_aliased_arg('ns.invalid', 'monkeys!'))
     end
 
     def test_to_post_args
-      assert_equal({'openid.mode' => 'error',
-                     'openid.error' => 'unit test'},
+      assert_equal({ 'openid.mode' => 'error',
+                     'openid.error' => 'unit test' },
                    @m.to_post_args)
     end
 
@@ -312,17 +318,16 @@ module OpenID
       @m.namespaces.add_alias(invalid_ns, 'foos')
       @m.set_arg(invalid_ns, 'ball', 'awesome')
       @m.set_arg(BARE_NS, 'xey', 'value')
-      assert_equal({'openid.mode' => 'error',
+      assert_equal({ 'openid.mode' => 'error',
                      'openid.error' => 'unit test',
                      'openid.foos.ball' => 'awesome',
                      'xey' => 'value',
-                     'openid.ns.foos' => 'http://invalid/'
-                   }, @m.to_post_args)
+                     'openid.ns.foos' => 'http://invalid/' }, @m.to_post_args)
     end
 
     def test_to_args
-      assert_equal({'mode' => 'error',
-                     'error' => 'unit test'},
+      assert_equal({ 'mode' => 'error',
+                     'error' => 'unit test' },
                    @m.to_args)
     end
 
@@ -342,8 +347,8 @@ module OpenID
       actual_base = actual[0...base_url.length]
       assert_equal(base_url, actual_base)
       assert_equal('?', actual[base_url.length].chr)
-      query = actual[base_url.length+1..-1]
-      assert_equal({'openid.mode'=>['error'],'openid.error'=>['unit test']},
+      query = actual[base_url.length + 1..-1]
+      assert_equal({ 'openid.mode' => ['error'], 'openid.error' => ['unit test'] },
                    CGI.parse(query))
     end
 
@@ -374,15 +379,19 @@ module OpenID
     def test_has_key
       assert_equal(true, @m.has_key?(OPENID_NS, 'mode'))
     end
+
     def test_has_key_bare
       assert_equal(false, @m.has_key?(BARE_NS, 'mode'))
     end
+
     def test_has_key_ns1
       assert_equal(true, @m.has_key?(OPENID1_NS, 'mode'))
     end
+
     def test_has_key_ns2
       assert_equal(false, @m.has_key?(OPENID2_NS, 'mode'))
     end
+
     def test_has_key_ns3
       assert_equal(false, @m.has_key?('urn:xxx', 'mode'))
     end
@@ -412,30 +421,32 @@ module OpenID
     end
 
     def test_get_args
-      assert_equal({'mode'=>'error','error'=>'unit test'},
+      assert_equal({ 'mode' => 'error', 'error' => 'unit test' },
                    @m.get_args(OPENID_NS))
     end
+
     def test_get_args_bare
       assert_equal({}, @m.get_args(BARE_NS))
     end
+
     def test_get_args_ns1
-      assert_equal({'mode'=>'error','error'=>'unit test'},
+      assert_equal({ 'mode' => 'error', 'error' => 'unit test' },
                    @m.get_args(OPENID1_NS))
     end
+
     def test_get_args_ns2
       assert_equal({}, @m.get_args(OPENID2_NS))
     end
+
     def test_get_args_ns3
       assert_equal({}, @m.get_args('urn:xxx'))
     end
 
-    def _test_update_args_ns(ns, before=nil)
-      if before.nil?
-        before = {}
-      end
+    def _test_update_args_ns(ns, before = nil)
+      before = {} if before.nil?
       update_args = {
-        'Camper van Beethoven'=>'David Lowery',
-        'Magnolia Electric Co.'=>'Jason Molina'
+        'Camper van Beethoven' => 'David Lowery',
+        'Magnolia Electric Co.' => 'Jason Molina'
       }
       assert_equal(before, @m.get_args(ns))
       @m.update_args(ns, update_args)
@@ -445,17 +456,21 @@ module OpenID
     end
 
     def test_update_args
-      _test_update_args_ns(OPENID_NS, {'mode'=>'error','error'=>'unit test'})
+      _test_update_args_ns(OPENID_NS, { 'mode' => 'error', 'error' => 'unit test' })
     end
+
     def test_update_args_bare
       _test_update_args_ns(BARE_NS)
     end
+
     def test_update_args_ns1
-      _test_update_args_ns(OPENID1_NS, {'mode'=>'error','error'=>'unit test'})
+      _test_update_args_ns(OPENID1_NS, { 'mode' => 'error', 'error' => 'unit test' })
     end
+
     def test_update_args_ns2
       _test_update_args_ns(OPENID2_NS)
     end
+
     def test_update_args_ns3
       _test_update_args_ns('urn:xxx')
     end
@@ -463,31 +478,59 @@ module OpenID
     def _test_set_arg_ns(ns)
       key = 'awesometown'
       value = 'funny'
-      assert_nil(@m.get_arg(ns,key))
+      assert_nil(@m.get_arg(ns, key))
       @m.set_arg(ns, key, value)
-      assert_equal(value, @m.get_arg(ns,key))
+      assert_equal(value, @m.get_arg(ns, key))
     end
 
-    def test_set_arg; _test_set_arg_ns(OPENID_NS); end
-    def test_set_arg_bare; _test_set_arg_ns(BARE_NS); end
-    def test_set_arg_ns1; _test_set_arg_ns(OPENID1_NS); end
-    def test_set_arg_ns2; _test_set_arg_ns(OPENID2_NS); end
-    def test_set_arg_ns3; _test_set_arg_ns('urn:xxx'); end
+    def test_set_arg
+      _test_set_arg_ns(OPENID_NS)
+    end
+
+    def test_set_arg_bare
+      _test_set_arg_ns(BARE_NS)
+    end
+
+    def test_set_arg_ns1
+      _test_set_arg_ns(OPENID1_NS)
+    end
+
+    def test_set_arg_ns2
+      _test_set_arg_ns(OPENID2_NS)
+    end
+
+    def test_set_arg_ns3
+      _test_set_arg_ns('urn:xxx')
+    end
 
     def _test_del_arg_ns(ns)
       key = 'marry an'
       value = 'ice cream sandwich'
       @m.set_arg(ns, key, value)
-      assert_equal(value, @m.get_arg(ns,key))
-      @m.del_arg(ns,key)
-      assert_nil(@m.get_arg(ns,key))
+      assert_equal(value, @m.get_arg(ns, key))
+      @m.del_arg(ns, key)
+      assert_nil(@m.get_arg(ns, key))
     end
 
-    def test_del_arg; _test_del_arg_ns(OPENID_NS); end
-    def test_del_arg_bare; _test_del_arg_ns(BARE_NS); end
-    def test_del_arg_ns1; _test_del_arg_ns(OPENID1_NS); end
-    def test_del_arg_ns2; _test_del_arg_ns(OPENID2_NS); end
-    def test_del_arg_ns3; _test_del_arg_ns('urn:yyy'); end
+    def test_del_arg
+      _test_del_arg_ns(OPENID_NS)
+    end
+
+    def test_del_arg_bare
+      _test_del_arg_ns(BARE_NS)
+    end
+
+    def test_del_arg_ns1
+      _test_del_arg_ns(OPENID1_NS)
+    end
+
+    def test_del_arg_ns2
+      _test_del_arg_ns(OPENID2_NS)
+    end
+
+    def test_del_arg_ns3
+      _test_del_arg_ns('urn:yyy')
+    end
 
     def test_isOpenID1
       assert_equal(true, @m.is_openid1)
@@ -504,7 +547,7 @@ module OpenID
 
     def test_from_openid_args_undefined_ns
       expected = 'almost.complete'
-      msg = Message.from_openid_args({'coverage.is' => expected})
+      msg = Message.from_openid_args({ 'coverage.is' => expected })
       actual = msg.get_arg(OPENID1_NS, 'coverage.is')
       assert_equal(expected, actual)
     end
@@ -526,16 +569,15 @@ module OpenID
     # XXX - check to make sure the test suite will get built the way this
     # expects.
     def setup
-      @m = Message.from_post_args({'openid.mode'=>'error',
-                                          'openid.error'=>'unit test',
-                                          'openid.ns'=>OPENID1_NS})
+      @m = Message.from_post_args({ 'openid.mode' => 'error',
+                                    'openid.error' => 'unit test',
+                                    'openid.ns' => OPENID1_NS })
     end
 
     def test_to_post_args
-      assert_equal({'openid.mode' => 'error',
-                    'openid.error' => 'unit test',
-                    'openid.ns'=>OPENID1_NS,
-                    },
+      assert_equal({ 'openid.mode' => 'error',
+                     'openid.error' => 'unit test',
+                     'openid.ns' => OPENID1_NS },
                    @m.to_post_args)
     end
 
@@ -544,20 +586,18 @@ module OpenID
       @m.namespaces.add_alias(invalid_ns, 'foos')
       @m.set_arg(invalid_ns, 'ball', 'awesome')
       @m.set_arg(BARE_NS, 'xey', 'value')
-      assert_equal({'openid.mode' => 'error',
+      assert_equal({ 'openid.mode' => 'error',
                      'openid.error' => 'unit test',
                      'openid.foos.ball' => 'awesome',
                      'xey' => 'value',
-                     'openid.ns'=>OPENID1_NS,
-                     'openid.ns.foos' => 'http://invalid/'
-                   }, @m.to_post_args)
+                     'openid.ns' => OPENID1_NS,
+                     'openid.ns.foos' => 'http://invalid/' }, @m.to_post_args)
     end
 
     def test_to_args
-      assert_equal({'mode' => 'error',
+      assert_equal({ 'mode' => 'error',
                      'error' => 'unit test',
-                     'ns'=>OPENID1_NS
-                     },
+                     'ns' => OPENID1_NS },
                    @m.to_args)
     end
 
@@ -577,52 +617,49 @@ module OpenID
       actual_base = actual[0...base_url.length]
       assert_equal(base_url, actual_base)
       assert_equal('?', actual[base_url.length].chr)
-      query = actual[base_url.length+1..-1]
-      assert_equal({'openid.mode'=>['error'],
-                    'openid.error'=>['unit test'],
-                    'openid.ns'=>[OPENID1_NS],
-                    },
+      query = actual[base_url.length + 1..-1]
+      assert_equal({ 'openid.mode' => ['error'],
+                     'openid.error' => ['unit test'],
+                     'openid.ns' => [OPENID1_NS] },
                    CGI.parse(query))
     end
-
-
   end
 
   class OpenID2MessageTest < Minitest::Test
     include TestUtil
 
     def setup
-      @m = Message.from_post_args({'openid.mode'=>'error',
-                                          'openid.error'=>'unit test',
-                                          'openid.ns'=>OPENID2_NS})
+      @m = Message.from_post_args({ 'openid.mode' => 'error',
+                                    'openid.error' => 'unit test',
+                                    'openid.ns' => OPENID2_NS })
       @m.set_arg(BARE_NS, 'xey', 'value')
     end
 
     def test_to_args_fails
-      assert_raises(ArgumentError) {
+      assert_raises(ArgumentError) do
         @m.to_args
-      }
+      end
     end
 
     def test_fix_ns_non_string
       # Using has_key to invoke _fix_ns since _fix_ns should be private
-      assert_raises(ArgumentError) {
-        @m.has_key?(:non_string_namespace, "key")
-      }
+      assert_raises(ArgumentError) do
+        @m.has_key?(:non_string_namespace, 'key')
+      end
     end
 
     def test_fix_ns_non_uri
       # Using has_key to invoke _fix_ns since _fix_ns should be private
-      assert_log_matches(/identifiers SHOULD be URIs/) {
-        @m.has_key?("foo", "key")
-      }
+      assert_log_matches(/identifiers SHOULD be URIs/) do
+        @m.has_key?('foo', 'key')
+      end
     end
 
     def test_fix_ns_sreg_literal
       # Using has_key to invoke _fix_ns since _fix_ns should be private
-      assert_log_matches(/identifiers SHOULD be URIs/, /instead of "sreg"/) {
-        @m.has_key?("sreg", "key")
-      }
+      assert_log_matches(/identifiers SHOULD be URIs/, /instead of "sreg"/) do
+        @m.has_key?('sreg', 'key')
+      end
     end
 
     def test_copy
@@ -631,31 +668,29 @@ module OpenID
     end
 
     def test_to_post_args
-      assert_equal({'openid.mode' => 'error',
+      assert_equal({ 'openid.mode' => 'error',
                      'openid.error' => 'unit test',
                      'openid.ns' => OPENID2_NS,
-                     'xey' => 'value',
-                   }, @m.to_post_args)
+                     'xey' => 'value' }, @m.to_post_args)
     end
 
     def test_to_post_args_ns
       invalid_ns = 'http://invalid/'
       @m.namespaces.add_alias(invalid_ns, 'foos')
       @m.set_arg(invalid_ns, 'ball', 'awesome')
-      assert_equal({'openid.mode' => 'error',
+      assert_equal({ 'openid.mode' => 'error',
                      'openid.error' => 'unit test',
                      'openid.ns' => OPENID2_NS,
                      'openid.ns.foos' => invalid_ns,
                      'openid.foos.ball' => 'awesome',
-                     'xey' => 'value',
-                   }, @m.to_post_args)
+                     'xey' => 'value' }, @m.to_post_args)
     end
 
     def test_to_args
       @m.del_arg(BARE_NS, 'xey')
-      assert_equal({'mode' => 'error',
-                   'error' => 'unit test',
-                   'ns' => OPENID2_NS},
+      assert_equal({ 'mode' => 'error',
+                     'error' => 'unit test',
+                     'ns' => OPENID2_NS },
                    @m.to_args)
     end
 
@@ -666,10 +701,10 @@ module OpenID
     end
 
     def _test_urlencoded(s)
-      expected_list = ["openid.error=unit+test",
-                       "openid.mode=error",
+      expected_list = ['openid.error=unit+test',
+                       'openid.mode=error',
                        "openid.ns=#{CGI.escape(OPENID2_NS)}",
-                       "xey=value"]
+                       'xey=value']
       # Hard to do this with string comparison since the mapping doesn't
       # preserve order.
       encoded_list = s.split('&')
@@ -687,7 +722,7 @@ module OpenID
       actual_base = actual[0...base_url.length]
       assert_equal(base_url, actual_base)
       assert_equal('?', actual[base_url.length].chr)
-      query = actual[base_url.length+1..-1]
+      query = actual[base_url.length + 1..-1]
       _test_urlencoded(query)
     end
 
@@ -716,53 +751,53 @@ module OpenID
     end
 
     def test_has_key_openid
-      assert_equal(true, @m.has_key?(OPENID_NS,'mode'))
+      assert_equal(true, @m.has_key?(OPENID_NS, 'mode'))
     end
 
     def test_has_key_bare
-      assert_equal(false, @m.has_key?(BARE_NS,'mode'))
+      assert_equal(false, @m.has_key?(BARE_NS, 'mode'))
     end
 
     def test_has_key_ns1
-      assert_equal(false, @m.has_key?(OPENID1_NS,'mode'))
+      assert_equal(false, @m.has_key?(OPENID1_NS, 'mode'))
     end
 
     def test_has_key_ns2
-      assert_equal(true, @m.has_key?(OPENID2_NS,'mode'))
+      assert_equal(true, @m.has_key?(OPENID2_NS, 'mode'))
     end
 
     def test_has_key_ns3
-      assert_equal(false, @m.has_key?('urn:xxx','mode'))
+      assert_equal(false, @m.has_key?('urn:xxx', 'mode'))
     end
 
     # XXX - getArgTest
     def test_get_arg_openid
-      assert_equal('error', @m.get_arg(OPENID_NS,'mode'))
+      assert_equal('error', @m.get_arg(OPENID_NS, 'mode'))
     end
 
     def test_get_arg_bare
-      assert_nil(@m.get_arg(BARE_NS,'mode'))
+      assert_nil(@m.get_arg(BARE_NS, 'mode'))
     end
 
     def test_get_arg_ns1
-      assert_nil(@m.get_arg(OPENID1_NS,'mode'))
+      assert_nil(@m.get_arg(OPENID1_NS, 'mode'))
     end
 
     def test_get_arg_ns2
-      assert_equal('error', @m.get_arg(OPENID2_NS,'mode'))
+      assert_equal('error', @m.get_arg(OPENID2_NS, 'mode'))
     end
 
     def test_get_arg_ns3
-      assert_nil(@m.get_arg('urn:bananastand','mode'))
+      assert_nil(@m.get_arg('urn:bananastand', 'mode'))
     end
 
     def test_get_args_openid
-      assert_equal({'mode'=>'error','error'=>'unit test'},
+      assert_equal({ 'mode' => 'error', 'error' => 'unit test' },
                    @m.get_args(OPENID_NS))
     end
 
     def test_get_args_bare
-      assert_equal({'xey'=>'value'},
+      assert_equal({ 'xey' => 'value' },
                    @m.get_args(BARE_NS))
     end
 
@@ -772,7 +807,7 @@ module OpenID
     end
 
     def test_get_args_ns2
-      assert_equal({'mode'=>'error','error'=>'unit test'},
+      assert_equal({ 'mode' => 'error', 'error' => 'unit test' },
                    @m.get_args(OPENID2_NS))
     end
 
@@ -781,9 +816,9 @@ module OpenID
                    @m.get_args('urn:loose seal'))
     end
 
-    def _test_update_args_ns(ns, before=nil)
-      before = {} unless before
-      update_args = {'aa'=>'bb','cc'=>'dd'}
+    def _test_update_args_ns(ns, before = nil)
+      before ||= {}
+      update_args = { 'aa' => 'bb', 'cc' => 'dd' }
 
       assert_equal(before, @m.get_args(ns))
       @m.update_args(ns, update_args)
@@ -793,11 +828,11 @@ module OpenID
     end
 
     def test_update_args_openid
-      _test_update_args_ns(OPENID_NS, {'mode'=>'error','error'=>'unit test'})
+      _test_update_args_ns(OPENID_NS, { 'mode' => 'error', 'error' => 'unit test' })
     end
 
     def test_update_args_bare
-      _test_update_args_ns(BARE_NS, {'xey'=>'value'})
+      _test_update_args_ns(BARE_NS, { 'xey' => 'value' })
     end
 
     def test_update_args_ns1
@@ -805,7 +840,7 @@ module OpenID
     end
 
     def test_update_args_ns2
-      _test_update_args_ns(OPENID2_NS, {'mode'=>'error','error'=>'unit test'})
+      _test_update_args_ns(OPENID2_NS, { 'mode' => 'error', 'error' => 'unit test' })
     end
 
     def test_update_args_ns3
@@ -814,17 +849,31 @@ module OpenID
 
     def _test_set_arg_ns(ns)
       key = "logan's"
-      value = "run"
-      assert_nil(@m.get_arg(ns,key))
+      value = 'run'
+      assert_nil(@m.get_arg(ns, key))
       @m.set_arg(ns, key, value)
-      assert_equal(value, @m.get_arg(ns,key))
+      assert_equal(value, @m.get_arg(ns, key))
     end
 
-    def test_set_arg_openid; _test_set_arg_ns(OPENID_NS); end
-    def test_set_arg_bare; _test_set_arg_ns(BARE_NS); end
-    def test_set_arg_ns1; _test_set_arg_ns(OPENID1_NS); end
-    def test_set_arg_ns2; _test_set_arg_ns(OPENID2_NS); end
-    def test_set_arg_ns3; _test_set_arg_ns('urn:g'); end
+    def test_set_arg_openid
+      _test_set_arg_ns(OPENID_NS)
+    end
+
+    def test_set_arg_bare
+      _test_set_arg_ns(BARE_NS)
+    end
+
+    def test_set_arg_ns1
+      _test_set_arg_ns(OPENID1_NS)
+    end
+
+    def test_set_arg_ns2
+      _test_set_arg_ns(OPENID2_NS)
+    end
+
+    def test_set_arg_ns3
+      _test_set_arg_ns('urn:g')
+    end
 
     def test_bad_alias
       # Make sure dotted aliases and OpenID protocol fields are not allowed
@@ -832,21 +881,21 @@ module OpenID
 
       fields = OPENID_PROTOCOL_FIELDS + ['dotted.alias']
 
-      fields.each { |f|
-        args = {"openid.ns.#{f}" => "blah#{f}",
-          "openid.#{f}.foo" => "test#{f}"}
+      fields.each do |f|
+        args = { "openid.ns.#{f}" => "blah#{f}",
+                 "openid.#{f}.foo" => "test#{f}" }
 
         # .fromPostArgs covers .fromPostArgs, .fromOpenIDArgs,
         # ._fromOpenIDArgs, and .fromOpenIDArgs (since it calls
         # .fromPostArgs).
-        assert_raises(AssertionError) {
+        assert_raises(AssertionError) do
           Message.from_post_args(args)
-        }
-      }
+        end
+      end
     end
 
     def test_from_post_args
-      msg = Message.from_post_args({'foos' => 'ball'})
+      msg = Message.from_post_args({ 'foos' => 'ball' })
       assert_equal('ball', msg.get_arg(BARE_NS, 'foos'))
     end
 
@@ -860,11 +909,25 @@ module OpenID
       assert_nil(@m.get_arg(ns, key))
     end
 
-    def test_del_arg_openid; _test_del_arg_ns(OPENID_NS); end
-    def test_del_arg_bare; _test_del_arg_ns(BARE_NS); end
-    def test_del_arg_ns1; _test_del_arg_ns(OPENID1_NS); end
-    def test_del_arg_ns2; _test_del_arg_ns(OPENID2_NS); end
-    def test_del_arg_ns3; _test_del_arg_ns('urn:tofu'); end
+    def test_del_arg_openid
+      _test_del_arg_ns(OPENID_NS)
+    end
+
+    def test_del_arg_bare
+      _test_del_arg_ns(BARE_NS)
+    end
+
+    def test_del_arg_ns1
+      _test_del_arg_ns(OPENID1_NS)
+    end
+
+    def test_del_arg_ns2
+      _test_del_arg_ns(OPENID2_NS)
+    end
+
+    def test_del_arg_ns3
+      _test_del_arg_ns('urn:tofu')
+    end
 
     def test_overwrite_extension_arg
       ns = 'urn:unittest_extension'
@@ -879,9 +942,9 @@ module OpenID
     end
 
     def test_argList
-      assert_raises(ArgumentError) {
-        Message.from_post_args({'arg' => [1, 2, 3]})
-      }
+      assert_raises(ArgumentError) do
+        Message.from_post_args({ 'arg' => [1, 2, 3] })
+      end
     end
 
     def test_isOpenID1
@@ -908,7 +971,7 @@ module OpenID
 
       @form_tag_attrs = {
         'company' => 'janrain',
-        'class' => 'fancyCSS',
+        'class' => 'fancyCSS'
       }
 
       @submit_text = 'GO!'
@@ -918,70 +981,66 @@ module OpenID
       @required_form_attrs = {
         'accept-charset' => 'UTF-8',
         'enctype' => 'application/x-www-form-urlencoded',
-        'method' => 'post',
+        'method' => 'post'
       }
     end
 
     def _checkForm(html, message_, action_url,
-                   form_tag_attrs, submit_text)
+                   _form_tag_attrs, submit_text)
       @xml = REXML::Document.new(html)
 
       # Get root element
       form = @xml.root
 
       # Check required form attributes
-      @required_form_attrs.each { |k, v|
+      @required_form_attrs.each do |k, v|
         assert(form.attributes[k] == v,
                "Expected '#{v}' for required form attribute '#{k}', got '#{form.attributes[k]}'")
-      }
+      end
 
       # Check extra form attributes
-      @form_tag_attrs.each { |k, v|
+      @form_tag_attrs.each do |k, v|
         # Skip attributes that already passed the required attribute
         # check, since they should be ignored by the form generation
         # code.
-        if @required_form_attrs.include?(k)
-          continue
-        end
+        continue if @required_form_attrs.include?(k)
 
         assert(form.attributes[k] == v,
                "Form attribute '#{k}' should be '#{v}', found '#{form.attributes[k]}'")
 
         # Check hidden fields against post args
         hiddens = []
-        form.each { |e|
-          if (e.is_a?(REXML::Element)) and
-              (e.name.upcase() == 'INPUT') and
-              (e.attributes['type'].upcase() == 'HIDDEN')
-            # For each post arg, make sure there is a hidden with that
-            # value.  Make sure there are no other hiddens.
-            hiddens += [e]
-          end
-        }
+        form.each do |e|
+          next unless e.is_a?(REXML::Element) and
+                      (e.name.upcase == 'INPUT') and
+                      (e.attributes['type'].upcase == 'HIDDEN')
 
-        message_.to_post_args().each { |name, value|
+          # For each post arg, make sure there is a hidden with that
+          # value.  Make sure there are no other hiddens.
+          hiddens += [e]
+        end
+
+        message_.to_post_args.each do |name, value|
           success = false
 
-          hiddens.each { |e|
-            if e.attributes['name'] == name
-              assert(e.attributes['value'] == value,
-                     "Expected value of hidden input '#{e.attributes['name']}' " +
-                     "to be '#{value}', got '#{e.attributes['value']}'")
-              success = true
-              break
-            end
-          }
+          hiddens.each do |e|
+            next unless e.attributes['name'] == name
 
-          if !success
-            flunk "Post arg '#{name}' not found in form"
+            assert(e.attributes['value'] == value,
+                   "Expected value of hidden input '#{e.attributes['name']}' " +
+                   "to be '#{value}', got '#{e.attributes['value']}'")
+            success = true
+            break
           end
-        }
 
-        hiddens.each { |e|
-          assert(message_.to_post_args().keys().include?(e.attributes['name']),
+          flunk "Post arg '#{name}' not found in form" unless success
+        end
+
+        hiddens.each do |e|
+          assert(message_.to_post_args.keys.include?(e.attributes['name']),
                  "Form element for '#{e.attributes['name']}' not in " +
-                 "original message")
-        }
+                 'original message')
+        end
 
         # Check action URL
         assert(form.attributes['action'] == action_url,
@@ -989,13 +1048,13 @@ module OpenID
 
         # Check submit text
         submits = []
-        form.each { |e|
-          if (e.is_a?(REXML::Element)) and
-              (e.name.upcase() == 'INPUT') and
-              e.attributes['type'].upcase() == 'SUBMIT'
-            submits += [e]
-          end
-        }
+        form.each do |e|
+          next unless e.is_a?(REXML::Element) and
+                      (e.name.upcase == 'INPUT') and
+                      e.attributes['type'].upcase == 'SUBMIT'
+
+          submits += [e]
+        end
 
         assert(submits.length == 1,
                "Expected only one 'input' with type = 'submit', got #{submits.length}")
@@ -1003,8 +1062,7 @@ module OpenID
         assert(submits[0].attributes['value'] == submit_text,
                "Expected submit value to be '#{submit_text}', " +
                "got '#{submits[0].attributes['value']}'")
-      }
-
+      end
     end
 
     def test_toFormMarkup
@@ -1045,7 +1103,6 @@ module OpenID
   end
 
   class NamespaceMapTestCase < Minitest::Test
-
     def test_onealias
       nsm = NamespaceMap.new
       uri = 'http://example.com/foo'
@@ -1055,19 +1112,18 @@ module OpenID
       assert_equal(_alias, nsm.get_alias(uri))
     end
 
-
     def test_iteration
       nsm = NamespaceMap.new
-      uripat = "http://example.com/foo%i"
+      uripat = 'http://example.com/foo%i'
       nsm.add(uripat % 0)
 
-      (1..23).each { |i|
+      (1..23).each do |i|
         assert_equal(false, nsm.member?(uripat % i))
         nsm.add(uripat % i)
-      }
-      nsm.each { |uri, _alias|
+      end
+      nsm.each do |uri, _alias|
         assert_equal(uri[22..-1], _alias[3..-1])
-      }
+      end
 
       nsm = NamespaceMap.new
       alias_ = 'bogus'
@@ -1075,8 +1131,8 @@ module OpenID
 
       nsm.add_alias(uri, alias_)
 
-      assert_equal(nsm.aliases(), [alias_])
-      assert_equal(nsm.namespace_uris(), [uri])
+      assert_equal(nsm.aliases, [alias_])
+      assert_equal(nsm.namespace_uris, [uri])
     end
 
     def test_register_default_alias
@@ -1087,17 +1143,17 @@ module OpenID
       Message.register_namespace_alias(invalid_ns, alias_)
 
       # Once it's registered, you can't register it again
-      assert_raises(NamespaceAliasRegistrationError) {
+      assert_raises(NamespaceAliasRegistrationError) do
         Message.register_namespace_alias(invalid_ns, 'another_alias')
-      }
+      end
 
       # Once it's registered, you can't register another URL with that alias
-      assert_raises(NamespaceAliasRegistrationError) {
+      assert_raises(NamespaceAliasRegistrationError) do
         Message.register_namespace_alias('http://janrain.com/', alias_)
-      }
+      end
 
       # It gets used automatically by the Message class:
-      msg = Message.from_openid_args({'invalid.stuff' => 'things'})
+      msg = Message.from_openid_args({ 'invalid.stuff' => 'things' })
       assert(msg.is_openid1)
       assert_equal(alias_, msg.namespaces.get_alias(invalid_ns))
       assert_equal(invalid_ns, msg.namespaces.get_namespace_uri(alias_))
@@ -1108,9 +1164,9 @@ module OpenID
       uri = 'urn:bogus'
 
       nsm.add_alias(uri, 'foos')
-      assert_raises(IndexError) {
+      assert_raises(IndexError) do
         nsm.add_alias(uri, 'ball')
-      }
+      end
     end
   end
 end

@@ -1,11 +1,10 @@
 require 'uri'
 
 module OpenID
-
   module URINorm
-    VALID_URI_SCHEMES = ['http','https'].freeze
-    public
-    def URINorm.urinorm(uri)
+    VALID_URI_SCHEMES = %w[http https].freeze
+
+    def self.urinorm(uri)
       uri = URI.parse(uri)
 
       raise URI::InvalidURIError.new('no scheme') unless uri.scheme
@@ -20,26 +19,23 @@ module OpenID
       uri.host = uri.host.downcase
 
       uri.path = remove_dot_segments(uri.path)
-      uri.path = '/' if uri.path.length == 0
+      uri.path = '/' if uri.path.empty?
 
       uri = uri.normalize.to_s
-      uri = uri.gsub(PERCENT_ESCAPE_RE) {
-        sub = $&[1..2].to_i(16).chr
-        reserved(sub) ? $&.upcase : sub
-      }
-
-      return uri
+      uri.gsub(PERCENT_ESCAPE_RE) do
+        sub = ::Regexp.last_match(0)[1..2].to_i(16).chr
+        reserved(sub) ? ::Regexp.last_match(0).upcase : sub
+      end
     end
 
-    private
     RESERVED_RE = /[A-Za-z0-9._~-]/
     PERCENT_ESCAPE_RE = /%[0-9a-zA-Z]{2}/
 
-    def URINorm.reserved(chr)
-      not RESERVED_RE =~ chr
+    def self.reserved(chr)
+      !(RESERVED_RE =~ chr)
     end
 
-    def URINorm.remove_dot_segments(path)
+    def self.remove_dot_segments(path)
       result_segments = []
 
       while path.length > 0
@@ -57,7 +53,7 @@ module OpenID
         elsif path == '/..'
           path = '/'
           result_segments.pop if result_segments.length > 0
-        elsif path == '..' or path == '.'
+        elsif ['..', '.'].include?(path)
           path = ''
         else
           i = 0
@@ -69,8 +65,7 @@ module OpenID
         end
       end
 
-      return result_segments.join('')
+      result_segments.join('')
     end
   end
-
 end

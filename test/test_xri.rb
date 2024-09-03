@@ -2,11 +2,8 @@ require 'minitest/autorun'
 require 'openid/yadis/xri'
 
 module OpenID
-
   module Yadis
-
     class XriDiscoveryTestCase < Minitest::Test
-
       def test_isXRI?
         assert_equal(:xri, XRI.identifier_scheme('=john.smith'))
         assert_equal(:xri, XRI.identifier_scheme('@smiths/john'))
@@ -20,7 +17,7 @@ module OpenID
 
     class XriEscapingTestCase < Minitest::Test
       def test_escaping_percents
-        assert_equal('@example/abc%252Fd/ef', 
+        assert_equal('@example/abc%252Fd/ef',
                      XRI.escape_for_iri('@example/abc%2Fd/ef'))
       end
 

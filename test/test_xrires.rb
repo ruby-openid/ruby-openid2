@@ -3,16 +3,13 @@ require 'openid/yadis/xrires'
 
 module OpenID
   module Yadis
-
     class XRDSFetcher
       def initialize(results)
         @results = results
       end
 
-      def fetch(url, body=nil, headers=nil, redirect_limit=nil)
-        if !@results.empty?
-          return @results.shift
-        end
+      def fetch(_url, _body = nil, _headers = nil, _redirect_limit = nil)
+        return @results.shift unless @results.empty?
 
         nil
       end
@@ -29,7 +26,7 @@ module OpenID
       def test_proxy_url
         st = @servicetype
         ste = @servicetype_enc
-        args_esc = ["_xrd_r=application%2Fxrds%2Bxml", "_xrd_t=#{ste}"]
+        args_esc = ['_xrd_r=application%2Fxrds%2Bxml', "_xrd_t=#{ste}"]
         pqu = @proxy.method('query_url')
         h = @proxy_url
 
@@ -50,7 +47,7 @@ module OpenID
         assert_match args_esc[1], pqu.call('=foo/bar?mi=fa&so=la', st)
 
         # With no service endpoint selection.
-        args_esc = "_xrd_r=application%2Fxrds%2Bxml%3Bsep%3Dfalse"
+        args_esc = '_xrd_r=application%2Fxrds%2Bxml%3Bsep%3Dfalse'
 
         assert_match h + '=foo?', pqu.call('=foo', nil)
         assert_match args_esc, pqu.call('=foo', nil)
@@ -59,7 +56,7 @@ module OpenID
       def test_proxy_url_qmarks
         st = @servicetype
         ste = @servicetype_enc
-        args_esc = ["_xrd_r=application%2Fxrds%2Bxml", "_xrd_t=#{ste}"]
+        args_esc = ['_xrd_r=application%2Fxrds%2Bxml', "_xrd_t=#{ste}"]
         pqu = @proxy.method('query_url')
         h = @proxy_url
 

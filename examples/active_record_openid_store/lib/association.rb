@@ -7,4 +7,3 @@ class Association < ActiveRecord::Base
     OpenID::Association.new(handle, secret, Time.at(issued), lifetime, assoc_type)
   end
 end
-

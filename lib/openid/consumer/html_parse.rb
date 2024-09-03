@@ -1,9 +1,8 @@
-require "openid/yadis/htmltokenizer"
+require 'openid/yadis/htmltokenizer'
 
 module OpenID
-
   # Stuff to remove before we start looking for tags
-  REMOVED_RE = /
+  REMOVED_RE = %r{
     # Comments
     <!--.*?-->
 
@@ -16,33 +15,36 @@ module OpenID
     # make sure script is not an XML namespace
     (?!:)
 
-    [^>]*>.*?<\/script>
+    [^>]*>.*?</script>
 
-  /mix
+  }mix
 
-  def OpenID.openid_unescape(s)
-    s.gsub('&amp;','&').gsub('&lt;','<').gsub('&gt;','>').gsub('&quot;','"')
+  def self.openid_unescape(s)
+    s.gsub('&amp;', '&').gsub('&lt;', '<').gsub('&gt;', '>').gsub('&quot;', '"')
   end
 
-  def OpenID.unescape_hash(h)
+  def self.unescape_hash(h)
     newh = {}
-    h.map{|k,v|
-      newh[k]=openid_unescape(v)
-    }
+    h.map  do |k, v|
+      newh[k] = openid_unescape(v)
+    end
     newh
   end
 
-
-  def OpenID.parse_link_attrs(html)
+  def self.parse_link_attrs(html)
     begin
-      stripped = html.gsub(REMOVED_RE,'')
+      stripped = html.gsub(REMOVED_RE, '')
     rescue ArgumentError
       begin
-        stripped = html.encode('UTF-8', 'binary', :invalid => :replace, :undef => :replace, :replace => '').gsub(REMOVED_RE,'')
+        stripped = html.encode('UTF-8', 'binary', invalid: :replace, undef: :replace, replace: '').gsub(
+          REMOVED_RE, ''
+        )
       rescue Encoding::UndefinedConversionError, Encoding::ConverterNotFoundError
         # needed for a problem in JRuby where it can't handle the conversion.
         # see details here: https://github.com/jruby/jruby/issues/829
-        stripped = html.encode('UTF-8', 'ASCII', :invalid => :replace, :undef => :replace, :replace => '').gsub(REMOVED_RE,'')
+        stripped = html.encode('UTF-8', 'ASCII', invalid: :replace, undef: :replace, replace: '').gsub(
+          REMOVED_RE, ''
+        )
       end
     end
     parser = HTMLTokenizer.new(stripped)
@@ -54,91 +56,80 @@ module OpenID
     saw_head = false
 
     begin
-      while el = parser.getTag('head', '/head', 'link', 'body', '/body', 
+      while el = parser.getTag('head', '/head', 'link', 'body', '/body',
                                'html', '/html')
-        
+
         # we are leaving head or have reached body, so we bail
         return links if ['/head', 'body', '/body', '/html'].member?(el.tag_name)
 
         # enforce html > head > link
-        if el.tag_name == 'html'
-          in_html = true
-        end
+        in_html = true if el.tag_name == 'html'
         next unless in_html
+
         if el.tag_name == 'head'
           if saw_head
-            return links #only allow one head
+            return links # only allow one head
           end
+
           saw_head = true
-          unless el.to_s[-2] == 47 # tag ends with a /: a short tag
-            in_head = true
-          end
+          in_head = true unless el.to_s[-2] == 47 # tag ends with a /: a short tag
         end
         next unless in_head
 
         return links if el.tag_name == 'html'
 
-        if el.tag_name == 'link'
-          links << unescape_hash(el.attr_hash)
-        end
-        
+        links << unescape_hash(el.attr_hash) if el.tag_name == 'link'
+
       end
     rescue Exception # just stop parsing if there's an error
     end
-    return links
+    links
   end
 
-  def OpenID.rel_matches(rel_attr, target_rel)
+  def self.rel_matches(rel_attr, target_rel)
     # Does this target_rel appear in the rel_str?
     # XXX: TESTME
-    rels = rel_attr.strip().split()
-    rels.each { |rel|
+    rels = rel_attr.strip.split
+    rels.each do |rel|
       rel = rel.downcase
-      if rel == target_rel
-        return true
-      end
-    }
+      return true if rel == target_rel
+    end
 
-    return false
+    false
   end
 
-  def OpenID.link_has_rel(link_attrs, target_rel)
+  def self.link_has_rel(link_attrs, target_rel)
     # Does this link have target_rel as a relationship?
 
     # XXX: TESTME
     rel_attr = link_attrs['rel']
-    return (rel_attr and rel_matches(rel_attr, target_rel))
+    (rel_attr and rel_matches(rel_attr, target_rel))
   end
 
-  def OpenID.find_links_rel(link_attrs_list, target_rel)
+  def self.find_links_rel(link_attrs_list, target_rel)
     # Filter the list of link attributes on whether it has target_rel
     # as a relationship.
 
     # XXX: TESTME
-    matchesTarget = lambda { |attrs| link_has_rel(attrs, target_rel) }
+    matches_target = ->(attrs) { link_has_rel(attrs, target_rel) }
     result = []
 
-    link_attrs_list.each { |item|
-      if matchesTarget.call(item)
-        result << item
-      end
-    }
+    link_attrs_list.each do |item|
+      result << item if matches_target.call(item)
+    end
 
-    return result
+    result
   end
 
-  def OpenID.find_first_href(link_attrs_list, target_rel)
+  def self.find_first_href(link_attrs_list, target_rel)
     # Return the value of the href attribute for the first link tag in
     # the list that has target_rel as a relationship.
 
     # XXX: TESTME
     matches = find_links_rel(link_attrs_list, target_rel)
-    if !matches or matches.empty?
-      return nil
-    end
+    return nil if !matches or matches.empty?
 
     first = matches[0]
-    return first['href']
+    first['href']
   end
 end
-

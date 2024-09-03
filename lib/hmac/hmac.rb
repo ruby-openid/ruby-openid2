@@ -24,23 +24,24 @@ module HMAC
     end
 
     private
+
     def check_status
-      unless @status == STATUS_INITIALIZED
-	raise RuntimeError,
-	  "The underlying hash algorithm has not yet been initialized."
-      end
+      return if @status == STATUS_INITIALIZED
+
+      raise 'The underlying hash algorithm has not yet been initialized.'
     end
 
     public
+
     def set_key(key)
       # If key is longer than the block size, apply hash function
       # to key and use the result as a real key.
       key = @algorithm.digest(key) if key.size > @block_size
       key_xor_ipad = "\x36" * @block_size
       key_xor_opad = "\x5C" * @block_size
-      for i in 0 .. key.size - 1
-	key_xor_ipad[i] ^= key[i]
-	key_xor_opad[i] ^= key[i]
+      for i in 0..key.size - 1
+        key_xor_ipad[i] ^= key[i]
+        key_xor_opad[i] ^= key[i]
       end
       @key_xor_ipad = key_xor_ipad
       @key_xor_opad = key_xor_opad
@@ -85,28 +86,25 @@ module HMAC
     # These two class methods below are safer than using above
     # instance methods combinatorially because an instance will have
     # held a key even if it's no longer in use.
-    def Base.digest(key, text)
-      begin
-	hmac = self.new(key)
-	hmac.update(text)
-	hmac.digest
-      ensure
-	hmac.reset_key
-      end
+    def self.digest(key, text)
+      hmac = new(key)
+      hmac.update(text)
+      hmac.digest
+    ensure
+      hmac.reset_key
     end
 
-    def Base.hexdigest(key, text)
-      begin
-	hmac = self.new(key)
-	hmac.update(text)
-	hmac.hexdigest
-      ensure
-	hmac.reset_key
-      end
+    def self.hexdigest(key, text)
+      hmac = new(key)
+      hmac.update(text)
+      hmac.hexdigest
+    ensure
+      hmac.reset_key
     end
 
     private_class_method :new, :digest, :hexdigest
   end
 
-  STATUS_UNDEFINED, STATUS_INITIALIZED = 0, 1
+  STATUS_UNDEFINED = 0
+  STATUS_INITIALIZED = 1
 end

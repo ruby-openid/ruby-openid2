@@ -1,15 +1,15 @@
-require "minitest/autorun"
-require "openid/consumer/checkid_request"
-require "openid/message"
-require "testutil"
-require "util"
+require 'minitest/autorun'
+require 'openid/consumer/checkid_request'
+require 'openid/message'
+require 'testutil'
+require 'util'
 
 module OpenID
   class Consumer
     class CheckIDRequest
       class DummyEndpoint
         attr_accessor :preferred_namespace, :local_id, :server_url,
-          :is_op_identifier, :claimed_id
+                      :is_op_identifier, :claimed_id
 
         def initialize
           @preferred_namespace = nil
@@ -58,13 +58,13 @@ module OpenID
 
         def assert_openid_value_equal(msg, key, expected)
           actual = msg.get_arg(OPENID_NS, key, NO_DEFAULT)
-          error_text = ("Expected #{expected.inspect} for openid.#{key} "\
-                        "but got #{actual.inspect}: #{msg.inspect}")
+          error_text = "Expected #{expected.inspect} for openid.#{key} "\
+                        "but got #{actual.inspect}: #{msg.inspect}"
           assert_equal(expected, actual, error_text)
         end
 
         def assert_anonymous(msg)
-          ['claimed_id', 'identity'].each do |key|
+          %w[claimed_id identity].each do |key|
             assert_openid_key_absent(msg, key)
           end
         end
@@ -87,9 +87,9 @@ module OpenID
 
         def test_check_no_assoc_handle
           @checkid_req.instance_variable_set('@assoc', nil)
-          msg = assert_log_matches("Generated checkid") {
+          msg = assert_log_matches('Generated checkid') do
             @checkid_req.get_message(@realm, @return_to, immediate)
-          }
+          end
           assert_openid_key_absent(msg, 'assoc_handle')
         end
 
@@ -98,29 +98,29 @@ module OpenID
           @checkid_req.add_extension_arg('bag:', 'material', 'paper')
           assert(@checkid_req.message.namespaces.member?('bag:'))
           assert_equal(@checkid_req.message.get_args('bag:'),
-                       {'color' => 'brown', 'material' => 'paper'})
+                       { 'color' => 'brown', 'material' => 'paper' })
 
-          msg = assert_log_matches("Generated checkid") {
+          msg = assert_log_matches('Generated checkid') do
             @checkid_req.get_message(@realm, @return_to, immediate)
-          }
+          end
 
           # XXX: this depends on the way that Message assigns
           # namespaces. Really it doesn't care that it has alias "0",
           # but that is tested anyway
-          post_args = msg.to_post_args()
+          post_args = msg.to_post_args
           assert_equal('brown', post_args['openid.ext0.color'])
           assert_equal('paper', post_args['openid.ext0.material'])
         end
 
         def test_standard
-          msg = assert_log_matches('Generated checkid') {
+          msg = assert_log_matches('Generated checkid') do
             @checkid_req.get_message(@realm, @return_to, immediate)
-          }
+          end
           assert_has_identifiers(msg, @endpoint.local_id, @endpoint.claimed_id)
         end
 
         def test_send_redirect?
-          silence_logging {
+          silence_logging do
             url = @checkid_req.redirect_url(@realm, @return_to, immediate)
             assert(url.length < OPENID1_URL_LIMIT)
             assert(@checkid_req.send_redirect?(@realm, @return_to, immediate))
@@ -131,7 +131,7 @@ module OpenID
             actual = @checkid_req.send_redirect?(@realm, @return_to, immediate)
             expected = preferred_namespace != OPENID2_NS
             assert_equal(expected, actual)
-          }
+          end
         end
       end
 
@@ -173,9 +173,9 @@ module OpenID
 
         def test_user_anonymous_ignores_identfier
           @checkid_req.anonymous = true
-          msg = assert_log_matches('Generated checkid') {
+          msg = assert_log_matches('Generated checkid') do
             @checkid_req.get_message(@realm, @return_to, immediate)
-          }
+          end
           assert_has_required_fields(msg)
           assert_anonymous(msg)
         end
@@ -183,26 +183,26 @@ module OpenID
         def test_op_anonymous_ignores_identifier
           @endpoint.is_op_identifier = true
           @checkid_req.anonymous = true
-          msg = assert_log_matches('Generated checkid') {
+          msg = assert_log_matches('Generated checkid') do
             @checkid_req.get_message(@realm, @return_to, immediate)
-          }
+          end
           assert_has_required_fields(msg)
           assert_anonymous(msg)
         end
 
         def test_op_identifier_sends_identifier_select
           @endpoint.is_op_identifier = true
-          msg = assert_log_matches('Generated checkid') {
+          msg = assert_log_matches('Generated checkid') do
             @checkid_req.get_message(@realm, @return_to, immediate)
-          }
+          end
           assert_has_required_fields(msg)
           assert_has_identifiers(msg, IDENTIFIER_SELECT, IDENTIFIER_SELECT)
         end
 
         def test_no_assoc_handle
-          msg = assert_log_matches("Generated checkid") {
+          msg = assert_log_matches('Generated checkid') do
             @checkid_req.get_message(@realm, @return_to, immediate)
-          }
+          end
           assert_openid_key_absent(msg, 'assoc_handle')
         end
       end
@@ -223,7 +223,7 @@ module OpenID
         end
 
         # Make sure claimed_is is *absent* in request.
-        def assert_has_identifiers(msg, op_specific_id, claimed_id)
+        def assert_has_identifiers(msg, op_specific_id, _claimed_id)
           assert_openid_value_equal(msg, 'identity', op_specific_id)
           assert_openid_key_absent(msg, 'claimed_id')
         end
@@ -245,9 +245,9 @@ module OpenID
         # OpenID 1 requests MUST NOT be able to set anonymous to true
         def test_set_anonymous_fails_for_openid1
           assert(@checkid_req.message.is_openid1)
-          assert_raises(ArgumentError) {
+          assert_raises(ArgumentError) do
             @checkid_req.anonymous = true
-          }
+          end
           @checkid_req.anonymous = false
         end
 
@@ -257,14 +257,13 @@ module OpenID
         # identifier_select just like OpenID 2.
         def test_identifier_select
           @endpoint.is_op_identifier = true
-          msg = assert_log_matches('Generated checkid') {
+          msg = assert_log_matches('Generated checkid') do
             @checkid_req.get_message(@realm, @return_to, immediate)
-          }
+          end
           assert_has_required_fields(msg)
           assert_equal(IDENTIFIER_SELECT,
                        msg.get_arg(OPENID1_NS, 'identity'))
         end
-
       end
 
       class TestCheckIDRequestOpenID1Immediate < TestCheckIDRequestOpenID1

@@ -1,11 +1,9 @@
-
 require 'openid/util'
 require 'openid/fetchers'
 require 'openid/yadis/constants'
 require 'openid/yadis/parsehtml'
 
 module OpenID
-
   # Raised when a error occurs in the discovery process
   class DiscoveryFailure < OpenIDError
     attr_accessor :identity_url, :http_response
@@ -18,10 +16,8 @@ module OpenID
   end
 
   module Yadis
-
     # Contains the result of performing Yadis discovery on a URI
     class DiscoveryResult
-
       # The result of following redirects from the request_uri
       attr_accessor :normalize_uri
 
@@ -50,12 +46,12 @@ module OpenID
 
       # Was the Yadis protocol's indirection used?
       def used_yadis_location?
-        return @normalized_uri != @xrds_uri
+        @normalized_uri != @xrds_uri
       end
 
       # Is the response text supposed to be an XRDS document?
       def is_xrds
-        return (used_yadis_location?() or
+        (used_yadis_location? or
                 @content_type == YADIS_CONTENT_TYPE)
       end
     end
@@ -74,14 +70,15 @@ module OpenID
     def self.discover(uri)
       result = DiscoveryResult.new(uri)
       begin
-        resp = OpenID.fetch(uri, nil, {'Accept' => YADIS_ACCEPT_HEADER})
+        resp = OpenID.fetch(uri, nil, { 'Accept' => YADIS_ACCEPT_HEADER })
       rescue Exception
         raise DiscoveryFailure.new("Failed to fetch identity URL #{uri} : #{$!}", $!)
       end
-      if resp.code != "200" and resp.code != "206"
+      if resp.code != '200' and resp.code != '206'
         raise DiscoveryFailure.new(
-                "HTTP Response status from identity URL host is not \"200\"."\
-                "Got status #{resp.code.inspect} for #{resp.final_url}", resp)
+          'HTTP Response status from identity URL host is not "200".'\
+          "Got status #{resp.code.inspect} for #{resp.final_url}", resp
+        )
       end
 
       # Note the URL after following redirects
@@ -91,27 +88,28 @@ module OpenID
       # we already have it
       result.content_type = resp['content-type']
 
-      result.xrds_uri = self.where_is_yadis?(resp)
+      result.xrds_uri = where_is_yadis?(resp)
 
       if result.xrds_uri and result.used_yadis_location?
         begin
           resp = OpenID.fetch(result.xrds_uri)
-        rescue
+        rescue StandardError
           raise DiscoveryFailure.new("Failed to fetch Yadis URL #{result.xrds_uri} : #{$!}", $!)
         end
-        if resp.code != "200" and resp.code != "206"
-            exc = DiscoveryFailure.new(
-                    "HTTP Response status from Yadis host is not \"200\". " +
-                                       "Got status #{resp.code.inspect} for #{resp.final_url}", resp)
-            exc.identity_url = result.normalized_uri
-            raise exc
+        if resp.code != '200' and resp.code != '206'
+          exc = DiscoveryFailure.new(
+            'HTTP Response status from Yadis host is not "200". ' +
+                                 "Got status #{resp.code.inspect} for #{resp.final_url}", resp
+          )
+          exc.identity_url = result.normalized_uri
+          raise exc
         end
 
         result.content_type = resp['content-type']
       end
 
       result.response_text = resp.body
-      return result
+      result
     end
 
     # Given a HTTPResponse, return the location of the Yadis
@@ -128,8 +126,8 @@ module OpenID
 
       # According to the spec, the content-type header must be an
       # exact match, or else we have to look for an indirection.
-      if (!content_type.nil? and !content_type.to_s.empty? and
-          content_type.split(';', 2)[0].downcase == YADIS_CONTENT_TYPE)
+      if !content_type.nil? and !content_type.to_s.empty? and
+         content_type.split(';', 2)[0].downcase == YADIS_CONTENT_TYPE
         return resp.final_url
       else
         # Try the header
@@ -145,9 +143,7 @@ module OpenID
         end
       end
 
-      return yadis_loc
+      yadis_loc
     end
-
   end
-
 end

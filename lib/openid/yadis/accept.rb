@@ -1,39 +1,36 @@
 module OpenID
-
   module Yadis
-
     # Generate an accept header value
     #
     # [str or (str, float)] -> str
     def self.generate_accept_header(*elements)
       parts = []
-      elements.each { |element|
+      elements.each do |element|
         if element.is_a?(String)
-          qs = "1.0"
+          qs = '1.0'
           mtype = element
         else
           mtype, q = element
           q = q.to_f
-          if q > 1 or q <= 0
-            raise ArgumentError.new("Invalid preference factor: #{q}")
-          end
-          qs = sprintf("%0.1f", q)
+          raise ArgumentError.new("Invalid preference factor: #{q}") if q > 1 or q <= 0
+
+          qs = format('%0.1f', q)
         end
 
         parts << [qs, mtype]
-      }
+      end
 
       parts.sort!
       chunks = []
-      parts.each { |q, mtype|
-        if q == '1.0'
-          chunks << mtype
-        else
-          chunks << sprintf("%s; q=%s", mtype, q)
-        end
-      }
+      parts.each do |q, mtype|
+        chunks << if q == '1.0'
+                    mtype
+                  else
+                    format('%s; q=%s', mtype, q)
+                  end
+      end
 
-      return chunks.join(', ')
+      chunks.join(', ')
     end
 
     def self.parse_accept_header(value)
@@ -45,8 +42,8 @@ module OpenID
       # str -> [(str, str, float)]
       chunks = value.split(',', -1).collect { |v| v.strip }
       accept = []
-      chunks.each { |chunk|
-        parts = chunk.split(";", -1).collect { |s| s.strip }
+      chunks.each do |chunk|
+        parts = chunk.split(';', -1).collect { |s| s.strip }
 
         mtype = parts.shift
         if mtype.index('/').nil?
@@ -57,24 +54,22 @@ module OpenID
         main, sub = mtype.split('/', 2)
 
         q = nil
-        parts.each { |ext|
-          if !ext.index('=').nil?
+        parts.each do |ext|
+          unless ext.index('=').nil?
             k, v = ext.split('=', 2)
-            if k == 'q'
-              q = v.to_f
-            end
+            q = v.to_f if k == 'q'
           end
-        }
+        end
 
         q = 1.0 if q.nil?
 
         accept << [q, main, sub]
-      }
+      end
 
       accept.sort!
       accept.reverse!
 
-      return accept.collect { |q, main, sub| [main, sub, q] }
+      accept.collect { |q, main, sub| [main, sub, q] }
     end
 
     def self.match_types(accept_types, have_types)
@@ -89,16 +84,16 @@ module OpenID
       # [('text/html', 1.0), ('text/plain', 0.5)]
       #
       # Type signature: ([(str, str, float)], [str]) -> [(str, float)]
-      if accept_types.nil? or accept_types == []
-        # Accept all of them
-        default = 1
-      else
-        default = 0
-      end
+      default = if accept_types.nil? or accept_types == []
+                  # Accept all of them
+                  1
+                else
+                  0
+                end
 
       match_main = {}
       match_sub = {}
-      accept_types.each { |main, sub, q|
+      accept_types.each do |main, sub, q|
         if main == '*'
           default = [default, q].max
           next
@@ -107,26 +102,26 @@ module OpenID
         else
           match_sub[[main, sub]] = [match_sub.fetch([main, sub], 0), q].max
         end
-      }
+      end
 
       accepted_list = []
       order_maintainer = 0
-      have_types.each { |mtype|
+      have_types.each do |mtype|
         main, sub = mtype.split('/', 2)
-        if match_sub.member?([main, sub])
-          q = match_sub[[main, sub]]
-        else
-          q = match_main.fetch(main, default)
-        end
+        q = if match_sub.member?([main, sub])
+              match_sub[[main, sub]]
+            else
+              match_main.fetch(main, default)
+            end
 
         if q != 0
           accepted_list << [1 - q, order_maintainer, q, mtype]
           order_maintainer += 1
         end
-      }
+      end
 
       accepted_list.sort!
-      return accepted_list.collect { |_, _, q, mtype| [mtype, q] }
+      accepted_list.collect { |_, _, q, mtype| [mtype, q] }
     end
 
     def self.get_acceptable(accept_header, have_types)
@@ -138,11 +133,9 @@ module OpenID
       # parse_accept_header
       #
       # (str, [str]) -> [str]
-      accepted = self.parse_accept_header(accept_header)
-      preferred = self.match_types(accepted, have_types)
-      return preferred.collect { |mtype, _| mtype }
+      accepted = parse_accept_header(accept_header)
+      preferred = match_types(accepted, have_types)
+      preferred.collect { |mtype, _| mtype }
     end
-
   end
-
 end

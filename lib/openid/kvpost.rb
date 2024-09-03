@@ -1,5 +1,5 @@
-require "openid/message"
-require "openid/fetchers"
+require 'openid/message'
+require 'openid/fetchers'
 
 module OpenID
   # Exception that is raised when the server returns a 400 response
@@ -18,23 +18,24 @@ module OpenID
       error_text = msg.get_arg(OPENID_NS, 'error',
                                '<no error message supplied>')
       error_code = msg.get_arg(OPENID_NS, 'error_code')
-      return self.new(error_text, error_code, msg)
+      new(error_text, error_code, msg)
     end
   end
 
   class KVPostNetworkError < OpenIDError
   end
+
   class HTTPStatusError < OpenIDError
   end
 
   class Message
     def self.from_http_response(response, server_url)
-      msg = self.from_kvform(response.body)
+      msg = from_kvform(response.body)
       case response.code.to_i
       when 200
-        return msg
+        msg
       when 206
-        return msg
+        msg
       when 400
         raise ServerError.from_message(msg)
       else
@@ -49,10 +50,10 @@ module OpenID
   # a response in KV Form
   def self.make_kv_post(request_message, server_url)
     begin
-      http_response = self.fetch(server_url, request_message.to_url_encoded)
+      http_response = fetch(server_url, request_message.to_url_encoded)
     rescue Exception
-      raise KVPostNetworkError.new("Unable to contact OpenID server: #{$!.to_s}")
+      raise KVPostNetworkError.new("Unable to contact OpenID server: #{$!}")
     end
-    return Message.from_http_response(http_response, server_url)
+    Message.from_http_response(http_response, server_url)
   end
 end

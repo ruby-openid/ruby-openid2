@@ -19,14 +19,13 @@ require 'openid/consumer/associationmanager'
 # for more, see /etc/ssh/moduli
 
 module OpenID
-
   ALT_MODULUS = 0xCAADDDEC1667FC68B5FA15D53C4E1532DD24561A1A2D47A12C01ABEA1E00731F6921AAC40742311FDF9E634BB7131BEE1AF240261554389A910425E044E88C8359B010F5AD2B80E29CB1A5B027B19D9E01A6F63A6F45E5D7ED2FF6A2A0085050A7D0CF307C3DB51D2490355907B4427C23A98DF1EB8ABEF2BA209BB7AFFE86A7
   ALT_GEN = 5
 
   class CatchLogs
     def catchlogs_setup
       @old_logger = Util.logger
-      Util.logger = self.method('got_log_message')
+      Util.logger = method('got_log_message')
       @messages = []
     end
 
@@ -41,19 +40,19 @@ module OpenID
 
   class TestProtocolError < Minitest::Test
     def test_browserWithReturnTo
-      return_to = "http://rp.unittest/consumer"
+      return_to = 'http://rp.unittest/consumer'
       # will be a ProtocolError raised by Decode or
       # CheckIDRequest.answer
       args = Message.from_post_args({
                                       'openid.mode' => 'monkeydance',
                                       'openid.identity' => 'http://wagu.unittest/',
-                                      'openid.return_to' => return_to,
+                                      'openid.return_to' => return_to
                                     })
-      e = Server::ProtocolError.new(args, "plucky")
+      e = Server::ProtocolError.new(args, 'plucky')
       assert(e.has_return_to)
       expected_args = {
         'openid.mode' => 'error',
-        'openid.error' => 'plucky',
+        'openid.error' => 'plucky'
       }
 
       _, result_args = e.encode_to_url.split('?', 2)
@@ -62,7 +61,7 @@ module OpenID
     end
 
     def test_browserWithReturnTo_OpenID2_GET
-      return_to = "http://rp.unittest/consumer"
+      return_to = 'http://rp.unittest/consumer'
       # will be a ProtocolError raised by Decode or
       # CheckIDRequest.answer
       args = Message.from_post_args({
@@ -70,14 +69,14 @@ module OpenID
                                       'openid.mode' => 'monkeydance',
                                       'openid.identity' => 'http://wagu.unittest/',
                                       'openid.claimed_id' => 'http://wagu.unittest/',
-                                      'openid.return_to' => return_to,
+                                      'openid.return_to' => return_to
                                     })
-      e = Server::ProtocolError.new(args, "plucky")
+      e = Server::ProtocolError.new(args, 'plucky')
       assert(e.has_return_to)
       expected_args = {
         'openid.ns' => OPENID2_NS,
         'openid.mode' => 'error',
-        'openid.error' => 'plucky',
+        'openid.error' => 'plucky'
       }
 
       _, result_args = e.encode_to_url.split('?', 2)
@@ -86,7 +85,7 @@ module OpenID
     end
 
     def test_browserWithReturnTo_OpenID2_POST
-      return_to = "http://rp.unittest/consumer" + ('x' * OPENID1_URL_LIMIT)
+      return_to = 'http://rp.unittest/consumer' + ('x' * OPENID1_URL_LIMIT)
       # will be a ProtocolError raised by Decode or
       # CheckIDRequest.answer
       args = Message.from_post_args({
@@ -94,29 +93,30 @@ module OpenID
                                       'openid.mode' => 'monkeydance',
                                       'openid.identity' => 'http://wagu.unittest/',
                                       'openid.claimed_id' => 'http://wagu.unittest/',
-                                      'openid.return_to' => return_to,
+                                      'openid.return_to' => return_to
                                     })
-      e = Server::ProtocolError.new(args, "plucky")
+      e = Server::ProtocolError.new(args, 'plucky')
       assert(e.has_return_to)
       assert(e.which_encoding == Server::ENCODE_HTML_FORM)
       assert(e.to_form_markup == e.to_message.to_form_markup(
-                                                             args.get_arg(OPENID_NS, 'return_to')))
+        args.get_arg(OPENID_NS, 'return_to')
+      ))
     end
 
     def test_browserWithReturnTo_OpenID1_exceeds_limit
-      return_to = "http://rp.unittest/consumer" + ('x' * OPENID1_URL_LIMIT)
+      return_to = 'http://rp.unittest/consumer' + ('x' * OPENID1_URL_LIMIT)
       # will be a ProtocolError raised by Decode or
       # CheckIDRequest.answer
       args = Message.from_post_args({
                                       'openid.mode' => 'monkeydance',
                                       'openid.identity' => 'http://wagu.unittest/',
-                                      'openid.return_to' => return_to,
+                                      'openid.return_to' => return_to
                                     })
-      e = Server::ProtocolError.new(args, "plucky")
+      e = Server::ProtocolError.new(args, 'plucky')
       assert(e.has_return_to)
       expected_args = {
         'openid.mode' => 'error',
-        'openid.error' => 'plucky',
+        'openid.error' => 'plucky'
       }
 
       assert(e.which_encoding == Server::ENCODE_URL)
@@ -131,22 +131,22 @@ module OpenID
       # CheckIDRequest.answer
       args = Message.from_post_args({
                                       'openid.mode' => 'zebradance',
-                                      'openid.identity' => 'http://wagu.unittest/',
+                                      'openid.identity' => 'http://wagu.unittest/'
                                     })
-      e = Server::ProtocolError.new(args, "waffles")
+      e = Server::ProtocolError.new(args, 'waffles')
       assert(!e.has_return_to)
       expected = "error:waffles\nmode:error\n"
       assert_equal(e.encode_to_kvform, expected)
     end
 
     def test_no_message
-      e = Server::ProtocolError.new(nil, "no message")
+      e = Server::ProtocolError.new(nil, 'no message')
       assert(e.get_return_to.nil?)
       assert_nil(e.which_encoding)
     end
 
     def test_which_encoding_no_message
-      e = Server::ProtocolError.new(nil, "no message")
+      e = Server::ProtocolError.new(nil, 'no message')
       assert(e.which_encoding.nil?)
     end
   end
@@ -154,12 +154,12 @@ module OpenID
   class TestDecode < Minitest::Test
     def setup
       @claimed_id = 'http://de.legating.de.coder.unittest/'
-      @id_url = "http://decoder.am.unittest/"
-      @rt_url = "http://rp.unittest/foobot/?qux=zam"
-      @tr_url = "http://rp.unittest/"
-      @assoc_handle = "{assoc}{handle}"
+      @id_url = 'http://decoder.am.unittest/'
+      @rt_url = 'http://rp.unittest/foobot/?qux=zam'
+      @tr_url = 'http://rp.unittest/'
+      @assoc_handle = '{assoc}{handle}'
       @op_endpoint = 'http://endpoint.unittest/encode'
-      @store = Store::Memory.new()
+      @store = Store::Memory.new
       @server = Server::Server.new(@store, @op_endpoint)
       @decode = Server::Decoder.new(@server).method('decode')
     end
@@ -173,21 +173,21 @@ module OpenID
     def test_irrelevant
       args = {
         'pony' => 'spotted',
-        'sreg.mutant_power' => 'decaffinator',
+        'sreg.mutant_power' => 'decaffinator'
       }
-      assert_raises(Server::ProtocolError) {
+      assert_raises(Server::ProtocolError) do
         @decode.call(args)
-      }
+      end
     end
 
     def test_bad
       args = {
         'openid.mode' => 'twos-compliment',
-        'openid.pants' => 'zippered',
+        'openid.pants' => 'zippered'
       }
-      assert_raises(Server::ProtocolError) {
+      assert_raises(Server::ProtocolError) do
         @decode.call(args)
-      }
+      end
     end
 
     def test_dictOfLists
@@ -196,12 +196,12 @@ module OpenID
         'openid.identity' => @id_url,
         'openid.assoc_handle' => @assoc_handle,
         'openid.return_to' => @rt_url,
-        'openid.trust_root' => @tr_url,
+        'openid.trust_root' => @tr_url
       }
       begin
         result = @decode.call(args)
-      rescue ArgumentError => err
-        assert !err.to_s.index('values').nil?
+      rescue ArgumentError => e
+        assert !e.to_s.index('values').nil?
       else
         flunk("Expected ArgumentError, but got result #{result}")
       end
@@ -215,11 +215,11 @@ module OpenID
         'openid.return_to' => @rt_url,
         'openid.trust_root' => @tr_url,
         # should be ignored
-        'openid.some.extension' => 'junk',
+        'openid.some.extension' => 'junk'
       }
       r = @decode.call(args)
       assert(r.is_a?(Server::CheckIDRequest))
-      assert_equal(r.mode, "checkid_immediate")
+      assert_equal(r.mode, 'checkid_immediate')
       assert_equal(r.immediate, true)
       assert_equal(r.identity, @id_url)
       assert_equal(r.trust_root, @tr_url)
@@ -240,12 +240,12 @@ module OpenID
         'openid.mode' => 'checkid_setup',
         'openid.identity' => @id_url,
         'openid.claimed_id' => @id_url,
-        'openid.assoc_handle' => @assoc_handle,
+        'openid.assoc_handle' => @assoc_handle
       }
-      assert_raises(Server::ProtocolError) {
+      assert_raises(Server::ProtocolError) do
         m = Message.from_post_args(args)
         Server::CheckIDRequest.from_message(m, @op_endpoint)
-      }
+      end
     end
 
     def test_checkid_id_select
@@ -256,7 +256,7 @@ module OpenID
         'openid.claimed_id' => IDENTIFIER_SELECT,
         'openid.assoc_handle' => @assoc_handle,
         'openid.return_to' => @rt_url,
-        'openid.realm' => @tr_url,
+        'openid.realm' => @tr_url
       }
       m = Message.from_post_args(args)
       req = Server::CheckIDRequest.from_message(m, @op_endpoint)
@@ -269,22 +269,22 @@ module OpenID
         'openid.mode' => 'checkid_setup',
         'openid.assoc_handle' => @assoc_handle,
         'openid.return_to' => @rt_url,
-        'openid.realm' => @tr_url,
+        'openid.realm' => @tr_url
       }
 
       id_args = [
-                 {'openid.claimed_id' => IDENTIFIER_SELECT,
-                   'openid.identity' => 'http://bogus.com/'},
+        { 'openid.claimed_id' => IDENTIFIER_SELECT,
+          'openid.identity' => 'http://bogus.com/' },
 
-                 {'openid.claimed_id' => 'http://bogus.com/',
-                   'openid.identity' => 'http://bogus.com/'},
-                ]
+        { 'openid.claimed_id' => 'http://bogus.com/',
+          'openid.identity' => 'http://bogus.com/' }
+      ]
 
-      id_args.each { |id|
+      id_args.each do |id|
         m = Message.from_post_args(args.merge(id))
         req = Server::CheckIDRequest.from_message(m, @op_endpoint)
         assert(!req.id_select)
-      }
+      end
     end
 
     def test_checkidSetup
@@ -293,11 +293,11 @@ module OpenID
         'openid.identity' => @id_url,
         'openid.assoc_handle' => @assoc_handle,
         'openid.return_to' => @rt_url,
-        'openid.trust_root' => @tr_url,
+        'openid.trust_root' => @tr_url
       }
       r = @decode.call(args)
       assert(r.is_a?(Server::CheckIDRequest))
-      assert_equal(r.mode, "checkid_setup")
+      assert_equal(r.mode, 'checkid_setup')
       assert_equal(r.immediate, false)
       assert_equal(r.identity, @id_url)
       assert_equal(r.trust_root, @tr_url)
@@ -312,11 +312,11 @@ module OpenID
         'openid.claimed_id' => @claimed_id,
         'openid.assoc_handle' => @assoc_handle,
         'openid.return_to' => @rt_url,
-        'openid.realm' => @tr_url,
+        'openid.realm' => @tr_url
       }
       r = @decode.call(args)
       assert(r.is_a?(Server::CheckIDRequest))
-      assert_equal(r.mode, "checkid_setup")
+      assert_equal(r.mode, 'checkid_setup')
       assert_equal(r.immediate, false)
       assert_equal(r.identity, @id_url)
       assert_equal(r.claimed_id, @claimed_id)
@@ -331,11 +331,11 @@ module OpenID
         'openid.identity' => @id_url,
         'openid.assoc_handle' => @assoc_handle,
         'openid.return_to' => @rt_url,
-        'openid.realm' => @tr_url,
+        'openid.realm' => @tr_url
       }
-      assert_raises(Server::ProtocolError) {
+      assert_raises(Server::ProtocolError) do
         @decode.call(args)
-      }
+      end
     end
 
     def test_checkidSetupNoIdentityOpenID2
@@ -344,11 +344,11 @@ module OpenID
         'openid.mode' => 'checkid_setup',
         'openid.assoc_handle' => @assoc_handle,
         'openid.return_to' => @rt_url,
-        'openid.realm' => @tr_url,
+        'openid.realm' => @tr_url
       }
       r = @decode.call(args)
       assert(r.is_a?(Server::CheckIDRequest))
-      assert_equal(r.mode, "checkid_setup")
+      assert_equal(r.mode, 'checkid_setup')
       assert_equal(r.immediate, false)
       assert_nil(r.identity)
       assert_equal(r.trust_root, @tr_url)
@@ -362,11 +362,11 @@ module OpenID
         'openid.mode' => 'checkid_setup',
         'openid.identity' => @id_url,
         'openid.assoc_handle' => @assoc_handle,
-        'openid.trust_root' => @tr_url,
+        'openid.trust_root' => @tr_url
       }
-      assert_raises(Server::ProtocolError) {
+      assert_raises(Server::ProtocolError) do
         @decode.call(args)
-      }
+      end
     end
 
     def test_checkidSetupNoReturnOpenID2
@@ -379,23 +379,23 @@ module OpenID
         'openid.identity' => @id_url,
         'openid.claimed_id' => @id_url,
         'openid.assoc_handle' => @assoc_handle,
-        'openid.realm' => @tr_url,
+        'openid.realm' => @tr_url
       }
 
       req = @decode.call(args)
       assert(req.is_a?(Server::CheckIDRequest))
 
-      assert_raises(Server::NoReturnToError) {
+      assert_raises(Server::NoReturnToError) do
         req.answer(false)
-      }
+      end
 
-      assert_raises(Server::NoReturnToError) {
+      assert_raises(Server::NoReturnToError) do
         req.encode_to_url('bogus')
-      }
+      end
 
-      assert_raises(Server::NoReturnToError) {
+      assert_raises(Server::NoReturnToError) do
         req.cancel_url
-      }
+      end
     end
 
     def test_checkidSetupRealmRequiredOpenID2
@@ -406,11 +406,11 @@ module OpenID
         'openid.ns' => OPENID2_NS,
         'openid.mode' => 'checkid_setup',
         'openid.identity' => @id_url,
-        'openid.assoc_handle' => @assoc_handle,
+        'openid.assoc_handle' => @assoc_handle
       }
-      assert_raises(Server::ProtocolError) {
+      assert_raises(Server::ProtocolError) do
         @decode.call(args)
-      }
+      end
     end
 
     def test_checkidSetupBadReturn
@@ -418,12 +418,12 @@ module OpenID
         'openid.mode' => 'checkid_setup',
         'openid.identity' => @id_url,
         'openid.assoc_handle' => @assoc_handle,
-        'openid.return_to' => 'not a url',
+        'openid.return_to' => 'not a url'
       }
       begin
         result = @decode.call(args)
-      rescue Server::ProtocolError => err
-        assert(err.openid_message)
+      rescue Server::ProtocolError => e
+        assert(e.openid_message)
       else
         flunk("Expected ProtocolError, instead returned with #{result}")
       end
@@ -435,31 +435,31 @@ module OpenID
         'openid.identity' => @id_url,
         'openid.assoc_handle' => @assoc_handle,
         'openid.return_to' => @rt_url,
-        'openid.trust_root' => 'http://not-the-return-place.unittest/',
+        'openid.trust_root' => 'http://not-the-return-place.unittest/'
       }
       begin
         result = @decode.call(args)
-      rescue Server::UntrustedReturnURL => err
-        assert(err.openid_message, err.to_s)
+      rescue Server::UntrustedReturnURL => e
+        assert(e.openid_message, e.to_s)
       else
         flunk("Expected UntrustedReturnURL, instead returned with #{result}")
       end
     end
 
     def test_checkidSetupUntrustedReturn_Constructor
-      assert_raises(Server::UntrustedReturnURL) {
+      assert_raises(Server::UntrustedReturnURL) do
         Server::CheckIDRequest.new(@id_url, @rt_url, nil,
                                    'http://not-the-return-place.unittest/',
                                    false, @assoc_handle)
-      }
+      end
     end
 
     def test_checkidSetupMalformedReturnURL_Constructor
-      assert_raises(Server::MalformedReturnURL) {
+      assert_raises(Server::MalformedReturnURL) do
         Server::CheckIDRequest.new(@id_url, 'bogus://return.url', nil,
                                    'http://trustroot.com/',
                                    false, @assoc_handle)
-      }
+      end
     end
 
     def test_checkAuth
@@ -471,7 +471,7 @@ module OpenID
         'openid.identity' => 'signedval1',
         'openid.return_to' => 'signedval2',
         'openid.response_nonce' => 'signedval3',
-        'openid.baz' => 'unsigned',
+        'openid.baz' => 'unsigned'
       }
       r = @decode.call(args)
       assert(r.is_a?(Server::CheckAuthRequest))
@@ -486,11 +486,11 @@ module OpenID
         'openid.signed' => 'foo,bar,mode',
         'openid.foo' => 'signedval1',
         'openid.bar' => 'signedval2',
-        'openid.baz' => 'unsigned',
+        'openid.baz' => 'unsigned'
       }
-      assert_raises(Server::ProtocolError) {
+      assert_raises(Server::ProtocolError) do
         @decode.call(args)
-      }
+      end
     end
 
     def test_checkAuthAndInvalidate
@@ -503,7 +503,7 @@ module OpenID
         'openid.identity' => 'signedval1',
         'openid.return_to' => 'signedval2',
         'openid.response_nonce' => 'signedval3',
-        'openid.baz' => 'unsigned',
+        'openid.baz' => 'unsigned'
       }
       r = @decode.call(args)
       assert(r.is_a?(Server::CheckAuthRequest))
@@ -514,13 +514,13 @@ module OpenID
       args = {
         'openid.mode' => 'associate',
         'openid.session_type' => 'DH-SHA1',
-        'openid.dh_consumer_public' => "Rzup9265tw==",
+        'openid.dh_consumer_public' => 'Rzup9265tw=='
       }
       r = @decode.call(args)
       assert(r.is_a?(Server::AssociateRequest))
-      assert_equal(r.mode, "associate")
-      assert_equal(r.session.session_type, "DH-SHA1")
-      assert_equal(r.assoc_type, "HMAC-SHA1")
+      assert_equal(r.mode, 'associate')
+      assert_equal(r.session.session_type, 'DH-SHA1')
+      assert_equal(r.assoc_type, 'HMAC-SHA1')
       assert(r.session.consumer_pubkey)
     end
 
@@ -528,23 +528,23 @@ module OpenID
       # Trying DH assoc w/o public key
       args = {
         'openid.mode' => 'associate',
-        'openid.session_type' => 'DH-SHA1',
+        'openid.session_type' => 'DH-SHA1'
       }
       # Using DH-SHA1 without supplying dh_consumer_public is an error.
-      assert_raises(Server::ProtocolError) {
+      assert_raises(Server::ProtocolError) do
         @decode.call(args)
-      }
+      end
     end
 
     def test_associateDHpubKeyNotB64
       args = {
         'openid.mode' => 'associate',
         'openid.session_type' => 'DH-SHA1',
-        'openid.dh_consumer_public' => "donkeydonkeydonkey",
+        'openid.dh_consumer_public' => 'donkeydonkeydonkey'
       }
-      assert_raises(Server::ProtocolError) {
+      assert_raises(Server::ProtocolError) do
         @decode.call(args)
-      }
+      end
     end
 
     def test_associateDHModGen
@@ -553,15 +553,15 @@ module OpenID
       args = {
         'openid.mode' => 'associate',
         'openid.session_type' => 'DH-SHA1',
-        'openid.dh_consumer_public' => "Rzup9265tw==",
+        'openid.dh_consumer_public' => 'Rzup9265tw==',
         'openid.dh_modulus' => CryptUtil.num_to_base64(ALT_MODULUS),
-        'openid.dh_gen' => CryptUtil.num_to_base64(ALT_GEN) ,
+        'openid.dh_gen' => CryptUtil.num_to_base64(ALT_GEN)
       }
       r = @decode.call(args)
       assert(r.is_a?(Server::AssociateRequest))
-      assert_equal(r.mode, "associate")
-      assert_equal(r.session.session_type, "DH-SHA1")
-      assert_equal(r.assoc_type, "HMAC-SHA1")
+      assert_equal(r.mode, 'associate')
+      assert_equal(r.session.session_type, 'DH-SHA1')
+      assert_equal(r.assoc_type, 'HMAC-SHA1')
       assert_equal(r.session.dh.modulus, ALT_MODULUS)
       assert_equal(r.session.dh.generator, ALT_GEN)
       assert(r.session.consumer_pubkey)
@@ -573,37 +573,37 @@ module OpenID
       args = {
         'openid.mode' => 'associate',
         'openid.session_type' => 'DH-SHA1',
-        'openid.dh_consumer_public' => "Rzup9265tw==",
+        'openid.dh_consumer_public' => 'Rzup9265tw==',
         'openid.dh_modulus' => 'pizza',
-        'openid.dh_gen' => 'gnocchi',
+        'openid.dh_gen' => 'gnocchi'
       }
-      assert_raises(Server::ProtocolError) {
+      assert_raises(Server::ProtocolError) do
         @decode.call(args)
-      }
+      end
     end
 
     def test_associateDHMissingGen
       args = {
         'openid.mode' => 'associate',
         'openid.session_type' => 'DH-SHA1',
-        'openid.dh_consumer_public' => "Rzup9265tw==",
-        'openid.dh_modulus' => 'pizza',
+        'openid.dh_consumer_public' => 'Rzup9265tw==',
+        'openid.dh_modulus' => 'pizza'
       }
-      assert_raises(Server::ProtocolError) {
+      assert_raises(Server::ProtocolError) do
         @decode.call(args)
-      }
+      end
     end
 
     def test_associateDHMissingMod
       args = {
         'openid.mode' => 'associate',
         'openid.session_type' => 'DH-SHA1',
-        'openid.dh_consumer_public' => "Rzup9265tw==",
-        'openid.dh_gen' => 'pizza',
+        'openid.dh_consumer_public' => 'Rzup9265tw==',
+        'openid.dh_gen' => 'pizza'
       }
-      assert_raises(Server::ProtocolError) {
+      assert_raises(Server::ProtocolError) do
         @decode.call(args)
-      }
+      end
     end
 
     #     def test_associateDHInvalidModGen(self):
@@ -623,55 +623,55 @@ module OpenID
       args = {
         'openid.mode' => 'associate',
         'openid.session_type' => 'FLCL6',
-        'openid.dh_consumer_public' => "YQ==\n",
+        'openid.dh_consumer_public' => "YQ==\n"
       }
-      assert_raises(Server::ProtocolError) {
+      assert_raises(Server::ProtocolError) do
         @decode.call(args)
-      }
+      end
     end
 
     def test_associatePlain
       args = {
-        'openid.mode' => 'associate',
+        'openid.mode' => 'associate'
       }
       r = @decode.call(args)
       assert(r.is_a?(Server::AssociateRequest))
-      assert_equal(r.mode, "associate")
-      assert_equal(r.session.session_type, "no-encryption")
-      assert_equal(r.assoc_type, "HMAC-SHA1")
+      assert_equal(r.mode, 'associate')
+      assert_equal(r.session.session_type, 'no-encryption')
+      assert_equal(r.assoc_type, 'HMAC-SHA1')
     end
 
     def test_nomode
       args = {
         'openid.session_type' => 'DH-SHA1',
-        'openid.dh_consumer_public' => "my public keeey",
+        'openid.dh_consumer_public' => 'my public keeey'
       }
-      assert_raises(Server::ProtocolError) {
+      assert_raises(Server::ProtocolError) do
         @decode.call(args)
-      }
+      end
     end
 
     def test_invalidns
-      args = {'openid.ns' => 'Vegetables',
-              'openid.mode' => 'associate'}
+      args = { 'openid.ns' => 'Vegetables',
+               'openid.mode' => 'associate' }
       begin
         @decode.call(args)
-      rescue Server::ProtocolError => err
-        assert(err.openid_message)
-        assert(err.to_s.index('Vegetables'))
+      rescue Server::ProtocolError => e
+        assert(e.openid_message)
+        assert(e.to_s.index('Vegetables'))
       end
     end
   end
 
   class BogusEncoder < Server::Encoder
-    def encode(response)
-      return "BOGUS"
+    def encode(_response)
+      'BOGUS'
     end
   end
 
   class BogusDecoder < Server::Decoder
-    def decode(query)
-      return "BOGUS"
+    def decode(_query)
+      'BOGUS'
     end
   end
 
@@ -688,12 +688,13 @@ module OpenID
       # Check that when an OpenID 2 response does not exceed the OpenID
       # 1 message size, a GET response (i.e., redirect) is issued.
       request = Server::CheckIDRequest.new(
-                                   'http://bombom.unittest/',
-                                   'http://burr.unittest/999',
-                                   @server.op_endpoint,
-                                   'http://burr.unittest/',
-                                   false,
-                                   nil)
+        'http://bombom.unittest/',
+        'http://burr.unittest/999',
+        @server.op_endpoint,
+        'http://burr.unittest/',
+        false,
+        nil
+      )
       request.message = Message.new(OPENID2_NS)
       response = Server::OpenIDResponse.new(request)
       response.fields = Message.from_openid_args({
@@ -701,7 +702,7 @@ module OpenID
                                                    'mode' => 'id_res',
                                                    'identity' => request.identity,
                                                    'claimed_id' => request.identity,
-                                                   'return_to' => request.return_to,
+                                                   'return_to' => request.return_to
                                                  })
 
       assert(!response.render_as_form)
@@ -714,12 +715,13 @@ module OpenID
       # Check that when an OpenID 2 response exceeds the OpenID 1
       # message size, a POST response (i.e., an HTML form) is returned.
       request = Server::CheckIDRequest.new(
-                                   'http://bombom.unittest/',
-                                   'http://burr.unittest/999',
-                                   @server.op_endpoint,
-                                   'http://burr.unittest/',
-                                   false,
-                                   nil)
+        'http://bombom.unittest/',
+        'http://burr.unittest/999',
+        @server.op_endpoint,
+        'http://burr.unittest/',
+        false,
+        nil
+      )
       request.message = Message.new(OPENID2_NS)
       response = Server::OpenIDResponse.new(request)
       response.fields = Message.from_openid_args({
@@ -727,7 +729,7 @@ module OpenID
                                                    'mode' => 'id_res',
                                                    'identity' => request.identity,
                                                    'claimed_id' => request.identity,
-                                                   'return_to' => 'x' * OPENID1_URL_LIMIT,
+                                                   'return_to' => 'x' * OPENID1_URL_LIMIT
                                                  })
 
       assert(response.render_as_form)
@@ -738,13 +740,14 @@ module OpenID
     end
 
     def test_to_form_markup
-       request = Server::CheckIDRequest.new(
-                                   'http://bombom.unittest/',
-                                   'http://burr.unittest/999',
-                                   @server.op_endpoint,
-                                   'http://burr.unittest/',
-                                   false,
-                                   nil)
+      request = Server::CheckIDRequest.new(
+        'http://bombom.unittest/',
+        'http://burr.unittest/999',
+        @server.op_endpoint,
+        'http://burr.unittest/',
+        false,
+        nil
+      )
       request.message = Message.new(OPENID2_NS)
       response = Server::OpenIDResponse.new(request)
       response.fields = Message.from_openid_args({
@@ -752,20 +755,21 @@ module OpenID
                                                    'mode' => 'id_res',
                                                    'identity' => request.identity,
                                                    'claimed_id' => request.identity,
-                                                   'return_to' => 'x' * OPENID1_URL_LIMIT,
+                                                   'return_to' => 'x' * OPENID1_URL_LIMIT
                                                  })
-      form_markup = response.to_form_markup({'foo'=>'bar'})
+      form_markup = response.to_form_markup({ 'foo' => 'bar' })
       assert(/ foo="bar"/ =~ form_markup, form_markup)
     end
 
     def test_to_html
-       request = Server::CheckIDRequest.new(
-                                   'http://bombom.unittest/',
-                                   'http://burr.unittest/999',
-                                   @server.op_endpoint,
-                                   'http://burr.unittest/',
-                                   false,
-                                   nil)
+      request = Server::CheckIDRequest.new(
+        'http://bombom.unittest/',
+        'http://burr.unittest/999',
+        @server.op_endpoint,
+        'http://burr.unittest/',
+        false,
+        nil
+      )
       request.message = Message.new(OPENID2_NS)
       response = Server::OpenIDResponse.new(request)
       response.fields = Message.from_openid_args({
@@ -773,7 +777,7 @@ module OpenID
                                                    'mode' => 'id_res',
                                                    'identity' => request.identity,
                                                    'claimed_id' => request.identity,
-                                                   'return_to' => 'x' * OPENID1_URL_LIMIT,
+                                                   'return_to' => 'x' * OPENID1_URL_LIMIT
                                                  })
       html = response.to_html
       assert(html)
@@ -785,19 +789,20 @@ module OpenID
       # shouldn't be permitted by the library, but this test is in place
       # to preserve the status quo for OpenID 1.
       request = Server::CheckIDRequest.new(
-                                   'http://bombom.unittest/',
-                                   'http://burr.unittest/999',
-                                   @server.op_endpoint,
-                                   'http://burr.unittest/',
-                                   false,
-                                   nil)
+        'http://bombom.unittest/',
+        'http://burr.unittest/999',
+        @server.op_endpoint,
+        'http://burr.unittest/',
+        false,
+        nil
+      )
       request.message = Message.new(OPENID1_NS)
 
       response = Server::OpenIDResponse.new(request)
       response.fields = Message.from_openid_args({
                                                    'mode' => 'id_res',
                                                    'identity' => request.identity,
-                                                   'return_to' => 'x' * OPENID1_URL_LIMIT,
+                                                   'return_to' => 'x' * OPENID1_URL_LIMIT
                                                  })
 
       assert(!response.render_as_form)
@@ -809,17 +814,18 @@ module OpenID
 
     def test_id_res
       request = Server::CheckIDRequest.new(
-                                   'http://bombom.unittest/',
-                                   'http://burr.unittest/999',
-                                   @server.op_endpoint,
-                                   'http://burr.unittest/',
-                                   false, nil)
+        'http://bombom.unittest/',
+        'http://burr.unittest/999',
+        @server.op_endpoint,
+        'http://burr.unittest/',
+        false, nil
+      )
       request.message = Message.new(OPENID1_NS)
       response = Server::OpenIDResponse.new(request)
       response.fields = Message.from_openid_args({
                                                    'mode' => 'id_res',
                                                    'identity' => request.identity,
-                                                   'return_to' => request.return_to,
+                                                   'return_to' => request.return_to
                                                  })
       webresponse = @encode.call(response)
       assert_equal(webresponse.code, Server::HTTP_REDIRECT)
@@ -827,25 +833,26 @@ module OpenID
 
       location = webresponse.headers['location']
       assert(location.start_with?(request.return_to),
-             sprintf("%s does not start with %s",
-                     location, request.return_to))
+             format('%s does not start with %s',
+                    location, request.return_to))
       # argh.
-      q2 = Util.parse_query(URI::parse(location).query)
+      q2 = Util.parse_query(URI.parse(location).query)
       expected = response.fields.to_post_args
       assert_equal(q2, expected)
     end
 
     def test_cancel
       request = Server::CheckIDRequest.new(
-                                   'http://bombom.unittest/',
-                                   'http://burr.unittest/999',
-                                   @server.op_endpoint,
-                                   'http://burr.unittest/',
-                                   false, nil)
+        'http://bombom.unittest/',
+        'http://burr.unittest/999',
+        @server.op_endpoint,
+        'http://burr.unittest/',
+        false, nil
+      )
       request.message = Message.new(OPENID2_NS)
       response = Server::OpenIDResponse.new(request)
       response.fields = Message.from_openid_args({
-                                                   'mode' => 'cancel',
+                                                   'mode' => 'cancel'
                                                  })
       webresponse = @encode.call(response)
       assert_equal(webresponse.code, Server::HTTP_REDIRECT)
@@ -854,15 +861,16 @@ module OpenID
 
     def test_cancel_to_form
       request = Server::CheckIDRequest.new(
-                                   'http://bombom.unittest/',
-                                   'http://burr.unittest/999',
-                                   @server.op_endpoint,
-                                   'http://burr.unittest/',
-                                   false, nil)
+        'http://bombom.unittest/',
+        'http://burr.unittest/999',
+        @server.op_endpoint,
+        'http://burr.unittest/',
+        false, nil
+      )
       request.message = Message.new(OPENID2_NS)
       response = Server::OpenIDResponse.new(request)
       response.fields = Message.from_openid_args({
-                                                   'mode' => 'cancel',
+                                                   'mode' => 'cancel'
                                                  })
       form = response.to_form_markup
       assert(form.index(request.return_to))
@@ -874,7 +882,8 @@ module OpenID
       request = Server::AssociateRequest.from_message(msg)
       response = Server::OpenIDResponse.new(request)
       response.fields = Message.from_post_args(
-                                               {'openid.assoc_handle' => "every-zig"})
+        { 'openid.assoc_handle' => 'every-zig' }
+      )
       webresponse = @encode.call(response)
       body = "assoc_handle:every-zig\n"
 
@@ -885,8 +894,8 @@ module OpenID
 
     def test_checkauthReply
       request = Server::CheckAuthRequest.new('a_sock_monkey',
-                                     'siggggg',
-                                     [])
+                                             'siggggg',
+                                             [])
       request.message = Message.new(OPENID2_NS)
       response = Server::OpenIDResponse.new(request)
       response.fields = Message.from_openid_args({
@@ -903,21 +912,21 @@ module OpenID
 
     def test_unencodableError
       args = Message.from_post_args({
-                                      'openid.identity' => 'http://limu.unittest/',
+                                      'openid.identity' => 'http://limu.unittest/'
                                     })
-      e = Server::ProtocolError.new(args, "wet paint")
-      assert_raises(Server::EncodingError) {
+      e = Server::ProtocolError.new(args, 'wet paint')
+      assert_raises(Server::EncodingError) do
         @encode.call(e)
-      }
+      end
     end
 
     def test_encodableError
       args = Message.from_post_args({
                                       'openid.mode' => 'associate',
-                                      'openid.identity' => 'http://limu.unittest/',
+                                      'openid.identity' => 'http://limu.unittest/'
                                     })
-      body="error:snoot\nmode:error\n"
-      webresponse = @encode.call(Server::ProtocolError.new(args, "snoot"))
+      body = "error:snoot\nmode:error\n"
+      webresponse = @encode.call(Server::ProtocolError.new(args, 'snoot'))
       assert_equal(webresponse.code, Server::HTTP_ERROR)
       assert_equal(webresponse.headers, {})
       assert_equal(webresponse.body, body)
@@ -928,21 +937,22 @@ module OpenID
     def setup
       @_dumb_key = Server::Signatory._dumb_key
       @_normal_key = Server::Signatory._normal_key
-      @store = Store::Memory.new()
-      @server = Server::Server.new(@store, "http://signing.unittest/enc")
+      @store = Store::Memory.new
+      @server = Server::Server.new(@store, 'http://signing.unittest/enc')
       @request = Server::CheckIDRequest.new(
-                                    'http://bombom.unittest/',
-                                    'http://burr.unittest/999',
-                                    @server.op_endpoint,
-                                    'http://burr.unittest/',
-                                    false, nil)
+        'http://bombom.unittest/',
+        'http://burr.unittest/999',
+        @server.op_endpoint,
+        'http://burr.unittest/',
+        false, nil
+      )
       @request.message = Message.new(OPENID2_NS)
 
       @response = Server::OpenIDResponse.new(@request)
       @response.fields = Message.from_openid_args({
                                                     'mode' => 'id_res',
                                                     'identity' => @request.identity,
-                                                    'return_to' => @request.return_to,
+                                                    'return_to' => @request.return_to
                                                   })
       @signatory = Server::Signatory.new(@store)
       @encoder = Server::SigningEncoder.new(@signatory)
@@ -952,16 +962,17 @@ module OpenID
     def test_idres
       assoc_handle = '{bicycle}{shed}'
       @store.store_association(
-                               @_normal_key,
-                               Association.from_expires_in(60, assoc_handle,
-                                                           'sekrit', 'HMAC-SHA1'))
+        @_normal_key,
+        Association.from_expires_in(60, assoc_handle,
+                                    'sekrit', 'HMAC-SHA1')
+      )
       @request.assoc_handle = assoc_handle
       webresponse = @encode.call(@response)
       assert_equal(webresponse.code, Server::HTTP_REDIRECT)
       assert(webresponse.headers.member?('location'))
 
       location = webresponse.headers['location']
-      query = Util.parse_query(URI::parse(location).query)
+      query = Util.parse_query(URI.parse(location).query)
       assert(query.member?('openid.sig'))
       assert(query.member?('openid.assoc_handle'))
       assert(query.member?('openid.signed'))
@@ -973,7 +984,7 @@ module OpenID
       assert(webresponse.headers.has_key?('location'))
 
       location = webresponse.headers['location']
-      query = Util.parse_query(URI::parse(location).query)
+      query = Util.parse_query(URI.parse(location).query)
       assert(query.member?('openid.sig'))
       assert(query.member?('openid.assoc_handle'))
       assert(query.member?('openid.signed'))
@@ -981,18 +992,19 @@ module OpenID
 
     def test_forgotStore
       @encoder.signatory = nil
-      assert_raises(ArgumentError) {
+      assert_raises(ArgumentError) do
         @encode.call(@response)
-      }
+      end
     end
 
     def test_cancel
       request = Server::CheckIDRequest.new(
-                                   'http://bombom.unittest/',
-                                   'http://burr.unittest/999',
-                                   @server.op_endpoint,
-                                   'http://burr.unittest/',
-                                   false, nil)
+        'http://bombom.unittest/',
+        'http://burr.unittest/999',
+        @server.op_endpoint,
+        'http://burr.unittest/',
+        false, nil
+      )
       request.message = Message.new(OPENID2_NS)
       response = Server::OpenIDResponse.new(request)
       response.fields.set_arg(OPENID_NS, 'mode', 'cancel')
@@ -1000,7 +1012,7 @@ module OpenID
       assert_equal(webresponse.code, Server::HTTP_REDIRECT)
       assert(webresponse.headers.has_key?('location'))
       location = webresponse.headers['location']
-      query = Util.parse_query(URI::parse(location).query)
+      query = Util.parse_query(URI.parse(location).query)
       assert !query.has_key?('openid.sig')
     end
 
@@ -1009,7 +1021,7 @@ module OpenID
       msg.set_arg(OPENID2_NS, 'session_type', 'no-encryption')
       request = Server::AssociateRequest.from_message(msg)
       response = Server::OpenIDResponse.new(request)
-      response.fields = Message.from_openid_args({'assoc_handle' => "every-zig"})
+      response.fields = Message.from_openid_args({ 'assoc_handle' => 'every-zig' })
       webresponse = @encode.call(response)
       body = "assoc_handle:every-zig\n"
       assert_equal(webresponse.code, Server::HTTP_OK)
@@ -1019,39 +1031,40 @@ module OpenID
 
     def test_alreadySigned
       @response.fields.set_arg(OPENID_NS, 'sig', 'priorSig==')
-      assert_raises(Server::AlreadySigned) {
+      assert_raises(Server::AlreadySigned) do
         @encode.call(@response)
-      }
+      end
     end
   end
 
   class TestCheckID < Minitest::Test
     def setup
       @op_endpoint = 'http://endpoint.unittest/'
-      @store = Store::Memory.new()
+      @store = Store::Memory.new
       @server = Server::Server.new(@store, @op_endpoint)
       @request = Server::CheckIDRequest.new(
-                                    'http://bambam.unittest/',
-                                    'http://bar.unittest/999',
-                                    @server.op_endpoint,
-                                    'http://bar.unittest/',
-                                    false)
+        'http://bambam.unittest/',
+        'http://bar.unittest/999',
+        @server.op_endpoint,
+        'http://bar.unittest/',
+        false
+      )
       @request.message = Message.new(OPENID2_NS)
     end
 
     def test_trustRootInvalid
-      @request.trust_root = "http://foo.unittest/17"
-      @request.return_to = "http://foo.unittest/39"
-      assert(!@request.trust_root_valid())
+      @request.trust_root = 'http://foo.unittest/17'
+      @request.return_to = 'http://foo.unittest/39'
+      assert(!@request.trust_root_valid)
     end
 
     def test_trustRootInvalid_modified
-      @request.trust_root = "does://not.parse/"
+      @request.trust_root = 'does://not.parse/'
       @request.message = :sentinel
       begin
         result = @request.trust_root_valid
-      rescue Server::MalformedTrustRoot => why
-        assert_equal(:sentinel, why.openid_message)
+      rescue Server::MalformedTrustRoot => e
+        assert_equal(:sentinel, e.openid_message)
       else
         flunk("Expected MalformedTrustRoot, got #{result.inspect}")
       end
@@ -1059,96 +1072,95 @@ module OpenID
 
     def test_trustRootvalid_absent_trust_root
       @request.trust_root = nil
-      assert(@request.trust_root_valid())
+      assert(@request.trust_root_valid)
     end
 
     def test_trustRootValid
-      @request.trust_root = "http://foo.unittest/"
-      @request.return_to = "http://foo.unittest/39"
-      assert(@request.trust_root_valid())
+      @request.trust_root = 'http://foo.unittest/'
+      @request.return_to = 'http://foo.unittest/39'
+      assert(@request.trust_root_valid)
     end
 
     def test_trustRootValidNoReturnTo
       request = Server::CheckIDRequest.new(
-                                   'http://bambam.unittest/',
-                                   nil,
-                                   @server.op_endpoint,
-                                   'http://bar.unittest/',
-                                   false)
+        'http://bambam.unittest/',
+        nil,
+        @server.op_endpoint,
+        'http://bar.unittest/',
+        false
+      )
 
-      assert(request.trust_root_valid())
+      assert(request.trust_root_valid)
     end
 
     def test_returnToVerified_callsVerify
       # Make sure that verifyReturnTo is calling the trustroot
       # function verifyReturnTo
       # Ensure that exceptions are passed through
-      sentinel = Exception.new()
+      sentinel = Exception.new
 
       __req = @request
       tc = self
 
-      vrfyExc = Proc.new { |trust_root, return_to|
+      vrfyExc = proc do |trust_root, return_to|
         tc.assert_equal(__req.trust_root, trust_root)
         tc.assert_equal(__req.return_to, return_to)
         raise sentinel
-      }
+      end
 
       TrustRoot.extend(OverrideMethodMixin)
 
       TrustRoot.with_method_overridden(:verify_return_to, vrfyExc) do
-        begin
-          @request.return_to_verified()
-          flunk("Expected sentinel to be raised, got success")
-        rescue Exception => e
-          assert(e.equal?(sentinel), [e, sentinel].inspect)
-        end
+        @request.return_to_verified
+        flunk('Expected sentinel to be raised, got success')
+      rescue Exception => e
+        assert(e.equal?(sentinel), [e, sentinel].inspect)
       end
 
       # Ensure that True and False are passed through unchanged
-      constVerify = Proc.new { |val|
-        verify = Proc.new { |trust_root, return_to|
+      constVerify = proc do |val|
+        verify = proc do |trust_root, return_to|
           tc.assert_equal(__req.trust_root, trust_root)
           tc.assert_equal(__req.request.return_to, return_to)
           return val
-        }
+        end
 
         return verify
-      }
+      end
 
-      [true, false].each { |val|
+      [true, false].each do |val|
         verifier = constVerify.call(val)
 
         TrustRoot.with_method_overridden(:verify_return_to, verifier) do
-          assert_equal(val, @request.return_to_verified())
-        end
-      }
-    end
-
-    def _expectAnswer(answer, identity=nil, claimed_id=nil)
-      expected_list = [
-                       ['mode', 'id_res'],
-                       ['return_to', @request.return_to],
-                       ['op_endpoint', @op_endpoint],
-                      ]
-      if identity
-        expected_list << ['identity', identity]
-        if claimed_id
-          expected_list << ['claimed_id', claimed_id]
-        else
-          expected_list << ['claimed_id', identity]
+          assert_equal(val, @request.return_to_verified)
         end
       end
+    end
 
-      expected_list.each { |k, expected|
+    def _expectAnswer(answer, identity = nil, claimed_id = nil)
+      expected_list = [
+        %w[mode id_res],
+        ['return_to', @request.return_to],
+        ['op_endpoint', @op_endpoint]
+      ]
+      if identity
+        expected_list << ['identity', identity]
+        expected_list << if claimed_id
+                           ['claimed_id', claimed_id]
+                         else
+                           ['claimed_id', identity]
+                         end
+      end
+
+      expected_list.each do |k, expected|
         actual = answer.fields.get_arg(OPENID_NS, k)
         assert_equal(expected, actual,
-                     sprintf("%s: expected %s, got %s",
-                             k, expected, actual))
-      }
+                     format('%s: expected %s, got %s',
+                            k, expected, actual))
+      end
 
       assert(answer.fields.has_key?(OPENID_NS, 'response_nonce'))
-      assert(answer.fields.get_openid_namespace() == OPENID2_NS)
+      assert(answer.fields.get_openid_namespace == OPENID2_NS)
 
       # One for nonce, one for ns
       assert_equal(answer.fields.to_post_args.length,
@@ -1184,9 +1196,9 @@ module OpenID
       @request.identity = nil
       # XXX - Check on this, I think this behavior is legal in OpenID
       # 2.0?
-      assert_raises(ArgumentError) {
-        @request.answer(true, nil, "=V")
-      }
+      assert_raises(ArgumentError) do
+        @request.answer(true, nil, '=V')
+      end
     end
 
     def test_answerAllowWithIdentity
@@ -1198,9 +1210,9 @@ module OpenID
 
     def test_answerAllowWithNoIdentity
       @request.identity = IDENTIFIER_SELECT
-      assert_raises(ArgumentError) {
+      assert_raises(ArgumentError) do
         @request.answer(true, nil, nil)
-      }
+      end
     end
 
     def test_immediate_openid1_no_identity
@@ -1225,30 +1237,30 @@ module OpenID
       @request.mode = 'checkid_immediate'
       @request.op_endpoint = nil
 
-      assert_raises(ArgumentError) {
+      assert_raises(ArgumentError) do
         @request.answer(false)
-      }
+      end
     end
 
     def test_immediate_encode_to_url
       @request.message = Message.new(OPENID1_NS)
       @request.immediate = true
       @request.mode = 'checkid_immediate'
-      @request.trust_root = "BOGUS"
-      @request.assoc_handle = "ASSOC"
+      @request.trust_root = 'BOGUS'
+      @request.assoc_handle = 'ASSOC'
 
-      server_url = "http://server.com/server"
+      server_url = 'http://server.com/server'
 
       url = @request.encode_to_url(server_url)
       assert(url.start_with?(server_url))
 
-      _, query = url.split("?", 2)
+      _, query = url.split('?', 2)
       args = Util.parse_query(query)
 
       m = Message.from_post_args(args)
-      assert(m.get_arg(OPENID_NS, 'trust_root') == "BOGUS")
-      assert(m.get_arg(OPENID_NS, 'assoc_handle') == "ASSOC")
-      assert(m.get_arg(OPENID_NS, 'mode'), "checkid_immediate")
+      assert(m.get_arg(OPENID_NS, 'trust_root') == 'BOGUS')
+      assert(m.get_arg(OPENID_NS, 'assoc_handle') == 'ASSOC')
+      assert(m.get_arg(OPENID_NS, 'mode'), 'checkid_immediate')
       assert(m.get_arg(OPENID_NS, 'identity') == @request.identity)
       assert(m.get_arg(OPENID_NS, 'claimed_id') == @request.claimed_id)
       assert(m.get_arg(OPENID_NS, 'return_to') == @request.return_to)
@@ -1272,32 +1284,32 @@ module OpenID
       @request.identity = IDENTIFIER_SELECT
       selected_id = 'http://anon.unittest/9861'
       claimed_id = 'http://monkeyhat.unittest/'
-      assert_raises(Server::VersionError) {
+      assert_raises(Server::VersionError) do
         @request.answer(true, nil, selected_id, claimed_id)
-      }
+      end
     end
 
     def test_answerAllowWithAnotherIdentity
       # XXX - Check on this, I think this behavior is legal in OpenID
       # 2.0?
-      assert_raises(ArgumentError){
-        @request.answer(true, nil, "http://pebbles.unittest/")
-      }
+      assert_raises(ArgumentError) do
+        @request.answer(true, nil, 'http://pebbles.unittest/')
+      end
     end
 
     def test_answerAllowNoIdentityOpenID1
       @request.message = Message.new(OPENID1_NS)
       @request.identity = nil
-      assert_raises(ArgumentError) {
+      assert_raises(ArgumentError) do
         @request.answer(true, nil, nil)
-      }
+      end
     end
 
     def test_answerAllowForgotEndpoint
       @request.op_endpoint = nil
-      assert_raises(RuntimeError) {
+      assert_raises(RuntimeError) do
         @request.answer(true)
-      }
+      end
     end
 
     def test_checkIDWithNoIdentityOpenID1
@@ -1307,9 +1319,9 @@ module OpenID
       msg.set_arg(OPENID_NS, 'mode', 'checkid_setup')
       msg.set_arg(OPENID_NS, 'assoc_handle', 'bogus')
 
-      assert_raises(Server::ProtocolError) {
+      assert_raises(Server::ProtocolError) do
         Server::CheckIDRequest.from_message(msg, @server)
-      }
+      end
     end
 
     def test_fromMessageClaimedIDWithoutIdentityOpenID2
@@ -1318,9 +1330,9 @@ module OpenID
       msg.set_arg(OPENID_NS, 'return_to', 'http://invalid:8000/rt')
       msg.set_arg(OPENID_NS, 'claimed_id', 'https://example.myopenid.com')
 
-      assert_raises(Server::ProtocolError) {
+      assert_raises(Server::ProtocolError) do
         Server::CheckIDRequest.from_message(msg, @server)
-      }
+      end
     end
 
     def test_fromMessageIdentityWithoutClaimedIDOpenID2
@@ -1329,22 +1341,22 @@ module OpenID
       msg.set_arg(OPENID_NS, 'return_to', 'http://invalid:8000/rt')
       msg.set_arg(OPENID_NS, 'identity', 'https://example.myopenid.com')
 
-      assert_raises(Server::ProtocolError) {
+      assert_raises(Server::ProtocolError) do
         Server::CheckIDRequest.from_message(msg, @server)
-      }
+      end
     end
 
     def test_fromMessageWithEmptyTrustRoot
       return_to = 'http://some.url/foo?bar=baz'
       msg = Message.from_post_args({
-              'openid.assoc_handle' => '{blah}{blah}{OZivdQ==}',
-              'openid.claimed_id' => 'http://delegated.invalid/',
-              'openid.identity' => 'http://op-local.example.com/',
-              'openid.mode' => 'checkid_setup',
-              'openid.ns' => 'http://openid.net/signon/1.0',
-              'openid.return_to' => return_to,
-              'openid.trust_root' => ''
-              });
+                                     'openid.assoc_handle' => '{blah}{blah}{OZivdQ==}',
+                                     'openid.claimed_id' => 'http://delegated.invalid/',
+                                     'openid.identity' => 'http://op-local.example.com/',
+                                     'openid.mode' => 'checkid_setup',
+                                     'openid.ns' => 'http://openid.net/signon/1.0',
+                                     'openid.return_to' => return_to,
+                                     'openid.trust_root' => ''
+                                   })
       result = Server::CheckIDRequest.from_message(msg, @server)
       assert_equal(return_to, result.trust_root)
     end
@@ -1396,7 +1408,7 @@ module OpenID
       @request.mode = 'checkid_immediate'
       @request.immediate = true
 
-      server_url = "http://setup-url.unittest/"
+      server_url = 'http://setup-url.unittest/'
       # crappiting setup_url, you dirty my interface with your presence!
       answer = @request.answer(false, server_url)
       assert_equal(answer.request, @request)
@@ -1414,7 +1426,7 @@ module OpenID
       @request.mode = 'checkid_immediate'
       @request.immediate = true
       @request.claimed_id = 'http://claimed-id.test/'
-      server_url = "http://setup-url.unittest/"
+      server_url = 'http://setup-url.unittest/'
       # crappiting setup_url, you dirty my interface with your presence!
       answer = @request.answer(false, server_url)
       assert_equal(answer.request, @request)
@@ -1431,7 +1443,7 @@ module OpenID
     def test_answerSetupDeny
       answer = @request.answer(false)
       assert_equal(answer.fields.get_args(OPENID_NS), {
-                     'mode' => 'cancel',
+                     'mode' => 'cancel'
                    })
     end
 
@@ -1444,14 +1456,14 @@ module OpenID
       result_args = Util.parse_query(result_args)
       message = Message.from_post_args(result_args)
       rebuilt_request = Server::CheckIDRequest.from_message(message,
-                                                    @server.op_endpoint)
+                                                            @server.op_endpoint)
 
       @request.message = message
 
-      @request.instance_variables.each { |var|
+      @request.instance_variables.each do |var|
         assert_equal(@request.instance_variable_get(var),
                      rebuilt_request.instance_variable_get(var), var)
-      }
+      end
     end
 
     def test_getCancelURL
@@ -1459,56 +1471,56 @@ module OpenID
       rt, query_string = url.split('?', -1)
       assert_equal(@request.return_to, rt)
       query = Util.parse_query(query_string)
-      assert_equal(query, {'openid.mode' => 'cancel',
-                     'openid.ns' => OPENID2_NS})
+      assert_equal(query, { 'openid.mode' => 'cancel',
+                            'openid.ns' => OPENID2_NS })
     end
 
     def test_getCancelURLimmed
       @request.mode = 'checkid_immediate'
       @request.immediate = true
-      assert_raises(ArgumentError) {
+      assert_raises(ArgumentError) do
         @request.cancel_url
-      }
+      end
     end
 
     def test_fromMessageWithoutTrustRoot
-        msg = Message.new(OPENID2_NS)
-        msg.set_arg(OPENID_NS, 'mode', 'checkid_setup')
-        msg.set_arg(OPENID_NS, 'return_to', 'http://real.trust.root/foo')
-        msg.set_arg(OPENID_NS, 'assoc_handle', 'bogus')
-        msg.set_arg(OPENID_NS, 'identity', 'george')
-        msg.set_arg(OPENID_NS, 'claimed_id', 'george')
+      msg = Message.new(OPENID2_NS)
+      msg.set_arg(OPENID_NS, 'mode', 'checkid_setup')
+      msg.set_arg(OPENID_NS, 'return_to', 'http://real.trust.root/foo')
+      msg.set_arg(OPENID_NS, 'assoc_handle', 'bogus')
+      msg.set_arg(OPENID_NS, 'identity', 'george')
+      msg.set_arg(OPENID_NS, 'claimed_id', 'george')
 
-        result = Server::CheckIDRequest.from_message(msg, @server.op_endpoint)
+      result = Server::CheckIDRequest.from_message(msg, @server.op_endpoint)
 
-        assert_equal(result.trust_root, 'http://real.trust.root/foo')
+      assert_equal(result.trust_root, 'http://real.trust.root/foo')
     end
 
     def test_fromMessageWithoutTrustRootOrReturnTo
-        msg = Message.new(OPENID2_NS)
-        msg.set_arg(OPENID_NS, 'mode', 'checkid_setup')
-        msg.set_arg(OPENID_NS, 'assoc_handle', 'bogus')
-        msg.set_arg(OPENID_NS, 'identity', 'george')
-        msg.set_arg(OPENID_NS, 'claimed_id', 'george')
+      msg = Message.new(OPENID2_NS)
+      msg.set_arg(OPENID_NS, 'mode', 'checkid_setup')
+      msg.set_arg(OPENID_NS, 'assoc_handle', 'bogus')
+      msg.set_arg(OPENID_NS, 'identity', 'george')
+      msg.set_arg(OPENID_NS, 'claimed_id', 'george')
 
-        assert_raises(Server::ProtocolError) {
-          Server::CheckIDRequest.from_message(msg, @server.op_endpoint)
-        }
+      assert_raises(Server::ProtocolError) do
+        Server::CheckIDRequest.from_message(msg, @server.op_endpoint)
+      end
     end
   end
 
   class TestCheckIDExtension < Minitest::Test
-
     def setup
       @op_endpoint = 'http://endpoint.unittest/ext'
-      @store = Store::Memory.new()
+      @store = Store::Memory.new
       @server = Server::Server.new(@store, @op_endpoint)
       @request = Server::CheckIDRequest.new(
-                                    'http://bambam.unittest/',
-                                    'http://bar.unittest/999',
-                                    @server.op_endpoint,
-                                    'http://bar.unittest/',
-                                    false)
+        'http://bambam.unittest/',
+        'http://bar.unittest/999',
+        @server.op_endpoint,
+        'http://bar.unittest/',
+        false
+      )
       @request.message = Message.new(OPENID2_NS)
       @response = Server::OpenIDResponse.new(@request)
       @response.fields.set_arg(OPENID_NS, 'mode', 'id_res')
@@ -1519,23 +1531,21 @@ module OpenID
       namespace = 'something:'
       @response.fields.set_arg(namespace, 'bright', 'potato')
       assert_equal(@response.fields.get_args(OPENID_NS),
-                   {'blue' => 'star',
-                     'mode' => 'id_res',
-                   })
+                   { 'blue' => 'star',
+                     'mode' => 'id_res'  })
 
       assert_equal(@response.fields.get_args(namespace),
-                   {'bright' => 'potato'})
+                   { 'bright' => 'potato' })
     end
 
     def test_addFields
       namespace = 'mi5:'
-      args =  {'tangy' => 'suspenders',
-        'bravo' => 'inclusion'}
+      args = { 'tangy' => 'suspenders',
+               'bravo' => 'inclusion' }
       @response.fields.update_args(namespace, args)
       assert_equal(@response.fields.get_args(OPENID_NS),
-                   {'blue' => 'star',
-                     'mode' => 'id_res',
-                   })
+                   { 'blue' => 'star',
+                     'mode' => 'id_res'  })
       assert_equal(@response.fields.get_args(namespace), args)
     end
   end
@@ -1549,28 +1559,25 @@ module OpenID
     end
 
     def verify(assoc_handle, message)
-      Util.assert(message.has_key?(OPENID_NS, "sig"))
-      if self.assocs.member?([true, assoc_handle])
-        return @isValid
-      else
-        return false
-      end
+      Util.assert(message.has_key?(OPENID_NS, 'sig'))
+      return @isValid if assocs.member?([true, assoc_handle])
+
+      false
     end
 
     def get_association(assoc_handle, dumb)
-      if self.assocs.member?([dumb, assoc_handle])
-        # This isn't a valid implementation for many uses of this
-        # function, mind you.
-        return true
-      else
-        return nil
-      end
+      return true if assocs.member?([dumb, assoc_handle])
+
+      # This isn't a valid implementation for many uses of this
+      # function, mind you.
+
+      nil
     end
 
     def invalidate(assoc_handle, dumb)
-      if self.assocs.member?([dumb, assoc_handle])
-        @assocs.delete([dumb, assoc_handle])
-      end
+      return unless assocs.member?([dumb, assoc_handle])
+
+      @assocs.delete([dumb, assoc_handle])
     end
   end
 
@@ -1580,10 +1587,11 @@ module OpenID
       @message = Message.from_post_args({
                                           'openid.sig' => 'signarture',
                                           'one' => 'alpha',
-                                          'two' => 'beta',
+                                          'two' => 'beta'
                                         })
       @request = Server::CheckAuthRequest.new(
-                                      @assoc_handle, @message)
+        @assoc_handle, @message
+      )
       @request.message = Message.new(OPENID2_NS)
 
       @signatory = MockSignatory.new([true, @assoc_handle])
@@ -1595,7 +1603,7 @@ module OpenID
 
     def test_valid
       r = @request.answer(@signatory)
-      assert_equal({'is_valid' => 'true'},
+      assert_equal({ 'is_valid' => 'true' },
                    r.fields.get_args(OPENID_NS))
       assert_equal(r.request, @request)
     end
@@ -1603,9 +1611,8 @@ module OpenID
     def test_invalid
       @signatory.isValid = false
       r = @request.answer(@signatory)
-      assert_equal({'is_valid' => 'false'},
+      assert_equal({ 'is_valid' => 'false' },
                    r.fields.get_args(OPENID_NS))
-
     end
 
     def test_replay
@@ -1622,16 +1629,16 @@ module OpenID
       # be used with another handle without breaking the sig.
       r = @request.answer(@signatory)
       r = @request.answer(@signatory)
-      assert_equal({'is_valid' => 'false'},
+      assert_equal({ 'is_valid' => 'false' },
                    r.fields.get_args(OPENID_NS))
     end
 
     def test_invalidatehandle
-      @request.invalidate_handle = "bogusHandle"
+      @request.invalidate_handle = 'bogusHandle'
       r = @request.answer(@signatory)
       assert_equal(r.fields.get_args(OPENID_NS),
-                   {'is_valid' => 'true',
-                     'invalidate_handle' => "bogusHandle"})
+                   { 'is_valid' => 'true',
+                     'invalidate_handle' => 'bogusHandle' })
       assert_equal(r.request, @request)
     end
 
@@ -1640,7 +1647,7 @@ module OpenID
       @signatory.assocs << [false, 'goodhandle']
       @request.invalidate_handle = assoc_handle
       r = @request.answer(@signatory)
-      assert_equal(r.fields.get_args(OPENID_NS), {'is_valid' => 'true'})
+      assert_equal(r.fields.get_args(OPENID_NS), { 'is_valid' => 'true' })
     end
   end
 
@@ -1650,29 +1657,29 @@ module OpenID
 
     def setup
       @request = Server::AssociateRequest.from_message(Message.from_post_args({}))
-      @store = Store::Memory.new()
+      @store = Store::Memory.new
       @signatory = Server::Signatory.new(@store)
     end
 
     def test_dhSHA1
       @assoc = @signatory.create_association(false, 'HMAC-SHA1')
-      consumer_dh = DiffieHellman.from_defaults()
+      consumer_dh = DiffieHellman.from_defaults
       cpub = consumer_dh.public
-      server_dh = DiffieHellman.from_defaults()
+      server_dh = DiffieHellman.from_defaults
       session = Server::DiffieHellmanSHA1ServerSession.new(server_dh, cpub)
       @request = Server::AssociateRequest.new(session, 'HMAC-SHA1')
       @request.message = Message.new(OPENID2_NS)
       response = @request.answer(@assoc)
-      rfg = lambda { |f| response.fields.get_arg(OPENID_NS, f) }
-      assert_equal(rfg.call("assoc_type"), "HMAC-SHA1")
-      assert_equal(rfg.call("assoc_handle"), @assoc.handle)
-      assert(!rfg.call("mac_key"))
-      assert_equal(rfg.call("session_type"), "DH-SHA1")
-      assert(rfg.call("enc_mac_key"))
-      assert(rfg.call("dh_server_public"))
+      rfg = ->(f) { response.fields.get_arg(OPENID_NS, f) }
+      assert_equal(rfg.call('assoc_type'), 'HMAC-SHA1')
+      assert_equal(rfg.call('assoc_handle'), @assoc.handle)
+      assert(!rfg.call('mac_key'))
+      assert_equal(rfg.call('session_type'), 'DH-SHA1')
+      assert(rfg.call('enc_mac_key'))
+      assert(rfg.call('dh_server_public'))
 
-      enc_key = Util.from_base64(rfg.call("enc_mac_key"))
-      spub = CryptUtil.base64_to_num(rfg.call("dh_server_public"))
+      enc_key = Util.from_base64(rfg.call('enc_mac_key'))
+      spub = CryptUtil.base64_to_num(rfg.call('dh_server_public'))
       secret = consumer_dh.xor_secret(CryptUtil.method('sha1'),
                                       spub, enc_key)
       assert_equal(secret, @assoc.secret)
@@ -1680,97 +1687,96 @@ module OpenID
 
     def test_dhSHA256
       @assoc = @signatory.create_association(false, 'HMAC-SHA256')
-      consumer_dh = DiffieHellman.from_defaults()
+      consumer_dh = DiffieHellman.from_defaults
       cpub = consumer_dh.public
-      server_dh = DiffieHellman.from_defaults()
+      server_dh = DiffieHellman.from_defaults
       session = Server::DiffieHellmanSHA256ServerSession.new(server_dh, cpub)
       @request = Server::AssociateRequest.new(session, 'HMAC-SHA256')
       @request.message = Message.new(OPENID2_NS)
       response = @request.answer(@assoc)
-      rfg = lambda { |f| response.fields.get_arg(OPENID_NS, f) }
-      assert_equal(rfg.call("assoc_type"), "HMAC-SHA256")
-      assert_equal(rfg.call("assoc_handle"), @assoc.handle)
-      assert(!rfg.call("mac_key"))
-      assert_equal(rfg.call("session_type"), "DH-SHA256")
-      assert(rfg.call("enc_mac_key"))
-      assert(rfg.call("dh_server_public"))
+      rfg = ->(f) { response.fields.get_arg(OPENID_NS, f) }
+      assert_equal(rfg.call('assoc_type'), 'HMAC-SHA256')
+      assert_equal(rfg.call('assoc_handle'), @assoc.handle)
+      assert(!rfg.call('mac_key'))
+      assert_equal(rfg.call('session_type'), 'DH-SHA256')
+      assert(rfg.call('enc_mac_key'))
+      assert(rfg.call('dh_server_public'))
 
-      enc_key = Util.from_base64(rfg.call("enc_mac_key"))
-      spub = CryptUtil.base64_to_num(rfg.call("dh_server_public"))
+      enc_key = Util.from_base64(rfg.call('enc_mac_key'))
+      spub = CryptUtil.base64_to_num(rfg.call('dh_server_public'))
       secret = consumer_dh.xor_secret(CryptUtil.method('sha256'),
                                       spub, enc_key)
       assert_equal(secret, @assoc.secret)
     end
 
     def test_protoError256
-      s256_session = Consumer::DiffieHellmanSHA256Session.new()
+      s256_session = Consumer::DiffieHellmanSHA256Session.new
 
-      invalid_s256 = {'openid.assoc_type' => 'HMAC-SHA1',
-        'openid.session_type' => 'DH-SHA256',}
-      invalid_s256.merge!(s256_session.get_request())
+      invalid_s256 = { 'openid.assoc_type' => 'HMAC-SHA1',
+                       'openid.session_type' => 'DH-SHA256' }
+      invalid_s256.merge!(s256_session.get_request)
 
-      invalid_s256_2 = {'openid.assoc_type' => 'MONKEY-PIRATE',
-        'openid.session_type' => 'DH-SHA256',}
-      invalid_s256_2.merge!(s256_session.get_request())
+      invalid_s256_2 = { 'openid.assoc_type' => 'MONKEY-PIRATE',
+                         'openid.session_type' => 'DH-SHA256' }
+      invalid_s256_2.merge!(s256_session.get_request)
 
       bad_request_argss = [
-                           invalid_s256,
-                           invalid_s256_2,
-                          ]
+        invalid_s256,
+        invalid_s256_2
+      ]
 
-      bad_request_argss.each { |request_args|
+      bad_request_argss.each do |request_args|
         message = Message.from_post_args(request_args)
-        assert_raises(Server::ProtocolError) {
+        assert_raises(Server::ProtocolError) do
           Server::AssociateRequest.from_message(message)
-        }
-      }
+        end
+      end
     end
 
     def test_protoError
-      s1_session = Consumer::DiffieHellmanSHA1Session.new()
+      s1_session = Consumer::DiffieHellmanSHA1Session.new
 
-      invalid_s1 = {'openid.assoc_type' => 'HMAC-SHA256',
-        'openid.session_type' => 'DH-SHA1',}
-      invalid_s1.merge!(s1_session.get_request())
+      invalid_s1 = { 'openid.assoc_type' => 'HMAC-SHA256',
+                     'openid.session_type' => 'DH-SHA1' }
+      invalid_s1.merge!(s1_session.get_request)
 
-      invalid_s1_2 = {'openid.assoc_type' => 'ROBOT-NINJA',
-        'openid.session_type' => 'DH-SHA1',}
-      invalid_s1_2.merge!(s1_session.get_request())
+      invalid_s1_2 = { 'openid.assoc_type' => 'ROBOT-NINJA',
+                       'openid.session_type' => 'DH-SHA1' }
+      invalid_s1_2.merge!(s1_session.get_request)
 
       bad_request_argss = [
-                           {'openid.assoc_type' => 'Wha?'},
-                           invalid_s1,
-                           invalid_s1_2,
-                          ]
+        { 'openid.assoc_type' => 'Wha?' },
+        invalid_s1,
+        invalid_s1_2
+      ]
 
-      bad_request_argss.each { |request_args|
+      bad_request_argss.each do |request_args|
         message = Message.from_post_args(request_args)
-        assert_raises(Server::ProtocolError) {
+        assert_raises(Server::ProtocolError) do
           Server::AssociateRequest.from_message(message)
-        }
-      }
+        end
+      end
     end
 
     def test_protoErrorFields
-
       contact = 'user@example.invalid'
       reference = 'Trac ticket number MAX_INT'
       error = 'poltergeist'
 
       openid1_args = {
         'openid.identitiy' => 'invalid',
-        'openid.mode' => 'checkid_setup',
+        'openid.mode' => 'checkid_setup'
       }
 
       openid2_args = openid1_args.dup
-      openid2_args.merge!({'openid.ns' => OPENID2_NS})
+      openid2_args.merge!({ 'openid.ns' => OPENID2_NS })
 
       # Check presence of optional fields in both protocol versions
 
       openid1_msg = Message.from_post_args(openid1_args)
       p = Server::ProtocolError.new(openid1_msg, error,
                                     reference, contact)
-      reply = p.to_message()
+      reply = p.to_message
 
       assert_equal(reply.get_arg(OPENID_NS, 'reference'), reference)
       assert_equal(reply.get_arg(OPENID_NS, 'contact'), contact)
@@ -1778,7 +1784,7 @@ module OpenID
       openid2_msg = Message.from_post_args(openid2_args)
       p = Server::ProtocolError.new(openid2_msg, error,
                                     reference, contact)
-      reply = p.to_message()
+      reply = p.to_message
 
       assert_equal(reply.get_arg(OPENID_NS, 'reference'), reference)
       assert_equal(reply.get_arg(OPENID_NS, 'contact'), contact)
@@ -1793,78 +1799,84 @@ module OpenID
       slop = 1 # second
       difference = expected_expires_in - expires_in
 
-      error_message = sprintf('"expires_in" value not within %s of expected: ' +
+      error_message = format('"expires_in" value not within %s of expected: ' +
                               'expected=%s, actual=%s', slop, expected_expires_in,
-                              expires_in)
+                             expires_in)
       assert((0 <= difference and difference <= slop), error_message)
     end
 
     def test_plaintext
       @assoc = @signatory.create_association(false, 'HMAC-SHA1')
       response = @request.answer(@assoc)
-      rfg = lambda { |f| response.fields.get_arg(OPENID_NS, f) }
+      rfg = ->(f) { response.fields.get_arg(OPENID_NS, f) }
 
-      assert_equal(rfg.call("assoc_type"), "HMAC-SHA1")
-      assert_equal(rfg.call("assoc_handle"), @assoc.handle)
+      assert_equal(rfg.call('assoc_type'), 'HMAC-SHA1')
+      assert_equal(rfg.call('assoc_handle'), @assoc.handle)
 
       failUnlessExpiresInMatches(response.fields,
                                  @signatory.secret_lifetime)
 
       assert_equal(
-                   rfg.call("mac_key"), Util.to_base64(@assoc.secret))
-      assert(!rfg.call("session_type"))
-      assert(!rfg.call("enc_mac_key"))
-      assert(!rfg.call("dh_server_public"))
+        rfg.call('mac_key'), Util.to_base64(@assoc.secret)
+      )
+      assert(!rfg.call('session_type'))
+      assert(!rfg.call('enc_mac_key'))
+      assert(!rfg.call('dh_server_public'))
     end
 
     def test_plaintext_v2
-        # The main difference between this and the v1 test is that
-        # session_type is always returned in v2.
-        args = {
-            'openid.ns' => OPENID2_NS,
-            'openid.mode' => 'associate',
-            'openid.assoc_type' => 'HMAC-SHA1',
-            'openid.session_type' => 'no-encryption',
-            }
-        @request = Server::AssociateRequest.from_message(
-          Message.from_post_args(args))
+      # The main difference between this and the v1 test is that
+      # session_type is always returned in v2.
+      args = {
+        'openid.ns' => OPENID2_NS,
+        'openid.mode' => 'associate',
+        'openid.assoc_type' => 'HMAC-SHA1',
+        'openid.session_type' => 'no-encryption'
+      }
+      @request = Server::AssociateRequest.from_message(
+        Message.from_post_args(args)
+      )
 
-        assert(!@request.message.is_openid1())
+      assert(!@request.message.is_openid1)
 
-        @assoc = @signatory.create_association(false, 'HMAC-SHA1')
-        response = @request.answer(@assoc)
-        rfg = lambda { |f| response.fields.get_arg(OPENID_NS, f) }
+      @assoc = @signatory.create_association(false, 'HMAC-SHA1')
+      response = @request.answer(@assoc)
+      rfg = ->(f) { response.fields.get_arg(OPENID_NS, f) }
 
-        assert_equal(rfg.call("assoc_type"), "HMAC-SHA1")
-        assert_equal(rfg.call("assoc_handle"), @assoc.handle)
+      assert_equal(rfg.call('assoc_type'), 'HMAC-SHA1')
+      assert_equal(rfg.call('assoc_handle'), @assoc.handle)
 
-        failUnlessExpiresInMatches(
-            response.fields, @signatory.secret_lifetime)
+      failUnlessExpiresInMatches(
+        response.fields, @signatory.secret_lifetime
+      )
 
-        assert_equal(
-            rfg.call("mac_key"), Util.to_base64(@assoc.secret))
+      assert_equal(
+        rfg.call('mac_key'), Util.to_base64(@assoc.secret)
+      )
 
-        assert_equal(rfg.call("session_type"), "no-encryption")
-        assert(!rfg.call("enc_mac_key"))
-        assert(!rfg.call("dh_server_public"))
+      assert_equal(rfg.call('session_type'), 'no-encryption')
+      assert(!rfg.call('enc_mac_key'))
+      assert(!rfg.call('dh_server_public'))
     end
 
     def test_plaintext256
       @assoc = @signatory.create_association(false, 'HMAC-SHA256')
       response = @request.answer(@assoc)
-      rfg = lambda { |f| response.fields.get_arg(OPENID_NS, f) }
+      rfg = ->(f) { response.fields.get_arg(OPENID_NS, f) }
 
-      assert_equal(rfg.call("assoc_type"), "HMAC-SHA1")
-      assert_equal(rfg.call("assoc_handle"), @assoc.handle)
+      assert_equal(rfg.call('assoc_type'), 'HMAC-SHA1')
+      assert_equal(rfg.call('assoc_handle'), @assoc.handle)
 
       failUnlessExpiresInMatches(
-                                 response.fields, @signatory.secret_lifetime)
+        response.fields, @signatory.secret_lifetime
+      )
 
       assert_equal(
-                   rfg.call("mac_key"), Util.to_base64(@assoc.secret))
-      assert(!rfg.call("session_type"))
-      assert(!rfg.call("enc_mac_key"))
-      assert(!rfg.call("dh_server_public"))
+        rfg.call('mac_key'), Util.to_base64(@assoc.secret)
+      )
+      assert(!rfg.call('session_type'))
+      assert(!rfg.call('enc_mac_key'))
+      assert(!rfg.call('dh_server_public'))
     end
 
     def test_unsupportedPrefer
@@ -1879,7 +1891,7 @@ module OpenID
       response = @request.answer_unsupported(message,
                                              allowed_assoc,
                                              allowed_sess)
-      rfg = lambda { |f| response.fields.get_arg(OPENID_NS, f) }
+      rfg = ->(f) { response.fields.get_arg(OPENID_NS, f) }
       assert_equal(rfg.call('error_code'), 'unsupported-type')
       assert_equal(rfg.call('assoc_type'), allowed_assoc)
       assert_equal(rfg.call('error'), message)
@@ -1894,7 +1906,7 @@ module OpenID
       @request.message = Message.new(OPENID2_NS)
 
       response = @request.answer_unsupported(message)
-      rfg = lambda { |f| response.fields.get_arg(OPENID_NS, f) }
+      rfg = ->(f) { response.fields.get_arg(OPENID_NS, f) }
       assert_equal(rfg.call('error_code'), 'unsupported-type')
       assert_nil(rfg.call('assoc_type'))
       assert_equal(rfg.call('error'), message)
@@ -1906,9 +1918,9 @@ module OpenID
       # the request was an OpenID 1 request.
       m = Message.new(OPENID1_NS)
 
-      assert_raises(Server::ProtocolError) {
+      assert_raises(Server::ProtocolError) do
         @request.answer_unsupported(m)
-      }
+      end
     end
   end
 
@@ -1919,49 +1931,49 @@ module OpenID
     include TestUtil
 
     def setup
-      @store = Store::Memory.new()
-      @server = Server::Server.new(@store, "http://server.unittest/endpt")
+      @store = Store::Memory.new
+      @server = Server::Server.new(@store, 'http://server.unittest/endpt')
       # catchlogs_setup()
     end
 
     def test_failed_dispatch
-      request = Server::OpenIDRequest.new()
-      request.mode = "monkeymode"
+      request = Server::OpenIDRequest.new
+      request.mode = 'monkeymode'
       request.message = Message.new(OPENID1_NS)
-      assert_raises(RuntimeError) {
+      assert_raises(RuntimeError) do
         @server.handle_request(request)
-      }
+      end
     end
 
     def test_decode_request
       @server.decoder = BogusDecoder.new(@server)
-      assert(@server.decode_request({}) == "BOGUS")
+      assert(@server.decode_request({}) == 'BOGUS')
     end
 
     def test_encode_response
       @server.encoder = BogusEncoder.new
-      assert(@server.encode_response(nil) == "BOGUS")
+      assert(@server.encode_response(nil) == 'BOGUS')
     end
 
     def test_dispatch
       @server.extend(InstanceDefExtension)
-      @server.instance_def(:openid_monkeymode) do |request|
+      @server.instance_def(:openid_monkeymode) do |_request|
         raise UnhandledError
       end
 
-      request = Server::OpenIDRequest.new()
-      request.mode = "monkeymode"
+      request = Server::OpenIDRequest.new
+      request.mode = 'monkeymode'
       request.message = Message.new(OPENID1_NS)
-      assert_raises(UnhandledError) {
+      assert_raises(UnhandledError) do
         @server.handle_request(request)
-      }
+      end
     end
 
     def test_associate
       request = Server::AssociateRequest.from_message(Message.from_post_args({}))
       response = @server.openid_associate(request)
-      assert(response.fields.has_key?(OPENID_NS, "assoc_handle"),
-             sprintf("No assoc_handle here: %s", response.fields.inspect))
+      assert(response.fields.has_key?(OPENID_NS, 'assoc_handle'),
+             format('No assoc_handle here: %s', response.fields.inspect))
     end
 
     def test_associate2
@@ -1975,17 +1987,17 @@ module OpenID
       # ProtocolError.
       msg = Message.from_post_args({
                                      'openid.ns' => OPENID2_NS,
-                                     'openid.session_type' => 'no-encryption',
+                                     'openid.session_type' => 'no-encryption'
                                    })
 
       request = Server::AssociateRequest.from_message(msg)
 
       response = @server.openid_associate(request)
-      assert(response.fields.has_key?(OPENID_NS, "error"))
-      assert(response.fields.has_key?(OPENID_NS, "error_code"))
-      assert(!response.fields.has_key?(OPENID_NS, "assoc_handle"))
-      assert(!response.fields.has_key?(OPENID_NS, "assoc_type"))
-      assert(!response.fields.has_key?(OPENID_NS, "session_type"))
+      assert(response.fields.has_key?(OPENID_NS, 'error'))
+      assert(response.fields.has_key?(OPENID_NS, 'error_code'))
+      assert(!response.fields.has_key?(OPENID_NS, 'assoc_handle'))
+      assert(!response.fields.has_key?(OPENID_NS, 'assoc_type'))
+      assert(!response.fields.has_key?(OPENID_NS, 'session_type'))
     end
 
     def test_associate3
@@ -1993,29 +2005,29 @@ module OpenID
       # supported types.
       #
       # Should give back an error message with a fallback type.
-      @server.negotiator.allowed_types = [['HMAC-SHA256', 'DH-SHA256']]
+      @server.negotiator.allowed_types = [%w[HMAC-SHA256 DH-SHA256]]
 
       msg = Message.from_post_args({
                                      'openid.ns' => OPENID2_NS,
-                                     'openid.session_type' => 'no-encryption',
+                                     'openid.session_type' => 'no-encryption'
                                    })
 
       request = Server::AssociateRequest.from_message(msg)
       response = @server.openid_associate(request)
 
-      assert(response.fields.has_key?(OPENID_NS, "error"))
-      assert(response.fields.has_key?(OPENID_NS, "error_code"))
-      assert(!response.fields.has_key?(OPENID_NS, "assoc_handle"))
+      assert(response.fields.has_key?(OPENID_NS, 'error'))
+      assert(response.fields.has_key?(OPENID_NS, 'error_code'))
+      assert(!response.fields.has_key?(OPENID_NS, 'assoc_handle'))
 
-      assert_equal(response.fields.get_arg(OPENID_NS, "assoc_type"),
+      assert_equal(response.fields.get_arg(OPENID_NS, 'assoc_type'),
                    'HMAC-SHA256')
-      assert_equal(response.fields.get_arg(OPENID_NS, "session_type"),
+      assert_equal(response.fields.get_arg(OPENID_NS, 'session_type'),
                    'DH-SHA256')
     end
 
     def test_associate4
       # DH-SHA256 association session
-      @server.negotiator.allowed_types = [['HMAC-SHA256', 'DH-SHA256']]
+      @server.negotiator.allowed_types = [%w[HMAC-SHA256 DH-SHA256]]
 
       query = {
         'openid.dh_consumer_public' =>
@@ -2024,46 +2036,46 @@ module OpenID
         '1WxJY3jHd5k1/ZReyRZOxZTKdF/dnIqwF8ZXUwI6peV0TyS/K1fOfF/s',
 
         'openid.assoc_type' => 'HMAC-SHA256',
-        'openid.session_type' => 'DH-SHA256',
+        'openid.session_type' => 'DH-SHA256'
       }
 
       message = Message.from_post_args(query)
       request = Server::AssociateRequest.from_message(message)
       response = @server.openid_associate(request)
-      assert(response.fields.has_key?(OPENID_NS, "assoc_handle"))
+      assert(response.fields.has_key?(OPENID_NS, 'assoc_handle'))
     end
 
     def test_no_encryption_openid1
       # Make sure no-encryption associate requests for OpenID 1 are
       # logged.
-      assert_log_matches(/Continuing anyway./) {
+      assert_log_matches(/Continuing anyway./) do
         m = Message.from_openid_args({
-                                       'session_type' => 'no-encryption',
+                                       'session_type' => 'no-encryption'
                                      })
 
         Server::AssociateRequest.from_message(m)
-      }
+      end
     end
 
     def test_missingSessionTypeOpenID2
       # Make sure session_type is required in OpenID 2
       msg = Message.from_post_args({
-                                     'openid.ns' => OPENID2_NS,
+                                     'openid.ns' => OPENID2_NS
                                    })
 
-      assert_raises(Server::ProtocolError) {
+      assert_raises(Server::ProtocolError) do
         Server::AssociateRequest.from_message(msg)
-      }
+      end
     end
 
     def test_checkAuth
       request = Server::CheckAuthRequest.new('arrrrrf', '0x3999', [])
       request.message = Message.new(OPENID2_NS)
       response = nil
-      silence_logging {
+      silence_logging do
         response = @server.openid_check_authentication(request)
-      }
-      assert(response.fields.has_key?(OPENID_NS, "is_valid"))
+      end
+      assert(response.fields.has_key?(OPENID_NS, 'is_valid'))
     end
   end
 
@@ -2075,7 +2087,7 @@ module OpenID
     include TestUtil
 
     def setup
-      @store = Store::Memory.new()
+      @store = Store::Memory.new
       @signatory = Server::Signatory.new(@store)
       @_dumb_key = @signatory.class._dumb_key
       @_normal_key = @signatory.class._normal_key
@@ -2083,30 +2095,32 @@ module OpenID
     end
 
     def test_get_association_nil
-      assert_raises(ArgumentError) {
+      assert_raises(ArgumentError) do
         @signatory.get_association(nil, false)
-      }
+      end
     end
 
     def test_sign
-      request = TestingRequest.new()
+      request = TestingRequest.new
       assoc_handle = '{assoc}{lookatme}'
       @store.store_association(
-                               @_normal_key,
-                               Association.from_expires_in(60, assoc_handle,
-                                                           'sekrit', 'HMAC-SHA1'))
+        @_normal_key,
+        Association.from_expires_in(60, assoc_handle,
+                                    'sekrit', 'HMAC-SHA1')
+      )
       request.assoc_handle = assoc_handle
       request.namespace = OPENID1_NS
       response = Server::OpenIDResponse.new(request)
       response.fields = Message.from_openid_args({
                                                    'foo' => 'amsigned',
                                                    'bar' => 'notsigned',
-                                                   'azu' => 'alsosigned',
+                                                   'azu' => 'alsosigned'
                                                  })
       sresponse = @signatory.sign(response)
       assert_equal(
-            sresponse.fields.get_arg(OPENID_NS, 'assoc_handle'),
-            assoc_handle)
+        sresponse.fields.get_arg(OPENID_NS, 'assoc_handle'),
+        assoc_handle
+      )
       assert_equal(sresponse.fields.get_arg(OPENID_NS, 'signed'),
                    'assoc_handle,azu,bar,foo,signed')
       assert(sresponse.fields.get_arg(OPENID_NS, 'sig'))
@@ -2114,7 +2128,7 @@ module OpenID
     end
 
     def test_signDumb
-      request = TestingRequest.new()
+      request = TestingRequest.new
       request.assoc_handle = nil
       request.namespace = OPENID2_NS
       response = Server::OpenIDResponse.new(request)
@@ -2122,7 +2136,7 @@ module OpenID
                                                    'foo' => 'amsigned',
                                                    'bar' => 'notsigned',
                                                    'azu' => 'alsosigned',
-                                                   'ns' => OPENID2_NS,
+                                                   'ns' => OPENID2_NS
                                                  })
       sresponse = @signatory.sign(response)
       assoc_handle = sresponse.fields.get_arg(OPENID_NS, 'assoc_handle')
@@ -2150,13 +2164,14 @@ module OpenID
       #   instance, the OP will include the field
       #   "openid.invalidate_handle" set to the association handle
       #   that the Relying Party included with the original request.
-      request = TestingRequest.new()
+      request = TestingRequest.new
       request.namespace = OPENID2_NS
       assoc_handle = '{assoc}{lookatme}'
       @store.store_association(
-                               @_normal_key,
-                               Association.from_expires_in(-10, assoc_handle,
-                                                           'sekrit', 'HMAC-SHA1'))
+        @_normal_key,
+        Association.from_expires_in(-10, assoc_handle,
+                                    'sekrit', 'HMAC-SHA1')
+      )
       assert(@store.get_association(@_normal_key, assoc_handle))
 
       request.assoc_handle = assoc_handle
@@ -2164,20 +2179,21 @@ module OpenID
       response.fields = Message.from_openid_args({
                                                    'foo' => 'amsigned',
                                                    'bar' => 'notsigned',
-                                                   'azu' => 'alsosigned',
+                                                   'azu' => 'alsosigned'
                                                  })
       sresponse = nil
-      silence_logging {
+      silence_logging do
         sresponse = @signatory.sign(response)
-      }
+      end
 
       new_assoc_handle = sresponse.fields.get_arg(OPENID_NS, 'assoc_handle')
       assert(new_assoc_handle)
       assert(new_assoc_handle != assoc_handle)
 
       assert_equal(
-            sresponse.fields.get_arg(OPENID_NS, 'invalidate_handle'),
-            assoc_handle)
+        sresponse.fields.get_arg(OPENID_NS, 'invalidate_handle'),
+        assoc_handle
+      )
 
       assert_equal(sresponse.fields.get_arg(OPENID_NS, 'signed'),
                    'assoc_handle,azu,bar,foo,invalidate_handle,signed')
@@ -2185,7 +2201,7 @@ module OpenID
 
       # make sure the expired association is gone
       assert(!@store.get_association(@_normal_key, assoc_handle),
-             "expired association is still retrievable.")
+             'expired association is still retrievable.')
 
       # make sure the new key is a dumb mode association
       assert(@store.get_association(@_dumb_key, new_assoc_handle))
@@ -2194,7 +2210,7 @@ module OpenID
     end
 
     def test_signInvalidHandle
-      request = TestingRequest.new()
+      request = TestingRequest.new
       request.namespace = OPENID2_NS
       assoc_handle = '{bogus-assoc}{notvalid}'
 
@@ -2203,7 +2219,7 @@ module OpenID
       response.fields = Message.from_openid_args({
                                                    'foo' => 'amsigned',
                                                    'bar' => 'notsigned',
-                                                   'azu' => 'alsosigned',
+                                                   'azu' => 'alsosigned'
                                                  })
       sresponse = @signatory.sign(response)
 
@@ -2212,12 +2228,14 @@ module OpenID
       assert(new_assoc_handle != assoc_handle)
 
       assert_equal(
-            sresponse.fields.get_arg(OPENID_NS, 'invalidate_handle'),
-            assoc_handle)
+        sresponse.fields.get_arg(OPENID_NS, 'invalidate_handle'),
+        assoc_handle
+      )
 
       assert_equal(
-            sresponse.fields.get_arg(OPENID_NS, 'signed'),
-                   'assoc_handle,azu,bar,foo,invalidate_handle,signed')
+        sresponse.fields.get_arg(OPENID_NS, 'signed'),
+        'assoc_handle,azu,bar,foo,invalidate_handle,signed'
+      )
       assert(sresponse.fields.get_arg(OPENID_NS, 'sig'))
 
       # make sure the new key is a dumb mode association
@@ -2229,7 +2247,8 @@ module OpenID
     def test_verify
       assoc_handle = '{vroom}{zoom}'
       assoc = Association.from_expires_in(
-            60, assoc_handle, 'sekrit', 'HMAC-SHA1')
+        60, assoc_handle, 'sekrit', 'HMAC-SHA1'
+      )
 
       @store.store_association(@_dumb_key, assoc)
 
@@ -2238,7 +2257,7 @@ module OpenID
                                         'openid.apple' => 'orange',
                                         'openid.assoc_handle' => assoc_handle,
                                         'openid.signed' => 'apple,assoc_handle,foo,signed',
-                                        'openid.sig' => 'uXoT1qm62/BB09Xbj98TQ8mlBco=',
+                                        'openid.sig' => 'uXoT1qm62/BB09Xbj98TQ8mlBco='
                                       })
 
       verified = @signatory.verify(assoc_handle, signed)
@@ -2249,17 +2268,18 @@ module OpenID
     def test_verifyBadSig
       assoc_handle = '{vroom}{zoom}'
       assoc = Association.from_expires_in(
-            60, assoc_handle, 'sekrit', 'HMAC-SHA1')
+        60, assoc_handle, 'sekrit', 'HMAC-SHA1'
+      )
 
       @store.store_association(@_dumb_key, assoc)
 
       signed = Message.from_post_args({
-            'openid.foo' => 'bar',
-            'openid.apple' => 'orange',
-            'openid.assoc_handle' => assoc_handle,
-            'openid.signed' => 'apple,assoc_handle,foo,signed',
-            'openid.sig' => 'uXoT1qm62/BB09Xbj98TQ8mlBco=BOGUS'
-            })
+                                        'openid.foo' => 'bar',
+                                        'openid.apple' => 'orange',
+                                        'openid.assoc_handle' => assoc_handle,
+                                        'openid.signed' => 'apple,assoc_handle,foo,signed',
+                                        'openid.sig' => 'uXoT1qm62/BB09Xbj98TQ8mlBco=BOGUS'
+                                      })
 
       verified = @signatory.verify(assoc_handle, signed)
       # @failIf(@messages, @messages)
@@ -2269,15 +2289,15 @@ module OpenID
     def test_verifyBadHandle
       assoc_handle = '{vroom}{zoom}'
       signed = Message.from_post_args({
-            'foo' => 'bar',
-            'apple' => 'orange',
-            'openid.sig' => "Ylu0KcIR7PvNegB/K41KpnRgJl0=",
-            })
+                                        'foo' => 'bar',
+                                        'apple' => 'orange',
+                                        'openid.sig' => 'Ylu0KcIR7PvNegB/K41KpnRgJl0='
+                                      })
 
       verified = nil
-      silence_logging {
+      silence_logging do
         verified = @signatory.verify(assoc_handle, signed)
-      }
+      end
 
       assert !verified
     end
@@ -2286,20 +2306,21 @@ module OpenID
       # Attempt to validate sign-all message with a signed-list assoc.
       assoc_handle = '{vroom}{zoom}'
       assoc = Association.from_expires_in(
-            60, assoc_handle, 'sekrit', 'HMAC-SHA1')
+        60, assoc_handle, 'sekrit', 'HMAC-SHA1'
+      )
 
       @store.store_association(@_dumb_key, assoc)
 
       signed = Message.from_post_args({
-            'foo' => 'bar',
-            'apple' => 'orange',
-            'openid.sig' => "d71xlHtqnq98DonoSgoK/nD+QRM=",
-            })
+                                        'foo' => 'bar',
+                                        'apple' => 'orange',
+                                        'openid.sig' => 'd71xlHtqnq98DonoSgoK/nD+QRM='
+                                      })
 
       verified = nil
-      silence_logging {
+      silence_logging do
         verified = @signatory.verify(assoc_handle, signed)
-      }
+      end
 
       assert !verified
     end
@@ -2314,26 +2335,26 @@ module OpenID
     def test_getAssocExpired
       assoc_handle = makeAssoc(true, -10)
       assoc = nil
-      silence_logging {
+      silence_logging do
         assoc = @signatory.get_association(assoc_handle, true)
-      }
+      end
       assert !assoc
     end
 
     def test_getAssocInvalid
       ah = 'no-such-handle'
-      silence_logging {
+      silence_logging do
         assert_nil(@signatory.get_association(ah, false))
-      }
+      end
       # assert(!@messages, @messages)
     end
 
     def test_getAssocDumbVsNormal
       # getAssociation(dumb=False) cannot get a dumb assoc
       assoc_handle = makeAssoc(true)
-      silence_logging {
+      silence_logging do
         assert_nil(@signatory.get_association(assoc_handle, false))
-      }
+      end
       # @failIf(@messages, @messages)
     end
 
@@ -2345,30 +2366,30 @@ module OpenID
       #   An OP MUST NOT verify signatures for associations that have shared
       #   MAC keys.
       assoc_handle = makeAssoc(false)
-      silence_logging {
+      silence_logging do
         assert_nil(@signatory.get_association(assoc_handle, true))
-      }
+      end
       # @failIf(@messages, @messages)
     end
 
     def test_createAssociation
       assoc = @signatory.create_association(false)
-      silence_logging {
+      silence_logging do
         assert(@signatory.get_association(assoc.handle, false))
-      }
+      end
       # @failIf(@messages, @messages)
     end
 
-    def makeAssoc(dumb, lifetime=60)
+    def makeAssoc(dumb, lifetime = 60)
       assoc_handle = '{bling}'
       assoc = Association.from_expires_in(lifetime, assoc_handle,
                                           'sekrit', 'HMAC-SHA1')
 
-      silence_logging {
+      silence_logging do
         @store.store_association(((dumb and @_dumb_key) or @_normal_key), assoc)
-      }
+      end
 
-      return assoc_handle
+      assoc_handle
     end
 
     def test_invalidate
@@ -2376,7 +2397,7 @@ module OpenID
       assoc = Association.from_expires_in(60, assoc_handle,
                                           'sekrit', 'HMAC-SHA1')
 
-      silence_logging {
+      silence_logging do
         @store.store_association(@_dumb_key, assoc)
         assoc = @signatory.get_association(assoc_handle, true)
         assert(assoc)
@@ -2385,7 +2406,7 @@ module OpenID
         @signatory.invalidate(assoc_handle, true)
         assoc = @signatory.get_association(assoc_handle, true)
         assert(!assoc)
-      }
+      end
       # @failIf(@messages, @messages)
     end
   end
@@ -2393,12 +2414,12 @@ module OpenID
   class RunthroughTestCase < Minitest::Test
     def setup
       @store = Store::Memory.new
-      @server = Server::Server.new(@store, "http://example.com/openid/server")
+      @server = Server::Server.new(@store, 'http://example.com/openid/server')
     end
 
     def test_openid1_assoc_checkid
-      assoc_args = {'openid.mode' => 'associate',
-                    'openid.assoc_type' => 'HMAC-SHA1'}
+      assoc_args = { 'openid.mode' => 'associate',
+                     'openid.assoc_type' => 'HMAC-SHA1' }
       areq = @server.decode_request(assoc_args)
       aresp = @server.handle_request(areq)
 
@@ -2409,11 +2430,10 @@ module OpenID
       assoc = @store.get_association('http://localhost/|normal', ahandle)
       assert(assoc.is_a?(Association))
 
-
-      checkid_args = {'openid.mode' => 'checkid_setup',
-                      'openid.return_to' => 'http://example.com/openid/consumer',
-                      'openid.assoc_handle' => ahandle,
-                      'openid.identity' => 'http://foo.com/'}
+      checkid_args = { 'openid.mode' => 'checkid_setup',
+                       'openid.return_to' => 'http://example.com/openid/consumer',
+                       'openid.assoc_handle' => ahandle,
+                       'openid.identity' => 'http://foo.com/' }
 
       cireq = @server.decode_request(checkid_args)
       ciresp = cireq.answer(true)
@@ -2425,6 +2445,5 @@ module OpenID
 
       assert(assoc.check_message_signature(signed_resp.fields))
     end
-
   end
 end

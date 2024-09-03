@@ -29,8 +29,8 @@ module OpenID
       end
 
       def test_check_mode
-        assert_raises(Error) { @bax.do_check_mode({'mode' => 'fetch_request'})}
-        @bax.do_check_mode({'mode' => @bax.mode})
+        assert_raises(Error) { @bax.do_check_mode({ 'mode' => 'fetch_request' }) }
+        @bax.do_check_mode({ 'mode' => @bax.mode })
       end
 
       def test_check_mode_new_args
@@ -57,23 +57,23 @@ module OpenID
       end
 
       def test_empty
-        [nil, ''].each{|empty|
+        [nil, ''].each do |empty|
           uris = AX.to_type_uris(@aliases, empty)
           assert_equal([], uris)
-        }
+        end
       end
 
       def test_undefined
-        assert_raises(IndexError) {
+        assert_raises(IndexError) do
           AX.to_type_uris(@aliases, 'http://janrain.com/')
-        }
+        end
       end
 
       def test_one
         uri = 'http://janrain.com/'
         name = 'openid_hackers'
         @aliases.add_alias(uri, name)
-        uris = AX::to_type_uris(@aliases, name)
+        uris = AX.to_type_uris(@aliases, name)
         assert_equal([uri], uris)
       end
 
@@ -100,9 +100,9 @@ module OpenID
 
       def ax_error(ax_args, error)
         msg = KeyValueMessage.new
-        assert_raises(error) {
+        assert_raises(error) do
           msg.parse_extension_args(ax_args)
-        }
+        end
       end
 
       def test_empty_is_valid
@@ -110,28 +110,27 @@ module OpenID
       end
 
       def test_missing_value_for_alias_explodes
-        ax_error({'type.foo'=>'urn:foo'}, IndexError)
+        ax_error({ 'type.foo' => 'urn:foo' }, IndexError)
       end
 
       def test_count_present_but_not_value
-        ax_error({'type.foo'=>'urn:foo', 'count.foo' => '1'}, IndexError)
+        ax_error({ 'type.foo' => 'urn:foo', 'count.foo' => '1' }, IndexError)
       end
 
       def test_invalid_count_value
         msg = FetchRequest.new
-        assert_raises(Error) {
-          msg.parse_extension_args({'type.foo'=>'urn:foo',
-                                     'count.foo' => 'bogus'})
-        }
+        assert_raises(Error) do
+          msg.parse_extension_args({ 'type.foo' => 'urn:foo',
+                                     'count.foo' => 'bogus' })
+        end
       end
 
       def test_request_unlimited_values
         msg = FetchRequest.new
-        args = {'mode' => 'fetch_request',
-          'required' => 'foo',
-          'type.foo' => 'urn:foo',
-          'count.foo' => UNLIMITED_VALUES
-        }
+        args = { 'mode' => 'fetch_request',
+                 'required' => 'foo',
+                 'type.foo' => 'urn:foo',
+                 'count.foo' => UNLIMITED_VALUES }
         msg.parse_extension_args(args)
         foo = msg.attributes[0]
         assert_equal(UNLIMITED_VALUES, foo.count)
@@ -146,78 +145,73 @@ module OpenID
         args = {
           "type.#{name}" => 'urn:foo',
           "count.#{name}" => '1',
-          "value.#{name}.1" => 'first',
+          "value.#{name}.1" => 'first'
         }
         msg.parse_extension_args(args)
-        assert_equal(['first'],msg['urn:foo'])
+        assert_equal(['first'], msg['urn:foo'])
       end
 
       def test_invalid_alias
         types = [
-                 KeyValueMessage,
-                 FetchRequest
-                ]
+          KeyValueMessage,
+          FetchRequest
+        ]
         inputs = [
-                  {'type.a.b'=>'urn:foo',
-                    'count.a.b'=>'1'},
-                  {'type.a,b'=>'urn:foo',
-                    'count.a,b'=>'1'},
-                 ]
-        types.each{|t|
-          inputs.each{|input|
+          { 'type.a.b' => 'urn:foo',
+            'count.a.b' => '1' },
+          { 'type.a,b' => 'urn:foo',
+            'count.a,b' => '1' }
+        ]
+        types.each do |t|
+          inputs.each  do |input|
             msg = t.new
-            assert_raises(Error) {msg.parse_extension_args(input)}
-          }
-        }
+            assert_raises(Error) { msg.parse_extension_args(input) }
+          end
+        end
       end
 
       def test_count_present_and_is_zero
         ax_values(
-                  {'type.foo'=>'urn:foo',
-                    'count.foo'=>'0',
-                  },
-                  {'urn:foo'=>[]}
-                  )
+          { 'type.foo' => 'urn:foo',
+            'count.foo' => '0' },
+          { 'urn:foo' => [] }
+        )
       end
 
       def test_singleton_empty
         ax_values(
-                  {'type.foo'=>'urn:foo',
-                    'value.foo'=>'',
-                  },
-                  {'urn:foo'=>[]}
-                  )
+          { 'type.foo' => 'urn:foo',
+            'value.foo' => '' },
+          { 'urn:foo' => [] }
+        )
       end
 
       def test_double_alias
         ax_error(
-                 {'type.foo'=>'urn:foo',
-                   'value.foo'=>'',
-                   'type.bar'=>'urn:foo',
-                   'value.bar'=>'',
-                 },
-                 IndexError
-                 )
+          { 'type.foo' => 'urn:foo',
+            'value.foo' => '',
+            'type.bar' => 'urn:foo',
+            'value.bar' => '' },
+          IndexError
+        )
       end
 
       def test_double_singleton
         ax_values(
-                  {'type.foo'=>'urn:foo',
-                    'value.foo'=>'',
-                    'type.bar'=>'urn:bar',
-                    'value.bar'=>'',
-                  },
-                  {'urn:foo'=>[],'urn:bar'=>[]}
-                  )
+          { 'type.foo' => 'urn:foo',
+            'value.foo' => '',
+            'type.bar' => 'urn:bar',
+            'value.bar' => '' },
+          { 'urn:foo' => [], 'urn:bar' => [] }
+        )
       end
 
       def singleton_value
         ax_values(
-                  {'type.foo'=>'urn:foo',
-                    'value.foo'=>'something',
-                  },
-                  {'urn:foo'=>['something']}
-                  )
+          { 'type.foo' => 'urn:foo',
+            'value.foo' => 'something' },
+          { 'urn:foo' => ['something'] }
+        )
       end
     end
 
@@ -244,7 +238,7 @@ module OpenID
       def test_add
         uri = 'mud://puddle'
 
-        assert(! @msg.member?(uri))
+        assert(!@msg.member?(uri))
         a = AttrInfo.new(uri)
         @msg.add(a)
         assert(@msg.member?(uri))
@@ -254,7 +248,7 @@ module OpenID
         uri = 'its://raining'
         a = AttrInfo.new(uri)
         @msg.add(a)
-        assert_raises(IndexError) {@msg.add(a)}
+        assert_raises(IndexError) { @msg.add(a) }
       end
 
       def do_extension_args(expected_args)
@@ -270,22 +264,22 @@ module OpenID
         a = AttrInfo.new('foo://bar')
         @msg.add(a)
         ax_args = @msg.get_extension_args
-        ax_args.each{|k,v|
+        ax_args.each do |k, v|
           if v == a.type_uri and k.index('type.') == 0
             @name = k[5..-1]
             break
           end
-        }
-        do_extension_args({'type.'+@name => a.type_uri,
-                            'if_available' => @name})
+        end
+        do_extension_args({ 'type.' + @name => a.type_uri,
+                            'if_available' => @name })
       end
 
       def test_get_extension_args_alias_if_available
         a = AttrInfo.new('type://of.transportation',
                          'transport')
         @msg.add(a)
-        do_extension_args({'type.'+a.ns_alias => a.type_uri,
-                            'if_available' => a.ns_alias})
+        do_extension_args({ 'type.' + a.ns_alias => a.type_uri,
+                            'if_available' => a.ns_alias })
       end
 
       def test_get_extension_args_alias_req
@@ -293,8 +287,8 @@ module OpenID
                          'transport',
                          true)
         @msg.add(a)
-        do_extension_args({'type.'+a.ns_alias => a.type_uri,
-                            'required' => a.ns_alias})
+        do_extension_args({ 'type.' + a.ns_alias => a.type_uri,
+                            'required' => a.ns_alias })
       end
 
       def test_get_required_attrs_empty
@@ -306,7 +300,7 @@ module OpenID
           'mode' => 'fetch_request',
           'type.' + @name_a => @type_a
         }
-        assert_raises(Error) {@msg.parse_extension_args(args)}
+        assert_raises(Error) { @msg.parse_extension_args(args) }
       end
 
       def test_parse_extension_args
@@ -316,7 +310,7 @@ module OpenID
           'if_available' => @name_a
         }
         @msg.parse_extension_args(args)
-        assert(@msg.member?(@type_a) )
+        assert(@msg.member?(@type_a))
         assert_equal([@type_a], @msg.requested_types)
         ai = @msg.requested_attributes[@type_a]
         assert(ai.is_a?(AttrInfo))
@@ -379,15 +373,15 @@ module OpenID
         value = 'snarfblat'
 
         message = OpenID::Message.from_openid_args({
-                                               'mode' => 'id_res',
-                                               'ns' => OPENID2_NS,
-                                               'ns.ax' => AXMessage::NS_URI,
-                                               'ax.update_url' => 'http://example.com/realm/update_path',
-                                               'ax.mode' => 'store_request',
-                                               'ax.type.' + name => uri,
-                                               'ax.count.' + name => '1',
-                                               'ax.value.' + name + '.1' => value
-                                             })
+                                                     'mode' => 'id_res',
+                                                     'ns' => OPENID2_NS,
+                                                     'ns.ax' => AXMessage::NS_URI,
+                                                     'ax.update_url' => 'http://example.com/realm/update_path',
+                                                     'ax.mode' => 'store_request',
+                                                     'ax.type.' + name => uri,
+                                                     'ax.count.' + name => '1',
+                                                     'ax.value.' + name + '.1' => value
+                                                   })
         openid_req = Server::OpenIDRequest.new
         openid_req.message = message
         ax_req = FetchRequest.from_openid_request(openid_req)
@@ -401,13 +395,13 @@ module OpenID
                                                     'realm' => 'http://example.com/realm',
                                                     'ns.ax' => AXMessage::NS_URI,
                                                     'ax.update_url' => 'http://different.site/path',
-                                                    'ax.mode' => 'fetch_request',
+                                                    'ax.mode' => 'fetch_request'
                                                   })
         openid_req = Server::OpenIDRequest.new
         openid_req.message = openid_req_msg
-        assert_raises(Error) {
+        assert_raises(Error) do
           FetchRequest.from_openid_request(openid_req)
-        }
+        end
       end
 
       def test_openid_no_realm
@@ -416,13 +410,13 @@ module OpenID
                                                     'ns' => OPENID2_NS,
                                                     'ns.ax' => AXMessage::NS_URI,
                                                     'ax.update_url' => 'http://different.site/path',
-                                                    'ax.mode' => 'fetch_request',
+                                                    'ax.mode' => 'fetch_request'
                                                   })
         openid_req = Server::OpenIDRequest.new
         openid_req.message = openid_req_msg
-        assert_raises(Error) {
+        assert_raises(Error) do
           FetchRequest.from_openid_request(openid_req)
-        }
+        end
       end
 
       def test_openid_update_url_verification_success
@@ -432,7 +426,7 @@ module OpenID
                                                     'realm' => 'http://example.com/realm',
                                                     'ns.ax' => AXMessage::NS_URI,
                                                     'ax.update_url' => 'http://example.com/realm/update_path',
-                                                    'ax.mode' => 'fetch_request',
+                                                    'ax.mode' => 'fetch_request'
                                                   })
         openid_req = Server::OpenIDRequest.new
         openid_req.message = openid_req_msg
@@ -447,7 +441,7 @@ module OpenID
                                                     'return_to' => 'http://example.com/realm',
                                                     'ns.ax' => AXMessage::NS_URI,
                                                     'ax.update_url' => 'http://example.com/realm/update_path',
-                                                    'ax.mode' => 'fetch_request',
+                                                    'ax.mode' => 'fetch_request'
                                                   })
         openid_req = Server::OpenIDRequest.new
         openid_req.message = openid_req_msg
@@ -459,7 +453,7 @@ module OpenID
         openid_req_msg = Message.from_openid_args({
                                                     'mode' => 'checkid_setup',
                                                     'ns' => OPENID2_NS,
-                                                    'return_to' => 'http://example.com/realm',
+                                                    'return_to' => 'http://example.com/realm'
                                                   })
 
         e = OpenID::OpenIDServiceEndpoint.new
@@ -467,19 +461,19 @@ module OpenID
         openid_req.message = openid_req_msg
 
         fr = FetchRequest.new
-        fr.add(AttrInfo.new("urn:bogus"))
+        fr.add(AttrInfo.new('urn:bogus'))
 
         openid_req.add_extension(fr)
 
         expected = {
           'mode' => 'fetch_request',
           'if_available' => 'ext0',
-          'type.ext0' => 'urn:bogus',
+          'type.ext0' => 'urn:bogus'
         }
 
-        expected.each { |k,v|
+        expected.each do |k, v|
           assert(openid_req.message.get_arg(AXMessage::NS_URI, k) == v)
-        }
+        end
       end
     end
 
@@ -546,7 +540,7 @@ module OpenID
         eargs = {
           'mode' => 'fetch_response',
           'type.' + @name_a => @type_a,
-          'value.' + @name_a  => @value_a
+          'value.' + @name_a => @value_a
         }
         req = FetchRequest.new
         req.add(AttrInfo.new(@type_a, @name_a))
@@ -560,8 +554,8 @@ module OpenID
         eargs = {
           'mode' => 'fetch_response',
           'type.' + @name_a => @type_a,
-          'value.' + @name_a + ".1" => @value_a,
-          'value.' + @name_a + ".2" => @value_a1,
+          'value.' + @name_a + '.1' => @value_a,
+          'value.' + @name_a + '.2' => @value_a1,
           'count.' + @name_a => '2'
         }
         req = FetchRequest.new
@@ -576,7 +570,7 @@ module OpenID
       def test_get_extension_args_some_not_request
         req = FetchRequest.new
         @msg.add_value(@type_a, @value_a)
-        assert_raises(IndexError) {@msg.get_extension_args(req)}
+        assert_raises(IndexError) { @msg.get_extension_args(req) }
       end
 
       def test_get_single_success
@@ -589,7 +583,7 @@ module OpenID
       end
 
       def test_get_single_extra
-        @msg.set_values(@type_a, ['x', 'y'])
+        @msg.set_values(@type_a, %w[x y])
         assert_raises(Error) { @msg.get_single(@type_a) }
       end
 
@@ -609,7 +603,7 @@ module OpenID
                                                'ax.value.' + name + '.1' => value
                                              })
 
-        e = OpenID::OpenIDServiceEndpoint.new()
+        e = OpenID::OpenIDServiceEndpoint.new
         resp = OpenID::Consumer::SuccessResponse.new(e, m, [])
 
         ax_resp = FetchResponse.from_success_response(resp, false)
@@ -632,10 +626,10 @@ module OpenID
           'ax.count.' + name => '1',
           'ax.value.' + name + '.1' => value
         }
-        signed_fields = oid_fields.keys.map{|f| "openid.#{f}"}
+        signed_fields = oid_fields.keys.map { |f| "openid.#{f}" }
 
         m = OpenID::Message.from_openid_args(oid_fields)
-        e = OpenID::OpenIDServiceEndpoint.new()
+        e = OpenID::OpenIDServiceEndpoint.new
         resp = OpenID::Consumer::SuccessResponse.new(e, m, signed_fields)
 
         ax_resp = FetchResponse.from_success_response(resp, true)
@@ -660,15 +654,15 @@ module OpenID
                                                'ax.value.' + name + '.1' => value
                                              })
 
-        e = OpenID::OpenIDServiceEndpoint.new()
+        e = OpenID::OpenIDServiceEndpoint.new
         resp = OpenID::Consumer::SuccessResponse.new(e, m, [])
 
         assert_nil FetchResponse.from_success_response(resp, true)
       end
 
       def test_from_empty_success_response
-        e = OpenID::OpenIDServiceEndpoint.new()
-        m = OpenID::Message.from_openid_args({'mode' => 'id_res'})
+        e = OpenID::OpenIDServiceEndpoint.new
+        m = OpenID::Message.from_openid_args({ 'mode' => 'id_res' })
         resp = OpenID::Consumer::SuccessResponse.new(e, m, [])
         ax_resp = FetchResponse.from_success_response(resp)
         assert(ax_resp.nil?)
@@ -699,15 +693,15 @@ module OpenID
         value = 'snarfblat'
 
         message = OpenID::Message.from_openid_args({
-                                               'mode' => 'id_res',
-                                               'ns' => OPENID2_NS,
-                                               'ns.ax' => AXMessage::NS_URI,
-                                               'ax.update_url' => 'http://example.com/realm/update_path',
-                                               'ax.mode' => 'fetch_request',
-                                               'ax.type.' + name => uri,
-                                               'ax.count.' + name => '1',
-                                               'ax.value.' + name + '.1' => value
-                                             })
+                                                     'mode' => 'id_res',
+                                                     'ns' => OPENID2_NS,
+                                                     'ns.ax' => AXMessage::NS_URI,
+                                                     'ax.update_url' => 'http://example.com/realm/update_path',
+                                                     'ax.mode' => 'fetch_request',
+                                                     'ax.type.' + name => uri,
+                                                     'ax.count.' + name => '1',
+                                                     'ax.value.' + name + '.1' => value
+                                                   })
         openid_req = Server::OpenIDRequest.new
         openid_req.message = message
         ax_req = StoreRequest.from_openid_request(openid_req)
@@ -715,7 +709,7 @@ module OpenID
       end
 
       def test_get_extension_args_nonempty
-        @msg.set_values(@type_a, ['foo','bar'])
+        @msg.set_values(@type_a, %w[foo bar])
         aliases = NamespaceMap.new
         aliases.add_alias(@type_a, @name_a)
         eargs = {
@@ -723,7 +717,7 @@ module OpenID
           'type.' + @name_a => @type_a,
           'value.' + @name_a + '.1' => 'foo',
           'value.' + @name_a + '.2' => 'bar',
-          'count.' + @name_a =>  '2'
+          'count.' + @name_a => '2'
         }
         assert_equal(eargs, @msg.get_extension_args(aliases))
       end
@@ -734,24 +728,24 @@ module OpenID
         msg = StoreResponse.new
         assert(msg.succeeded?)
         assert(!msg.error_message)
-        assert_equal({'mode' => 'store_response_success'},
+        assert_equal({ 'mode' => 'store_response_success' },
                      msg.get_extension_args)
       end
 
       def test_fail_nomsg
         msg = StoreResponse.new(false)
-        assert(! msg.succeeded? )
-        assert(! msg.error_message )
-        assert_equal({'mode' => 'store_response_failure'},
+        assert(!msg.succeeded?)
+        assert(!msg.error_message)
+        assert_equal({ 'mode' => 'store_response_failure' },
                      msg.get_extension_args)
       end
 
       def test_fail_msg
-        reason = "because I said so"
+        reason = 'because I said so'
         msg = StoreResponse.new(false, reason)
-        assert(! msg.succeeded? )
-        assert_equal(reason,  msg.error_message)
-        assert_equal({'mode' => 'store_response_failure', 'error' => reason},
+        assert(!msg.succeeded?)
+        assert_equal(reason, msg.error_message)
+        assert_equal({ 'mode' => 'store_response_failure', 'error' => reason },
                      msg.get_extension_args)
       end
     end

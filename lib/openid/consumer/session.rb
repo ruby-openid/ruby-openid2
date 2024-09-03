@@ -24,9 +24,9 @@ module OpenID
       def to_session_value(val)
         case val
         when Array
-          val.map{|ele| to_session_value(ele) }
+          val.map { |ele| to_session_value(ele) }
         when Hash
-          Hash[*(val.map{|k,v| [k, to_session_value(v)] }.flatten(1))]
+          Hash[*val.map { |k, v| [k, to_session_value(v)] }.flatten(1)]
         else
           val.respond_to?(:to_session_value) ? val.to_session_value : val
         end

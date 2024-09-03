@@ -1,37 +1,34 @@
-require "openid/dh"
-require "openid/util"
-require "openid/kvpost"
-require "openid/cryptutil"
-require "openid/protocolerror"
-require "openid/association"
+require 'openid/dh'
+require 'openid/util'
+require 'openid/kvpost'
+require 'openid/cryptutil'
+require 'openid/protocolerror'
+require 'openid/association'
 
 module OpenID
   class Consumer
-
     # A superclass for implementing Diffie-Hellman association sessions.
     class DiffieHellmanSession
       class << self
         attr_reader :session_type, :secret_size, :allowed_assoc_types,
-          :hashfunc
+                    :hashfunc
       end
 
-      def initialize(dh=nil)
-        if dh.nil?
-          dh = DiffieHellman.from_defaults
-        end
+      def initialize(dh = nil)
+        dh = DiffieHellman.from_defaults if dh.nil?
         @dh = dh
       end
 
       # Return the query parameters for requesting an association
       # using this Diffie-Hellman association session
       def get_request
-        args = {'dh_consumer_public' => CryptUtil.num_to_base64(@dh.public)}
-        if (!@dh.using_default_values?)
+        args = { 'dh_consumer_public' => CryptUtil.num_to_base64(@dh.public) }
+        unless @dh.using_default_values?
           args['dh_modulus'] = CryptUtil.num_to_base64(@dh.modulus)
           args['dh_gen'] = CryptUtil.num_to_base64(@dh.generator)
         end
 
-        return args
+        args
       end
 
       # Process the response from a successful association request and
@@ -42,8 +39,8 @@ module OpenID
         enc_mac_key64 = response.get_arg(OPENID_NS, 'enc_mac_key', NO_DEFAULT)
         dh_server_public = CryptUtil.base64_to_num(dh_server_public64)
         enc_mac_key = Util.from_base64(enc_mac_key64)
-        return @dh.xor_secret(self.class.hashfunc,
-                              dh_server_public, enc_mac_key)
+        @dh.xor_secret(self.class.hashfunc,
+                       dh_server_public, enc_mac_key)
       end
     end
 
@@ -71,15 +68,15 @@ module OpenID
         attr_reader :session_type, :allowed_assoc_types
       end
       @session_type = 'no-encryption'
-      @allowed_assoc_types = ['HMAC-SHA1', 'HMAC-SHA256']
+      @allowed_assoc_types = %w[HMAC-SHA1 HMAC-SHA256]
 
       def get_request
-        return {}
+        {}
       end
 
       def extract_secret(response)
         mac_key64 = response.get_arg(OPENID_NS, 'mac_key', NO_DEFAULT)
-        return Util.from_base64(mac_key64)
+        Util.from_base64(mac_key64)
       end
     end
 
@@ -95,13 +92,13 @@ module OpenID
         when 'DH-SHA256'
           DiffieHellmanSHA256Session.new
         else
-          raise ArgumentError, "Unknown association session type: "\
+          raise ArgumentError, 'Unknown association session type: '\
                                "#{session_type.inspect}"
         end
       end
 
-      def initialize(store, server_url, compatibility_mode=false,
-                     negotiator=nil)
+      def initialize(store, server_url, compatibility_mode = false,
+                     negotiator = nil)
         @store = store
         @server_url = server_url
         @compatibility_mode = compatibility_mode
@@ -109,54 +106,51 @@ module OpenID
       end
 
       def get_association
-        if @store.nil?
-          return nil
-        end
+        return nil if @store.nil?
 
         assoc = @store.get_association(@server_url)
         if assoc.nil? || assoc.expires_in <= 0
           assoc = negotiate_association
-          if !assoc.nil?
-            @store.store_association(@server_url, assoc)
-          end
+          @store.store_association(@server_url, assoc) unless assoc.nil?
         end
 
-        return assoc
+        assoc
       end
 
       def negotiate_association
         assoc_type, session_type = @negotiator.get_allowed_type
         begin
-          return request_association(assoc_type, session_type)
-        rescue ServerError => why
-          supported_types = extract_supported_association_type(why, assoc_type)
-          if !supported_types.nil?
+          request_association(assoc_type, session_type)
+        rescue ServerError => e
+          supported_types = extract_supported_association_type(e, assoc_type)
+          unless supported_types.nil?
             # Attempt to create an association from the assoc_type and
             # session_type that the server told us it supported.
             assoc_type, session_type = supported_types
             begin
-              return request_association(assoc_type, session_type)
+              request_association(assoc_type, session_type)
             rescue ServerError => why
               Util.log("Server #{@server_url} refused its suggested " \
                        "association type: session_type=#{session_type}, " \
                        "assoc_type=#{assoc_type}")
-              return nil
+              nil
             end
           end
         rescue InvalidOpenIDNamespace
           Util.log("Server #{@server_url} returned a malformed association " \
-                   "response.  Falling back to check_id mode for this request.")
-          return nil
+                   'response.  Falling back to check_id mode for this request.')
+          nil
         end
       end
 
       protected
+
       def extract_supported_association_type(server_error, assoc_type)
         # Any error message whose code is not 'unsupported-type' should
         # be considered a total failure.
-        if (server_error.error_code != 'unsupported-type' or
-            server_error.message.is_openid1)
-          Util.log("Server error when requesting an association from "\
+        if server_error.error_code != 'unsupported-type' or
+           server_error.message.is_openid1
+          Util.log('Server error when requesting an association from '\
                    "#{@server_url}: #{server_error.error_text}")
           return nil
         end
@@ -173,14 +167,14 @@ module OpenID
 
         if assoc_type.nil? or session_type.nil?
           Util.log("Server #{@server_url} responded with unsupported "\
-                   "association session but did not supply a fallback.")
-          return nil
+                   'association session but did not supply a fallback.')
+          nil
         elsif !@negotiator.allowed?(assoc_type, session_type)
-          Util.log("Server sent unsupported session/association type: "\
+          Util.log('Server sent unsupported session/association type: '\
                    "session_type=#{session_type}, assoc_type=#{assoc_type}")
-          return nil
+          nil
         else
-          return [assoc_type, session_type]
+          [assoc_type, session_type]
         end
       end
 
@@ -193,19 +187,18 @@ module OpenID
 
         begin
           response = OpenID.make_kv_post(args, @server_url)
-          return extract_association(response, assoc_session)
-        rescue HTTPStatusError => why
-          Util.log("Got HTTP status error when requesting association: #{why}")
-          return nil
-        rescue Message::KeyNotFound => why
-          Util.log("Missing required parameter in response from "\
-                   "#{@server_url}: #{why}")
-          return nil
-
-        rescue ProtocolError => why
+          extract_association(response, assoc_session)
+        rescue HTTPStatusError => e
+          Util.log("Got HTTP status error when requesting association: #{e}")
+          nil
+        rescue Message::KeyNotFound => e
+          Util.log('Missing required parameter in response from '\
+                   "#{@server_url}: #{e}")
+          nil
+        rescue ProtocolError => e
           Util.log("Protocol error processing response from #{@server_url}: "\
-                   "#{why}")
-          return nil
+                   "#{e}")
+          nil
         end
       end
 
@@ -216,23 +209,21 @@ module OpenID
         assoc_session = self.class.create_session(session_type)
         args = {
           'mode' => 'associate',
-          'assoc_type' => assoc_type,
+          'assoc_type' => assoc_type
         }
 
-        if !@compatibility_mode
-          args['ns'] = OPENID2_NS
-        end
+        args['ns'] = OPENID2_NS unless @compatibility_mode
 
         # Leave out the session type if we're in compatibility mode
         # *and* it's no-encryption.
         if !@compatibility_mode ||
-            assoc_session.class.session_type != 'no-encryption'
+           assoc_session.class.session_type != 'no-encryption'
           args['session_type'] = assoc_session.class.session_type
         end
 
         args.merge!(assoc_session.get_request)
         message = Message.from_openid_args(args)
-        return assoc_session, message
+        [assoc_session, message]
       end
 
       # Given an association response message, extract the OpenID 1.X
@@ -256,7 +247,7 @@ module OpenID
         # warning.
         if session_type == 'no-encryption'
           Util.log("WARNING: #{@server_url} sent 'no-encryption'"\
-                   "for OpenID 1.X")
+                   'for OpenID 1.X')
 
         # Missing or empty session type is the way to flag a
         # 'no-encryption' response. Change the session type to
@@ -266,15 +257,14 @@ module OpenID
           session_type = 'no-encryption'
         end
 
-        return session_type
+        session_type
       end
 
       def self.extract_expires_in(message)
         # expires_in should be a base-10 string.
         expires_in_str = message.get_arg(OPENID_NS, 'expires_in', NO_DEFAULT)
-        if !(/\A\d+\Z/ =~ expires_in_str)
-          raise ProtocolError, "Invalid expires_in field: #{expires_in_str}"
-        end
+        raise ProtocolError, "Invalid expires_in field: #{expires_in_str}" unless /\A\d+\Z/ =~ expires_in_str
+
         expires_in_str.to_i
       end
 
@@ -291,16 +281,16 @@ module OpenID
         expires_in = self.class.extract_expires_in(assoc_response)
 
         # OpenID 1 has funny association session behaviour.
-        if assoc_response.is_openid1
-            session_type = get_openid1_session_type(assoc_response)
-        else
-          session_type = assoc_response.get_arg(OPENID2_NS, 'session_type',
+        session_type = if assoc_response.is_openid1
+                         get_openid1_session_type(assoc_response)
+                       else
+                         assoc_response.get_arg(OPENID2_NS, 'session_type',
                                                 NO_DEFAULT)
-        end
+                       end
 
         # Session type mismatch
         if assoc_session.class.session_type != session_type
-          if (assoc_response.is_openid1 and session_type == 'no-encryption')
+          if assoc_response.is_openid1 and session_type == 'no-encryption'
             # In OpenID 1, any association request can result in a
             # 'no-encryption' association response. Setting
             # assoc_session to a new no-encryption session should
@@ -311,15 +301,15 @@ module OpenID
             # Any other mismatch, regardless of protocol version
             # results in the failure of the association session
             # altogether.
-            raise ProtocolError, "Session type mismatch. Expected "\
+            raise ProtocolError, 'Session type mismatch. Expected '\
                                  "#{assoc_session.class.session_type}, got "\
                                  "#{session_type}"
           end
         end
 
         # Make sure assoc_type is valid for session_type
-        if !assoc_session.class.allowed_assoc_types.member?(assoc_type)
-          raise ProtocolError, "Unsupported assoc_type for session "\
+        unless assoc_session.class.allowed_assoc_types.member?(assoc_type)
+          raise ProtocolError, 'Unsupported assoc_type for session '\
                                "#{assoc_session.class.session_type} "\
                                "returned: #{assoc_type}"
         end
@@ -329,15 +319,14 @@ module OpenID
         # type.
         begin
           secret = assoc_session.extract_secret(assoc_response)
-        rescue Message::KeyNotFound, ArgumentError => why
-          raise ProtocolError, "Malformed response for "\
+        rescue Message::KeyNotFound, ArgumentError => e
+          raise ProtocolError, 'Malformed response for '\
                                "#{assoc_session.class.session_type} "\
-                               "session: #{why.message}"
+                               "session: #{e.message}"
         end
 
-
-        return Association.from_expires_in(expires_in, assoc_handle, secret,
-                                           assoc_type)
+        Association.from_expires_in(expires_in, assoc_handle, secret,
+                                    assoc_type)
       end
     end
   end

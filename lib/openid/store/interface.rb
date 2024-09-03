@@ -1,7 +1,6 @@
 require 'openid/util'
 
 module OpenID
-
   # Stores for Associations and nonces. Used by both the Consumer and
   # the Server. If you have a database abstraction layer or other
   # state storage in your application or framework already, you can
@@ -13,7 +12,6 @@ module OpenID
     # * changed use_nonce to support one-way nonces
     # * added cleanup_nonces, cleanup_associations, cleanup
     class Interface < Object
-
       # Put a Association object into storage.
       # When implementing a store, don't assume that there are any limitations
       # on the character set of the server_url.  In particular, expect to see
@@ -26,7 +24,7 @@ module OpenID
       # the server_url.  Returns nil if no such association is found or if
       # the one matching association is expired. (Is allowed to GC expired
       # associations when found.)
-      def get_association(server_url, handle=nil)
+      def get_association(server_url, handle = nil)
         raise NotImplementedError
       end
 
@@ -68,7 +66,7 @@ module OpenID
       # Not called during normal library operation, this method is for store
       # admins to keep their storage from filling up with expired data
       def cleanup
-        return cleanup_nonces, cleanup_associations
+        [cleanup_nonces, cleanup_associations]
       end
     end
   end

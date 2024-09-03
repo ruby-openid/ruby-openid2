@@ -25,13 +25,13 @@ GEM
     rexml (3.3.6)
       strscan
     rspec-block_is_expected (1.0.6)
-    rubocop (1.64.1)
+    rubocop (1.65.1)
       json (~> 2.3)
       language_server-protocol (>= 3.17.0)
       parallel (~> 1.10)
       parser (>= 3.3.0.2)
       rainbow (>= 2.2.2, < 4.0)
-      regexp_parser (>= 1.8, < 3.0)
+      regexp_parser (>= 2.4, < 3.0)
       rexml (>= 3.2.5, < 4.0)
       rubocop-ast (>= 1.31.1, < 2.0)
       ruby-progressbar (~> 1.7)
@@ -50,6 +50,11 @@ GEM
       version_gem (>= 1.1.2, < 3)
     rubocop-md (1.2.2)
       rubocop (>= 1.0)
+    rubocop-minitest (0.36.0)
+      rubocop (>= 1.61, < 2.0)
+      rubocop-ast (>= 1.31.1, < 2.0)
+    rubocop-packaging (0.5.2)
+      rubocop (>= 1.33, < 2.0)
     rubocop-performance (1.21.1)
       rubocop (>= 1.48.1, < 2.0)
       rubocop-ast (>= 1.31.1, < 2.0)
@@ -68,10 +73,10 @@ GEM
     rubocop-thread_safety (0.5.1)
       rubocop (>= 0.90.0)
     ruby-progressbar (1.13.0)
-    standard (1.37.0)
+    standard (1.40.0)
       language_server-protocol (~> 3.17.0.2)
       lint_roller (~> 1.0)
-      rubocop (~> 1.64.0)
+      rubocop (~> 1.65.0)
       standard-custom (~> 1.0.0)
       standard-performance (~> 1.4)
     standard-custom (1.0.2)
@@ -92,17 +97,20 @@ GEM
     webrick (1.8.1)
 
 PLATFORMS
-  arm64-darwin-22
   arm64-darwin-23
+  ruby
 
 DEPENDENCIES
   byebug
   minitest (>= 5)
-  rake
+  rake (>= 13)
   rexml (~> 3.2)
   rubocop-lts (~> 18.2, >= 18.2.1)
+  rubocop-minitest (~> 0.36)
+  rubocop-packaging (~> 0.5, >= 0.5.2)
   ruby-openid!
+  standard (>= 1.35.1)
   webrick (~> 1.8)
 
 BUNDLED WITH
-   2.4.22
+   2.5.18

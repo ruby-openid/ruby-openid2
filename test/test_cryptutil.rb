@@ -1,10 +1,11 @@
 # coding: ASCII-8BIT
-require "minitest/autorun"
-require "openid/cryptutil"
-require "pathname"
+
+require 'minitest/autorun'
+require 'openid/cryptutil'
+require 'pathname'
 
 class CryptUtilTestCase < Minitest::Test
-  BIG = 2 ** 256
+  BIG = 2**256
 
   def test_rand
     # If this is not true, the rest of our test won't work
@@ -28,8 +29,8 @@ class CryptUtilTestCase < Minitest::Test
   end
 
   def test_random_binary_convert
-    (0..500).each do
-      n = (0..10).inject(0) {|sum, element| sum + OpenID::CryptUtil.rand(BIG) }
+    501.times do
+      n = (0..10).inject(0) { |sum, _element| sum + OpenID::CryptUtil.rand(BIG) }
       s = OpenID::CryptUtil.num_to_binary n
       assert(s.is_a?(String))
       n_converted_back = OpenID::CryptUtil.binary_to_num(s)
@@ -39,14 +40,14 @@ class CryptUtilTestCase < Minitest::Test
 
   def test_enumerated_binary_convert
     {
-        "\x00" => 0,
-        "\x01" => 1,
-        "\x7F" => 127,
-        "\x00\xFF" => 255,
-        "\x00\x80" => 128,
-        "\x00\x81" => 129,
-        "\x00\x80\x00" => 32768,
-        "OpenID is cool" => 1611215304203901150134421257416556,
+      "\x00" => 0,
+      "\x01" => 1,
+      "\x7F" => 127,
+      "\x00\xFF" => 255,
+      "\x00\x80" => 128,
+      "\x00\x81" => 129,
+      "\x00\x80\x00" => 32_768,
+      'OpenID is cool' => 1_611_215_304_203_901_150_134_421_257_416_556
     }.each do |str, num|
       num_prime = OpenID::CryptUtil.binary_to_num(str)
       str_prime = OpenID::CryptUtil.num_to_binary(num)
@@ -73,9 +74,9 @@ class CryptUtilTestCase < Minitest::Test
   end
 
   def test_base64_to_num_invalid
-    assert_raises(ArgumentError) {
+    assert_raises(ArgumentError) do
       OpenID::CryptUtil.base64_to_num('!@#$')
-    }
+    end
   end
 
   def test_num_to_base64
@@ -93,7 +94,7 @@ class CryptUtilTestCase < Minitest::Test
   end
 
   def test_randomstring_population
-    s1 = OpenID::CryptUtil.random_string(42, "XO")
+    s1 = OpenID::CryptUtil.random_string(42, 'XO')
     assert_match(/[XO]{42}/, s1)
   end
 

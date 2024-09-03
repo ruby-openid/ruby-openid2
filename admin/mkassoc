@@ -1,11 +1,11 @@
 #!/usr/bin/env ruby
 
-require "openid/consumer/associationmanager"
-require "openid/store/memory"
+require 'openid/consumer/associationmanager'
+require 'openid/store/memory'
 
 store = OpenID::Store::Memory.new
 ARGV.each do |server_url|
-  unless URI::regexp =~ server_url
+  unless URI::DEFAULT_PARSER.make_regexp =~ server_url
     puts "`#{server_url}` will be skipped for invalid URI format."
     next
   end
