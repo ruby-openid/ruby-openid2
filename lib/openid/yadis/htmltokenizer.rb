@@ -66,33 +66,31 @@ class HTMLTokenizer
 
   # Look at the next token, but don't actually grab it
   def peekNextToken
-    if @cur_pos == @page.length then return nil end
+    return nil if @cur_pos == @page.length
 
-    if ?< == @page[@cur_pos]
+    if '<' == @page[@cur_pos]
       # Next token is a tag of some kind
       if '!--' == @page[(@cur_pos + 1), 3]
         # Token is a comment
         tag_end = @page.index('-->', (@cur_pos + 1))
-        if tag_end.nil?
-          raise HTMLTokenizerError, "No end found to started comment:\n#{@page[@cur_pos,80]}"
-        end
+        raise HTMLTokenizerError, "No end found to started comment:\n#{@page[@cur_pos, 80]}" if tag_end.nil?
+
         # p @page[@cur_pos .. (tag_end+2)]
-        HTMLComment.new(@page[@cur_pos .. (tag_end + 2)])
+        HTMLComment.new(@page[@cur_pos..(tag_end + 2)])
       else
         # Token is a html tag
         tag_end = @page.index('>', (@cur_pos + 1))
-        if tag_end.nil?
-          raise HTMLTokenizerError, "No end found to started tag:\n#{@page[@cur_pos,80]}"
-        end
+        raise HTMLTokenizerError, "No end found to started tag:\n#{@page[@cur_pos, 80]}" if tag_end.nil?
+
         # p @page[@cur_pos .. tag_end]
-        HTMLTag.new(@page[@cur_pos .. tag_end])
+        HTMLTag.new(@page[@cur_pos..tag_end])
       end
     else
       # Next token is text
       text_end = @page.index('<', @cur_pos)
       text_end = text_end.nil? ? -1 : (text_end - 1)
       # p @page[@cur_pos .. text_end]
-      HTMLText.new(@page[@cur_pos .. text_end])
+      HTMLText.new(@page[@cur_pos..text_end])
     end
   end
 
@@ -107,9 +105,9 @@ class HTMLTokenizer
       # @page.slice!(0, token.raw.length)
       @cur_pos += token.raw.length
     end
-    #p token
-    #print token.raw
-    return token
+    # p token
+    # print token.raw
+    token
   end
 
   # Get a tag from the specified set of desired tags.
@@ -117,11 +115,11 @@ class HTMLTokenizer
   # <tt>foo =  toke.getTag("h1", "h2", "h3")</tt>
   # Will return the next header tag encountered.
   def getTag(*sought_tags)
-    sought_tags.collect! {|elm| elm.downcase}
+    sought_tags.collect! { |elm| elm.downcase }
 
     while (tag = getNextToken)
-      if tag.kind_of?(HTMLTag) and
-          (0 == sought_tags.length or sought_tags.include?(tag.tag_name))
+      if tag.is_a?(HTMLTag) and
+         (0 == sought_tags.length or sought_tags.include?(tag.tag_name))
         break
       end
     end
@@ -132,24 +130,20 @@ class HTMLTokenizer
   # (if specified) or a specific later tag
   def getText(until_tag = nil)
     if until_tag.nil?
-      if ?< == @page[@cur_pos]
+      if '<' == @page[@cur_pos]
         # Next token is a tag, not text
-        ""
+        ''
       else
         # Next token is text
         getNextToken.text
       end
     else
-      ret_str = ""
+      ret_str = ''
 
       while (tag = peekNextToken)
-        if tag.kind_of?(HTMLTag) and tag.tag_name == until_tag
-          break
-        end
+        break if tag.is_a?(HTMLTag) and tag.tag_name == until_tag
 
-        if ("" != tag.text)
-          ret_str << (tag.text + " ")
-        end
+        ret_str << (tag.text + ' ') if '' != tag.text
         getNextToken
       end
 
@@ -161,9 +155,8 @@ class HTMLTokenizer
   # leading and trailing whitespace, and squeezing multiple
   # spaces into a single space.
   def getTrimmedText(until_tag = nil)
-    getText(until_tag).strip.gsub(/\s+/m, " ")
+    getText(until_tag).strip.gsub(/\s+/m, ' ')
   end
-
 end
 
 class HTMLTokenizerError < Exception
@@ -185,11 +178,11 @@ class HTMLToken
 
   # By default tokens have no text representation
   def text
-    ""
+    ''
   end
 
   def trimmed_text
-    text.strip.gsub(/\s+/m, " ")
+    text.strip.gsub(/\s+/m, ' ')
   end
 
   # Compare to another based on the raw source
@@ -208,12 +201,11 @@ end
 # Class representing an HTML comment
 class HTMLComment < HTMLToken
   attr_accessor :contents
+
   def initialize(text)
     super(text)
     temp_arr = text.scan(/^<!--\s*(.*?)\s*-->$/m)
-    if temp_arr[0].nil?
-      raise HTMLTokenizerError, "Text passed to HTMLComment.initialize is not a comment"
-    end
+    raise HTMLTokenizerError, 'Text passed to HTMLComment.initialize is not a comment' if temp_arr[0].nil?
 
     @contents = temp_arr[0][0]
   end
@@ -222,21 +214,20 @@ end
 # Class representing an HTML tag
 class HTMLTag < HTMLToken
   attr_reader :end_tag, :tag_name
+
   def initialize(text)
     super(text)
-    if ?< != text[0] or ?> != text[-1]
-      raise HTMLTokenizerError, "Text passed to HTMLComment.initialize is not a comment"
+    if '<' != text[0] or '>' != text[-1]
+      raise HTMLTokenizerError, 'Text passed to HTMLComment.initialize is not a comment'
     end
 
-    @attr_hash = Hash.new
+    @attr_hash = {}
     @raw = text
 
     tag_name = text.scan(/[\w:-]+/)[0]
-    if tag_name.nil?
-      raise HTMLTokenizerError, "Error, tag is nil: #{tag_name}"
-    end
+    raise HTMLTokenizerError, "Error, tag is nil: #{tag_name}" if tag_name.nil?
 
-    if ?/ == text[1]
+    if '/' == text[1]
       # It's an end tag
       @end_tag = true
       @tag_name = '/' + tag_name.downcase
@@ -253,53 +244,47 @@ class HTMLTag < HTMLToken
   # things go quicker
   def attr_hash
     # Lazy initialize == don't build the hash until it's needed
-    if !@hashed
-      if !@end_tag
+    unless @hashed
+      unless @end_tag
         # Get the attributes
-        attr_arr = @raw.scan(/<[\w:-]+\s+(.*?)\/?>/m)[0]
-        if attr_arr.kind_of?(Array)
+        attr_arr = @raw.scan(%r{<[\w:-]+\s+(.*?)/?>}m)[0]
+        if attr_arr.is_a?(Array)
           # Attributes found, parse them
           attrs = attr_arr[0]
           attr_arr = attrs.scan(/\s*([\w:-]+)(?:\s*=\s*("[^"]*"|'[^']*'|([^"'>][^\s>]*)))?/m)
           # clean up the array by:
           # * setting all nil elements to true
           # * removing enclosing quotes
-          attr_arr.each {
-            |item|
+          attr_arr.each do |item|
             val = if item[1].nil?
                     item[0]
                   elsif '"'[0] == item[1][0] or '\''[0] == item[1][0]
-                    item[1][1 .. -2]
+                    item[1][1..-2]
                   else
                     item[1]
                   end
             @attr_hash[item[0].downcase] = val
-          }
+          end
         end
       end
       @hashed = true
     end
 
-    #p self
+    # p self
 
     @attr_hash
   end
 
   # Get the 'alt' text for a tag, if it exists, or an empty string otherwise
   def text
-    if !end_tag
+    unless end_tag
       case tag_name
       when 'img'
-        if !attr_hash['alt'].nil?
-          return attr_hash['alt']
-        end
+        return attr_hash['alt'] unless attr_hash['alt'].nil?
       when 'applet'
-        if !attr_hash['alt'].nil?
-          return attr_hash['alt']
-        end
+        return attr_hash['alt'] unless attr_hash['alt'].nil?
       end
     end
-    return ''
+    ''
   end
 end
-

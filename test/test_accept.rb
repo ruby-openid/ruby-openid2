@@ -4,21 +4,20 @@ require 'openid/yadis/accept'
 require 'openid/util'
 
 module OpenID
-
   class AcceptTest < Minitest::Test
     include TestDataMixin
 
-    def getTestData()
+    def getTestData
       # Read the test data off of disk
       #
       # () -> [(int, str)]
       lines = read_data_file('accept.txt')
       line_no = 1
-      return lines.collect { |line|
+      lines.collect do |line|
         pair = [line_no, line]
         line_no += 1
         pair
-      }
+      end
     end
 
     def chunk(lines)
@@ -27,8 +26,8 @@ module OpenID
       # [(int, str)] -> [[(int, str)]]
       chunks = []
       chunk = []
-      lines.each { |lineno, line|
-        stripped = line.strip()
+      lines.each do |lineno, line|
+        stripped = line.strip
         if (stripped == '') or stripped.start_with?('#')
           if chunk.length > 0
             chunks << chunk
@@ -37,13 +36,11 @@ module OpenID
         else
           chunk << [lineno, stripped]
         end
-      }
-
-      if chunk.length > 0
-        chunks << chunk
       end
 
-      return chunks
+      chunks << chunk if chunk.length > 0
+
+      chunks
     end
 
     def parseLines(chunk)
@@ -52,19 +49,19 @@ module OpenID
       #
       # [(int, str)] -> {str:(int, str)}
       items = {}
-      chunk.each { |lineno, line|
+      chunk.each do |lineno, line|
         header, data = line.split(':', 2)
         header = header.downcase
         items[header] = [lineno, data.strip]
-      }
-      return items
+      end
+      items
     end
 
     def parseAvailable(available_text)
       # Parse an Available: line's data
       #
       # str -> [str]
-      return available_text.split(',', -1).collect { |s| s.strip }
+      available_text.split(',', -1).collect { |s| s.strip }
     end
 
     def parseExpected(expected_text)
@@ -73,7 +70,7 @@ module OpenID
       # str -> [(str, float)]
       expected = []
       if expected_text != ''
-        expected_text.split(',', -1).each { |chunk|
+        expected_text.split(',', -1).each do |chunk|
           chunk = chunk.strip
           mtype, qstuff = chunk.split(';', -1)
           mtype = mtype.strip
@@ -83,17 +80,17 @@ module OpenID
           Util.assert(q == 'q')
           qval = qstr.to_f
           expected << [mtype, qval]
-        }
+        end
       end
 
-      return expected
+      expected
     end
 
     def test_accept_headers
-      lines = getTestData()
+      lines = getTestData
       chunks = chunk(lines)
       data_sets = chunks.collect { |chunk| parseLines(chunk) }
-      data_sets.each { |data|
+      data_sets.each do |data|
         lnos = []
         lno, header = data['accept']
         lnos << lno
@@ -101,7 +98,7 @@ module OpenID
         lnos << lno
         begin
           available = parseAvailable(avail_data)
-        rescue
+        rescue StandardError
           print 'On line', lno
           raise
         end
@@ -110,12 +107,12 @@ module OpenID
         lnos << lno
         begin
           expected = parseExpected(exp_data)
-        rescue
+        rescue StandardError
           print 'On line', lno
           raise
         end
 
-        sprintf('MatchAcceptTest for lines %s', lnos)
+        format('MatchAcceptTest for lines %s', lnos)
 
         # Test:
         accepted = Yadis.parse_accept_header(header)
@@ -124,7 +121,7 @@ module OpenID
 
         assert_equal(Yadis.get_acceptable(header, available),
                      expected.collect { |mtype, _| mtype })
-      }
+      end
     end
 
     def test_generate_accept_header
@@ -133,36 +130,33 @@ module OpenID
 
       # Form: [input_array, expected_header_string]
       [
-       # Empty input list
-       [[], ""],
-       # Content type name only; no q value
-       [["test"], "test"],
-       # q = 1.0 should be omitted from the header
-       [[["test", 1.0]], "test"],
-       # Test conversion of float to string
-       [["test", ["with_q", 0.8]], "with_q; q=0.8, test"],
-       # Allow string q values, too
-       [["test", ["with_q_str", "0.7"]], "with_q_str; q=0.7, test"],
-       # Test q values out of bounds
-       [[["test", -1.0]], nil],
-       [[["test", 1.1]], nil],
-       # Test sorting of types by q value
-       [[["middle", 0.5], ["min", 0.1], "max"],
-        "min; q=0.1, middle; q=0.5, max"],
+        # Empty input list
+        [[], ''],
+        # Content type name only; no q value
+        [['test'], 'test'],
+        # q = 1.0 should be omitted from the header
+        [[['test', 1.0]], 'test'],
+        # Test conversion of float to string
+        [['test', ['with_q', 0.8]], 'with_q; q=0.8, test'],
+        # Allow string q values, too
+        [['test', ['with_q_str', '0.7']], 'with_q_str; q=0.7, test'],
+        # Test q values out of bounds
+        [[['test', -1.0]], nil],
+        [[['test', 1.1]], nil],
+        # Test sorting of types by q value
+        [[['middle', 0.5], ['min', 0.1], 'max'],
+         'min; q=0.1, middle; q=0.5, max']
 
-      ].each { |input, expected_header|
-
+      ].each do |input, expected_header|
         if expected_header.nil?
-          assert_raises(ArgumentError) {
+          assert_raises(ArgumentError) do
             Yadis.generate_accept_header(*input)
-          }
+          end
         else
           assert_equal(expected_header, Yadis.generate_accept_header(*input),
                        [input, expected_header].inspect)
         end
-      }
+      end
     end
-
   end
-
 end

@@ -1,6 +1,6 @@
-require "minitest/autorun"
-require "testutil"
-require "openid/urinorm"
+require 'minitest/autorun'
+require 'testutil'
+require 'openid/urinorm'
 
 class URINormTestCase < Minitest::Test
   include OpenID::TestDataMixin
@@ -29,6 +29,4 @@ class URINormTestCase < Minitest::Test
       end
     end
   end
-
 end
-

@@ -1,6 +1,5 @@
 module OpenID
   class Consumer
-
     # A set of discovered services, for tracking which providers have
     # been attempted for an OpenID identifier
     class DiscoveredServices
@@ -30,7 +29,7 @@ module OpenID
       end
 
       def to_session_value
-        services = @services.map{|s| s.respond_to?(:to_session_value) ? s.to_session_value : s }
+        services = @services.map { |s| s.respond_to?(:to_session_value) ? s.to_session_value : s }
         current_val = @current.respond_to?(:to_session_value) ? @current.to_session_value : @current
 
         {
@@ -48,11 +47,11 @@ module OpenID
       def self.from_session_value(value)
         return value unless value.is_a?(Hash)
 
-        services = value['services'].map{|s| OpenID::OpenIDServiceEndpoint.from_session_value(s) }
+        services = value['services'].map { |s| OpenID::OpenIDServiceEndpoint.from_session_value(s) }
         current = OpenID::OpenIDServiceEndpoint.from_session_value(value['current'])
 
-        obj = self.new(value['starting_url'], value['yadis_url'], services)
-        obj.instance_variable_set("@current", current)
+        obj = new(value['starting_url'], value['yadis_url'], services)
+        obj.instance_variable_set('@current', current)
         obj
       end
     end
@@ -60,7 +59,7 @@ module OpenID
     # Manages calling discovery and tracking which endpoints have
     # already been attempted.
     class DiscoveryManager
-      def initialize(session, url, session_key_suffix=nil)
+      def initialize(session, url, session_key_suffix = nil)
         @url = url
 
         @session = OpenID::Consumer::Session.new(session, DiscoveredServices)
@@ -86,10 +85,10 @@ module OpenID
           service = nil
         end
 
-        return service
+        service
       end
 
-      def cleanup(force=false)
+      def cleanup(force = false)
         manager = get_manager(force)
         if !manager.nil?
           service = manager.current
@@ -97,37 +96,32 @@ module OpenID
         else
           service = nil
         end
-        return service
+        service
       end
 
       protected
 
-      def get_manager(force=false)
+      def get_manager(force = false)
         manager = load
-        if force || manager.nil? || manager.for_url?(@url)
-          return manager
-        else
-          return nil
-        end
+        return manager if force || manager.nil? || manager.for_url?(@url)
+
+        nil
       end
 
       def create_manager(yadis_url, services)
         manager = get_manager
-        if !manager.nil?
-          raise StandardError, "There is already a manager for #{yadis_url}"
-        end
-        if services.empty?
-          return nil
-        end
+        raise StandardError, "There is already a manager for #{yadis_url}" unless manager.nil?
+        return nil if services.empty?
+
         manager = DiscoveredServices.new(@url, yadis_url, services)
         store(manager)
-        return manager
+        manager
       end
 
-      def destroy_manager(force=false)
-        if !get_manager(force).nil?
-          destroy!
-        end
+      def destroy_manager(force = false)
+        return if get_manager(force).nil?
+
+        destroy!
       end
 
       def session_key

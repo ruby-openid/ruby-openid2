@@ -13,44 +13,42 @@ class LinkParseTestCase < Minitest::Test
       fk, fv = f.shift
       ok = false
       while ek[-1] == '*'[0] # optional entry detected
-        if fk == ek[0...-1] and fv==ev # optional entry found
+        if fk == ek[0...-1] and fv == ev # optional entry found
           ok = true
           break
         else # not found. okay, move on to next expected pair
           ek, ev = e.shift
         end
-        if ek.nil?
-          if fk == nil
-            ok = true
-          end
-          break
-        end
+        next unless ek.nil?
+
+        ok = true if fk.nil?
+        break
       end
       next if ok
       next if fk == ek and fv == ev
+
       return false
     end
-    return f.empty?
+    f.empty?
   end
 
   def test_attrcmp
     good = [
-     [{'foo' => 'bar'},{'foo' => 'bar'}],
-     [{'foo*' => 'bar'},{'foo' => 'bar'}],
-     [{'foo' => 'bar', 'bam*' => 'baz'},{'foo' => 'bar'}],
-     [{'foo' => 'bar', 'bam*' => 'baz', 'tak' => 'tal'},
-        {'foo' => 'bar', 'tak' => 'tal'}],
-     ]
-    bad = [
-     [{},{'foo' => 'bar'}],
-     [{'foo' => 'bar'}, {'bam' => 'baz'}],
-     [{'foo' => 'bar'}, {}],
-     [{'foo*' => 'bar'},{'foo*' => 'bar'}],
-     [{'foo' => 'bar', 'tak' => 'tal'}, {'foo' => 'bar'}]
+      [{ 'foo' => 'bar' }, { 'foo' => 'bar' }],
+      [{ 'foo*' => 'bar' }, { 'foo' => 'bar' }],
+      [{ 'foo' => 'bar', 'bam*' => 'baz' }, { 'foo' => 'bar' }],
+      [{ 'foo' => 'bar', 'bam*' => 'baz', 'tak' => 'tal' },
+       { 'foo' => 'bar', 'tak' => 'tal' }]
     ]
-    good.each{|c|assert(attr_cmp(c[0],c[1]),c.inspect)}
-    bad.each{|c|assert(!attr_cmp(c[0],c[1]),c.inspect)}
-
+    bad = [
+      [{}, { 'foo' => 'bar' }],
+      [{ 'foo' => 'bar' }, { 'bam' => 'baz' }],
+      [{ 'foo' => 'bar' }, {}],
+      [{ 'foo*' => 'bar' }, { 'foo*' => 'bar' }],
+      [{ 'foo' => 'bar', 'tak' => 'tal' }, { 'foo' => 'bar' }]
+    ]
+    good.each { |c| assert(attr_cmp(c[0], c[1]), c.inspect) }
+    bad.each { |c| assert(!attr_cmp(c[0], c[1]), c.inspect) }
   end
 
   def test_linkparse
@@ -58,54 +56,51 @@ class LinkParseTestCase < Minitest::Test
 
     numtests = nil
     testnum = 0
-    cases.each {|c|
-      headers, html = c.split("\n\n",2)
+    cases.each do |c|
+      headers, html = c.split("\n\n", 2)
       expected_links = []
-      name = ""
+      name = ''
       testnum += 1
-      headers.split("\n").each{|h|
-        k,v = h.split(":",2)
+      headers.split("\n").each do |h|
+        k, v = h.split(':', 2)
         v = '' if v.nil?
-        if k == "Num Tests"
-          assert(numtests.nil?, "datafile parsing error: there can be only one NumTests")
+        if k == 'Num Tests'
+          assert(numtests.nil?, 'datafile parsing error: there can be only one NumTests')
           numtests = v.to_i
           testnum = 0
           next
-        elsif k == "Name"
+        elsif k == 'Name'
           name = v.strip
-        elsif k == "Link" or k == "Link*"
+        elsif ['Link', 'Link*'].include?(k)
           attrs = {}
-          v.strip.split.each{|a|
-            kk,vv = a.split('=')
-            attrs[kk]=vv
-          }
-          expected_links << [k== "Link*", attrs]
+          v.strip.split.each do |a|
+            kk, vv = a.split('=')
+            attrs[kk] = vv
+          end
+          expected_links << [k == 'Link*', attrs]
         else
           assert(false, "datafile parsing error: bad header #{h}")
         end
-      }
+      end
       html = html.force_encoding('UTF-8') if html.respond_to? :force_encoding
-      links = OpenID::parse_link_attrs(html)
-      
+      links = OpenID.parse_link_attrs(html)
+
       found = links.dup
       expected = expected_links.dup
-      while(fl = found.shift)
+      while (fl = found.shift)
         optional, el = expected.shift
-        while optional and !attr_cmp(el, fl) and not expected.empty?
-          optional, el = expected.shift
-        end
-        assert(attr_cmp(el,fl), "#{name}: #{fl.inspect} does not match #{el.inspect}")
+        optional, el = expected.shift while optional and !attr_cmp(el, fl) and !expected.empty?
+        assert(attr_cmp(el, fl), "#{name}: #{fl.inspect} does not match #{el.inspect}")
       end
-    }
-    assert_equal(numtests, testnum, "Number of tests")
+    end
+    assert_equal(numtests, testnum, 'Number of tests')
 
     # test handling of invalid UTF-8 byte sequences
-    if "".respond_to? :force_encoding
-      html = "<html><body>hello joel\255</body></html>".force_encoding('UTF-8') 
-    else
-      html = "<html><body>hello joel\255</body></html>"
-    end
-    OpenID::parse_link_attrs(html)
-
+    html = if ''.respond_to? :force_encoding
+             "<html><body>hello joel\255</body></html>".force_encoding('UTF-8')
+           else
+             "<html><body>hello joel\255</body></html>"
+           end
+    OpenID.parse_link_attrs(html)
   end
 end

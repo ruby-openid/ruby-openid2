@@ -5,15 +5,15 @@ require 'openid/message'
 module OpenID
   module SReg
     DATA_FIELDS = {
-      'fullname'=>'Full Name',
-      'nickname'=>'Nickname',
-      'dob'=>'Date of Birth',
-      'email'=>'E-mail Address',
-      'gender'=>'Gender',
-      'postcode'=>'Postal Code',
-      'country'=>'Country',
-      'language'=>'Language',
-      'timezone'=>'Time Zone',
+      'fullname' => 'Full Name',
+      'nickname' => 'Nickname',
+      'dob' => 'Date of Birth',
+      'email' => 'E-mail Address',
+      'gender' => 'Gender',
+      'postcode' => 'Postal Code',
+      'country' => 'Country',
+      'language' => 'Language',
+      'timezone' => 'Time Zone'
     }
 
     NS_URI_1_0 = 'http://openid.net/sreg/1.0'
@@ -28,9 +28,9 @@ module OpenID
 
     # raise ArgumentError if fieldname is not in the defined sreg fields
     def OpenID.check_sreg_field_name(fieldname)
-      unless DATA_FIELDS.member? fieldname
-        raise ArgumentError, "#{fieldname} is not a defined simple registration field"
-      end
+      return if DATA_FIELDS.member? fieldname
+
+      raise ArgumentError, "#{fieldname} is not a defined simple registration field"
     end
 
     # Does the given endpoint advertise support for simple registration?
@@ -43,11 +43,9 @@ module OpenID
     # namespace URIs found in the wild, as well as missing namespace
     # definitions (for OpenID 1)
     def OpenID.get_sreg_ns(message)
-      [NS_URI_1_1, NS_URI_1_0].each{|ns|
-        if message.namespaces.get_alias(ns)
-          return ns
-        end
-      }
+      [NS_URI_1_1, NS_URI_1_0].each do |ns|
+        return ns if message.namespaces.get_alias(ns)
+      end
       # try to add an alias, since we didn't find one
       ns = NS_URI_1_1
       begin
@@ -55,7 +53,7 @@ module OpenID
       rescue IndexError
         raise NamespaceError
       end
-      return ns
+      ns
     end
 
     # The simple registration namespace was not found and could not
@@ -76,6 +74,7 @@ module OpenID
     class Request < Extension
       attr_reader :optional, :required, :ns_uri
       attr_accessor :policy_url
+
       def initialize(required = nil, optional = nil, policy_url = nil, ns_uri = NS_URI)
         super()
 
@@ -85,12 +84,10 @@ module OpenID
         @required = []
         @optional = []
 
-        if required
-          request_fields(required, true, true)
-        end
-        if optional
-          request_fields(optional, false, true)
-        end
+        request_fields(required, true, true) if required
+        return unless optional
+
+        request_fields(optional, false, true)
       end
 
       # Create a simple registration request that contains the
@@ -102,12 +99,13 @@ module OpenID
         # Since we're going to mess with namespace URI mapping, don't
         # mutate the object that was passed in.
         message = request.message.copy
-        ns_uri = OpenID::get_sreg_ns(message)
+        ns_uri = OpenID.get_sreg_ns(message)
         args = message.get_args(ns_uri)
         return nil if args == {}
-        req = new(nil,nil,nil,ns_uri)
+
+        req = new(nil, nil, nil, ns_uri)
         req.parse_extension_args(args)
-        return req
+        req
       end
 
       # Parse the unqualified simple registration request
@@ -126,24 +124,20 @@ module OpenID
       def parse_extension_args(args, strict = false)
         required_items = args['required']
         unless required_items.nil? or required_items.empty?
-          required_items.split(',').each{|field_name|
-            begin
-              request_field(field_name, true, strict)
-            rescue ArgumentError
-              raise if strict
-            end
-          }
+          required_items.split(',').each do |field_name|
+            request_field(field_name, true, strict)
+          rescue ArgumentError
+            raise if strict
+          end
         end
 
         optional_items = args['optional']
         unless optional_items.nil? or optional_items.empty?
-          optional_items.split(',').each{|field_name|
-            begin
-              request_field(field_name, false, strict)
-            rescue ArgumentError
-              raise if strict
-            end
-          }
+          optional_items.split(',').each do |field_name|
+            request_field(field_name, false, strict)
+          rescue ArgumentError
+            raise if strict
+          end
         end
         @policy_url = args['policy_url']
       end
@@ -168,21 +162,19 @@ module OpenID
       #        added to a request more than once
       # Raises ArgumentError if the field_name is not a simple registration
       # field, or if strict is set and a field is added more than once
-      def request_field(field_name, required=false, strict=false)
-        OpenID::check_sreg_field_name(field_name)
+      def request_field(field_name, required = false, strict = false)
+        OpenID.check_sreg_field_name(field_name)
 
         if strict
-          if (@required + @optional).member? field_name
-            raise ArgumentError, 'That field has already been requested'
-          end
+          raise ArgumentError, 'That field has already been requested' if (@required + @optional).member? field_name
         else
           return if @required.member? field_name
+
           if @optional.member? field_name
-            if required
-              @optional.delete field_name
-            else
-              return
-            end
+            return unless required
+
+            @optional.delete field_name
+
           end
         end
         if required
@@ -196,7 +188,8 @@ module OpenID
       def request_fields(field_names, required = false, strict = false)
         raise ArgumentError unless field_names.respond_to?(:each) and
                                    field_names[0].is_a?(String)
-        field_names.each{|fn|request_field(fn, required, strict)}
+
+        field_names.each { |fn| request_field(fn, required, strict) }
       end
 
       # Get a hash of unqualified simple registration arguments
@@ -208,13 +201,12 @@ module OpenID
         args['required'] = @required.join(',') unless @required.empty?
         args['optional'] = @optional.join(',') unless @optional.empty?
         args['policy_url'] = @policy_url unless @policy_url.nil?
-        return args
+        args
       end
 
       def member?(field_name)
         all_requested_fields.member?(field_name)
       end
-
     end
 
     # Represents the data returned in a simple registration response
@@ -224,7 +216,7 @@ module OpenID
     class Response < Extension
       attr_reader :ns_uri, :data
 
-      def initialize(data = {}, ns_uri=NS_URI)
+      def initialize(data = {}, ns_uri = NS_URI)
         @ns_alias = 'sreg'
         @data = data
         @ns_uri = ns_uri
@@ -234,7 +226,7 @@ module OpenID
       # values and create a Response object containing that data.
       def self.extract_response(request, data)
         arf = request.all_requested_fields
-        resp_data = data.reject{|k,v| !arf.member?(k) || v.nil? }
+        resp_data = data.reject { |k, v| !arf.member?(k) || v.nil? }
         new(resp_data, request.ns_uri)
       end
 
@@ -243,27 +235,27 @@ module OpenID
       # If you set the signed_only parameter to false, unsigned data from
       # the id_res message from the server will be processed.
       def self.from_success_response(success_response, signed_only = true)
-        ns_uri = OpenID::get_sreg_ns(success_response.message)
+        ns_uri = OpenID.get_sreg_ns(success_response.message)
         if signed_only
           args = success_response.get_signed_ns(ns_uri)
           return nil if args.nil? # No signed args, so fail
         else
           args = success_response.message.get_args(ns_uri)
         end
-        args.reject!{|k,v| !DATA_FIELDS.member?(k) }
+        args.reject! { |k, _v| !DATA_FIELDS.member?(k) }
         new(args, ns_uri)
       end
 
       # Get the fields to put in the simple registration namespace
       # when adding them to an id_res message.
       def get_extension_args
-        return @data
+        @data
       end
 
       # Read-only hashlike interface.
       # Raises an exception if the field name is bad
       def [](field_name)
-        OpenID::check_sreg_field_name(field_name)
+        OpenID.check_sreg_field_name(field_name)
         data[field_name]
       end
 
@@ -274,4 +266,3 @@ module OpenID
     end
   end
 end
-

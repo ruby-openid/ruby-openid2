@@ -18,7 +18,7 @@ cd rails_openid
 Open a web browser to http://localhost:3000/ and follow the instructions.
 
 The relevant code to work from when writing your Rails OpenID Relying
-Party is: 
+Party is:
 
   rails_openid/app/controllers/consumer_controller.rb
 
@@ -26,12 +26,12 @@ If you are working on an OpenID provider, check out
 
   rails_openid/app/controllers/server_controller.rb
 
-Since the library and examples are Apache-licensed, don't be shy about 
+Since the library and examples are Apache-licensed, don't be shy about
 copy-and-paste.
 
 ## Rails ActiveRecord OpenIDStore plugin
 
 For various reasons you may want or need to deploy your ruby openid
-consumer/server using an SQL based store.  The `active_record_openid_store` 
+consumer/server using an SQL based store.  The `active_record_openid_store`
 is a plugin that makes using an SQL based store simple.  Follow the
 README inside the plugin's dir for usage.

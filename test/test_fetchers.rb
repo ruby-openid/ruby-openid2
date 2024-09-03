@@ -1,4 +1,3 @@
-# encoding: utf-8
 require 'minitest/autorun'
 require 'net/http'
 require 'webrick'
@@ -28,10 +27,10 @@ module HttpResultAssertions
 end
 
 class BogusFetcher
-  RESPONSE = "bogus"
+  RESPONSE = 'bogus'
 
-  def fetch(url, body=nil, headers=nil, redirect_limit=5)
-    return BogusFetcher::RESPONSE
+  def fetch(_url, _body = nil, _headers = nil, _redirect_limit = 5)
+    BogusFetcher::RESPONSE
   end
 end
 
@@ -43,100 +42,96 @@ class FetcherTestCase < Minitest::Test
   @@test_header_value = 'marmoset'
 
   class ExpectedResponse < Net::HTTPResponse
-    attr_reader :final_url
+    attr_reader :final_url, :body
 
-    def initialize(code, final_url, body="the expected body",
-                   httpv="1.1", msg=nil)
+    def initialize(code, final_url, body = 'the expected body',
+                   httpv = '1.1', msg = nil)
       super(httpv, code, msg)
       @code = code
       @body = body
       @final_url = final_url
     end
-
-    def body
-      @body
-    end
   end
 
   @@cases =
     [
-     # path, status code, expected url (nil = default to path)
-     ['/success', 200, nil],
-     ['/notfound', 404, nil],
-     ['/badreq', 400, nil],
-     ['/forbidden', 403, nil],
-     ['/error', 500, nil],
-     ['/server_error', 503, nil],
-     ['/301redirect', 200, '/success'],
-     ['/302redirect', 200, '/success'],
-     ['/303redirect', 200, '/success'],
-     ['/307redirect', 200, '/success'],
+      # path, status code, expected url (nil = default to path)
+      ['/success', 200, nil],
+      ['/notfound', 404, nil],
+      ['/badreq', 400, nil],
+      ['/forbidden', 403, nil],
+      ['/error', 500, nil],
+      ['/server_error', 503, nil],
+      ['/301redirect', 200, '/success'],
+      ['/302redirect', 200, '/success'],
+      ['/303redirect', 200, '/success'],
+      ['/307redirect', 200, '/success']
     ]
 
   def _redirect_with_code(code)
-    lambda { |req, resp|
+    lambda { |_req, resp|
       resp.status = code
       resp['Location'] = _uri_build('/success')
     }
   end
 
   def _respond_with_code(code)
-    lambda { |req, resp|
+    lambda { |_req, resp|
       resp.status = code
-      resp.body = "the expected body"
+      resp.body = 'the expected body'
     }
   end
 
   def _require_header
-    lambda { |req, resp|
+    lambda { |req, _resp|
       assert_equal @@test_header_value, req[@@test_header_name]
       assert_match 'ruby-openid', req['User-agent']
     }
   end
 
   def _require_post
-    lambda { |req, resp|
+    lambda { |req, _resp|
       assert_equal 'POST', req.request_method
       assert_equal "postbody\n", req.body
     }
   end
 
   def _redirect_loop
-    lambda { |req, resp|
+    lambda { |_req, resp|
       @_redirect_counter += 1
       resp.status = 302
       resp['Location'] = _uri_build('/redirect_loop')
       resp.body = "Fetched #{@_redirect_counter} times."
-      assert @_redirect_counter < 10, "Fetched too many times."
+      assert @_redirect_counter < 10, 'Fetched too many times.'
     }
   end
 
-  UTF8_PAGE_CONTENT = <<-EOHTML
-<html>
-  <head><title>UTF-8</title></head>
-  <body>こんにちは</body>
-</html>
-EOHTML
+  UTF8_PAGE_CONTENT = <<~EOHTML
+    <html>
+      <head><title>UTF-8</title></head>
+      <body>こんにちは</body>
+    </html>
+  EOHTML
   def _utf8_page
-    lambda { |req, resp|
-      resp['Content-Type'] = "text/html; charset=utf-8"
+    lambda { |_req, resp|
+      resp['Content-Type'] = 'text/html; charset=utf-8'
       body = UTF8_PAGE_CONTENT.dup
       resp.body = body
     }
   end
 
   def _unencoded_page
-    lambda { |req, resp|
-      resp['Content-Type'] = "text/html"
-      body = "unencoded-body"
+    lambda { |_req, resp|
+      resp['Content-Type'] = 'text/html'
+      body = 'unencoded-body'
       resp.body = body
     }
   end
 
   def _badly_encoded_page
-    lambda { |req, resp|
-      resp['Content-Type'] = "text/html; charset=wtf"
-      body = "badly-encoded-body"
+    lambda { |_req, resp|
+      resp['Content-Type'] = 'text/html; charset=wtf'
+      body = 'badly-encoded-body'
       resp.body = body
     }
   end
@@ -148,10 +143,10 @@ EOHTML
     @fetcher = OpenID::StandardFetcher.new
     @logfile = StringIO.new
     @weblog = WEBrick::Log.new(@logfile)
-    @server = WEBrick::HTTPServer.new(:Port => 0,
-                                      :Logger => @weblog,
-                                      :AccessLog => [])
-    @server_thread = Thread.new {
+    @server = WEBrick::HTTPServer.new(Port: 0,
+                                      Logger: @weblog,
+                                      AccessLog: [])
+    @server_thread = Thread.new do
       @server.mount_proc('/success', _respond_with_code(200))
       @server.mount_proc('/301redirect', _redirect_with_code(301))
       @server.mount_proc('/302redirect', _redirect_with_code(302))
@@ -163,28 +158,28 @@ EOHTML
       @server.mount_proc('/error', _respond_with_code(500))
       @server.mount_proc('/server_error', _respond_with_code(503))
       @server.mount_proc('/require_header', _require_header)
-      @server.mount_proc('/redirect_to_reqheader') { |req, resp|
+      @server.mount_proc('/redirect_to_reqheader') do |_req, resp|
         resp.status = 302
         resp['Location'] = _uri_build('/require_header')
-      }
+      end
       @server.mount_proc('/post', _require_post)
       @server.mount_proc('/redirect_loop', _redirect_loop)
       @server.mount_proc('/utf8_page', _utf8_page)
       @server.mount_proc('/unencoded_page', _unencoded_page)
       @server.mount_proc('/badly_encoded_page', _badly_encoded_page)
       @server.start
-    }
+    end
     @uri = _uri_build
     sleep 0.2
   end
 
-  def _uri_build(path='/')
+  def _uri_build(path = '/')
     u = URI::HTTP.build({
-                          :host => "localhost",
-                          :port => @server.config[:Port],
-                          :path => path,
+                          host: 'localhost',
+                          port: @server.config[:Port],
+                          path: path
                         })
-    return u.to_s
+    u.to_s
   end
 
   def teardown
@@ -196,19 +191,17 @@ EOHTML
     @server_thread.join
   end
 
-=begin
-# XXX This test no longer works since we're not dealing with URI
-# objects internally.
-  def test_final_url_tainted
-    uri = _uri_build('/301redirect')
-    result = @fetcher.fetch(uri)
-
-    final_url = URI::parse(result.final_url)
-
-    assert final_url.host.tainted?
-    assert final_url.path.tainted?
-  end
-=end
+  # # XXX This test no longer works since we're not dealing with URI
+  # objects internally.
+  #   def test_final_url_tainted
+  #     uri = _uri_build('/301redirect')
+  #     result = @fetcher.fetch(uri)
+  #
+  #     final_url = URI::parse(result.final_url)
+  #
+  #     assert final_url.host.tainted?
+  #     assert final_url.path.tainted?
+  #   end
 
   def test_headers
     headers = {
@@ -243,24 +236,24 @@ EOHTML
   def test_redirect_limit
     @_redirect_counter = 0
     uri = _uri_build('/redirect_loop')
-    assert_raises(OpenID::HTTPRedirectLimitReached) {
-      @fetcher.fetch(uri, body=nil, headers=nil, redirect_limit=0)
-    }
+    assert_raises(OpenID::HTTPRedirectLimitReached) do
+      @fetcher.fetch(uri, body = nil, headers = nil, redirect_limit = 0)
+    end
   end
 
   def test_utf8_page
     uri = _uri_build('/utf8_page')
     response = @fetcher.fetch(uri)
     assert_equal(UTF8_PAGE_CONTENT, response.body)
-    if response.body.respond_to?(:encoding)
-      assert_equal(Encoding::UTF_8, response.body.encoding)
-    end
+    return unless response.body.respond_to?(:encoding)
+
+    assert_equal(Encoding::UTF_8, response.body.encoding)
   end
 
   def test_unencoded_page
     uri = _uri_build('/unencoded_page')
     response = @fetcher.fetch(uri)
-    assert_equal("unencoded-body", response.body)
+    assert_equal('unencoded-body', response.body)
     # The actual encoding seems to depend on the server
     # setting in case it is not defined explicitely
     # if defined?(Encoding.default_external)
@@ -274,40 +267,40 @@ EOHTML
     end
     uri = _uri_build('/badly_encoded_page')
     response = @fetcher.fetch(uri)
-    assert_equal("badly-encoded-body", response.body)
-    if defined?(Encoding.default_external)
-      assert_equal(Encoding::SHIFT_JIS, response.body.encoding)
-    end
+    assert_equal('badly-encoded-body', response.body)
+    return unless defined?(Encoding.default_external)
+
+    assert_equal(Encoding::SHIFT_JIS, response.body.encoding)
   end
 
   def test_cases
     for path, expected_code, expected_url in @@cases
       uri = _uri_build(path)
-      if expected_url.nil?
-        expected_url = uri
-      else
-        expected_url = _uri_build(expected_url)
-      end
+      expected_url = if expected_url.nil?
+                       uri
+                     else
+                       _uri_build(expected_url)
+                     end
 
       expected = ExpectedResponse.new(expected_code.to_s, expected_url)
       result = @fetcher.fetch(uri)
 
       begin
         assert_http_result_is expected, result
-      rescue Minitest::Assertion => err
+      rescue Minitest::Assertion => e
         if result.code == '500' && expected_code != 500
           # Looks like our WEBrick harness broke.
-          msg = <<EOF
-Status #{result.code} from case #{path}.  Logs:
-#{@logfile.string}
-EOF
+          msg = <<~EOF
+            Status #{result.code} from case #{path}.  Logs:
+            #{@logfile.string}
+          EOF
           raise msg
         end
 
         # Wrap failure messages so we can tell which case failed.
-        new_msg = "#{path}: #{err.message.to_s}"
+        new_msg = "#{path}: #{e.message}"
         new_err = Minitest::Assertion.new(new_msg)
-        new_err.set_backtrace(err.backtrace)
+        new_err.set_backtrace(e.backtrace)
         raise new_err
       end
     end
@@ -320,38 +313,30 @@ EOF
     f = OpenID::StandardFetcher.new
     f.extend(OpenID::InstanceDefExtension)
 
-    f.instance_def(:supports_ssl?) do |conn|
+    f.instance_def(:supports_ssl?) do |_conn|
       false
     end
 
     begin
-      f.fetch("https://someurl.com/")
-      flunk("Expected RuntimeError")
-    rescue RuntimeError => why
-      assert_equal(why.to_s, "SSL support not found; cannot fetch https://someurl.com/")
+      f.fetch('https://someurl.com/')
+      flunk('Expected RuntimeError')
+    rescue RuntimeError => e
+      assert_equal(e.to_s, 'SSL support not found; cannot fetch https://someurl.com/')
     end
   end
 
   class FakeConnection < Net::HTTP
-    attr_reader :use_ssl, :ca_file
+    attr_accessor :use_ssl, :ca_file
 
     def initialize *args
       super
       @ca_file = nil
     end
-
-    def use_ssl=(v)
-      @use_ssl = v
-    end
-
-    def ca_file=(ca_file)
-      @ca_file = ca_file
-    end
   end
 
   def test_ssl_with_ca_file
     f = OpenID::StandardFetcher.new
-    ca_file = "BOGUS"
+    ca_file = 'BOGUS'
     f.ca_file = ca_file
 
     f.extend(OpenID::InstanceDefExtension)
@@ -361,11 +346,11 @@ EOF
 
     testcase = self
 
-    f.instance_def(:set_verified) do |conn, verified|
+    f.instance_def(:set_verified) do |_conn, verified|
       testcase.assert(verified)
     end
 
-    conn = f.make_connection(URI::parse("https://someurl.com"))
+    conn = f.make_connection(URI.parse('https://someurl.com'))
     assert_equal(conn.ca_file, ca_file)
   end
 
@@ -379,14 +364,14 @@ EOF
 
     testcase = self
 
-    f.instance_def(:set_verified) do |conn, verified|
+    f.instance_def(:set_verified) do |_conn, verified|
       testcase.assert(!verified)
     end
 
     conn = nil
-    assert_log_matches(/making https request to https:\/\/someurl.com without verifying/) {
-      conn = f.make_connection(URI::parse("https://someurl.com"))
-    }
+    assert_log_matches(%r{making https request to https://someurl.com without verifying}) do
+      conn = f.make_connection(URI.parse('https://someurl.com'))
+    end
 
     assert(conn.ca_file.nil?)
   end
@@ -395,30 +380,30 @@ EOF
     f = OpenID::StandardFetcher.new
 
     f.extend(OpenID::InstanceDefExtension)
-    f.instance_def(:make_http) do |uri|
+    f.instance_def(:make_http) do |_uri|
       nil
     end
 
-    assert_raises(RuntimeError) {
-      f.make_connection(URI::parse("http://example.com/"))
-    }
+    assert_raises(RuntimeError) do
+      f.make_connection(URI.parse('http://example.com/'))
+    end
   end
 
   def test_make_http_invalid
     f = OpenID::StandardFetcher.new
 
     f.extend(OpenID::InstanceDefExtension)
-    f.instance_def(:make_http) do |uri|
-      "not a Net::HTTP object"
+    f.instance_def(:make_http) do |_uri|
+      'not a Net::HTTP object'
     end
 
-    assert_raises(RuntimeError) {
-      f.make_connection(URI::parse("http://example.com/"))
-    }
+    assert_raises(RuntimeError) do
+      f.make_connection(URI.parse('http://example.com/'))
+    end
   end
 
   class BrokenSSLConnection
-    def start(&block)
+    def start
       raise OpenSSL::SSL::SSLError
     end
   end
@@ -427,17 +412,17 @@ EOF
     f = OpenID::StandardFetcher.new
 
     f.extend(OpenID::InstanceDefExtension)
-    f.instance_def(:make_connection) do |uri|
+    f.instance_def(:make_connection) do |_uri|
       BrokenSSLConnection.new
     end
 
-    assert_raises(OpenID::SSLFetchingError) {
-      f.fetch("https://bogus.com/")
-    }
+    assert_raises(OpenID::SSLFetchingError) do
+      f.fetch('https://bogus.com/')
+    end
   end
 
   class TimeoutConnection
-    def start(&block)
+    def start
       raise Timeout::Error
     end
   end
@@ -446,13 +431,13 @@ EOF
     f = OpenID::StandardFetcher.new
 
     f.extend(OpenID::InstanceDefExtension)
-    f.instance_def(:make_connection) do |uri|
+    f.instance_def(:make_connection) do |_uri|
       TimeoutConnection.new
     end
 
-    assert_raises(OpenID::FetchingError) {
-      f.fetch("https://bogus.com/")
-    }
+    assert_raises(OpenID::FetchingError) do
+      f.fetch('https://bogus.com/')
+    end
   end
 
   class TestingException < OpenID::FetchingError; end
@@ -466,11 +451,11 @@ EOF
       yield
     end
 
-    def request_get(*args)
+    def request_get(*_args)
       raise TestingException
     end
 
-    def post_connection_check(hostname)
+    def post_connection_check(_hostname)
       raise RuntimeError
     end
 
@@ -489,28 +474,28 @@ EOF
     f = OpenID::StandardFetcher.new
 
     f.extend(OpenID::InstanceDefExtension)
-    f.instance_def(:make_connection) do |uri|
+    f.instance_def(:make_connection) do |_uri|
       NoSSLSupportConnection.new
     end
 
     # post_connection_check should not be called.
-    assert_raises(TestingException) {
-      f.fetch("https://bogus.com/")
-    }
+    assert_raises(TestingException) do
+      f.fetch('https://bogus.com/')
+    end
   end
 
   def test_post_connection_check_no_use_ssl
     f = OpenID::StandardFetcher.new
 
     f.extend(OpenID::InstanceDefExtension)
-    f.instance_def(:make_connection) do |uri|
+    f.instance_def(:make_connection) do |_uri|
       NoUseSSLConnection.new
     end
 
     # post_connection_check should not be called.
-    assert_raises(TestingException) {
-      f.fetch("https://bogus.com/")
-    }
+    assert_raises(TestingException) do
+      f.fetch('https://bogus.com/')
+    end
   end
 
   class PostConnectionCheckException < OpenID::FetchingError; end
@@ -520,7 +505,7 @@ EOF
       true
     end
 
-    def post_connection_check(hostname)
+    def post_connection_check(_hostname)
       raise PostConnectionCheckException
     end
   end
@@ -529,18 +514,18 @@ EOF
     f = OpenID::StandardFetcher.new
 
     f.extend(OpenID::InstanceDefExtension)
-    f.instance_def(:make_connection) do |uri|
+    f.instance_def(:make_connection) do |_uri|
       UseSSLConnection.new
     end
 
-    f.instance_def(:supports_ssl?) do |conn|
+    f.instance_def(:supports_ssl?) do |_conn|
       true
     end
 
     # post_connection_check should be called.
-    assert_raises(PostConnectionCheckException) {
-      f.fetch("https://bogus.com/")
-    }
+    assert_raises(PostConnectionCheckException) do
+      f.fetch('https://bogus.com/')
+    end
   end
 end
 
@@ -571,15 +556,14 @@ class ProxyTest < Minitest::Test
       # If this tries to connect to the proxy (on port 1), I expect
       # a 'connection refused' error.  If it tries to contact the below
       # URI first, it will get some other sort of error.
-      f.fetch("http://unittest.invalid")
-    rescue OpenID::FetchingError => why
+      f.fetch('http://unittest.invalid')
+    rescue OpenID::FetchingError => e
       # XXX: Is this a translatable string that is going to break?
-      if why.message =~ /Connection refused/
-        return
-      end
-      raise why
+      return if e.message =~ /Connection refused/
+
+      raise e
     end
-    flunk "expected Connection Refused, but it passed."
+    flunk 'expected Connection Refused, but it passed.'
   end
 
   def test_proxy_env
@@ -593,15 +577,15 @@ class ProxyTest < Minitest::Test
   end
   # These aren't fully automated tests, but if you start a proxy
   # on port 8888 (tinyproxy's default) and check its logs...
-#   def test_proxy
-#     f = OpenID::StandardFetcher.new('127.0.0.1', 8888)
-#     result = f.fetch("http://www.example.com/")
-#     assert_match(/RFC.*2606/, result.body)
-#   end
+  #   def test_proxy
+  #     f = OpenID::StandardFetcher.new('127.0.0.1', 8888)
+  #     result = f.fetch("http://www.example.com/")
+  #     assert_match(/RFC.*2606/, result.body)
+  #   end
 
-#   def test_proxy_https
-#     f = OpenID::StandardFetcher.new('127.0.0.1', 8888)
-#     result = f.fetch("https://www.myopenid.com/")
-#     assert_match(/myOpenID/, result.body)
-#   end
+  #   def test_proxy_https
+  #     f = OpenID::StandardFetcher.new('127.0.0.1', 8888)
+  #     result = f.fetch("https://www.myopenid.com/")
+  #     assert_match(/myOpenID/, result.body)
+  #   end
 end

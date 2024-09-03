@@ -1,6 +1,6 @@
-require "cgi"
-require "uri"
-require "logger"
+require 'cgi'
+require 'uri'
+require 'logger'
 
 # See OpenID::Consumer or OpenID::Server modules, as well as the store classes
 module OpenID
@@ -14,9 +14,8 @@ module OpenID
   end
 
   module Util
-
-    BASE64_CHARS = ('ABCDEFGHIJKLMNOPQRSTUVWXYZ' \
-                    'abcdefghijklmnopqrstuvwxyz0123456789+/')
+    BASE64_CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ' \
+                    'abcdefghijklmnopqrstuvwxyz0123456789+/'
     BASE64_RE = Regexp.compile("
     \\A
     ([#{BASE64_CHARS}]{4})*
@@ -24,76 +23,73 @@ module OpenID
      [#{BASE64_CHARS}]{3}=)?
     \\Z", Regexp::EXTENDED)
 
-    def Util.assert(value, message=nil)
-      if not value
-        raise AssertionError, message or value
-      end
+    def self.assert(value, message = nil)
+      return if value
+
+      raise AssertionError, message or value
     end
 
-    def Util.to_base64(s)
-      [s].pack('m').gsub("\n", "")
+    def self.to_base64(s)
+      [s].pack('m').gsub("\n", '')
     end
 
-    def Util.from_base64(s)
+    def self.from_base64(s)
       without_newlines = s.gsub(/[\r\n]+/, '')
-      if !BASE64_RE.match(without_newlines)
-        raise ArgumentError, "Malformed input: #{s.inspect}"
-      end
-      without_newlines.unpack('m').first
+      raise ArgumentError, "Malformed input: #{s.inspect}" unless BASE64_RE.match(without_newlines)
+
+      without_newlines.unpack1('m')
     end
 
-    def Util.urlencode(args)
+    def self.urlencode(args)
       a = []
       args.each do |key, val|
         if val.nil?
-          val = '' 
+          val = ''
         elsif !!val == val
-          #it's boolean let's convert it to string representation
+          # it's boolean let's convert it to string representation
           # or else CGI::escape won't like it
           val = val.to_s
-        end  
+        end
 
-        a << (CGI::escape(key) + "=" + CGI::escape(val))
+        a << (CGI.escape(key) + '=' + CGI.escape(val))
       end
-      a.join("&")
+      a.join('&')
     end
 
-    def Util.parse_query(qs)
+    def self.parse_query(qs)
       query = {}
-      CGI::parse(qs).each {|k,v| query[k] = v[0]}
-      return query
+      CGI.parse(qs).each { |k, v| query[k] = v[0] }
+      query
     end
 
-    def Util.append_args(url, args)
+    def self.append_args(url, args)
       url = url.dup
       return url if args.length == 0
 
-      if args.respond_to?('each_pair')
-        args = args.sort
-      end
+      args = args.sort if args.respond_to?('each_pair')
 
-      url << (url.include?("?") ? "&" : "?")
+      url << (url.include?('?') ? '&' : '?')
       url << Util.urlencode(args)
     end
 
     @@logger = Logger.new(STDERR)
-    @@logger.progname = "OpenID"
+    @@logger.progname = 'OpenID'
 
-    def Util.logger=(logger)
+    def self.logger=(logger)
       @@logger = logger
     end
 
-    def Util.logger
+    def self.logger
       @@logger
     end
 
     # change the message below to do whatever you like for logging
-    def Util.log(message)
+    def self.log(message)
       logger.info(message)
     end
 
-    def Util.auto_submit_html(form, title='OpenID transaction in progress')
-      return "
+    def self.auto_submit_html(form, title = 'OpenID transaction in progress')
+      "
 <html>
 <head>
   <title>#{title}</title>
@@ -113,9 +109,8 @@ for (var i = 0; i < elements.length; i++) {
 
     ESCAPE_TABLE = { '&' => '&amp;', '<' => '&lt;', '>' => '&gt;', '"' => '&quot;', "'" => '&#039;' }
     # Modified from ERb's html_encode
-    def Util.html_encode(str)
-      str.to_s.gsub(/[&<>"']/) {|s| ESCAPE_TABLE[s] }
+    def self.html_encode(str)
+      str.to_s.gsub(/[&<>"']/) { |s| ESCAPE_TABLE[s] }
     end
   end
-
 end

@@ -7,52 +7,51 @@ module OpenID
   module SReg
     module SRegTest
       SOME_DATA = {
-        'nickname'=>'linusaur',
-        'postcode'=>'12345',
-        'country'=>'US',
-        'gender'=>'M',
-        'fullname'=>'Leonhard Euler',
-        'email'=>'president@whitehouse.gov',
-        'dob'=>'0000-00-00',
-        'language'=>'en-us',
+        'nickname' => 'linusaur',
+        'postcode' => '12345',
+        'country' => 'US',
+        'gender' => 'M',
+        'fullname' => 'Leonhard Euler',
+        'email' => 'president@whitehouse.gov',
+        'dob' => '0000-00-00',
+        'language' => 'en-us'
       }
 
       class SRegTest < Minitest::Test
-
         def test_is11
           assert_equal(NS_URI, NS_URI_1_1)
         end
 
         def test_check_field_name
-          DATA_FIELDS.keys.each{|field_name|
-            OpenID::check_sreg_field_name(field_name)
-          }
-          assert_raises(ArgumentError) { OpenID::check_sreg_field_name('invalid') }
-          assert_raises(ArgumentError) { OpenID::check_sreg_field_name(nil) }
+          DATA_FIELDS.keys.each do |field_name|
+            OpenID.check_sreg_field_name(field_name)
+          end
+          assert_raises(ArgumentError) { OpenID.check_sreg_field_name('invalid') }
+          assert_raises(ArgumentError) { OpenID.check_sreg_field_name(nil) }
         end
 
         def test_unsupported
           endpoint = FakeEndpoint.new([])
-          assert(!OpenID::supports_sreg?(endpoint))
-          assert_equal([NS_URI_1_1,NS_URI_1_0], endpoint.checked_uris)
+          assert(!OpenID.supports_sreg?(endpoint))
+          assert_equal([NS_URI_1_1, NS_URI_1_0], endpoint.checked_uris)
         end
 
         def test_supported_1_1
           endpoint = FakeEndpoint.new([NS_URI_1_1])
-          assert(OpenID::supports_sreg?(endpoint))
+          assert(OpenID.supports_sreg?(endpoint))
           assert_equal([NS_URI_1_1], endpoint.checked_uris)
         end
 
         def test_supported_1_0
           endpoint = FakeEndpoint.new([NS_URI_1_0])
-          assert(OpenID::supports_sreg?(endpoint))
-          assert_equal([NS_URI_1_1,NS_URI_1_0], endpoint.checked_uris)
+          assert(OpenID.supports_sreg?(endpoint))
+          assert_equal([NS_URI_1_1, NS_URI_1_0], endpoint.checked_uris)
         end
-
       end
 
       class FakeEndpoint < Object
         attr_accessor :checked_uris
+
         def initialize(supported)
           @supported = supported
           @checked_uris = []
@@ -60,22 +59,21 @@ module OpenID
 
         def uses_extension(namespace_uri)
           @checked_uris << namespace_uri
-          return @supported.member?(namespace_uri)
+          @supported.member?(namespace_uri)
         end
       end
 
       class FakeMessage < Object
-        attr_accessor :namespaces
-        attr_accessor :openid1
+        attr_accessor :namespaces, :openid1
+
         def initialize
           @openid1 = false
           @namespaces = NamespaceMap.new
         end
 
         def is_openid1
-          return @openid1
+          @openid1
         end
-
       end
 
       class GetNSTest < Minitest::Test
@@ -84,14 +82,14 @@ module OpenID
         end
 
         def test_openid2_empty
-          ns_uri = OpenID::get_sreg_ns(@msg)
+          ns_uri = OpenID.get_sreg_ns(@msg)
           assert_equal('sreg', @msg.namespaces.get_alias(ns_uri))
           assert_equal(NS_URI, ns_uri)
         end
 
         def test_openid1_empty
           @msg.openid1 = true
-          ns_uri = OpenID::get_sreg_ns(@msg)
+          ns_uri = OpenID.get_sreg_ns(@msg)
           assert_equal('sreg', @msg.namespaces.get_alias(ns_uri))
           assert_equal(NS_URI, ns_uri)
         end
@@ -99,46 +97,46 @@ module OpenID
         def test_openid1defined_1_0
           @msg.openid1 = true
           @msg.namespaces.add(NS_URI_1_0)
-          ns_uri = OpenID::get_sreg_ns(@msg)
+          ns_uri = OpenID.get_sreg_ns(@msg)
           assert_equal(NS_URI_1_0, ns_uri)
         end
 
         def test_openid1_defined_1_0_override_alias
-          [true, false].each{|openid_version|
-            [NS_URI_1_0, NS_URI_1_1].each{|sreg_version|
-              ['sreg', 'bogus'].each{|name|
+          [true, false].each do |openid_version|
+            [NS_URI_1_0, NS_URI_1_1].each do |sreg_version|
+              %w[sreg bogus].each do |name|
                 setup
                 @msg.openid1 = openid_version
                 @msg.namespaces.add_alias(sreg_version, name)
-                ns_uri = OpenID::get_sreg_ns(@msg)
+                ns_uri = OpenID.get_sreg_ns(@msg)
                 assert_equal(name, @msg.namespaces.get_alias(ns_uri))
                 assert_equal(sreg_version, ns_uri)
-              }
-            }
-          }
+              end
+            end
+          end
         end
 
         def test_openid1_defined_badly
           @msg.openid1 = true
           @msg.namespaces.add_alias('http://invalid/', 'sreg')
-          assert_raises(NamespaceError) { OpenID::get_sreg_ns(@msg) }
+          assert_raises(NamespaceError) { OpenID.get_sreg_ns(@msg) }
         end
 
         def test_openid2_defined_badly
           @msg.namespaces.add_alias('http://invalid/', 'sreg')
-          assert_raises(NamespaceError) { OpenID::get_sreg_ns(@msg) }
+          assert_raises(NamespaceError) { OpenID.get_sreg_ns(@msg) }
         end
 
         def test_openid2_defined_1_0
           @msg.namespaces.add(NS_URI_1_0)
-          ns_uri = OpenID::get_sreg_ns(@msg)
+          ns_uri = OpenID.get_sreg_ns(@msg)
           assert_equal(NS_URI_1_0, ns_uri)
         end
 
         def test_openid1_sreg_ns_from_args
           args = {
-            'sreg.optional'=> 'nickname',
-            'sreg.required'=> 'dob',
+            'sreg.optional' => 'nickname',
+            'sreg.required' => 'dob'
           }
 
           m = Message.from_openid_args(args)
@@ -146,7 +144,6 @@ module OpenID
           assert_equal('nickname', m.get_arg(NS_URI_1_1, 'optional'))
           assert_equal('dob', m.get_arg(NS_URI_1_1, 'required'))
         end
-
       end
 
       class SRegRequestTest < Minitest::Test
@@ -159,7 +156,7 @@ module OpenID
         end
 
         def test_construct_fields
-          req = Request.new(['nickname'],['gender'],'http://policy', 'http://sreg.ns_uri')
+          req = Request.new(['nickname'], ['gender'], 'http://policy', 'http://sreg.ns_uri')
           assert_equal(['gender'], req.optional)
           assert_equal(['nickname'], req.required)
           assert_equal('http://policy', req.policy_url)
@@ -167,11 +164,11 @@ module OpenID
         end
 
         def test_construct_bad_fields
-          assert_raises(ArgumentError) {Request.new(['elvis'])}
+          assert_raises(ArgumentError) { Request.new(['elvis']) }
         end
 
         def test_from_openid_request_message_copied
-          message = Message.from_openid_args({"sreg.required" => "nickname"})
+          message = Message.from_openid_args({ 'sreg.required' => 'nickname' })
           openid_req = Server::OpenIDRequest.new
           openid_req.message = message
           sreg_req = Request.from_openid_request(openid_req)
@@ -182,8 +179,8 @@ module OpenID
         end
 
         def test_from_openid_request_ns_1_0
-          message = Message.from_openid_args({'ns.sreg' => NS_URI_1_0,
-                                               "sreg.required" => "nickname"})
+          message = Message.from_openid_args({ 'ns.sreg' => NS_URI_1_0,
+                                               'sreg.required' => 'nickname' })
           openid_req = Server::OpenIDRequest.new
           openid_req.message = message
           sreg_req = Request.from_openid_request(openid_req)
@@ -206,84 +203,84 @@ module OpenID
 
         def test_parse_extension_args_extra_ignored
           req = Request.new
-          req.parse_extension_args({'extra' => 'stuff'})
+          req.parse_extension_args({ 'extra' => 'stuff' })
         end
 
         def test_parse_extension_args_non_strict
           req = Request.new
-          req.parse_extension_args({'required' => 'stuff'})
+          req.parse_extension_args({ 'required' => 'stuff' })
           assert_equal([], req.required)
         end
 
         def test_parse_extension_args_strict
           req = Request.new
-          assert_raises(ArgumentError) {
-            req.parse_extension_args({'required' => 'stuff'}, true)
-          }
+          assert_raises(ArgumentError) do
+            req.parse_extension_args({ 'required' => 'stuff' }, true)
+          end
         end
 
         def test_parse_extension_args_policy
           req = Request.new
-          req.parse_extension_args({'policy_url' => 'http://policy'}, true)
+          req.parse_extension_args({ 'policy_url' => 'http://policy' }, true)
           assert_equal('http://policy', req.policy_url)
         end
 
         def test_parse_extension_args_required_empty
           req = Request.new
-          req.parse_extension_args({'required' => ''}, true)
+          req.parse_extension_args({ 'required' => '' }, true)
           assert_equal([], req.required)
         end
 
         def test_parse_extension_args_optional_empty
           req = Request.new
-          req.parse_extension_args({'optional' => ''},true)
+          req.parse_extension_args({ 'optional' => '' }, true)
           assert_equal([], req.optional)
         end
 
         def test_parse_extension_args_optional_single
           req = Request.new
-          req.parse_extension_args({'optional' => 'nickname'},true)
+          req.parse_extension_args({ 'optional' => 'nickname' }, true)
           assert_equal(['nickname'], req.optional)
         end
 
         def test_parse_extension_args_optional_list
           req = Request.new
-          req.parse_extension_args({'optional' => 'nickname,email'},true)
-          assert_equal(['nickname','email'], req.optional)
+          req.parse_extension_args({ 'optional' => 'nickname,email' }, true)
+          assert_equal(%w[nickname email], req.optional)
         end
 
         def test_parse_extension_args_optional_list_bad_nonstrict
           req = Request.new
-          req.parse_extension_args({'optional' => 'nickname,email,beer'})
-          assert_equal(['nickname','email'], req.optional)
+          req.parse_extension_args({ 'optional' => 'nickname,email,beer' })
+          assert_equal(%w[nickname email], req.optional)
         end
 
         def test_parse_extension_args_optional_list_bad_strict
           req = Request.new
-          assert_raises(ArgumentError) {
-            req.parse_extension_args({'optional' => 'nickname,email,beer'}, true)
-          }
+          assert_raises(ArgumentError) do
+            req.parse_extension_args({ 'optional' => 'nickname,email,beer' }, true)
+          end
         end
 
         def test_parse_extension_args_both_nonstrict
           req = Request.new
-          req.parse_extension_args({'optional' => 'nickname', 'required' => 'nickname'})
+          req.parse_extension_args({ 'optional' => 'nickname', 'required' => 'nickname' })
           assert_equal(['nickname'], req.required)
           assert_equal([], req.optional)
         end
 
         def test_parse_extension_args_both_strict
           req = Request.new
-          assert_raises(ArgumentError) {
-            req.parse_extension_args({'optional' => 'nickname', 'required' => 'nickname'},true)
-          }
+          assert_raises(ArgumentError) do
+            req.parse_extension_args({ 'optional' => 'nickname', 'required' => 'nickname' }, true)
+          end
         end
 
         def test_parse_extension_args_both_list
           req = Request.new
-          req.parse_extension_args({'optional' => 'nickname,email', 'required' => 'country,postcode'},true)
-          assert_equal(['nickname','email'], req.optional)
-          assert_equal(['country','postcode'], req.required)
+          req.parse_extension_args({ 'optional' => 'nickname,email', 'required' => 'country,postcode' }, true)
+          assert_equal(%w[nickname email], req.optional)
+          assert_equal(%w[country postcode], req.required)
         end
 
         def test_all_requested_fields
@@ -293,7 +290,7 @@ module OpenID
           assert_equal(['nickname'], req.all_requested_fields)
           req.request_field('gender', true)
           requested = req.all_requested_fields.sort
-          assert_equal(['gender', 'nickname'], requested)
+          assert_equal(%w[gender nickname], requested)
         end
 
         def test_were_fields_requested
@@ -305,25 +302,25 @@ module OpenID
 
         def test_member
           req = Request.new
-          DATA_FIELDS.keys.each {|f|
+          DATA_FIELDS.keys.each do |f|
             assert(!req.member?(f))
-          }
+          end
           assert(!req.member?('something else'))
           req.request_field('nickname')
-          DATA_FIELDS.keys.each {|f|
-            assert_equal(f == 'nickname',req.member?(f))
-          }
+          DATA_FIELDS.keys.each do |f|
+            assert_equal(f == 'nickname', req.member?(f))
+          end
         end
 
         def test_request_field_bogus
           req = Request.new
           fields = DATA_FIELDS.keys
-          fields.each {|f| req.request_field(f) }
+          fields.each { |f| req.request_field(f) }
           assert_equal(fields, req.optional)
           assert_equal([], req.required)
 
           # By default, adding the same fields over again has no effect
-          fields.each {|f| req.request_field(f) }
+          fields.each { |f| req.request_field(f) }
           assert_equal(fields, req.optional)
           assert_equal([], req.required)
 
@@ -334,7 +331,7 @@ module OpenID
           assert_equal(expected, req.optional)
           assert_equal([overridden], req.required)
 
-          fields.each {|f| req.request_field(f, true) }
+          fields.each { |f| req.request_field(f, true) }
           assert_equal(fields, req.required)
           assert_equal([], req.optional)
         end
@@ -379,53 +376,53 @@ module OpenID
           assert_equal({}, req.get_extension_args)
 
           req.request_field('nickname')
-          assert_equal({'optional' => 'nickname'}, req.get_extension_args)
+          assert_equal({ 'optional' => 'nickname' }, req.get_extension_args)
 
           req.request_field('email')
-          assert_equal({'optional' => 'nickname,email'}, req.get_extension_args)
+          assert_equal({ 'optional' => 'nickname,email' }, req.get_extension_args)
 
           req.request_field('gender', true)
-          assert_equal({'optional' => 'nickname,email',
-                         'required' => 'gender'}, req.get_extension_args)
+          assert_equal({ 'optional' => 'nickname,email',
+                         'required' => 'gender' }, req.get_extension_args)
 
           req.request_field('dob', true)
-          assert_equal({'optional' => 'nickname,email',
-                         'required' => 'gender,dob'}, req.get_extension_args)
+          assert_equal({ 'optional' => 'nickname,email',
+                         'required' => 'gender,dob' }, req.get_extension_args)
 
           req.policy_url = 'http://policy'
-          assert_equal({'optional' => 'nickname,email',
+          assert_equal({ 'optional' => 'nickname,email',
                          'required' => 'gender,dob',
-                         'policy_url' => 'http://policy'},
+                         'policy_url' => 'http://policy' },
                        req.get_extension_args)
-
         end
       end
 
       class DummySuccessResponse
         attr_accessor :message
+
         def initialize(message, signed_stuff)
           @message = message
           @signed_stuff = signed_stuff
         end
-        def get_signed_ns(ns_uri)
-          return @signed_stuff
+
+        def get_signed_ns(_ns_uri)
+          @signed_stuff
         end
       end
-
 
       class SRegResponseTest < Minitest::Test
         def test_construct
           resp = Response.new(SOME_DATA)
           assert_equal(SOME_DATA, resp.get_extension_args)
           assert_equal(NS_URI, resp.ns_uri)
-          resp2 = Response.new({}, "http://foo")
+          resp2 = Response.new({}, 'http://foo')
           assert_equal({}, resp2.get_extension_args)
           assert_equal('http://foo', resp2.ns_uri)
         end
 
         def test_from_success_response_signed
           message = Message.from_openid_args({
-                                               'sreg.nickname'=>'The Mad Stork',
+                                               'sreg.nickname' => 'The Mad Stork'
                                              })
           success_resp = DummySuccessResponse.new(message, {})
           sreg_resp = Response.from_success_response(success_resp)
@@ -435,11 +432,11 @@ module OpenID
         def test_from_success_response_unsigned
           message = Message.from_openid_args({
                                                'ns.sreg' => NS_URI,
-                                               'sreg.nickname' => 'The Mad Stork',
+                                               'sreg.nickname' => 'The Mad Stork'
                                              })
           success_resp = DummySuccessResponse.new(message, {})
           sreg_resp = Response.from_success_response(success_resp, false)
-          assert_equal({'nickname' => 'The Mad Stork'},
+          assert_equal({ 'nickname' => 'The Mad Stork' },
                        sreg_resp.get_extension_args)
         end
       end
@@ -448,7 +445,7 @@ module OpenID
         # class SendFieldsTest < Object
         def test_send_fields
           # create a request message with simple reg fields
-          sreg_req = Request.new(['nickname', 'email'], ['fullname'])
+          sreg_req = Request.new(%w[nickname email], ['fullname'])
           req_msg = Message.new
           req_msg.update_args(NS_URI, sreg_req.get_extension_args)
           req = Server::OpenIDRequest.new
@@ -467,10 +464,9 @@ module OpenID
 
           # extract sent fields
           sreg_data_resp = resp_msg.get_args(NS_URI)
-          assert_equal({'nickname' => 'linusaur',
-                         'email'=>'president@whitehouse.gov',
-                         'fullname'=>'Leonhard Euler',
-                       }, sreg_data_resp)
+          assert_equal({ 'nickname' => 'linusaur',
+                         'email' => 'president@whitehouse.gov',
+                         'fullname' => 'Leonhard Euler' }, sreg_data_resp)
         end
       end
     end

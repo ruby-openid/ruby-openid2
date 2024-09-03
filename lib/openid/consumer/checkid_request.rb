@@ -1,5 +1,5 @@
-require "openid/message"
-require "openid/util"
+require 'openid/message'
+require 'openid/util'
 
 module OpenID
   class Consumer
@@ -14,7 +14,7 @@ module OpenID
     # the authentication request as a URL or as a form POST.
     class CheckIDRequest
       attr_accessor :return_to_args, :message
-      attr_reader :endpoint
+      attr_reader :endpoint, :anonymous
 
       # Users of this library should not create instances of this
       # class.  Instances of this class are created by the library
@@ -27,8 +27,6 @@ module OpenID
         @anonymous = false
       end
 
-      attr_reader :anonymous
-
       # Set whether this request should be made anonymously. If a
       # request is anonymous, the identifier will not be sent in the
       # request. This is only useful if you are making another kind of
@@ -38,8 +36,8 @@ module OpenID
       # with OpenID 1.
       def anonymous=(is_anonymous)
         if is_anonymous && @message.is_openid1
-          raise ArgumentError, ("OpenID1 requests MUST include the "\
-                                "identifier in the request")
+          raise ArgumentError, 'OpenID1 requests MUST include the '\
+                                'identifier in the request'
         end
         @anonymous = is_anonymous
       end
@@ -74,20 +72,19 @@ module OpenID
       # engage the user before providing a response.  This is the
       # default case, as the user may need to provide credentials or
       # approve the request before a positive response can be sent.
-      def get_message(realm, return_to=nil, immediate=false)
+      def get_message(realm, return_to = nil, immediate = false)
         if !return_to.nil?
           return_to = Util.append_args(return_to, @return_to_args)
         elsif immediate
-          raise ArgumentError, ('"return_to" is mandatory when using '\
-                                '"checkid_immediate"')
+          raise ArgumentError, '"return_to" is mandatory when using '\
+                                '"checkid_immediate"'
         elsif @message.is_openid1
-          raise ArgumentError, ('"return_to" is mandatory for OpenID 1 '\
-                                'requests')
+          raise ArgumentError, '"return_to" is mandatory for OpenID 1 '\
+                                'requests'
         elsif @return_to_args.empty?
-          raise ArgumentError, ('extra "return_to" arguments were specified, '\
-                                'but no return_to was specified')
+          raise ArgumentError, 'extra "return_to" arguments were specified, '\
+                                'but no return_to was specified'
         end
-
 
         message = @message.copy
 
@@ -97,11 +94,9 @@ module OpenID
         realm_key = message.is_openid1 ? 'trust_root' : 'realm'
         message.set_arg(OPENID_NS, realm_key, realm)
 
-        if !return_to.nil?
-          message.set_arg(OPENID_NS, 'return_to', return_to)
-        end
+        message.set_arg(OPENID_NS, 'return_to', return_to) unless return_to.nil?
 
-        if not @anonymous
+        unless @anonymous
           if @endpoint.is_op_identifier
             # This will never happen when we're in OpenID 1
             # compatibility mode, as long as is_op_identifier()
@@ -116,12 +111,10 @@ module OpenID
           # This is true for both OpenID 1 and 2
           message.set_arg(OPENID_NS, 'identity', request_identity)
 
-          if message.is_openid2
-            message.set_arg(OPENID2_NS, 'claimed_id', claimed_id)
-          end
+          message.set_arg(OPENID2_NS, 'claimed_id', claimed_id) if message.is_openid2
         end
 
-        if @assoc && (message.is_openid1 || !['checkid_setup', 'checkid_immediate'].include?(mode))
+        if @assoc && (message.is_openid1 || !%w[checkid_setup checkid_immediate].include?(mode))
           message.set_arg(OPENID_NS, 'assoc_handle', @assoc.handle)
           assoc_log_msg = "with assocication #{@assoc.handle}"
         else
@@ -130,7 +123,7 @@ module OpenID
 
         Util.log("Generated #{mode} request to #{@endpoint.server_url} "\
                  "#{assoc_log_msg}")
-        return message
+        message
       end
 
       # Returns a URL with an encoded OpenID request.
@@ -141,9 +134,9 @@ module OpenID
       #
       # OpenID 2.0 endpoints also accept POST requests, see
       # 'send_redirect?' and 'form_markup'.
-      def redirect_url(realm, return_to=nil, immediate=false)
+      def redirect_url(realm, return_to = nil, immediate = false)
         message = get_message(realm, return_to, immediate)
-        return message.to_url(@endpoint.server_url)
+        message.to_url(@endpoint.server_url)
       end
 
       # Get html for a form to submit this request to the IDP.
@@ -152,20 +145,20 @@ module OpenID
       # tag. 'accept-charset' and 'enctype' have defaults that can be
       # overridden. If a value is supplied for 'action' or 'method',
       # it will be replaced.
-      def form_markup(realm, return_to=nil, immediate=false,
-                      form_tag_attrs=nil)
+      def form_markup(realm, return_to = nil, immediate = false,
+                      form_tag_attrs = nil)
         message = get_message(realm, return_to, immediate)
-        return message.to_form_markup(@endpoint.server_url, form_tag_attrs)
+        message.to_form_markup(@endpoint.server_url, form_tag_attrs)
       end
 
       # Get a complete HTML document that autosubmits the request to the IDP
       # with javascript.  This method wraps form_markup - see that method's
       # documentation for help with the parameters.
-      def html_markup(realm, return_to=nil, immediate=false,
-                      form_tag_attrs=nil)
-        Util.auto_submit_html(form_markup(realm, 
-                                          return_to, 
-                                          immediate, 
+      def html_markup(realm, return_to = nil, immediate = false,
+                      form_tag_attrs = nil)
+        Util.auto_submit_html(form_markup(realm,
+                                          return_to,
+                                          immediate,
                                           form_tag_attrs))
       end
 
@@ -173,13 +166,11 @@ module OpenID
       # redirect or as a POST (form submission)?
       #
       # This takes the same parameters as redirect_url or form_markup
-      def send_redirect?(realm, return_to=nil, immediate=false)
-        if @endpoint.compatibility_mode
-          return true
-        else
-          url = redirect_url(realm, return_to, immediate)
-          return url.length <= OPENID1_URL_LIMIT
-        end
+      def send_redirect?(realm, return_to = nil, immediate = false)
+        return true if @endpoint.compatibility_mode
+
+        url = redirect_url(realm, return_to, immediate)
+        url.length <= OPENID1_URL_LIMIT
       end
     end
   end

@@ -2,7 +2,6 @@ require 'uri'
 require 'openid/urinorm'
 
 module OpenID
-
   class RealmVerificationRedirected < Exception
     # Attempting to verify this realm resulted in a redirect.
     def initialize(relying_party_url, rp_url_after_redirects)
@@ -11,13 +10,13 @@ module OpenID
     end
 
     def to_s
-      return "Attempting to verify #{@relying_party_url} resulted in " +
+      "Attempting to verify #{@relying_party_url} resulted in " +
         "redirect to #{@rp_url_after_redirects}"
     end
   end
 
   module TrustRoot
-    TOP_LEVEL_DOMAINS = %w'
+    TOP_LEVEL_DOMAINS = %w[
       ac ad ae aero af ag ai al am an ao aq ar arpa as asia at
       au aw ax az ba bb bd be bf bg bh bi biz bj bm bn bo br bs bt
       bv bw by bz ca cat cc cd cf cg ch ci ck cl cm cn co com coop
@@ -35,9 +34,10 @@ module OpenID
       xn--11b5bs3a9aj6g xn--80akhbyknj4f xn--9t4b11yi5a
       xn--deba0ad xn--g6w251d xn--hgbk6aj7f53bba
       xn--hlcj6aya9esc7a xn--jxalpdlp xn--kgbechtv xn--zckzah ye
-      yt yu za zm zw'
+      yt yu za zm zw
+    ]
 
-    ALLOWED_PROTOCOLS = ['http', 'https']
+    ALLOWED_PROTOCOLS = %w[http https]
 
     # The URI for relying party discovery, used in realm verification.
     #
@@ -56,54 +56,53 @@ module OpenID
     #
     # returns the endpoint URL or None if the endpoint is not a
     # relying party endpoint.
-    def TrustRoot._extract_return_url(endpoint)
-      if endpoint.matchTypes([RP_RETURN_TO_URL_TYPE])
-        return endpoint.uri
-      else
-        return nil
-      end
+    def self._extract_return_url(endpoint)
+      return endpoint.uri if endpoint.matchTypes([RP_RETURN_TO_URL_TYPE])
+
+      nil
     end
 
     # Is the return_to URL under one of the supplied allowed
     # return_to URLs?
-    def TrustRoot.return_to_matches(allowed_return_to_urls, return_to)
-      allowed_return_to_urls.each { |allowed_return_to|
+    def self.return_to_matches(allowed_return_to_urls, return_to)
+      allowed_return_to_urls.each do |allowed_return_to|
         # A return_to pattern works the same as a realm, except that
         # it's not allowed to use a wildcard. We'll model this by
         # parsing it as a realm, and not trying to match it if it has
         # a wildcard.
 
         return_realm = TrustRoot.parse(allowed_return_to)
-        if (# Parses as a trust root
-            !return_realm.nil? and
+        if !return_realm.nil? and
 
-            # Does not have a wildcard
-            !return_realm.wildcard and
+           # Does not have a wildcard
+           !return_realm.wildcard and
 
-            # Matches the return_to that we passed in with it
-            return_realm.validate_url(return_to)
-            )
+           # Matches the return_to that we passed in with it
+           return_realm.validate_url(return_to) # Parses as a trust root
+
           return true
         end
-      }
+      end
 
       # No URL in the list matched
-      return false
+      false
     end
 
     # Given a relying party discovery URL return a list of return_to
     # URLs.
-    def TrustRoot.get_allowed_return_urls(relying_party_url)
+    def self.get_allowed_return_urls(relying_party_url)
       rp_url_after_redirects, return_to_urls = services.get_service_endpoints(
-        relying_party_url, _extract_return_url)
+        relying_party_url, _extract_return_url
+      )
 
       if rp_url_after_redirects != relying_party_url
         # Verification caused a redirect
         raise RealmVerificationRedirected.new(
-                relying_party_url, rp_url_after_redirects)
+          relying_party_url, rp_url_after_redirects
+        )
       end
 
-      return return_to_urls
+      return_to_urls
     end
 
     # Verify that a return_to URL is valid for the given realm.
@@ -115,15 +114,11 @@ module OpenID
     #
     # raises DiscoveryFailure when Yadis discovery fails returns
     # true if the return_to URL is valid for the realm
-    def TrustRoot.verify_return_to(realm_str, return_to, _vrfy=nil)
+    def self.verify_return_to(realm_str, return_to, _vrfy = nil)
       # _vrfy parameter is there to make testing easier
-      if _vrfy.nil?
-        _vrfy = self.method('get_allowed_return_urls')
-      end
+      _vrfy = method('get_allowed_return_urls') if _vrfy.nil?
 
-      if !(_vrfy.is_a?(Proc) or _vrfy.is_a?(Method))
-        raise ArgumentError, "_vrfy must be a Proc or Method"
-      end
+      raise ArgumentError, '_vrfy must be a Proc or Method' unless _vrfy.is_a?(Proc) or _vrfy.is_a?(Method)
 
       realm = TrustRoot.parse(realm_str)
       if realm.nil?
@@ -132,45 +127,38 @@ module OpenID
       end
 
       begin
-        allowable_urls = _vrfy.call(realm.build_discovery_url())
-      rescue RealmVerificationRedirected => err
-        Util.log(err.to_s)
+        allowable_urls = _vrfy.call(realm.build_discovery_url)
+      rescue RealmVerificationRedirected => e
+        Util.log(e.to_s)
         return false
       end
 
-      if return_to_matches(allowable_urls, return_to)
-        return true
-      else
-        Util.log("Failed to validate return_to #{return_to} for " +
-            "realm #{realm_str}, was not in #{allowable_urls}")
-        return false
-      end
+      return true if return_to_matches(allowable_urls, return_to)
+
+      Util.log("Failed to validate return_to #{return_to} for " +
+          "realm #{realm_str}, was not in #{allowable_urls}")
+      false
     end
 
     class TrustRoot
-
       attr_reader :unparsed, :proto, :wildcard, :host, :port, :path
 
       @@empty_re = Regexp.new('^http[s]*:\/\/\*\/$')
 
-      def TrustRoot._build_path(path, query=nil, frag=nil)
+      def self._build_path(path, query = nil, frag = nil)
         s = path.dup
 
         frag = nil if frag == ''
         query = nil if query == ''
 
-        if query
-          s << "?" << query
-        end
+        s << '?' << query if query
 
-        if frag
-          s << "#" << frag
-        end
+        s << '#' << frag if frag
 
-        return s
+        s
       end
 
-      def TrustRoot._parse_url(url)
+      def self._parse_url(url)
         begin
           url = URINorm.urinorm(url)
         rescue URI::InvalidURIError
@@ -187,20 +175,20 @@ module OpenID
                                      parsed.query,
                                      parsed.fragment)
 
-        return [parsed.scheme || '', parsed.host || '',
-                parsed.port || '', path || '']
+        [parsed.scheme || '', parsed.host || '',
+         parsed.port || '', path || '']
       end
 
-      def TrustRoot.parse(trust_root)
+      def self.parse(trust_root)
         trust_root = trust_root.dup
         unparsed = trust_root.dup
 
         # look for wildcard
-        wildcard = (not trust_root.index('://*.').nil?)
+        wildcard = !trust_root.index('://*.').nil?
         trust_root.sub!('*.', '') if wildcard
 
         # handle http://*/ case
-        if not wildcard and @@empty_re.match(trust_root)
+        if !wildcard and @@empty_re.match(trust_root)
           proto = trust_root.split(':')[0]
           port = proto == 'http' ? 80 : 443
           return new(unparsed, proto, true, '', port, '/')
@@ -213,28 +201,25 @@ module OpenID
         return nil if host[0] == '.'
 
         # check for URI fragment
-        if path and !path.index('#').nil?
-          return nil
-        end
+        return nil if path and !path.index('#').nil?
 
-        return nil unless ['http', 'https'].member?(proto)
-        return new(unparsed, proto, wildcard, host, port, path)
+        return nil unless %w[http https].member?(proto)
+
+        new(unparsed, proto, wildcard, host, port, path)
       end
 
-      def TrustRoot.check_sanity(trust_root_string)
+      def self.check_sanity(trust_root_string)
         trust_root = TrustRoot.parse(trust_root_string)
-        if trust_root.nil?
-          return false
-        else
-          return trust_root.sane?
-        end
+        return false if trust_root.nil?
+
+        trust_root.sane?
       end
 
       # quick func for validating a url against a trust root.  See the
       # TrustRoot class if you need more control.
       def self.check_url(trust_root, url)
-        tr = self.parse(trust_root)
-        return (!tr.nil? and tr.validate_url(url))
+        tr = parse(trust_root)
+        (!tr.nil? and tr.validate_url(url))
       end
 
       # Return a discovery URL for this realm.
@@ -248,14 +233,12 @@ module OpenID
       # Returns the URL upon which relying party discovery should be
       # run in order to verify the return_to URL
       def build_discovery_url
-        if self.wildcard
-          # Use "www." in place of the star
-          www_domain = 'www.' + @host
-          port = (!@port.nil? and ![80, 443].member?(@port)) ? (":" + @port.to_s) : ''
-          return "#{@proto}://#{www_domain}#{port}#{@path}"
-        else
-          return @unparsed
-        end
+        return @unparsed unless wildcard
+
+        # Use "www." in place of the star
+        www_domain = 'www.' + @host
+        port = (!@port.nil? and ![80, 443].member?(@port)) ? (':' + @port.to_s) : ''
+        "#{@proto}://#{www_domain}#{port}#{@path}"
       end
 
       def initialize(unparsed, proto, wildcard, host, port, path)
@@ -288,16 +271,14 @@ module OpenID
 
         return false if host_parts.length == 1
 
-        if @wildcard
-          if tld.length == 2 and host_parts[-2].length <= 3
-            # It's a 2-letter tld with a short second to last segment
-            # so there needs to be more than two segments specified
-            # (e.g. *.co.uk is insane)
-            return host_parts.length > 2
-          end
+        if @wildcard && (tld.length == 2 and host_parts[-2].length <= 3)
+          # It's a 2-letter tld with a short second to last segment
+          # so there needs to be more than two segments specified
+          # (e.g. *.co.uk is insane)
+          return host_parts.length > 2
         end
 
-        return true
+        true
       end
 
       def validate_url(url)
@@ -311,12 +292,10 @@ module OpenID
         return false unless host.index('*').nil?
 
         if !@wildcard
-          if host != @host
-            return false
-          end
-        elsif ((@host != '') and
-               (!host.end_with?('.' + @host)) and
-               (host != @host))
+          return false if host != @host
+        elsif (@host != '') and
+              !host.end_with?('.' + @host) and
+              (host != @host)
           return false
         end
 
@@ -326,25 +305,22 @@ module OpenID
           url_prefix = path[0...path_len]
 
           # must be equal up to the length of the path, at least
-          if trust_prefix != url_prefix
-            return false
-          end
+          return false if trust_prefix != url_prefix
 
           # These characters must be on the boundary between the end
           # of the trust root's path and the start of the URL's path.
-          if !@path.index('?').nil?
-            allowed = '&'
-          else
-            allowed = '?/'
-          end
+          allowed = if !@path.index('?').nil?
+                      '&'
+                    else
+                      '?/'
+                    end
 
           return (!allowed.index(@path[-1]).nil? or
                   !allowed.index(path[path_len]).nil?)
         end
 
-        return true
+        true
       end
     end
   end
 end
-

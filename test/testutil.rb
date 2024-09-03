@@ -1,4 +1,4 @@
-require "pathname"
+require 'pathname'
 
 if defined? Minitest::Test
   # We're on Minitest 5+. Nothing to do here.
@@ -12,7 +12,7 @@ module OpenID
     TESTS_DIR = Pathname.new(__FILE__).dirname
     TEST_DATA_DIR = Pathname.new('data')
 
-    def read_data_file(filename, lines=true, data_dir=TEST_DATA_DIR)
+    def read_data_file(filename, lines = true, data_dir = TEST_DATA_DIR)
       fname = TESTS_DIR.join(data_dir, filename)
 
       if lines
@@ -28,7 +28,7 @@ module OpenID
       original_fetcher = OpenID.fetcher
       begin
         OpenID.fetcher = fetcher
-        return yield
+        yield
       ensure
         OpenID.fetcher = original_fetcher
       end
@@ -37,7 +37,7 @@ module OpenID
 
   module Const
     def const(symbol, value)
-      (class << self;self;end).instance_eval do
+      (class << self; self; end).instance_eval do
         define_method(symbol) { value }
       end
     end
@@ -54,15 +54,13 @@ module OpenID
 
   module ProtocolErrorMixin
     def assert_protocol_error(str_prefix)
-      begin
-        result = yield
-      rescue ProtocolError => why
-        message = "Expected prefix #{str_prefix.inspect}, got "\
-                  "#{why.message.inspect}"
-        assert(why.message.start_with?(str_prefix), message)
-      else
-        fail("Expected ProtocolError. Got #{result.inspect}")
-      end
+      result = yield
+    rescue ProtocolError => e
+      message = "Expected prefix #{str_prefix.inspect}, got "\
+                "#{e.message.inspect}"
+      assert(e.message.start_with?(str_prefix), message)
+    else
+      raise("Expected ProtocolError. Got #{result.inspect}")
     end
   end
 
@@ -71,7 +69,8 @@ module OpenID
       original = method(method_name)
       begin
         # TODO: find a combination of undef calls which prevent the warning
-        verbose, $VERBOSE = $VERBOSE, false
+        verbose = $VERBOSE
+        $VERBOSE = false
         define_method(method_name, proc)
         module_function(method_name)
         $VERBOSE = verbose
@@ -98,9 +97,10 @@ module OpenID
   #
   module InstanceDefExtension
     def instance_def(method_name, &proc)
-      (class << self;self;end).instance_eval do
+      (class << self; self; end).instance_eval do
         # TODO: find a combination of undef calls which prevent the warning
-        verbose, $VERBOSE = $VERBOSE, false
+        verbose = $VERBOSE
+        $VERBOSE = false
         define_method(method_name, proc)
         $VERBOSE = verbose
       end
@@ -112,7 +112,7 @@ module OpenID
   class GoodAssoc
     attr_accessor :handle, :expires_in
 
-    def initialize(handle='-blah-')
+    def initialize(handle = '-blah-')
       @handle = handle
       @expires_in = 3600
     end
@@ -123,12 +123,12 @@ module OpenID
   end
 
   class HTTPResponse
-    def self._from_raw_data(status, body="", headers={}, final_url=nil)
+    def self._from_raw_data(status, body = '', headers = {}, final_url = nil)
       resp = Net::HTTPResponse.new('1.1', status.to_s, 'NONE')
-      me = self._from_net_response(resp, final_url)
+      me = _from_net_response(resp, final_url)
       me.initialize_http_header headers
       me.body = body
-      return me
+      me
     end
   end
 end

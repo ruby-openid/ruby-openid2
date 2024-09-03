@@ -8,7 +8,7 @@ module OpenID
     class Memcache < Interface
       attr_accessor :key_prefix
 
-      def initialize(cache_client, key_prefix='openid-store:')
+      def initialize(cache_client, key_prefix = 'openid-store:')
         @cache_client = cache_client
         self.key_prefix = key_prefix
       end
@@ -29,13 +29,11 @@ module OpenID
       # the server_url.  Returns nil if no such association is found or if
       # the one matching association is expired. (Is allowed to GC expired
       # associations when found.)
-      def get_association(server_url, handle=nil)
+      def get_association(server_url, handle = nil)
         serialized = @cache_client.get(assoc_key(server_url, handle))
-        if serialized
-          return deserialize(serialized)
-        else
-          return nil
-        end
+        return deserialize(serialized) if serialized
+
+        nil
       end
 
       # If there is a matching association, remove it from the store and
@@ -43,10 +41,8 @@ module OpenID
       def remove_association(server_url, handle)
         deleted = delete(assoc_key(server_url, handle))
         server_assoc = get_association(server_url)
-        if server_assoc && server_assoc.handle == handle
-          deleted = delete(assoc_key(server_url)) | deleted
-        end
-        return deleted
+        deleted = delete(assoc_key(server_url)) | deleted if server_assoc && server_assoc.handle == handle
+        deleted
       end
 
       # Return true if the nonce has not been used before, and store it
@@ -60,42 +56,34 @@ module OpenID
       #       the same second unique
       def use_nonce(server_url, timestamp, salt)
         return false if (timestamp - Time.now.to_i).abs > Nonce.skew
+
         ts = timestamp.to_s # base 10 seconds since epoch
         nonce_key = key_prefix + 'N' + server_url + '|' + ts + '|' + salt
         result = @cache_client.add(nonce_key, '', expiry(Nonce.skew + 5))
-        if result.is_a? String
-          return !!(result =~ /^STORED/)
-        else
-          return !!(result)
-        end
+        return !!(result =~ /^STORED/) if result.is_a? String
+
+        !!result
       end
 
-      def assoc_key(server_url, assoc_handle=nil)
+      def assoc_key(server_url, assoc_handle = nil)
         key = key_prefix + 'A' + server_url
-        if assoc_handle
-          key += '|' + assoc_handle
-        end
-        return key
+        key += '|' + assoc_handle if assoc_handle
+        key
       end
 
-      def cleanup_nonces
-      end
+      def cleanup_nonces; end
 
-      def cleanup
-      end
+      def cleanup; end
 
-      def cleanup_associations
-      end
+      def cleanup_associations; end
 
       protected
 
       def delete(key)
         result = @cache_client.delete(key)
-        if result.is_a? String
-          return !!(result =~ /^DELETED/)
-        else
-          return !!(result)
-        end
+        return !!(result =~ /^DELETED/) if result.is_a? String
+
+        !!result
       end
 
       def serialize(assoc)

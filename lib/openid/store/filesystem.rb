@@ -9,7 +9,7 @@ require 'openid/association'
 module OpenID
   module Store
     class Filesystem < Interface
-      @@FILENAME_ALLOWED = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ.-".split("")
+      @@FILENAME_ALLOWED = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ.-'.split('')
 
       # Create a Filesystem store instance, putting all data in +directory+.
       def initialize(directory)
@@ -17,28 +17,26 @@ module OpenID
         @association_dir = File.join(directory, 'associations')
         @temp_dir = File.join(directory, 'temp')
 
-        self.ensure_dir(@nonce_dir)
-        self.ensure_dir(@association_dir)
-        self.ensure_dir(@temp_dir)
+        ensure_dir(@nonce_dir)
+        ensure_dir(@association_dir)
+        ensure_dir(@temp_dir)
       end
 
       # Create a unique filename for a given server url and handle. The
       # filename that is returned will contain the domain name from the
       # server URL for ease of human inspection of the data dir.
       def get_association_filename(server_url, handle)
-        unless server_url.index('://')
-          raise ArgumentError, "Bad server URL: #{server_url}"
-        end
+        raise ArgumentError, "Bad server URL: #{server_url}" unless server_url.index('://')
 
         proto, rest = server_url.split('://', 2)
-        domain = filename_escape(rest.split('/',2)[0])
+        domain = filename_escape(rest.split('/', 2)[0])
         url_hash = safe64(server_url)
-        if handle
-          handle_hash = safe64(handle)
-        else
-          handle_hash = ''
-        end
-        filename = [proto,domain,url_hash,handle_hash].join('-')
+        handle_hash = if handle
+                        safe64(handle)
+                      else
+                        ''
+                      end
+        filename = [proto, domain, url_hash, handle_hash].join('-')
         File.join(@association_dir, filename)
       end
 
@@ -59,7 +57,6 @@ module OpenID
           begin
             File.rename(tmp, filename)
           rescue Errno::EEXIST
-
             begin
               File.unlink(filename)
             rescue Errno::ENOENT
@@ -68,73 +65,66 @@ module OpenID
 
             File.rename(tmp, filename)
           end
-
-        rescue
-          self.remove_if_present(tmp)
+        rescue StandardError
+          remove_if_present(tmp)
           raise
         end
       end
 
       # Retrieve an association
-      def get_association(server_url, handle=nil)
+      def get_association(server_url, handle = nil)
         # the filename with empty handle is the prefix for the associations
         # for a given server url
         filename = get_association_filename(server_url, handle)
-        if handle
-          return _get_association(filename)
-        end
+        return _get_association(filename) if handle
+
         assoc_filenames = Dir.glob(filename.to_s + '*')
 
         assocs = assoc_filenames.collect do |f|
           _get_association(f)
         end
 
-        assocs = assocs.find_all { |a| not a.nil? }
+        assocs = assocs.find_all { |a| !a.nil? }
         assocs = assocs.sort_by { |a| a.issued }
 
         return nil if assocs.empty?
-        return assocs[-1]
+
+        assocs[-1]
       end
 
       def _get_association(filename)
+        assoc_file = File.open(filename, 'r')
+      rescue Errno::ENOENT
+        nil
+      else
         begin
-          assoc_file = File.open(filename, "r")
-        rescue Errno::ENOENT
-          return nil
-        else
-          begin
-            assoc_s = assoc_file.read
-          ensure
-            assoc_file.close
-          end
-
-          begin
-            association = Association.deserialize(assoc_s)
-          rescue
-            self.remove_if_present(filename)
-            return nil
-          end
-
-          # clean up expired associations
-          if association.expires_in == 0
-            self.remove_if_present(filename)
-            return nil
-          else
-            return association
-          end
+          assoc_s = assoc_file.read
+        ensure
+          assoc_file.close
         end
+
+        begin
+          association = Association.deserialize(assoc_s)
+        rescue StandardError
+          remove_if_present(filename)
+          return nil
+        end
+
+        # clean up expired associations
+        return association unless association.expires_in == 0
+
+        remove_if_present(filename)
+        nil
       end
 
       # Remove an association if it exists, otherwise do nothing.
       def remove_association(server_url, handle)
         assoc = get_association(server_url, handle)
 
-        if assoc.nil?
-          return false
-        else
-          filename = get_association_filename(server_url, handle)
-          return self.remove_if_present(filename)
-        end
+        return false if assoc.nil?
+
+        filename = get_association_filename(server_url, handle)
+        remove_if_present(filename)
       end
 
       # Return whether the nonce is valid
@@ -142,26 +132,27 @@ module OpenID
         return false if (timestamp - Time.now.to_i).abs > Nonce.skew
 
         if server_url and !server_url.empty?
-          proto, rest = server_url.split('://',2)
+          proto, rest = server_url.split('://', 2)
         else
-          proto, rest = '',''
+          proto = ''
+          rest = ''
         end
-        raise "Bad server URL" unless proto && rest
+        raise 'Bad server URL' unless proto && rest
 
-        domain = filename_escape(rest.split('/',2)[0])
+        domain = filename_escape(rest.split('/', 2)[0])
         url_hash = safe64(server_url)
         salt_hash = safe64(salt)
 
-        nonce_fn = '%08x-%s-%s-%s-%s'%[timestamp, proto, domain, url_hash, salt_hash]
+        nonce_fn = format('%08x-%s-%s-%s-%s', timestamp, proto, domain, url_hash, salt_hash)
 
         filename = File.join(@nonce_dir, nonce_fn)
 
         begin
-          fd = File.new(filename, File::CREAT | File::EXCL | File::WRONLY, 0200)
+          fd = File.new(filename, File::CREAT | File::EXCL | File::WRONLY, 0o200)
           fd.close
-          return true
+          true
         rescue Errno::EEXIST
-          return false
+          false
         end
       end
 
@@ -173,37 +164,35 @@ module OpenID
       end
 
       def cleanup_associations
-        association_filenames = Dir[File.join(@association_dir, "*")]
+        association_filenames = Dir[File.join(@association_dir, '*')]
         count = 0
         association_filenames.each do |af|
+          f = File.open(af, 'r')
+        rescue Errno::ENOENT
+          next
+        else
           begin
-            f = File.open(af, 'r')
-          rescue Errno::ENOENT
+            assoc_s = f.read
+          ensure
+            f.close
+          end
+          begin
+            association = OpenID::Association.deserialize(assoc_s)
+          rescue StandardError
+            remove_if_present(af)
             next
           else
-            begin
-              assoc_s = f.read
-            ensure
-              f.close
-            end
-            begin
-              association = OpenID::Association.deserialize(assoc_s)
-            rescue StandardError
-              self.remove_if_present(af)
-              next
-            else
-              if association.expires_in == 0
-                self.remove_if_present(af)
-                count += 1
-              end
+            if association.expires_in == 0
+              remove_if_present(af)
+              count += 1
             end
           end
         end
-        return count
+        count
       end
 
       def cleanup_nonces
-        nonces = Dir[File.join(@nonce_dir, "*")]
+        nonces = Dir[File.join(@nonce_dir, '*')]
         now = Time.now.to_i
 
         count = 0
@@ -212,11 +201,11 @@ module OpenID
           timestamp = nonce.split('-', 2)[0].to_i(16)
           nonce_age = (timestamp - now).abs
           if nonce_age > Nonce.skew
-            self.remove_if_present(filename)
+            remove_if_present(filename)
             count += 1
           end
         end
-        return count
+        count
       end
 
       protected
@@ -230,11 +219,15 @@ module OpenID
       # create a safe filename from a url
       def filename_escape(s)
         s = '' if s.nil?
-        s.each_char.flat_map {|c|
-          @@FILENAME_ALLOWED.include?(c) ? c : c.bytes.map {|b|
-            "_%02X" % b
-          }
-        }.join
+        s.each_char.flat_map do |c|
+          if @@FILENAME_ALLOWED.include?(c)
+            c
+          else
+            c.bytes.map do |b|
+              '_%02X' % b
+            end
+          end
+        end.join
       end
 
       def safe64(s)
@@ -243,7 +236,7 @@ module OpenID
         s.gsub!('+', '_')
         s.gsub!('/', '.')
         s.gsub!('=', '')
-        return s
+        s
       end
 
       # remove file if present in filesystem
@@ -253,14 +246,13 @@ module OpenID
         rescue Errno::ENOENT
           return false
         end
-        return true
+        true
       end
 
       # ensure that a path exists
       def ensure_dir(dir_name)
-        FileUtils::mkdir_p(dir_name)
+        FileUtils.mkdir_p(dir_name)
       end
     end
   end
 end
-

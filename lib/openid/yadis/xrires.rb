@@ -1,37 +1,29 @@
-require "cgi"
-require "openid/yadis/xri"
-require "openid/yadis/xrds"
-require "openid/fetchers"
+require 'cgi'
+require 'openid/yadis/xri'
+require 'openid/yadis/xrds'
+require 'openid/fetchers'
 
 module OpenID
-
   module Yadis
-
     module XRI
-
       class XRIHTTPError < StandardError; end
 
       class ProxyResolver
-
         DEFAULT_PROXY = 'http://proxy.xri.net/'
 
-        def initialize(proxy_url=nil)
-          if proxy_url
-            @proxy_url = proxy_url
-          else
-            @proxy_url = DEFAULT_PROXY
-          end
+        def initialize(proxy_url = nil)
+          @proxy_url = proxy_url || DEFAULT_PROXY
 
           @proxy_url += '/' unless @proxy_url.match('/$')
         end
 
-        def query_url(xri, service_type=nil)
+        def query_url(xri, service_type = nil)
           # URI normal form has a leading xri://, but we need to strip
           # that off again for the QXRI.  This is under discussion for
           # XRI Resolution WD 11.
           qxri = XRI.to_uri_normal(xri)[6..-1]
           hxri = @proxy_url + qxri
-          args = {'_xrd_r' => 'application/xrds+xml'}
+          args = { '_xrd_r' => 'application/xrds+xml' }
           if service_type
             args['_xrd_t'] = service_type
           else
@@ -39,26 +31,24 @@ module OpenID
             args['_xrd_r'] += ';sep=false'
           end
 
-          return XRI.append_args(hxri, args)
+          XRI.append_args(hxri, args)
         end
 
         def query(xri)
           # these can be query args or http headers, needn't be both.
           # headers = {'Accept' => 'application/xrds+xml;sep=true'}
-          canonicalID = nil
+          url = query_url(xri)
+          begin
+            response = OpenID.fetch(url)
+          rescue StandardError
+            raise XRIHTTPError, "Could not fetch #{xri}, #{$!}"
+          end
+          raise XRIHTTPError, "Could not fetch #{xri}" if response.nil?
 
-          url = self.query_url(xri)
-            begin
-              response = OpenID.fetch(url)
-            rescue
-              raise XRIHTTPError, "Could not fetch #{xri}, #{$!}"
-            end
-            raise XRIHTTPError, "Could not fetch #{xri}" if response.nil?
+          xrds = Yadis.parseXRDS(response.body)
+          canonicalID = Yadis.get_canonical_id(xri, xrds)
 
-            xrds = Yadis::parseXRDS(response.body)
-            canonicalID = Yadis::get_canonical_id(xri, xrds)
-
-          return canonicalID, Yadis::services(xrds)
+          [canonicalID, Yadis.services(xrds)]
           # TODO:
           #  * If we do get hits for multiple service_types, we're almost
           #    certainly going to have duplicated service entries and
@@ -69,31 +59,26 @@ module OpenID
       def self.urlencode(args)
         a = []
         args.each do |key, val|
-          a << (CGI::escape(key) + "=" + CGI::escape(val))
+          a << (CGI.escape(key) + '=' + CGI.escape(val))
         end
-        a.join("&")
+        a.join('&')
       end
 
       def self.append_args(url, args)
-        return url if args.length == 0
+        return url if args.empty?
 
         # rstrip question marks
         rstripped = url.dup
-        while rstripped[-1].chr == '?'
-          rstripped = rstripped[0...rstripped.length-1]
-        end
+        rstripped = rstripped[0...rstripped.length - 1] while rstripped[-1].chr == '?'
 
-        if rstripped.index('?')
-          sep = '&'
-        else
-          sep = '?'
-        end
+        sep = if rstripped.index('?')
+                '&'
+              else
+                '?'
+              end
 
-        return url + sep + XRI.urlencode(args)
+        url + sep + XRI.urlencode(args)
       end
-
     end
-
   end
-
 end

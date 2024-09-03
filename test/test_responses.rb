@@ -1,6 +1,6 @@
-require "minitest/autorun"
-require "openid/consumer/discovery"
-require "openid/consumer/responses"
+require 'minitest/autorun'
+require 'openid/consumer/discovery'
+require 'openid/consumer/responses'
 
 module OpenID
   class Consumer
@@ -18,15 +18,15 @@ module OpenID
             'unittest.one' => '1',
             'unittest.two' => '2',
             'sreg.nickname' => 'j3h',
-            'return_to' => 'return_to',
+            'return_to' => 'return_to'
           }
           signed_list = q.keys.map { |k| 'openid.' + k }
           msg = Message.from_openid_args(q)
           resp = SuccessResponse.new(@endpoint, msg, signed_list)
           utargs = resp.extension_response('urn:unittest', false)
-          assert_equal(utargs, {'one' => '1', 'two' => '2'})
+          assert_equal(utargs, { 'one' => '1', 'two' => '2' })
           sregargs = resp.extension_response('urn:sreg', false)
-          assert_equal(sregargs, {'nickname' => 'j3h'})
+          assert_equal(sregargs, { 'nickname' => 'j3h' })
         end
 
         def test_extension_response_signed
@@ -38,19 +38,19 @@ module OpenID
             'sreg.nickname' => 'j3h',
             'sreg.dob' => 'yesterday',
             'return_to' => 'return_to',
-            'signed' => 'sreg.nickname,unittest.one,sreg.dob',
+            'signed' => 'sreg.nickname,unittest.one,sreg.dob'
           }
 
           signed_list = ['openid.sreg.nickname',
                          'openid.unittest.one',
-                         'openid.sreg.dob',]
+                         'openid.sreg.dob']
 
           msg = Message.from_openid_args(args)
           resp = SuccessResponse.new(@endpoint, msg, signed_list)
 
           # All args in this NS are signed, so expect all.
           sregargs = resp.extension_response('urn:sreg', true)
-          assert_equal(sregargs, {'nickname' => 'j3h', 'dob' => 'yesterday'})
+          assert_equal(sregargs, { 'nickname' => 'j3h', 'dob' => 'yesterday' })
 
           # Not all args in this NS are signed, so expect nil when
           # asking for them.

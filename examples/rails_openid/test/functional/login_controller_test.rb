@@ -2,7 +2,10 @@ require File.dirname(__FILE__) + '/../test_helper'
 require 'login_controller'
 
 # Re-raise errors caught by the controller.
-class LoginController; def rescue_action(e) raise e end; end
+class LoginController
+  def rescue_action(e)
+    raise e
+  end; end
 
 class LoginControllerTest < Test::Unit::TestCase
   def setup
