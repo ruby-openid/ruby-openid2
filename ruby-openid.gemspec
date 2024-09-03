@@ -23,4 +23,7 @@ Gem::Specification.new do |s|
   s.rdoc_options << '--main' << 'README.md'
 
   s.add_development_dependency 'minitest', '>= 5'
+  s.add_development_dependency 'rake', '>= 13'
+  s.add_development_dependency 'rexml', '~> 3.2'
+  s.add_development_dependency 'webrick', '~> 1.8'
 end
