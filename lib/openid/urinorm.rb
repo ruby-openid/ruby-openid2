@@ -3,17 +3,20 @@ require 'uri'
 module OpenID
 
   module URINorm
+    VALID_URI_SCHEMES = ['http','https'].freeze
     public
     def URINorm.urinorm(uri)
       uri = URI.parse(uri)
 
       raise URI::InvalidURIError.new('no scheme') unless uri.scheme
-      uri.scheme = uri.scheme.downcase
-      unless ['http','https'].member?(uri.scheme)
-        raise URI::InvalidURIError.new('Not an HTTP or HTTPS URI')
-      end
 
-      raise URI::InvalidURIError.new('no host') unless uri.host
+      uri.scheme = uri.scheme.downcase
+      raise URI::InvalidURIError.new('Not an HTTP or HTTPS URI') unless VALID_URI_SCHEMES.member?(uri.scheme)
+
+      raise URI::InvalidURIError.new('no host') if uri.host.nil? # For Ruby 2.7
+
+      raise URI::InvalidURIError.new('no host') if uri.host.empty? # For Ruby 3+
+
       uri.host = uri.host.downcase
 
       uri.path = remove_dot_segments(uri.path)
