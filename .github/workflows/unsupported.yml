@@ -3,7 +3,7 @@ name: Unsupported (EOL) Ruby Matrix
 on:
   push:
     branches:
-      - 'master'
+      - 'main'
     tags:
       - '!*' # Do not execute on tags
   pull_request:

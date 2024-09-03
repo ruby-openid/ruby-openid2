@@ -6,7 +6,7 @@ env:
 on:
   push:
     branches:
-      - 'master'
+      - 'main'
     tags:
       - '!*' # Do not execute on tags
   pull_request:
