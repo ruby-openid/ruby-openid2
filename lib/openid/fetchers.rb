@@ -50,15 +50,21 @@ module OpenID
   class HTTPResponse
     attr_accessor :final_url, :_response
 
-    def self._from_net_response(response, final_url, _headers = nil)
-      me = new
-      me._response = response
-      me.final_url = final_url
-      me
+    class << self
+      def _from_net_response(response, final_url, _headers = nil)
+        instance = new
+        instance._response = response
+        instance.final_url = final_url
+        instance
+      end
     end
 
     def method_missing(method, *args)
       @_response.send(method, *args)
+    end
+
+    def respond_to_missing?(method_name, include_private = false)
+      super
     end
 
     def body=(s)
