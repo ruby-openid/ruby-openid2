@@ -120,7 +120,7 @@ module OpenID
   end
 
   class StandardFetcher
-    USER_AGENT = "ruby-openid/#{OpenID::VERSION} (#{RUBY_PLATFORM})"
+    USER_AGENT = "ruby-openid/#{OpenID::Version::VERSION} (#{RUBY_PLATFORM})"
 
     REDIRECT_LIMIT = 5
     TIMEOUT = ENV["RUBY_OPENID_FETCHER_TIMEOUT"] || 60
