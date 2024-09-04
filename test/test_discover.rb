@@ -1,13 +1,13 @@
-require 'minitest/autorun'
-require 'testutil'
-require 'util'
-require 'openid/fetchers'
-require 'openid/yadis/discovery'
-require 'openid/consumer/discovery'
-require 'openid/yadis/xrires'
-require 'openid/yadis/xri'
-require 'openid/message'
-require 'openid/util'
+require_relative "test_helper"
+require_relative "testutil"
+require_relative "util"
+require "openid/fetchers"
+require "openid/yadis/discovery"
+require "openid/consumer/discovery"
+require "openid/yadis/xrires"
+require "openid/yadis/xri"
+require "openid/message"
+require "openid/util"
 
 ### Tests for conditions that trigger DiscoveryFailure
 
@@ -20,7 +20,8 @@ module OpenID
 
     def fetch(url, body = nil, _headers = nil, _limit = nil)
       response = @responses.shift
-      @test.assert(body.nil?)
+
+      @test.assert_predicate(body, :nil?)
       @test.assert_equal(response.final_url, url)
       response
     end
@@ -28,16 +29,22 @@ module OpenID
 
   class TestDiscoveryFailure < Minitest::Test
     def initialize(*args)
-      super(*args)
+      super
 
       @responses = [
-        [HTTPResponse._from_raw_data(nil, nil, {}, 'http://network.error/')],
-        [HTTPResponse._from_raw_data(404, nil, {}, 'http://not.found/')],
-        [HTTPResponse._from_raw_data(400, nil, {}, 'http://bad.request/')],
-        [HTTPResponse._from_raw_data(500, nil, {}, 'http://server.error/')],
-        [HTTPResponse._from_raw_data(200, nil, { 'x-xrds-location' => 'http://xrds.missing/' },
-                                     'http://header.found/'),
-         HTTPResponse._from_raw_data(404, nil, {}, 'http://xrds.missing/')]
+        [HTTPResponse._from_raw_data(nil, nil, {}, "http://network.error/")],
+        [HTTPResponse._from_raw_data(404, nil, {}, "http://not.found/")],
+        [HTTPResponse._from_raw_data(400, nil, {}, "http://bad.request/")],
+        [HTTPResponse._from_raw_data(500, nil, {}, "http://server.error/")],
+        [
+          HTTPResponse._from_raw_data(
+            200,
+            nil,
+            {"x-xrds-location" => "http://xrds.missing/"},
+            "http://header.found/",
+          ),
+          HTTPResponse._from_raw_data(404, nil, {}, "http://xrds.missing/"),
+        ],
       ]
     end
 
@@ -52,7 +59,7 @@ module OpenID
         rescue DiscoveryFailure => e
           assert_equal(e.http_response.code, expected_status)
         else
-          flunk('Did not raise DiscoveryFailure')
+          flunk("Did not raise DiscoveryFailure")
         end
 
         OpenID.fetcher = nil
@@ -83,13 +90,13 @@ module OpenID
     # Discovery should only raise DiscoveryFailure
 
     def initialize(*args)
-      super(*args)
+      super
 
       @cases = [
         DidFetch.new,
         Exception.new,
         ArgumentError.new,
-        RuntimeError.new
+        RuntimeError.new,
       ]
     end
 
@@ -97,7 +104,7 @@ module OpenID
       @cases.each do |exc|
         OpenID.fetcher = ErrorRaisingFetcher.new(exc)
         assert_raises(DiscoveryFailure) do
-          OpenID.discover('http://doesnt.matter/')
+          OpenID.discover("http://doesnt.matter/")
         end
         OpenID.fetcher = nil
       end
@@ -112,9 +119,9 @@ module OpenID
       OpenID.fetcher = f
 
       begin
-        OpenID.discover('users.stompy.janrain.com:8000/x')
+        OpenID.discover("users.stompy.janrain.com:8000/x")
       rescue DiscoveryFailure => e
-        assert e.to_s.match('Failed to fetch')
+        assert_match("Failed to fetch", e.to_s)
       rescue RuntimeError
       end
 
@@ -137,13 +144,13 @@ module OpenID
         ctype, body = @documents.fetch(url)
       rescue IndexError
         status = 404
-        ctype = 'text/plain'
-        body = ''
+        ctype = "text/plain"
+        body = ""
       else
         status = 200
       end
 
-      HTTPResponse._from_raw_data(status, body, { 'content-type' => ctype }, final_url)
+      HTTPResponse._from_raw_data(status, body, {"content-type" => ctype}, final_url)
     end
   end
 
@@ -151,18 +158,18 @@ module OpenID
     attr_accessor :id_url, :fetcher_class
 
     def initialize(*args)
-      super(*args)
-      @id_url = 'http://someuser.unittest/'
+      super
+      @id_url = "http://someuser.unittest/"
       @documents = {}
       @fetcher_class = DiscoveryMockFetcher
     end
 
     def _checkService(s, server_url, claimed_id = nil,
-                      local_id = nil, canonical_id = nil,
-                      types = nil, used_yadis = false,
-                      display_identifier = nil)
+      local_id = nil, canonical_id = nil,
+      types = nil, used_yadis = false,
+      display_identifier = nil)
       assert_equal(server_url, s.server_url)
-      if types == ['2.0 OP']
+      if types == ["2.0 OP"]
         assert(!claimed_id)
         assert(!local_id)
         assert(!s.claimed_id)
@@ -170,25 +177,29 @@ module OpenID
         assert(!s.get_local_id)
         assert(!s.compatibility_mode)
         assert(s.is_op_identifier)
-        assert_equal(s.preferred_namespace,
-                     OPENID_2_0_MESSAGE_NS)
+        assert_equal(
+          s.preferred_namespace,
+          OPENID_2_0_MESSAGE_NS,
+        )
       else
         assert_equal(claimed_id, s.claimed_id)
         assert_equal(local_id, s.get_local_id)
       end
 
       if used_yadis
-        assert(s.used_yadis, 'Expected to use Yadis')
+        assert(s.used_yadis, "Expected to use Yadis")
       else
-        assert(!s.used_yadis,
-               'Expected to use old-style discovery')
+        assert(
+          !s.used_yadis,
+          "Expected to use old-style discovery",
+        )
       end
 
       openid_types = {
-        '1.1' => OPENID_1_1_TYPE,
-        '1.0' => OPENID_1_0_TYPE,
-        '2.0' => OPENID_2_0_TYPE,
-        '2.0 OP' => OPENID_IDP_2_0_TYPE
+        "1.1" => OPENID_1_1_TYPE,
+        "1.0" => OPENID_1_0_TYPE,
+        "2.0" => OPENID_2_0_TYPE,
+        "2.0 OP" => OPENID_IDP_2_0_TYPE,
       }
 
       type_uris = types.collect { |t| openid_types[t] }
@@ -228,7 +239,7 @@ module OpenID
     include TestDataMixin
 
     def _discover(content_type, data,
-                  expected_services, expected_id = nil)
+      expected_services, expected_id = nil)
       expected_id = @id_url if expected_id.nil?
 
       @documents[@id_url] = [content_type, data]
@@ -241,265 +252,322 @@ module OpenID
 
     def test_404
       assert_raises(DiscoveryFailure) do
-        OpenID.discover(@id_url + '/404')
+        OpenID.discover(@id_url + "/404")
       end
     end
 
     def test_noOpenID
-      services = _discover('text/plain',
-                           'junk', 0)
+      services = _discover(
+        "text/plain",
+        "junk",
+        0,
+      )
 
       services = _discover(
-        'text/html',
-        read_data_file('test_discover/openid_no_delegate.html', false),
-        1
+        "text/html",
+        read_data_file("test_discover/openid_no_delegate.html", false),
+        1,
       )
 
       _checkService(
         services[0],
-        'http://www.myopenid.com/server',
+        "http://www.myopenid.com/server",
         @id_url,
         @id_url,
         nil,
-        ['1.1'],
-        false
+        ["1.1"],
+        false,
       )
     end
 
     def test_malformed_meta_tag
-      @id_url = 'http://user.myopenid.com/'
+      @id_url = "http://user.myopenid.com/"
 
       services = _discover(
-        'text/html',
-        read_data_file('test_discover/malformed_meta_tag.html', false),
-        2
+        "text/html",
+        read_data_file("test_discover/malformed_meta_tag.html", false),
+        2,
       )
 
       _checkService(
         services[0],
-        'http://www.myopenid.com/server',
+        "http://www.myopenid.com/server",
         @id_url,
         @id_url,
         nil,
-        ['2.0'],
-        false
+        ["2.0"],
+        false,
       )
 
       _checkService(
         services[1],
-        'http://www.myopenid.com/server',
+        "http://www.myopenid.com/server",
         @id_url,
         @id_url,
         nil,
-        ['1.1'],
-        false
+        ["1.1"],
+        false,
       )
     end
 
     def test_html1
-      services = _discover('text/html',
-                           read_data_file('test_discover/openid.html', false),
-                           1)
+      services = _discover(
+        "text/html",
+        read_data_file("test_discover/openid.html", false),
+        1,
+      )
 
-      _checkService(services[0],
-                    'http://www.myopenid.com/server',
-                    @id_url,
-                    'http://smoker.myopenid.com/',
-                    nil,
-                    ['1.1'],
-                    false)
+      _checkService(
+        services[0],
+        "http://www.myopenid.com/server",
+        @id_url,
+        "http://smoker.myopenid.com/",
+        nil,
+        ["1.1"],
+        false,
+      )
     end
 
     def test_html1Fragment
       # Ensure that the Claimed Identifier does not have a fragment if
       # one is supplied in the User Input.
-      content_type = 'text/html'
-      data = read_data_file('test_discover/openid.html', false)
+      content_type = "text/html"
+      data = read_data_file("test_discover/openid.html", false)
       expected_services = 1
 
       @documents[@id_url] = [content_type, data]
       expected_id = @id_url
-      @id_url += '#fragment'
+      @id_url += "#fragment"
       id_url, services = OpenID.discover(@id_url)
 
       assert_equal(expected_services, services.length)
       assert_equal(expected_id, id_url)
 
-      _checkService(services[0],
-                    'http://www.myopenid.com/server',
-                    expected_id,
-                    'http://smoker.myopenid.com/',
-                    nil,
-                    ['1.1'],
-                    false)
+      _checkService(
+        services[0],
+        "http://www.myopenid.com/server",
+        expected_id,
+        "http://smoker.myopenid.com/",
+        nil,
+        ["1.1"],
+        false,
+      )
     end
 
     def test_html2
-      services = _discover('text/html',
-                           read_data_file('test_discover/openid2.html', false),
-                           1)
+      services = _discover(
+        "text/html",
+        read_data_file("test_discover/openid2.html", false),
+        1,
+      )
 
-      _checkService(services[0],
-                    'http://www.myopenid.com/server',
-                    @id_url,
-                    'http://smoker.myopenid.com/',
-                    nil,
-                    ['2.0'],
-                    false)
+      _checkService(
+        services[0],
+        "http://www.myopenid.com/server",
+        @id_url,
+        "http://smoker.myopenid.com/",
+        nil,
+        ["2.0"],
+        false,
+      )
     end
 
     def test_html1And2
       services = _discover(
-        'text/html',
-        read_data_file('test_discover/openid_1_and_2.html', false),
-        2
+        "text/html",
+        read_data_file("test_discover/openid_1_and_2.html", false),
+        2,
       )
 
-      services.zip(['2.0', '1.1']).each do |s, t|
-        _checkService(s,
-                      'http://www.myopenid.com/server',
-                      @id_url,
-                      'http://smoker.myopenid.com/',
-                      nil,
-                      [t],
-                      false)
+      services.zip(["2.0", "1.1"]).each do |s, t|
+        _checkService(
+          s,
+          "http://www.myopenid.com/server",
+          @id_url,
+          "http://smoker.myopenid.com/",
+          nil,
+          [t],
+          false,
+        )
       end
     end
 
     def test_html_utf8
-      utf8_html = read_data_file('test_discover/openid_utf8.html', false)
-      utf8_html.force_encoding('UTF-8') if utf8_html.respond_to?(:force_encoding)
-      services = _discover('text/html', utf8_html, 1)
+      utf8_html = read_data_file("test_discover/openid_utf8.html", false)
+      utf8_html.force_encoding("UTF-8") if utf8_html.respond_to?(:force_encoding)
+      services = _discover("text/html", utf8_html, 1)
 
-      _checkService(services[0],
-                    'http://www.myopenid.com/server',
-                    @id_url,
-                    'http://smoker.myopenid.com/',
-                    nil,
-                    ['1.1'],
-                    false)
+      _checkService(
+        services[0],
+        "http://www.myopenid.com/server",
+        @id_url,
+        "http://smoker.myopenid.com/",
+        nil,
+        ["1.1"],
+        false,
+      )
     end
 
     def test_yadisEmpty
-      _discover('application/xrds+xml',
-                read_data_file('test_discover/yadis_0entries.xml', false),
-                0)
+      _discover(
+        "application/xrds+xml",
+        read_data_file("test_discover/yadis_0entries.xml", false),
+        0,
+      )
     end
 
     def test_htmlEmptyYadis
       # HTML document has discovery information, but points to an
       # empty Yadis document.  The XRDS document pointed to by
       # "openid_and_yadis.html"
-      @documents[@id_url + 'xrds'] = ['application/xrds+xml',
-                                      read_data_file('test_discover/yadis_0entries.xml', false)]
+      @documents[@id_url + "xrds"] = [
+        "application/xrds+xml",
+        read_data_file("test_discover/yadis_0entries.xml", false),
+      ]
 
-      services = _discover('text/html',
-                           read_data_file('test_discover/openid_and_yadis.html', false),
-                           1)
+      services = _discover(
+        "text/html",
+        read_data_file("test_discover/openid_and_yadis.html", false),
+        1,
+      )
 
-      _checkService(services[0],
-                    'http://www.myopenid.com/server',
-                    @id_url,
-                    'http://smoker.myopenid.com/',
-                    nil,
-                    ['1.1'],
-                    false)
+      _checkService(
+        services[0],
+        "http://www.myopenid.com/server",
+        @id_url,
+        "http://smoker.myopenid.com/",
+        nil,
+        ["1.1"],
+        false,
+      )
     end
 
     def test_yadis1NoDelegate
-      services = _discover('application/xrds+xml',
-                           read_data_file('test_discover/yadis_no_delegate.xml', false),
-                           1)
+      services = _discover(
+        "application/xrds+xml",
+        read_data_file("test_discover/yadis_no_delegate.xml", false),
+        1,
+      )
 
-      _checkService(services[0],
-                    'http://www.myopenid.com/server',
-                    @id_url,
-                    @id_url,
-                    nil,
-                    ['1.0'],
-                    true)
+      _checkService(
+        services[0],
+        "http://www.myopenid.com/server",
+        @id_url,
+        @id_url,
+        nil,
+        ["1.0"],
+        true,
+      )
     end
 
     def test_yadis2NoLocalID
-      services = _discover('application/xrds+xml',
-                           read_data_file('test_discover/openid2_xrds_no_local_id.xml', false),
-                           1)
+      services = _discover(
+        "application/xrds+xml",
+        read_data_file("test_discover/openid2_xrds_no_local_id.xml", false),
+        1,
+      )
 
-      _checkService(services[0],
-                    'http://www.myopenid.com/server',
-                    @id_url,
-                    @id_url,
-                    nil,
-                    ['2.0'],
-                    true)
+      _checkService(
+        services[0],
+        "http://www.myopenid.com/server",
+        @id_url,
+        @id_url,
+        nil,
+        ["2.0"],
+        true,
+      )
     end
 
     def test_yadis2
-      services = _discover('application/xrds+xml',
-                           read_data_file('test_discover/openid2_xrds.xml', false),
-                           1)
+      services = _discover(
+        "application/xrds+xml",
+        read_data_file("test_discover/openid2_xrds.xml", false),
+        1,
+      )
 
-      _checkService(services[0],
-                    'http://www.myopenid.com/server',
-                    @id_url,
-                    'http://smoker.myopenid.com/',
-                    nil,
-                    ['2.0'],
-                    true)
+      _checkService(
+        services[0],
+        "http://www.myopenid.com/server",
+        @id_url,
+        "http://smoker.myopenid.com/",
+        nil,
+        ["2.0"],
+        true,
+      )
     end
 
     def test_yadis2OP
-      services = _discover('application/xrds+xml',
-                           read_data_file('test_discover/yadis_idp.xml', false),
-                           1)
+      services = _discover(
+        "application/xrds+xml",
+        read_data_file("test_discover/yadis_idp.xml", false),
+        1,
+      )
 
-      _checkService(services[0],
-                    'http://www.myopenid.com/server',
-                    nil, nil, nil,
-                    ['2.0 OP'],
-                    true)
+      _checkService(
+        services[0],
+        "http://www.myopenid.com/server",
+        nil,
+        nil,
+        nil,
+        ["2.0 OP"],
+        true,
+      )
     end
 
     def test_yadis2OPDelegate
       # The delegate tag isn't meaningful for OP entries.
-      services = _discover('application/xrds+xml',
-                           read_data_file('test_discover/yadis_idp_delegate.xml', false),
-                           1)
+      services = _discover(
+        "application/xrds+xml",
+        read_data_file("test_discover/yadis_idp_delegate.xml", false),
+        1,
+      )
 
-      _checkService(services[0],
-                    'http://www.myopenid.com/server',
-                    nil, nil, nil,
-                    ['2.0 OP'],
-                    true)
+      _checkService(
+        services[0],
+        "http://www.myopenid.com/server",
+        nil,
+        nil,
+        nil,
+        ["2.0 OP"],
+        true,
+      )
     end
 
     def test_yadis2BadLocalID
       assert_raises(DiscoveryFailure) do
-        _discover('application/xrds+xml',
-                  read_data_file('test_discover/yadis_2_bad_local_id.xml', false),
-                  1)
+        _discover(
+          "application/xrds+xml",
+          read_data_file("test_discover/yadis_2_bad_local_id.xml", false),
+          1,
+        )
       end
     end
 
     def test_yadis1And2
-      services = _discover('application/xrds+xml',
-                           read_data_file('test_discover/openid_1_and_2_xrds.xml', false),
-                           1)
+      services = _discover(
+        "application/xrds+xml",
+        read_data_file("test_discover/openid_1_and_2_xrds.xml", false),
+        1,
+      )
 
-      _checkService(services[0],
-                    'http://www.myopenid.com/server',
-                    @id_url,
-                    'http://smoker.myopenid.com/',
-                    nil,
-                    ['2.0', '1.1'],
-                    true)
+      _checkService(
+        services[0],
+        "http://www.myopenid.com/server",
+        @id_url,
+        "http://smoker.myopenid.com/",
+        nil,
+        ["2.0", "1.1"],
+        true,
+      )
     end
 
     def test_yadis1And2BadLocalID
       assert_raises(DiscoveryFailure) do
-        _discover('application/xrds+xml',
-                  read_data_file('test_discover/openid_1_and_2_xrds_bad_delegate.xml', false),
-                  1)
+        _discover(
+          "application/xrds+xml",
+          read_data_file("test_discover/openid_1_and_2_xrds_bad_delegate.xml", false),
+          1,
+        )
       end
     end
   end
@@ -520,23 +588,27 @@ module OpenID
 
       if !headers and !query
         raise ArgumentError.new("No headers or query; you probably didn't " +
-                                'mean to do that.')
+                                "mean to do that.")
       end
 
-      xri = xri[1..-1] if xri.start_with?('/')
+      xri = xri[1..-1] if xri.start_with?("/")
 
       begin
         ctype, body = @documents.fetch(xri)
       rescue IndexError
         status = 404
-        ctype = 'text/plain'
-        body = ''
+        ctype = "text/plain"
+        body = ""
       else
         status = 200
       end
 
-      HTTPResponse._from_raw_data(status, body,
-                                  { 'content-type' => ctype }, url)
+      HTTPResponse._from_raw_data(
+        status,
+        body,
+        {"content-type" => ctype},
+        url,
+      )
     end
   end
 
@@ -545,64 +617,79 @@ module OpenID
     include TestUtil
 
     def initialize(*args)
-      super(*args)
+      super
 
       @fetcher_class = MockFetcherForXRIProxy
 
-      @documents = { '=smoker' => ['application/xrds+xml',
-                                   read_data_file('test_discover/yadis_2entries_delegate.xml', false)],
-                     '=smoker*bad' => ['application/xrds+xml',
-                                       read_data_file('test_discover/yadis_another_delegate.xml', false)] }
+      @documents = {
+        "=smoker" => [
+          "application/xrds+xml",
+          read_data_file("test_discover/yadis_2entries_delegate.xml", false),
+        ],
+        "=smoker*bad" => [
+          "application/xrds+xml",
+          read_data_file("test_discover/yadis_another_delegate.xml", false),
+        ],
+      }
     end
 
     def test_xri
-      _, services = OpenID.discover_xri('=smoker')
+      _, services = OpenID.discover_xri("=smoker")
 
-      _checkService(services[0],
-                    'http://www.myopenid.com/server',
-                    Yadis::XRI.make_xri('=!1000'),
-                    'http://smoker.myopenid.com/',
-                    Yadis::XRI.make_xri('=!1000'),
-                    ['1.0'],
-                    true,
-                    '=smoker')
+      _checkService(
+        services[0],
+        "http://www.myopenid.com/server",
+        Yadis::XRI.make_xri("=!1000"),
+        "http://smoker.myopenid.com/",
+        Yadis::XRI.make_xri("=!1000"),
+        ["1.0"],
+        true,
+        "=smoker",
+      )
 
-      _checkService(services[1],
-                    'http://www.livejournal.com/openid/server.bml',
-                    Yadis::XRI.make_xri('=!1000'),
-                    'http://frank.livejournal.com/',
-                    Yadis::XRI.make_xri('=!1000'),
-                    ['1.0'],
-                    true,
-                    '=smoker')
+      _checkService(
+        services[1],
+        "http://www.livejournal.com/openid/server.bml",
+        Yadis::XRI.make_xri("=!1000"),
+        "http://frank.livejournal.com/",
+        Yadis::XRI.make_xri("=!1000"),
+        ["1.0"],
+        true,
+        "=smoker",
+      )
     end
 
     def test_xri_normalize
-      _, services = OpenID.discover_xri('xri://=smoker')
+      _, services = OpenID.discover_xri("xri://=smoker")
 
-      _checkService(services[0],
-                    'http://www.myopenid.com/server',
-                    Yadis::XRI.make_xri('=!1000'),
-                    'http://smoker.myopenid.com/',
-                    Yadis::XRI.make_xri('=!1000'),
-                    ['1.0'],
-                    true,
-                    '=smoker')
+      _checkService(
+        services[0],
+        "http://www.myopenid.com/server",
+        Yadis::XRI.make_xri("=!1000"),
+        "http://smoker.myopenid.com/",
+        Yadis::XRI.make_xri("=!1000"),
+        ["1.0"],
+        true,
+        "=smoker",
+      )
 
-      _checkService(services[1],
-                    'http://www.livejournal.com/openid/server.bml',
-                    Yadis::XRI.make_xri('=!1000'),
-                    'http://frank.livejournal.com/',
-                    Yadis::XRI.make_xri('=!1000'),
-                    ['1.0'],
-                    true,
-                    '=smoker')
+      _checkService(
+        services[1],
+        "http://www.livejournal.com/openid/server.bml",
+        Yadis::XRI.make_xri("=!1000"),
+        "http://frank.livejournal.com/",
+        Yadis::XRI.make_xri("=!1000"),
+        ["1.0"],
+        true,
+        "=smoker",
+      )
     end
 
     def test_xriNoCanonicalID
       silence_logging do
-        _, services = OpenID.discover_xri('=smoker*bad')
-        assert(services.empty?)
+        _, services = OpenID.discover_xri("=smoker*bad")
+
+        assert_empty(services)
       end
     end
 
@@ -610,9 +697,10 @@ module OpenID
       # When there is no delegate, the CanonicalID should be used with
       # XRI.
       endpoint = OpenIDServiceEndpoint.new
-      endpoint.claimed_id = Yadis::XRI.make_xri('=!1000')
-      endpoint.canonical_id = Yadis::XRI.make_xri('=!1000')
-      assert_equal(endpoint.get_local_id, Yadis::XRI.make_xri('=!1000'))
+      endpoint.claimed_id = Yadis::XRI.make_xri("=!1000")
+      endpoint.canonical_id = Yadis::XRI.make_xri("=!1000")
+
+      assert_equal(endpoint.get_local_id, Yadis::XRI.make_xri("=!1000"))
     end
   end
 
@@ -620,37 +708,48 @@ module OpenID
     include TestDataMixin
 
     def initialize(*args)
-      super(*args)
+      super
 
       @fetcher_class = MockFetcherForXRIProxy
 
-      @documents = { '=smoker' => ['application/xrds+xml',
-                                   read_data_file('test_discover/yadis_2entries_idp.xml', false)] }
+      @documents = {
+        "=smoker" => [
+          "application/xrds+xml",
+          read_data_file("test_discover/yadis_2entries_idp.xml", false),
+        ],
+      }
     end
 
     def test_xri
-      _, services = OpenID.discover_xri('=smoker')
-      assert(!services.empty?, 'Expected services, got zero')
-      assert_equal(services[0].server_url,
-                   'http://www.livejournal.com/openid/server.bml')
+      _, services = OpenID.discover_xri("=smoker")
+
+      assert(!services.empty?, "Expected services, got zero")
+      assert_equal(
+        "http://www.livejournal.com/openid/server.bml",
+        services[0].server_url,
+      )
     end
   end
 
   class TestPreferredNamespace < Minitest::Test
     def initialize(*args)
-      super(*args)
+      super
 
       @cases = [
         [OPENID1_NS, []],
-        [OPENID1_NS, ['http://jyte.com/']],
+        [OPENID1_NS, ["http://jyte.com/"]],
         [OPENID1_NS, [OPENID_1_0_TYPE]],
         [OPENID1_NS, [OPENID_1_1_TYPE]],
         [OPENID2_NS, [OPENID_2_0_TYPE]],
         [OPENID2_NS, [OPENID_IDP_2_0_TYPE]],
-        [OPENID2_NS, [OPENID_2_0_TYPE,
-                      OPENID_1_0_TYPE]],
-        [OPENID2_NS, [OPENID_1_0_TYPE,
-                      OPENID_2_0_TYPE]]
+        [OPENID2_NS, [
+          OPENID_2_0_TYPE,
+          OPENID_1_0_TYPE,
+        ],],
+        [OPENID2_NS, [
+          OPENID_1_0_TYPE,
+          OPENID_2_0_TYPE,
+        ],],
       ]
     end
 
@@ -659,6 +758,7 @@ module OpenID
         endpoint = OpenIDServiceEndpoint.new
         endpoint.type_uris = type_uris
         actual_ns = endpoint.preferred_namespace
+
         assert_equal(actual_ns, expected_ns)
       end
     end
@@ -675,41 +775,51 @@ module OpenID
 
     def test_openid1_0
       @endpoint.type_uris = [OPENID_1_0_TYPE]
+
       assert(!@endpoint.is_op_identifier)
     end
 
     def test_openid1_1
       @endpoint.type_uris = [OPENID_1_1_TYPE]
+
       assert(!@endpoint.is_op_identifier)
     end
 
     def test_openid2
       @endpoint.type_uris = [OPENID_2_0_TYPE]
+
       assert(!@endpoint.is_op_identifier)
     end
 
     def test_openid2OP
       @endpoint.type_uris = [OPENID_IDP_2_0_TYPE]
+
       assert(@endpoint.is_op_identifier)
     end
 
     def test_multipleMissing
-      @endpoint.type_uris = [OPENID_2_0_TYPE,
-                             OPENID_1_0_TYPE]
+      @endpoint.type_uris = [
+        OPENID_2_0_TYPE,
+        OPENID_1_0_TYPE,
+      ]
+
       assert(!@endpoint.is_op_identifier)
     end
 
     def test_multiplePresent
-      @endpoint.type_uris = [OPENID_2_0_TYPE,
-                             OPENID_1_0_TYPE,
-                             OPENID_IDP_2_0_TYPE]
+      @endpoint.type_uris = [
+        OPENID_2_0_TYPE,
+        OPENID_1_0_TYPE,
+        OPENID_IDP_2_0_TYPE,
+      ]
+
       assert(@endpoint.is_op_identifier)
     end
   end
 
   class TestFromOPEndpointURL < Minitest::Test
     def setup
-      @op_endpoint_url = 'http://example.com/op/endpoint'
+      @op_endpoint_url = "http://example.com/op/endpoint"
       @endpoint = OpenIDServiceEndpoint.from_op_endpoint_url(@op_endpoint_url)
     end
 
@@ -740,18 +850,18 @@ module OpenID
       # XXX these were all different tests in python, but they're
       # combined here so I only have to use with_method_overridden
       # once.
-      discoverXRI = proc { |_identifier| 'XRI' }
+      discoverXRI = proc { |_identifier| "XRI" }
 
-      discoverURI = proc { |_identifier| 'URI' }
+      discoverURI = proc { |_identifier| "URI" }
 
       OpenID.extend(OverrideMethodMixin)
 
       OpenID.with_method_overridden(:discover_uri, discoverURI) do
         OpenID.with_method_overridden(:discover_xri, discoverXRI) do
-          assert_equal('URI', OpenID.discover('http://woo!'))
-          assert_equal('URI', OpenID.discover('not a URL or XRI'))
-          assert_equal('XRI', OpenID.discover('xri://=something'))
-          assert_equal('XRI', OpenID.discover('=something'))
+          assert_equal("URI", OpenID.discover("http://woo!"))
+          assert_equal("URI", OpenID.discover("not a URL or XRI"))
+          assert_equal("XRI", OpenID.discover("xri://=something"))
+          assert_equal("XRI", OpenID.discover("=something"))
         end
       end
     end
@@ -763,17 +873,23 @@ module OpenID
     end
 
     def failUnlessSupportsOnly(*types)
-      ['foo',
-       OPENID_1_1_TYPE,
-       OPENID_1_0_TYPE,
-       OPENID_2_0_TYPE,
-       OPENID_IDP_2_0_TYPE].each do |t|
+      [
+        "foo",
+        OPENID_1_1_TYPE,
+        OPENID_1_0_TYPE,
+        OPENID_2_0_TYPE,
+        OPENID_IDP_2_0_TYPE,
+      ].each do |t|
         if types.member?(t)
-          assert(@endpoint.supports_type(t),
-                 format('Must support %s', t))
+          assert(
+            @endpoint.supports_type(t),
+            format("Must support %s", t),
+          )
         else
-          assert(!@endpoint.supports_type(t),
-                 format("Shouldn't support %s", t))
+          assert(
+            !@endpoint.supports_type(t),
+            format("Shouldn't support %s", t),
+          )
         end
       end
     end
@@ -789,8 +905,10 @@ module OpenID
 
     def test_openid2provider
       @endpoint.type_uris = [OPENID_IDP_2_0_TYPE]
-      failUnlessSupportsOnly(OPENID_IDP_2_0_TYPE,
-                             OPENID_2_0_TYPE)
+      failUnlessSupportsOnly(
+        OPENID_IDP_2_0_TYPE,
+        OPENID_2_0_TYPE,
+      )
     end
 
     def test_openid1_0
@@ -804,34 +922,43 @@ module OpenID
     end
 
     def test_multiple
-      @endpoint.type_uris = [OPENID_1_1_TYPE,
-                             OPENID_2_0_TYPE]
-      failUnlessSupportsOnly(OPENID_1_1_TYPE,
-                             OPENID_2_0_TYPE)
+      @endpoint.type_uris = [
+        OPENID_1_1_TYPE,
+        OPENID_2_0_TYPE,
+      ]
+      failUnlessSupportsOnly(
+        OPENID_1_1_TYPE,
+        OPENID_2_0_TYPE,
+      )
     end
 
     def test_multipleWithProvider
-      @endpoint.type_uris = [OPENID_1_1_TYPE,
-                             OPENID_2_0_TYPE,
-                             OPENID_IDP_2_0_TYPE]
-      failUnlessSupportsOnly(OPENID_1_1_TYPE,
-                             OPENID_2_0_TYPE,
-                             OPENID_IDP_2_0_TYPE)
+      @endpoint.type_uris = [
+        OPENID_1_1_TYPE,
+        OPENID_2_0_TYPE,
+        OPENID_IDP_2_0_TYPE,
+      ]
+      failUnlessSupportsOnly(
+        OPENID_1_1_TYPE,
+        OPENID_2_0_TYPE,
+        OPENID_IDP_2_0_TYPE,
+      )
     end
   end
 
   class TestEndpointDisplayIdentifier < Minitest::Test
     def test_strip_fragment
       @endpoint = OpenIDServiceEndpoint.new
-      @endpoint.claimed_id = 'http://recycled.invalid/#123'
-      assert_equal 'http://recycled.invalid/', @endpoint.display_identifier
+      @endpoint.claimed_id = "http://recycled.invalid/#123"
+
+      assert_equal("http://recycled.invalid/", @endpoint.display_identifier)
     end
   end
 
   class TestNormalizeURL < Minitest::Test
     def test_no_host
       assert_raises(DiscoveryFailure) do
-        OpenID.normalize_url('http:///too-many.invalid/slashes')
+        OpenID.normalize_url("http:///too-many.invalid/slashes")
       end
     end
   end

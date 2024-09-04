@@ -1,6 +1,6 @@
-require 'minitest/autorun'
-require 'testutil'
-require 'openid/consumer'
+require_relative "test_helper"
+require_relative "testutil"
+require "openid/consumer"
 
 module OpenID
   class Consumer
@@ -11,22 +11,29 @@ module OpenID
           consumer = Consumer.new(session, nil)
           consumer.send(:last_requested_endpoint=, :endpoint)
           ep = consumer.send(:last_requested_endpoint)
+
           assert_equal(:endpoint, ep)
           ep = consumer.send(:last_requested_endpoint)
+
           assert_equal(:endpoint, ep)
           consumer.send(:cleanup_last_requested_endpoint)
           ep = consumer.send(:last_requested_endpoint)
+
           assert_nil(ep)
         end
       end
 
       class TestBegin < Minitest::Test
-        attr_accessor :user_input, :anonymous, :services,
-                      :discovered_identifier, :checkid_request, :service
+        attr_accessor :user_input,
+          :anonymous,
+          :services,
+          :discovered_identifier,
+          :checkid_request,
+          :service
 
         def setup
-          @discovered_identifier = 'http://discovered/'
-          @user_input = 'user.input'
+          @discovered_identifier = "http://discovered/"
+          @user_input = "user.input"
           @service = :service
           @services = [@service]
           @session = {}
@@ -52,9 +59,13 @@ module OpenID
 
         def test_begin
           checkid_request = consumer.begin(@user_input, @anonymous)
+
           assert_equal(:checkid_request, checkid_request)
-          assert_equal(['OpenID::Consumer::DiscoveredServices::'\
-                        'OpenID::Consumer::'], @session.keys.sort!)
+          assert_equal(
+            ["OpenID::Consumer::DiscoveredServices::" \
+              "OpenID::Consumer::"],
+            @session.keys.sort!,
+          )
         end
 
         def test_begin_failure
@@ -85,7 +96,7 @@ module OpenID
           @session = {}
           @assoc = :assoc
           @service = OpenIDServiceEndpoint.new
-          @claimed_id = 'http://claimed.id/'
+          @claimed_id = "http://claimed.id/"
           @service.claimed_id = @claimed_id
           @anonymous = false
         end
@@ -108,7 +119,8 @@ module OpenID
 
         def call_begin_without_discovery
           result = consumer.begin_without_discovery(@service, @anonymous)
-          assert(result.instance_of?(CheckIDRequest))
+
+          assert_instance_of(CheckIDRequest, result)
           assert_equal(@anonymous, result.anonymous)
           assert_equal(@service, consumer.send(:last_requested_endpoint))
           assert_equal(result.instance_variable_get(:@assoc), @assoc)
@@ -127,8 +139,10 @@ module OpenID
           result = call_begin_without_discovery
 
           assert_equal(@claimed_id, result.return_to_args[cid_name])
-          assert_equal([cid_name, nonce_name].sort!,
-                       result.return_to_args.keys.sort!)
+          assert_equal(
+            [cid_name, nonce_name].sort!,
+            result.return_to_args.keys.sort!,
+          )
         end
 
         def test_begin_without_openid1_anonymous
@@ -142,7 +156,7 @@ module OpenID
           @service.type_uris = [OPENID_2_0_TYPE]
           result = call_begin_without_discovery
 
-          assert(result.return_to_args.empty?)
+          assert_empty(result.return_to_args)
         end
 
         def test_begin_without_openid2_anonymous
@@ -150,7 +164,7 @@ module OpenID
           @service.type_uris = [OPENID_2_0_TYPE]
           result = call_begin_without_discovery
 
-          assert(result.return_to_args.empty?)
+          assert_empty(result.return_to_args)
         end
       end
 
@@ -161,60 +175,73 @@ module OpenID
         end
 
         def test_bad_mode
-          response = @consumer.complete({ 'openid.ns' => OPENID2_NS,
-                                          'openid.mode' => 'bad' }, nil)
+          response = @consumer.complete(
+            {
+              "openid.ns" => OPENID2_NS,
+              "openid.mode" => "bad",
+            },
+            nil,
+          )
+
           assert_equal(FAILURE, response.status)
         end
 
         def test_missing_mode
-          response = @consumer.complete({ 'openid.ns' => OPENID2_NS }, nil)
+          response = @consumer.complete({"openid.ns" => OPENID2_NS}, nil)
+
           assert_equal(FAILURE, response.status)
         end
 
         def test_cancel
-          response = @consumer.complete({ 'openid.mode' => 'cancel' }, nil)
+          response = @consumer.complete({"openid.mode" => "cancel"}, nil)
+
           assert_equal(CANCEL, response.status)
         end
 
         def test_setup_needed_openid1
-          response = @consumer.complete({ 'openid.mode' => 'setup_needed' }, nil)
+          response = @consumer.complete({"openid.mode" => "setup_needed"}, nil)
+
           assert_equal(FAILURE, response.status)
         end
 
         def test_setup_needed_openid2
-          setup_url = 'http://setup.url/'
-          args = { 'openid.ns' => OPENID2_NS, 'openid.mode' => 'setup_needed', 'openid.user_setup_url' => setup_url }
+          setup_url = "http://setup.url/"
+          args = {"openid.ns" => OPENID2_NS, "openid.mode" => "setup_needed", "openid.user_setup_url" => setup_url}
           response = @consumer.complete(args, nil)
+
           assert_equal(SETUP_NEEDED, response.status)
           assert_equal(setup_url, response.setup_url)
         end
 
         def test_idres_setup_needed_openid1
-          setup_url = 'http://setup.url/'
+          setup_url = "http://setup.url/"
           args = {
-            'openid.user_setup_url' => setup_url,
-            'openid.mode' => 'id_res'
+            "openid.user_setup_url" => setup_url,
+            "openid.mode" => "id_res",
           }
           response = @consumer.complete(args, nil)
+
           assert_equal(SETUP_NEEDED, response.status)
           assert_equal(setup_url, response.setup_url)
         end
 
         def test_error
-          contact = 'me'
-          reference = 'thing thing'
+          contact = "me"
+          reference = "thing thing"
           args = {
-            'openid.mode' => 'error',
-            'openid.contact' => contact,
-            'openid.reference' => reference
+            "openid.mode" => "error",
+            "openid.contact" => contact,
+            "openid.reference" => reference,
           }
           response = @consumer.complete(args, nil)
+
           assert_equal(FAILURE, response.status)
           assert_equal(contact, response.contact)
           assert_equal(reference, response.reference)
 
-          args['openid.ns'] = OPENID2_NS
+          args["openid.ns"] = OPENID2_NS
           response = @consumer.complete(args, nil)
+
           assert_equal(FAILURE, response.status)
           assert_equal(contact, response.contact)
           assert_equal(reference, response.reference)
@@ -222,7 +249,7 @@ module OpenID
 
         def test_idres_openid1
           args = {
-            'openid.mode' => 'id_res'
+            "openid.mode" => "id_res",
           }
 
           endpoint = OpenIDServiceEndpoint.new
@@ -242,15 +269,17 @@ module OpenID
           end
 
           response = @consumer.complete(args, :test_return_to)
+
           assert_equal(SUCCESS, response.status, response.message)
           assert_equal(:test_claimed_id, response.identity_url)
           assert_equal(endpoint, response.endpoint)
 
-          error_message = 'In Soviet Russia, id_res handles you!'
+          error_message = "In Soviet Russia, id_res handles you!"
           @consumer.instance_def(:handle_idres) do |_message, _return_to|
             raise ProtocolError, error_message
           end
           response = @consumer.complete(args, :test_return_to)
+
           assert_equal(FAILURE, response.status)
           assert_equal(error_message, response.message)
         end

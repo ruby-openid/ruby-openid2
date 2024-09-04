@@ -1,12 +1,12 @@
-require 'openid/cryptutil'
-require 'openid/util'
-require 'openid/dh'
-require 'openid/store/nonce'
-require 'openid/trustroot'
-require 'openid/association'
-require 'openid/message'
+require "openid/cryptutil"
+require "openid/util"
+require "openid/dh"
+require "openid/store/nonce"
+require "openid/trustroot"
+require "openid/association"
+require "openid/message"
 
-require 'time'
+require "time"
 
 module OpenID
   module Server
@@ -16,9 +16,9 @@ module OpenID
 
     BROWSER_REQUEST_MODES = %w[checkid_setup checkid_immediate]
 
-    ENCODE_KVFORM = ['kvform'].freeze
-    ENCODE_URL = ['URL/redirect'].freeze
-    ENCODE_HTML_FORM = ['HTML form'].freeze
+    ENCODE_KVFORM = ["kvform"].freeze
+    ENCODE_URL = ["URL/redirect"].freeze
+    ENCODE_HTML_FORM = ["HTML form"].freeze
 
     UNUSED = nil
 
@@ -35,7 +35,7 @@ module OpenID
       end
 
       def namespace
-        raise 'Request has no message' if @message.nil?
+        raise "Request has no message" if @message.nil?
 
         @message.get_openid_namespace
       end
@@ -70,7 +70,7 @@ module OpenID
       def initialize(assoc_handle, signed, invalidate_handle = nil)
         super()
 
-        @mode = 'check_authentication'
+        @mode = "check_authentication"
         @required_fields = %w[identity return_to response_nonce].freeze
 
         @sig = nil
@@ -81,24 +81,27 @@ module OpenID
 
       # Construct me from an OpenID::Message.
       def self.from_message(message, _op_endpoint = UNUSED)
-        assoc_handle = message.get_arg(OPENID_NS, 'assoc_handle')
-        invalidate_handle = message.get_arg(OPENID_NS, 'invalidate_handle')
+        assoc_handle = message.get_arg(OPENID_NS, "assoc_handle")
+        invalidate_handle = message.get_arg(OPENID_NS, "invalidate_handle")
 
         signed = message.copy
         # openid.mode is currently check_authentication because
         # that's the mode of this request.  But the signature
         # was made on something with a different openid.mode.
         # http://article.gmane.org/gmane.comp.web.openid.general/537
-        signed.set_arg(OPENID_NS, 'mode', 'id_res') if signed.has_key?(OPENID_NS, 'mode')
+        signed.set_arg(OPENID_NS, "mode", "id_res") if signed.has_key?(OPENID_NS, "mode")
 
         obj = new(assoc_handle, signed, invalidate_handle)
         obj.message = message
-        obj.sig = message.get_arg(OPENID_NS, 'sig')
+        obj.sig = message.get_arg(OPENID_NS, "sig")
 
         if !obj.assoc_handle or
-           !obj.sig
-          msg = format('%s request missing required parameter from message %s',
-                       obj.mode, message)
+            !obj.sig
+          msg = format(
+            "%s request missing required parameter from message %s",
+            obj.mode,
+            message,
+          )
           raise ProtocolError.new(message, msg)
         end
 
@@ -116,14 +119,14 @@ module OpenID
         # message cannot be replayed.
         signatory.invalidate(@assoc_handle, true)
         response = OpenIDResponse.new(self)
-        valid_str = is_valid ? 'true' : 'false'
-        response.fields.set_arg(OPENID_NS, 'is_valid', valid_str)
+        valid_str = is_valid ? "true" : "false"
+        response.fields.set_arg(OPENID_NS, "is_valid", valid_str)
 
         if @invalidate_handle
           assoc = signatory.get_association(@invalidate_handle, false)
           unless assoc
             response.fields.set_arg(
-              OPENID_NS, 'invalidate_handle', @invalidate_handle
+              OPENID_NS, "invalidate_handle", @invalidate_handle
             )
           end
         end
@@ -135,14 +138,19 @@ module OpenID
         ih = nil
 
         ih = if @invalidate_handle
-               format(' invalidate? %s', @invalidate_handle)
-             else
-               ''
-             end
+          format(" invalidate? %s", @invalidate_handle)
+        else
+          ""
+        end
 
-        format('<%s handle: %s sig: %s: signed: %s%s>',
-               self.class, @assoc_handle,
-               @sig, @signed, ih)
+        format(
+          "<%s handle: %s sig: %s: signed: %s%s>",
+          self.class,
+          @assoc_handle,
+          @sig,
+          @signed,
+          ih,
+        )
       end
     end
 
@@ -171,7 +179,7 @@ module OpenID
       attr_reader :session_type
 
       def initialize
-        super('no-encryption', %w[HMAC-SHA1 HMAC-SHA256])
+        super("no-encryption", %w[HMAC-SHA1 HMAC-SHA256])
       end
 
       def self.from_message(_unused_request)
@@ -179,7 +187,7 @@ module OpenID
       end
 
       def answer(secret)
-        { 'mac_key' => Util.to_base64(secret) }
+        {"mac_key" => Util.to_base64(secret)}
       end
     end
 
@@ -199,9 +207,9 @@ module OpenID
       attr_reader :session_type
 
       def initialize(dh, consumer_pubkey)
-        super('DH-SHA1', ['HMAC-SHA1'])
+        super("DH-SHA1", ["HMAC-SHA1"])
 
-        @hash_func = CryptUtil.method('sha1')
+        @hash_func = CryptUtil.method(:sha1)
         @dh = dh
         @consumer_pubkey = consumer_pubkey
       end
@@ -211,21 +219,25 @@ module OpenID
       # Raises ProtocolError when parameters required to establish the
       # session are missing.
       def self.from_message(message)
-        dh_modulus = message.get_arg(OPENID_NS, 'dh_modulus')
-        dh_gen = message.get_arg(OPENID_NS, 'dh_gen')
+        dh_modulus = message.get_arg(OPENID_NS, "dh_modulus")
+        dh_gen = message.get_arg(OPENID_NS, "dh_gen")
         if (!dh_modulus and dh_gen) or
-           (!dh_gen and dh_modulus)
+            (!dh_gen and dh_modulus)
 
           missing = if !dh_modulus
-                      'modulus'
-                    else
-                      'generator'
-                    end
+            "modulus"
+          else
+            "generator"
+          end
 
-          raise ProtocolError.new(message,
-                                  format('If non-default modulus or generator is ' +
-                                          'supplied, both must be supplied. Missing %s',
-                                         missing))
+          raise ProtocolError.new(
+            message,
+            format(
+              "If non-default modulus or generator is " +
+                                  "supplied, both must be supplied. Missing %s",
+              missing,
+            ),
+          )
         end
 
         if dh_modulus or dh_gen
@@ -236,11 +248,16 @@ module OpenID
           dh = DiffieHellman.from_defaults
         end
 
-        consumer_pubkey = message.get_arg(OPENID_NS, 'dh_consumer_public')
+        consumer_pubkey = message.get_arg(OPENID_NS, "dh_consumer_public")
         unless consumer_pubkey
-          raise ProtocolError.new(message,
-                                  format('Public key for DH-SHA1 session ' +
-                                          'not found in message %s', message))
+          raise ProtocolError.new(
+            message,
+            format(
+              "Public key for DH-SHA1 session " +
+                                  "not found in message %s",
+              message,
+            ),
+          )
         end
 
         consumer_pubkey = CryptUtil.base64_to_num(consumer_pubkey)
@@ -249,22 +266,24 @@ module OpenID
       end
 
       def answer(secret)
-        mac_key = @dh.xor_secret(@hash_func,
-                                 @consumer_pubkey,
-                                 secret)
+        mac_key = @dh.xor_secret(
+          @hash_func,
+          @consumer_pubkey,
+          secret,
+        )
         {
-          'dh_server_public' => CryptUtil.num_to_base64(@dh.public),
-          'enc_mac_key' => Util.to_base64(mac_key)
+          "dh_server_public" => CryptUtil.num_to_base64(@dh.public),
+          "enc_mac_key" => Util.to_base64(mac_key),
         }
       end
     end
 
     class DiffieHellmanSHA256ServerSession < DiffieHellmanSHA1ServerSession
       def initialize(*args)
-        super(*args)
-        @session_type = 'DH-SHA256'
-        @hash_func = CryptUtil.method('sha256')
-        @allowed_assoc_types = ['HMAC-SHA256'].freeze
+        super
+        @session_type = "DH-SHA256"
+        @hash_func = CryptUtil.method(:sha256)
+        @allowed_assoc_types = ["HMAC-SHA256"].freeze
       end
     end
 
@@ -282,9 +301,9 @@ module OpenID
       attr_accessor :assoc_type
 
       @@session_classes = {
-        'no-encryption' => PlainTextServerSession,
-        'DH-SHA1' => DiffieHellmanSHA1ServerSession,
-        'DH-SHA256' => DiffieHellmanSHA256ServerSession
+        "no-encryption" => PlainTextServerSession,
+        "DH-SHA1" => DiffieHellmanSHA1ServerSession,
+        "DH-SHA256" => DiffieHellmanSHA256ServerSession,
       }
 
       # Construct me.
@@ -296,47 +315,59 @@ module OpenID
         @session = session
         @assoc_type = assoc_type
 
-        @mode = 'associate'
+        @mode = "associate"
       end
 
       # Construct me from an OpenID Message.
       def self.from_message(message, _op_endpoint = UNUSED)
         if message.is_openid1
-          session_type = message.get_arg(OPENID_NS, 'session_type')
-          if session_type == 'no-encryption'
-            Util.log('Received OpenID 1 request with a no-encryption ' +
-                     'association session type. Continuing anyway.')
+          session_type = message.get_arg(OPENID_NS, "session_type")
+          if session_type == "no-encryption"
+            Util.log("Received OpenID 1 request with a no-encryption " +
+                     "association session type. Continuing anyway.")
           elsif !session_type
-            session_type = 'no-encryption'
+            session_type = "no-encryption"
           end
         else
-          session_type = message.get_arg(OPENID2_NS, 'session_type')
+          session_type = message.get_arg(OPENID2_NS, "session_type")
           unless session_type
-            raise ProtocolError.new(message,
-                                    'session_type missing from request')
+            raise ProtocolError.new(
+              message,
+              "session_type missing from request",
+            )
           end
         end
 
         session_class = @@session_classes[session_type]
 
         unless session_class
-          raise ProtocolError.new(message,
-                                  format('Unknown session type %s', session_type))
+          raise ProtocolError.new(
+            message,
+            format("Unknown session type %s", session_type),
+          )
         end
 
         begin
           session = session_class.from_message(message)
         rescue ArgumentError => e
           # XXX
-          raise ProtocolError.new(message,
-                                  format('Error parsing %s session: %s',
-                                         session_type, e))
+          raise ProtocolError.new(
+            message,
+            format(
+              "Error parsing %s session: %s",
+              session_type,
+              e,
+            ),
+          )
         end
 
-        assoc_type = message.get_arg(OPENID_NS, 'assoc_type', 'HMAC-SHA1')
+        assoc_type = message.get_arg(OPENID_NS, "assoc_type", "HMAC-SHA1")
         unless session.allowed_assoc_type?(assoc_type)
-          msg = format('Session type %s does not support association type %s',
-                       session_type, assoc_type)
+          msg = format(
+            "Session type %s does not support association type %s",
+            session_type,
+            assoc_type,
+          )
           raise ProtocolError.new(message, msg)
         end
 
@@ -354,16 +385,18 @@ module OpenID
       def answer(assoc)
         response = OpenIDResponse.new(self)
         response.fields.update_args(OPENID_NS, {
-                                      'expires_in' => format('%d', assoc.expires_in),
-                                      'assoc_type' => @assoc_type,
-                                      'assoc_handle' => assoc.handle
-                                    })
-        response.fields.update_args(OPENID_NS,
-                                    @session.answer(assoc.secret))
-        unless @session.session_type == 'no-encryption' and
-               @message.is_openid1
+          "expires_in" => format("%d", assoc.expires_in),
+          "assoc_type" => @assoc_type,
+          "assoc_handle" => assoc.handle,
+        })
+        response.fields.update_args(
+          OPENID_NS,
+          @session.answer(assoc.secret),
+        )
+        unless @session.session_type == "no-encryption" and
+            @message.is_openid1
           response.fields.set_arg(
-            OPENID_NS, 'session_type', @session.session_type
+            OPENID_NS, "session_type", @session.session_type
           )
         end
 
@@ -373,22 +406,22 @@ module OpenID
       # Respond to this request indicating that the association type
       # or association session type is not supported.
       def answer_unsupported(message, preferred_association_type = nil,
-                             preferred_session_type = nil)
+        preferred_session_type = nil)
         raise ProtocolError.new(@message) if @message.is_openid1
 
         response = OpenIDResponse.new(self)
-        response.fields.set_arg(OPENID_NS, 'error_code', 'unsupported-type')
-        response.fields.set_arg(OPENID_NS, 'error', message)
+        response.fields.set_arg(OPENID_NS, "error_code", "unsupported-type")
+        response.fields.set_arg(OPENID_NS, "error", message)
 
         if preferred_association_type
           response.fields.set_arg(
-            OPENID_NS, 'assoc_type', preferred_association_type
+            OPENID_NS, "assoc_type", preferred_association_type
           )
         end
 
         if preferred_session_type
           response.fields.set_arg(
-            OPENID_NS, 'session_type', preferred_session_type
+            OPENID_NS, "session_type", preferred_session_type
           )
         end
 
@@ -436,7 +469,7 @@ module OpenID
       # Raises #MalformedReturnURL when the +return_to+ URL is not
       # a URL.
       def initialize(identity, return_to, op_endpoint, trust_root = nil,
-                     immediate = false, assoc_handle = nil, claimed_id = nil)
+        immediate = false, assoc_handle = nil, claimed_id = nil)
         @assoc_handle = assoc_handle
         @identity = identity
         @claimed_id = (claimed_id or identity)
@@ -447,14 +480,14 @@ module OpenID
 
         if immediate
           @immediate = true
-          @mode = 'checkid_immediate'
+          @mode = "checkid_immediate"
         else
           @immediate = false
-          @mode = 'checkid_setup'
+          @mode = "checkid_setup"
         end
 
         if @return_to and
-           !TrustRoot::TrustRoot.parse(@return_to)
+            !TrustRoot::TrustRoot.parse(@return_to)
           raise MalformedReturnURL.new(nil, @return_to)
         end
 
@@ -482,36 +515,38 @@ module OpenID
         obj = allocate
         obj.message = message
         obj.op_endpoint = op_endpoint
-        mode = message.get_arg(OPENID_NS, 'mode')
-        if mode == 'checkid_immediate'
+        mode = message.get_arg(OPENID_NS, "mode")
+        if mode == "checkid_immediate"
           obj.immediate = true
-          obj.mode = 'checkid_immediate'
+          obj.mode = "checkid_immediate"
         else
           obj.immediate = false
-          obj.mode = 'checkid_setup'
+          obj.mode = "checkid_setup"
         end
 
-        obj.return_to = message.get_arg(OPENID_NS, 'return_to')
+        obj.return_to = message.get_arg(OPENID_NS, "return_to")
         if message.is_openid1 and !obj.return_to
-          msg = format("Missing required field 'return_to' from %s",
-                       message)
+          msg = format(
+            "Missing required field 'return_to' from %s",
+            message,
+          )
           raise ProtocolError.new(message, msg)
         end
 
-        obj.identity = message.get_arg(OPENID_NS, 'identity')
-        obj.claimed_id = message.get_arg(OPENID_NS, 'claimed_id')
+        obj.identity = message.get_arg(OPENID_NS, "identity")
+        obj.claimed_id = message.get_arg(OPENID_NS, "claimed_id")
         if message.is_openid1
           unless obj.identity
-            s = 'OpenID 1 message did not contain openid.identity'
+            s = "OpenID 1 message did not contain openid.identity"
             raise ProtocolError.new(message, s)
           end
         elsif obj.identity and !obj.claimed_id
-          s = ('OpenID 2.0 message contained openid.identity but not ' +
-                 'claimed_id')
+          s = ("OpenID 2.0 message contained openid.identity but not " +
+                 "claimed_id")
           raise ProtocolError.new(message, s)
         elsif obj.claimed_id and !obj.identity
-          s = ('OpenID 2.0 message contained openid.claimed_id but not ' +
-               'identity')
+          s = ("OpenID 2.0 message contained openid.claimed_id but not " +
+               "identity")
           raise ProtocolError.new(message, s)
         end
 
@@ -519,20 +554,20 @@ module OpenID
         # here.  But if TrustRoot isn't currently part of the "public"
         # API, I'm not sure it's worth doing.
         trust_root_param = if message.is_openid1
-                             'trust_root'
-                           else
-                             'realm'
-                           end
+          "trust_root"
+        else
+          "realm"
+        end
         trust_root = message.get_arg(OPENID_NS, trust_root_param)
         trust_root = obj.return_to if trust_root.nil? || trust_root.empty?
         obj.trust_root = trust_root
 
         if !message.is_openid1 and !obj.return_to and !obj.trust_root
-          raise ProtocolError.new(message, 'openid.realm required when ' +
-                                  'openid.return_to absent')
+          raise ProtocolError.new(message, "openid.realm required when " +
+                                  "openid.return_to absent")
         end
 
-        obj.assoc_handle = message.get_arg(OPENID_NS, 'assoc_handle')
+        obj.assoc_handle = message.get_arg(OPENID_NS, "assoc_handle")
 
         # Using TrustRoot.parse here is a bit misleading, as we're not
         # parsing return_to as a trust root at all.  However, valid
@@ -540,8 +575,8 @@ module OpenID
         # idea if it is a valid URL.  Not all trust roots are valid
         # return_to URLs, however (particularly ones with wildcards),
         # so this is still a little sketchy.
-        if obj.return_to and \
-           !TrustRoot::TrustRoot.parse(obj.return_to)
+        if obj.return_to and
+            !TrustRoot::TrustRoot.parse(obj.return_to)
           raise MalformedReturnURL.new(message, obj.return_to)
         end
 
@@ -642,33 +677,33 @@ module OpenID
           if @message.is_openid2 and !@op_endpoint
             # In other words, that warning I raised in
             # Server.__init__?  You should pay attention to it now.
-            raise "#{self} should be constructed with "\
-                                 'op_endpoint to respond to OpenID 2.0 '\
-                                 'messages.'
+            raise "#{self} should be constructed with " \
+              "op_endpoint to respond to OpenID 2.0 " \
+              "messages."
           end
 
           server_url = @op_endpoint
         end
 
         mode = if allow
-                 'id_res'
-               elsif @message.is_openid1
-                 if @immediate
-                   'id_res'
-                 else
-                   'cancel'
-                 end
-               elsif @immediate
-                 'setup_needed'
-               else
-                 'cancel'
-               end
+          "id_res"
+        elsif @message.is_openid1
+          if @immediate
+            "id_res"
+          else
+            "cancel"
+          end
+        elsif @immediate
+          "setup_needed"
+        else
+          "cancel"
+        end
 
         response = OpenIDResponse.new(self)
 
         if claimed_id and @message.is_openid1
-          raise VersionError, 'claimed_id is new in OpenID 2.0 and not '\
-                               "available for #{@message.get_openid_namespace}"
+          raise VersionError, "claimed_id is new in OpenID 2.0 and not " \
+            "available for #{@message.get_openid_namespace}"
         end
 
         claimed_id = identity if identity and !claimed_id
@@ -676,9 +711,9 @@ module OpenID
         if allow
           if @identity == IDENTIFIER_SELECT
             unless identity
-              raise ArgumentError, 'This request uses IdP-driven '\
-                                    'identifier selection.You must supply '\
-                                    'an identifier in the response.'
+              raise ArgumentError, "This request uses IdP-driven " \
+                "identifier selection.You must supply " \
+                "an identifier in the response."
             end
 
             response_identity = identity
@@ -686,55 +721,64 @@ module OpenID
 
           elsif @identity
             if identity and (@identity != identity)
-              raise ArgumentError, "Request was for identity #{@identity}, "\
-                                    "cannot reply with identity #{identity}"
+              raise ArgumentError, "Request was for identity #{@identity}, " \
+                "cannot reply with identity #{identity}"
             end
 
             response_identity = @identity
             response_claimed_id = @claimed_id
           else
             if identity
-              raise ArgumentError, 'This request specified no identity '\
-                                    "and you supplied #{identity}"
+              raise ArgumentError, "This request specified no identity " \
+                "and you supplied #{identity}"
             end
             response_identity = nil
           end
 
           if @message.is_openid1 and !response_identity
-            raise ArgumentError, 'Request was an OpenID 1 request, so '\
-                                  'response must include an identifier.'
+            raise ArgumentError, "Request was an OpenID 1 request, so " \
+              "response must include an identifier."
           end
 
           response.fields.update_args(OPENID_NS, {
-                                        'mode' => mode,
-                                        'op_endpoint' => server_url,
-                                        'return_to' => @return_to,
-                                        'response_nonce' => Nonce.mk_nonce
-                                      })
+            "mode" => mode,
+            "op_endpoint" => server_url,
+            "return_to" => @return_to,
+            "response_nonce" => Nonce.mk_nonce,
+          })
 
           if response_identity
-            response.fields.set_arg(OPENID_NS, 'identity', response_identity)
+            response.fields.set_arg(OPENID_NS, "identity", response_identity)
             if @message.is_openid2
-              response.fields.set_arg(OPENID_NS,
-                                      'claimed_id', response_claimed_id)
+              response.fields.set_arg(
+                OPENID_NS,
+                "claimed_id",
+                response_claimed_id,
+              )
             end
           end
         else
-          response.fields.set_arg(OPENID_NS, 'mode', mode)
+          response.fields.set_arg(OPENID_NS, "mode", mode)
           if @immediate
             if @message.is_openid1 and !server_url
-              raise ArgumentError, 'setup_url is required for allow=false '\
-                                    'in OpenID 1.x immediate mode.'
+              raise ArgumentError, "setup_url is required for allow=false " \
+                "in OpenID 1.x immediate mode."
             end
 
             # Make a new request just like me, but with
             # immediate=false.
-            setup_request = self.class.new(@identity, @return_to,
-                                           @op_endpoint, @trust_root, false,
-                                           @assoc_handle, @claimed_id)
+            setup_request = self.class.new(
+              @identity,
+              @return_to,
+              @op_endpoint,
+              @trust_root,
+              false,
+              @assoc_handle,
+              @claimed_id,
+            )
             setup_request.message = Message.new(@message.get_openid_namespace)
             setup_url = setup_request.encode_to_url(server_url)
-            response.fields.set_arg(OPENID_NS, 'user_setup_url', setup_url)
+            response.fields.set_arg(OPENID_NS, "user_setup_url", setup_url)
           end
         end
 
@@ -752,20 +796,22 @@ module OpenID
         # used in both the client and server code, so Requests are
         # Encodable too.  That's right, code imported from alternate
         # realities all for the love of you, id_res/user_setup_url.
-        q = { 'mode' => @mode,
-              'identity' => @identity,
-              'claimed_id' => @claimed_id,
-              'return_to' => @return_to }
+        q = {
+          "mode" => @mode,
+          "identity" => @identity,
+          "claimed_id" => @claimed_id,
+          "return_to" => @return_to,
+        }
 
         if @trust_root
           if @message.is_openid1
-            q['trust_root'] = @trust_root
+            q["trust_root"] = @trust_root
           else
-            q['realm'] = @trust_root
+            q["realm"] = @trust_root
           end
         end
 
-        q['assoc_handle'] = @assoc_handle if @assoc_handle
+        q["assoc_handle"] = @assoc_handle if @assoc_handle
 
         response = Message.new(@message.get_openid_namespace)
         response.update_args(@message.get_openid_namespace, q)
@@ -786,21 +832,24 @@ module OpenID
         raise NoReturnToError unless @return_to
 
         if @immediate
-          raise ArgumentError.new('Cancel is not an appropriate response to ' +
-                                  'immediate mode requests.')
+          raise ArgumentError.new("Cancel is not an appropriate response to " +
+                                  "immediate mode requests.")
         end
 
         response = Message.new(@message.get_openid_namespace)
-        response.set_arg(OPENID_NS, 'mode', 'cancel')
+        response.set_arg(OPENID_NS, "mode", "cancel")
         response.to_url(@return_to)
       end
 
       def to_s
-        format('<%s id:%s im:%s tr:%s ah:%s>', self.class,
-               @identity,
-               @immediate,
-               @trust_root,
-               @assoc_handle)
+        format(
+          "<%s id:%s im:%s tr:%s ah:%s>",
+          self.class,
+          @identity,
+          @immediate,
+          @trust_root,
+          @assoc_handle,
+        )
       end
     end
 
@@ -833,10 +882,12 @@ module OpenID
       end
 
       def to_s
-        format('%s for %s: %s',
-               self.class,
-               @request.class,
-               @fields)
+        format(
+          "%s for %s: %s",
+          self.class,
+          @request.class,
+          @fields,
+        )
       end
 
       # form_tag_attrs is a hash of attributes to be added to the form
@@ -862,7 +913,7 @@ module OpenID
 
       def needs_signing
         # Does this response require signing?
-        @fields.get_arg(OPENID_NS, 'mode') == 'id_res'
+        @fields.get_arg(OPENID_NS, "mode") == "id_res"
       end
 
       # implements IEncodable
@@ -873,7 +924,7 @@ module OpenID
         return ENCODE_KVFORM unless BROWSER_REQUEST_MODES.member?(@request.mode)
 
         if @fields.is_openid2 and
-           encode_to_url.length > OPENID1_URL_LIMIT
+            encode_to_url.length > OPENID1_URL_LIMIT
           ENCODE_HTML_FORM
         else
           ENCODE_URL
@@ -927,7 +978,7 @@ module OpenID
       # The body of this response.
       attr_accessor :body
 
-      def initialize(code = HTTP_OK, headers = nil, body = '')
+      def initialize(code = HTTP_OK, headers = nil, body = "")
         # Construct me.
         #
         # These parameters are assigned directly as class attributes,
@@ -953,8 +1004,8 @@ module OpenID
       # really does expect that key to be a URL.  This seems a little
       # silly for the server store, since I expect there to be only
       # one server URL.
-      @@_normal_key = 'http://localhost/|normal'
-      @@_dumb_key = 'http://localhost/|dumb'
+      @@_normal_key = "http://localhost/|normal"
+      @@_dumb_key = "http://localhost/|dumb"
 
       def self._normal_key
         @@_normal_key
@@ -969,7 +1020,7 @@ module OpenID
       # Create a new Signatory. store is The back-end where my
       # associations are stored.
       def initialize(store)
-        Util.assert(store)
+        Util.truthy_assert(store)
         @store = store
         @secret_lifetime = 14 * 24 * 60 * 60
       end
@@ -978,16 +1029,24 @@ module OpenID
       def verify(assoc_handle, message)
         assoc = get_association(assoc_handle, true)
         unless assoc
-          Util.log(format('failed to get assoc with handle %s to verify ' +
-                           'message %s', assoc_handle, message))
+          Util.log(format(
+            "failed to get assoc with handle %s to verify " +
+                                       "message %s",
+            assoc_handle,
+            message,
+          ))
           return false
         end
 
         begin
           valid = assoc.check_message_signature(message)
         rescue StandardError => e
-          Util.log(format('Error in verifying %s with %s: %s',
-                          message, assoc, e))
+          Util.log(format(
+            "Error in verifying %s with %s: %s",
+            message,
+            assoc,
+            e,
+          ))
           return false
         end
 
@@ -1012,9 +1071,9 @@ module OpenID
           if !assoc or assoc.expires_in <= 0
             # fall back to dumb mode
             signed_response.fields.set_arg(
-              OPENID_NS, 'invalidate_handle', assoc_handle
+              OPENID_NS, "invalidate_handle", assoc_handle
             )
-            assoc_type = assoc ? assoc.assoc_type : 'HMAC-SHA1'
+            assoc_type = assoc ? assoc.assoc_type : "HMAC-SHA1"
             if assoc and assoc.expires_in <= 0
               # now do the clean-up that the disabled checkExpiration
               # code didn't get to do.
@@ -1036,20 +1095,20 @@ module OpenID
       end
 
       # Make a new association.
-      def create_association(dumb = true, assoc_type = 'HMAC-SHA1')
+      def create_association(dumb = true, assoc_type = "HMAC-SHA1")
         secret = CryptUtil.random_string(OpenID.get_secret_size(assoc_type))
         uniq = Util.to_base64(CryptUtil.random_string(4))
-        handle = format('{%s}{%x}{%s}', assoc_type, Time.now.to_i, uniq)
+        handle = format("{%s}{%x}{%s}", assoc_type, Time.now.to_i, uniq)
 
         assoc = Association.from_expires_in(
           secret_lifetime, handle, secret, assoc_type
         )
 
         key = if dumb
-                @@_dumb_key
-              else
-                @@_normal_key
-              end
+          @@_dumb_key
+        else
+          @@_normal_key
+        end
 
         @store.store_association(key, assoc)
         assoc
@@ -1064,19 +1123,22 @@ module OpenID
         # association request, as it must have the association's
         # secret.
 
-        raise ArgumentError.new('assoc_handle must not be None') unless assoc_handle
+        raise ArgumentError.new("assoc_handle must not be None") unless assoc_handle
 
         key = if dumb
-                @@_dumb_key
-              else
-                @@_normal_key
-              end
+          @@_dumb_key
+        else
+          @@_normal_key
+        end
 
         assoc = @store.get_association(key, assoc_handle)
         if assoc and assoc.expires_in <= 0
-          Util.log(format('requested %sdumb key %s is expired (by %s seconds)',
-                          !dumb ? 'not-' : '',
-                          assoc_handle, assoc.expires_in))
+          Util.log(format(
+            "requested %sdumb key %s is expired (by %s seconds)",
+            (!dumb) ? "not-" : "",
+            assoc_handle,
+            assoc.expires_in,
+          ))
           if check_expiration
             @store.remove_association(key, assoc_handle)
             assoc = nil
@@ -1089,10 +1151,10 @@ module OpenID
       # Invalidates the association with the given handle.
       def invalidate(assoc_handle, dumb)
         key = if dumb
-                @@_dumb_key
-              else
-                @@_normal_key
-              end
+          @@_dumb_key
+        else
+          @@_normal_key
+        end
 
         @store.remove_association(key, assoc_handle)
       end
@@ -1115,16 +1177,24 @@ module OpenID
       def encode(response)
         encode_as = response.which_encoding
         if encode_as == ENCODE_KVFORM
-          wr = @@responseFactory.new(HTTP_OK, nil,
-                                     response.encode_to_kvform)
+          wr = @@responseFactory.new(
+            HTTP_OK,
+            nil,
+            response.encode_to_kvform,
+          )
           wr.code = HTTP_ERROR if response.is_a?(Exception)
         elsif encode_as == ENCODE_URL
           location = response.encode_to_url
-          wr = @@responseFactory.new(HTTP_REDIRECT,
-                                     { 'location' => location })
+          wr = @@responseFactory.new(
+            HTTP_REDIRECT,
+            {"location" => location},
+          )
         elsif encode_as == ENCODE_HTML_FORM
-          wr = @@responseFactory.new(HTTP_OK, nil,
-                                     response.to_form_markup)
+          wr = @@responseFactory.new(
+            HTTP_OK,
+            nil,
+            response.to_form_markup,
+          )
         else
           # Can't encode this to a protocol message.  You should
           # probably render it to HTML and show it to the user.
@@ -1158,27 +1228,30 @@ module OpenID
         if !response.is_a?(Exception) and response.needs_signing
           unless @signatory
             raise ArgumentError.new(
-              format('Must have a store to sign this request: %s',
-                     response), response
+              format(
+                "Must have a store to sign this request: %s",
+                response,
+              ),
+              response,
             )
           end
 
-          raise AlreadySigned.new(response) if response.fields.has_key?(OPENID_NS, 'sig')
+          raise AlreadySigned.new(response) if response.fields.has_key?(OPENID_NS, "sig")
 
           response = @signatory.sign(response)
         end
 
-        super(response)
+        super
       end
     end
 
     # I decode an incoming web request in to a OpenIDRequest.
     class Decoder
       @@handlers = {
-        'checkid_setup' => CheckIDRequest.method('from_message'),
-        'checkid_immediate' => CheckIDRequest.method('from_message'),
-        'check_authentication' => CheckAuthRequest.method('from_message'),
-        'associate' => AssociateRequest.method('from_message')
+        "checkid_setup" => CheckIDRequest.method(:from_message),
+        "checkid_immediate" => CheckIDRequest.method(:from_message),
+        "check_authentication" => CheckAuthRequest.method(:from_message),
+        "associate" => AssociateRequest.method(:from_message),
       }
 
       attr_accessor :server
@@ -1197,24 +1270,24 @@ module OpenID
       # Raises ProtocolError when the query does not seem to be a valid
       # OpenID request.
       def decode(query)
-        return nil if query.nil? or query.empty?
+        return if query.nil? or query.empty?
 
         begin
           message = Message.from_post_args(query)
         rescue InvalidOpenIDNamespace => e
           query = query.dup
-          query['openid.ns'] = OPENID2_NS
+          query["openid.ns"] = OPENID2_NS
           message = Message.from_post_args(query)
           raise ProtocolError.new(message, e.to_s)
         end
 
-        mode = message.get_arg(OPENID_NS, 'mode')
+        mode = message.get_arg(OPENID_NS, "mode")
         unless mode
-          msg = format('No mode value in message %s', message)
+          msg = format("No mode value in message %s", message)
           raise ProtocolError.new(message, msg)
         end
 
-        handler = @@handlers.fetch(mode, method('default_decoder'))
+        handler = @@handlers.fetch(mode, method(:default_decoder))
         handler.call(message, @server.op_endpoint)
       end
 
@@ -1223,8 +1296,8 @@ module OpenID
       #
       # This implementation always raises ProtocolError.
       def default_decoder(message, _server)
-        mode = message.get_arg(OPENID_NS, 'mode')
-        msg = format('Unrecognized OpenID mode %s', mode)
+        mode = message.get_arg(OPENID_NS, "mode")
+        msg = format("Unrecognized OpenID mode %s", mode)
         raise ProtocolError.new(message, msg)
       end
     end
@@ -1283,10 +1356,13 @@ module OpenID
       # or add a method to me for handling that request type.
       def handle_request(request)
         begin
-          handler = method('openid_' + request.mode)
+          handler = method("openid_" + request.mode)
         rescue NameError
-          raise format('%s has no handler for a request of mode %s.',
-                       self, request.mode).to_s
+          raise format(
+            "%s has no handler for a request of mode %s.",
+            self,
+            request.mode,
+          ).to_s
         end
 
         handler.call(request)
@@ -1302,16 +1378,24 @@ module OpenID
         assoc_type = request.assoc_type
         session_type = request.session.session_type
         if @negotiator.allowed?(assoc_type, session_type)
-          assoc = @signatory.create_association(false,
-                                                assoc_type)
+          assoc = @signatory.create_association(
+            false,
+            assoc_type,
+          )
           request.answer(assoc)
         else
-          message = format('Association type %s is not supported with ' +
-                            'session type %s', assoc_type, session_type)
+          message = format(
+            "Association type %s is not supported with " +
+                                        "session type %s",
+            assoc_type,
+            session_type,
+          )
           preferred_assoc_type, preferred_session_type = @negotiator.get_allowed_type
-          request.answer_unsupported(message,
-                                     preferred_assoc_type,
-                                     preferred_session_type)
+          request.answer_unsupported(
+            message,
+            preferred_assoc_type,
+            preferred_session_type,
+          )
         end
       end
 
@@ -1348,15 +1432,15 @@ module OpenID
         @openid_message = message
         @reference = reference
         @contact = contact
-        Util.assert(!message.is_a?(String))
+        Util.truthy_assert(!message.is_a?(String))
         super(text)
       end
 
       # Get the return_to argument from the request, if any.
       def get_return_to
-        return nil if @openid_message.nil?
+        return if @openid_message.nil?
 
-        @openid_message.get_arg(OPENID_NS, 'return_to')
+        @openid_message.get_arg(OPENID_NS, "return_to")
       end
 
       # Did this request have a return_to parameter?
@@ -1369,12 +1453,12 @@ module OpenID
       def to_message
         namespace = @openid_message.get_openid_namespace
         reply = Message.new(namespace)
-        reply.set_arg(OPENID_NS, 'mode', 'error')
-        reply.set_arg(OPENID_NS, 'error', to_s)
+        reply.set_arg(OPENID_NS, "mode", "error")
+        reply.set_arg(OPENID_NS, "error", to_s)
 
-        reply.set_arg(OPENID_NS, 'contact', @contact.to_s) if @contact
+        reply.set_arg(OPENID_NS, "contact", @contact.to_s) if @contact
 
-        reply.set_arg(OPENID_NS, 'reference', @reference.to_s) if @reference
+        reply.set_arg(OPENID_NS, "reference", @reference.to_s) if @reference
 
         reply
       end
@@ -1405,16 +1489,16 @@ module OpenID
       def which_encoding
         if has_return_to
           if @openid_message.is_openid2 and
-             encode_to_url.length > OPENID1_URL_LIMIT
+              encode_to_url.length > OPENID1_URL_LIMIT
             return ENCODE_HTML_FORM
           else
             return ENCODE_URL
           end
         end
 
-        return nil if @openid_message.nil?
+        return if @openid_message.nil?
 
-        mode = @openid_message.get_arg(OPENID_NS, 'mode')
+        mode = @openid_message.get_arg(OPENID_NS, "mode")
         return ENCODE_KVFORM if mode && !BROWSER_REQUEST_MODES.member?(mode)
 
         # If your request was so broken that you didn't manage to
@@ -1442,7 +1526,7 @@ module OpenID
       attr_reader :response
 
       def initialize(response)
-        super(response)
+        super
         @response = response
       end
     end
@@ -1462,9 +1546,11 @@ module OpenID
       end
 
       def to_s
-        format('return_to %s not under trust_root %s',
-               @return_to,
-               @trust_root)
+        format(
+          "return_to %s not under trust_root %s",
+          @return_to,
+          @trust_root,
+        )
       end
     end
 

@@ -4,6 +4,8 @@ env:
   K_SOUP_COV_MIN_BRANCH: 71
   K_SOUP_COV_MIN_LINE: 89
   K_SOUP_COV_MIN_HARD: true
+  K_SOUP_COV_DO: true
+  K_SOUP_COV_COMMAND_NAME: "MiniTest Coverage"
 
 on:
   push:
@@ -45,12 +47,6 @@ jobs:
           - '3.1'
 
     steps:
-      - name: CodeClimate Install
-        uses: amancevice/setup-code-climate@v2
-        if: ${{ github.event_name != 'pull_request' }}
-        with:
-          cc_test_reporter_id: "${{ secrets.CC_TEST_REPORTER_ID }}"
-
       - name: Checkout
         uses: actions/checkout@v4
 
@@ -62,18 +58,8 @@ jobs:
           bundler: "${{ matrix.bundler }}"
           bundler-cache: true # runs 'bundle install' and caches installed gems automatically
 
-      - name: CodeClimate Pre-build Notification
-        run: cc-test-reporter before-build
-        if: ${{ github.event_name != 'pull_request' }}
-        continue-on-error: ${{ matrix.experimental != 'false' }}
-
       - name: Run tests
         run: bundle exec rake test
-
-      - name: CodeClimate Post-build Notification
-        run: cc-test-reporter after-build
-        if: ${{ github.event_name != 'pull_request' }}
-        continue-on-error: ${{ matrix.experimental != 'false' }}
 
       - name: Code Coverage Summary Report
         uses: irongut/CodeCoverageSummary@v1.3.0
@@ -97,15 +83,3 @@ jobs:
           recreate: true
           path: code-coverage-results.md
         continue-on-error: ${{ matrix.experimental != 'false' }}
-
-      - name: Coveralls
-        uses: coverallsapp/github-action@master
-        with:
-          github-token: "${{ secrets.GITHUB_TOKEN }}"
-        continue-on-error: ${{ matrix.experimental != 'false' }}
-
-      - name: Upload coverage reports to Codecov
-        uses: codecov/codecov-action@v4.5.0
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          slug: pboling/sanitize_email
