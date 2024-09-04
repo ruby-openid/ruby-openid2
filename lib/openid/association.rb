@@ -70,7 +70,7 @@ module OpenID
         assoc_type: assoc_type
       }
 
-      Util.assert(data.length == FIELD_ORDER.length)
+      Util.truthy_assert(data.length == FIELD_ORDER.length)
 
       pairs = FIELD_ORDER.map { |field| [field.to_s, data[field]] }
       Util.seq_to_kv(pairs, true)

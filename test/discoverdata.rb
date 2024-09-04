@@ -1,7 +1,8 @@
-require 'uri'
-require 'openid/yadis/constants'
-require 'openid/yadis/discovery'
-require 'openid/util'
+require "uri"
+require_relative "test_helper"
+require "openid/yadis/constants"
+require "openid/yadis/discovery"
+require "openid/util"
 
 module OpenID
   module DiscoverData
@@ -10,27 +11,27 @@ module OpenID
 
     TESTLIST = [
       # success,  input_name,          id_name,            result_name
-      [true, 'equiv', 'equiv', 'xrds'],
-      [true,  'header',            'header',           'xrds'],
-      [true,  'lowercase_header',  'lowercase_header', 'xrds'],
-      [true,  'xrds',              'xrds',             'xrds'],
-      [true,  'xrds_ctparam',      'xrds_ctparam',     'xrds_ctparam'],
-      [true,  'xrds_ctcase',       'xrds_ctcase',      'xrds_ctcase'],
-      [false, 'xrds_html',         'xrds_html',        'xrds_html'],
-      [true,  'redir_equiv',       'equiv',            'xrds'],
-      [true,  'redir_header',      'header',           'xrds'],
-      [true,  'redir_xrds',        'xrds',             'xrds'],
-      [false, 'redir_xrds_html',   'xrds_html',        'xrds_html'],
-      [true,  'redir_redir_equiv', 'equiv',            'xrds'],
-      [false, '404_server_response', nil,             nil],
-      [false, '404_with_header',     nil,             nil],
-      [false, '404_with_meta',       nil,             nil],
-      [false, '201_server_response', nil,             nil],
-      [false, '500_server_response', nil,             nil]
+      [true, "equiv", "equiv", "xrds"],
+      [true, "header", "header", "xrds"],
+      [true, "lowercase_header", "lowercase_header", "xrds"],
+      [true, "xrds", "xrds", "xrds"],
+      [true, "xrds_ctparam", "xrds_ctparam", "xrds_ctparam"],
+      [true, "xrds_ctcase", "xrds_ctcase", "xrds_ctcase"],
+      [false, "xrds_html", "xrds_html", "xrds_html"],
+      [true, "redir_equiv", "equiv", "xrds"],
+      [true, "redir_header", "header", "xrds"],
+      [true, "redir_xrds", "xrds", "xrds"],
+      [false, "redir_xrds_html", "xrds_html", "xrds_html"],
+      [true, "redir_redir_equiv", "equiv", "xrds"],
+      [false, "404_server_response", nil, nil],
+      [false, "404_with_header", nil, nil],
+      [false, "404_with_meta", nil, nil],
+      [false, "201_server_response", nil, nil],
+      [false, "500_server_response", nil, nil],
     ]
 
-    @@example_xrds_file = 'example-xrds.xml'
-    @@default_test_file = 'test1-discover.txt'
+    @@example_xrds_file = "example-xrds.xml"
+    @@default_test_file = "test1-discover.txt"
     @@discover_tests = {}
 
     def readTests(filename)
@@ -53,10 +54,10 @@ module OpenID
 
     def fillTemplate(test_name, template, base_url, example_xrds)
       mapping = [
-        ['URL_BASE/', base_url],
-        ['<XRDS Content>', example_xrds],
-        ['YADIS_HEADER', Yadis::YADIS_HEADER_NAME],
-        ['NAME', test_name]
+        ["URL_BASE/", base_url],
+        ["<XRDS Content>", example_xrds],
+        ["YADIS_HEADER", Yadis::YADIS_HEADER_NAME],
+        ["NAME", test_name],
       ]
 
       mapping.each do |k, v|
@@ -67,8 +68,8 @@ module OpenID
     end
 
     def generateSample(test_name, base_url,
-                       example_xrds = nil,
-                       filename = @@default_test_file)
+      example_xrds = nil,
+      filename = @@default_test_file)
       example_xrds = read_data_file(@@example_xrds_file, false) if example_xrds.nil?
 
       begin
@@ -88,7 +89,7 @@ module OpenID
       # If the name is None then we expect the protocol to fail, which
       # we represent by None
       if id_name.nil?
-        Util.assert(result_name.nil?)
+        Util.truthy_assert(result_name.nil?)
         return input_url, DiscoveryFailure
       end
 
@@ -98,8 +99,8 @@ module OpenID
 
       ctype = nil
       header_lines.each do |header_line|
-        if header_line.start_with?('Content-Type:')
-          _, ctype = header_line.split(':', 2)
+        if header_line.start_with?("Content-Type:")
+          _, ctype = header_line.split(":", 2)
           ctype = ctype.strip
           break
         else

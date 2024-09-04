@@ -1,8 +1,8 @@
-require 'minitest/autorun'
-require 'testutil'
-require 'openid/kvpost'
-require 'openid/kvform'
-require 'openid/message'
+require_relative "test_helper"
+require_relative "testutil"
+require "openid/kvpost"
+require "openid/kvform"
+require "openid/message"
 
 module OpenID
   class KVPostTestCase < Minitest::Test
@@ -13,20 +13,23 @@ module OpenID
     end
 
     def test_msg_from_http_resp_success
-      resp = mk_resp(200, { 'mode' => 'seitan' })
-      msg = Message.from_http_response(resp, 'http://invalid/')
-      assert_equal({ 'openid.mode' => 'seitan' }, msg.to_post_args)
+      resp = mk_resp(200, {"mode" => "seitan"})
+      msg = Message.from_http_response(resp, "http://invalid/")
+
+      assert_equal({"openid.mode" => "seitan"}, msg.to_post_args)
     end
 
     def test_400
-      args = { 'error' => 'I ate too much cheese',
-               'error_code' => 'sadness' }
+      args = {
+        "error" => "I ate too much cheese",
+        "error_code" => "sadness",
+      }
       resp = mk_resp(400, args)
       begin
-        val = Message.from_http_response(resp, 'http://invalid/')
+        val = Message.from_http_response(resp, "http://invalid/")
       rescue ServerError => e
-        assert_equal(e.error_text, 'I ate too much cheese')
-        assert_equal(e.error_code, 'sadness')
+        assert_equal("I ate too much cheese", e.error_text)
+        assert_equal("sadness", e.error_code)
         assert_equal(e.message.to_args, args)
       else
         raise("Expected exception. Got: #{val}")
@@ -34,11 +37,13 @@ module OpenID
     end
 
     def test_500
-      args = { 'error' => 'I ate too much cheese',
-               'error_code' => 'sadness' }
+      args = {
+        "error" => "I ate too much cheese",
+        "error_code" => "sadness",
+      }
       resp = mk_resp(500, args)
       assert_raises(HTTPStatusError) do
-        Message.from_http_response(resp, 'http://invalid')
+        Message.from_http_response(resp, "http://invalid")
       end
     end
 
@@ -51,7 +56,7 @@ module OpenID
       end
 
       with_fetcher(mock_fetcher.new) do
-        OpenID.make_kv_post(Message.from_openid_args(args), 'http://invalid/')
+        OpenID.make_kv_post(Message.from_openid_args(args), "http://invalid/")
       end
     end
 

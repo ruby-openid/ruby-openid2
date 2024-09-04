@@ -23,7 +23,7 @@ module OpenID
      [#{BASE64_CHARS}]{3}=)?
     \\Z", Regexp::EXTENDED)
 
-    def self.assert(value, message = nil)
+    def self.truthy_assert(value, message = nil)
       return if value
 
       raise AssertionError, message or value

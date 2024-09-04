@@ -969,7 +969,7 @@ module OpenID
       # Create a new Signatory. store is The back-end where my
       # associations are stored.
       def initialize(store)
-        Util.assert(store)
+        Util.truthy_assert(store)
         @store = store
         @secret_lifetime = 14 * 24 * 60 * 60
       end
@@ -1348,7 +1348,7 @@ module OpenID
         @openid_message = message
         @reference = reference
         @contact = contact
-        Util.assert(!message.is_a?(String))
+        Util.truthy_assert(!message.is_a?(String))
         super(text)
       end
 

@@ -1,6 +1,6 @@
-require 'minitest/autorun'
-require 'openid/consumer/discovery'
-require 'openid/yadis/services'
+require_relative "test_helper"
+require "openid/consumer/discovery"
+require "openid/yadis/services"
 
 module OpenID
   XRDS_BOILERPLATE = <<~EOF
@@ -18,12 +18,12 @@ module OpenID
     format(XRDS_BOILERPLATE, services)
   end
 
-  def self.mkService(uris = nil, type_uris = nil, local_id = nil, dent = '        ')
+  def self.mkService(uris = nil, type_uris = nil, local_id = nil, dent = "        ")
     chunks = [dent, "<Service>\n"]
-    dent2 = dent + '    '
+    dent2 = dent + "    "
     if type_uris
       type_uris.each do |type_uri|
-        chunks += [dent2 + '<Type>', type_uri, "</Type>\n"]
+        chunks += [dent2 + "<Type>", type_uri, "</Type>\n"]
       end
     end
 
@@ -35,28 +35,30 @@ module OpenID
           prio = nil
         end
 
-        chunks += [dent2, '<URI']
+        chunks += [dent2, "<URI"]
         chunks += [" priority='", str(prio), "'"] unless prio.nil?
-        chunks += ['>', uri, "</URI>\n"]
+        chunks += [">", uri, "</URI>\n"]
       end
     end
 
-    chunks += [dent2, '<openid:Delegate>', local_id, "</openid:Delegate>\n"] if local_id
+    chunks += [dent2, "<openid:Delegate>", local_id, "</openid:Delegate>\n"] if local_id
 
     chunks += [dent, "</Service>\n"]
 
-    chunks.join('')
+    chunks.join("")
   end
 
   # Different sets of server URLs for use in the URI tag
   SERVER_URL_OPTIONS = [
     [], # This case should not generate an endpoint object
-    ['http://server.url/'],
-    ['https://server.url/'],
-    ['https://server.url/', 'http://server.url/'],
-    ['https://server.url/',
-     'http://server.url/',
-     'http://example.server.url/']
+    ["http://server.url/"],
+    ["https://server.url/"],
+    ["https://server.url/", "http://server.url/"],
+    [
+      "https://server.url/",
+      "http://server.url/",
+      "http://example.server.url/",
+    ],
   ]
 
   # Used for generating test data
@@ -72,15 +74,15 @@ module OpenID
   # A couple of example extension type URIs. These are not at all
   # official, but are just here for testing.
   EXT_TYPES = [
-    'http://janrain.com/extension/blah',
-    'http://openid.net/sreg/1.0'
+    "http://janrain.com/extension/blah",
+    "http://openid.net/sreg/1.0",
   ]
 
   # Range of valid Delegate tag values for generating test data
   LOCAL_ID_OPTIONS = [
     nil,
-    'http://vanity.domain/',
-    'https://somewhere/yadis/'
+    "http://vanity.domain/",
+    "https://somewhere/yadis/",
   ]
 
   class OpenIDYadisTest
@@ -90,12 +92,14 @@ module OpenID
       @type_uris = type_uris
       @local_id = local_id
 
-      @yadis_url = 'http://unit.test/'
+      @yadis_url = "http://unit.test/"
 
       # Create an XRDS document to parse
-      services = OpenID.mkService(@uris,
-                                  @type_uris,
-                                  @local_id)
+      services = OpenID.mkService(
+        @uris,
+        @type_uris,
+        @local_id,
+      )
       @xrds = OpenID.mkXRDS(services)
     end
 
@@ -124,6 +128,7 @@ module OpenID
         # and types
         actual_types = endpoint.type_uris.dup
         actual_types.sort!
+
         testcase.assert_equal(type_uris, actual_types, actual_types.inspect)
       end
 

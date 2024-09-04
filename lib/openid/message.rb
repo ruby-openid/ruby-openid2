@@ -457,7 +457,7 @@ module OpenID
     def add_alias(namespace_uri, desired_alias, implicit = false)
       # Check that desired_alias is not an openid protocol field as
       # per the spec.
-      Util.assert(!OPENID_PROTOCOL_FIELDS.include?(desired_alias),
+      Util.truthy_assert(!OPENID_PROTOCOL_FIELDS.include?(desired_alias),
                   "#{desired_alias} is not an allowed namespace alias")
 
       # check that there is not a namespace already defined for the
@@ -471,7 +471,7 @@ module OpenID
       # Check that desired_alias does not contain a period as per the
       # spec.
       if desired_alias.is_a?(String)
-        Util.assert(desired_alias.index('.').nil?,
+        Util.truthy_assert(desired_alias.index('.').nil?,
                     "#{desired_alias} must not contain a dot")
       end
 

@@ -23,9 +23,18 @@ Gem::Specification.new do |s|
   s.add_development_dependency("minitest", ">= 5")
   s.add_development_dependency("rake", ">= 13")
   s.add_development_dependency("rexml", "~> 3.2")
+  s.add_development_dependency("webrick", "~> 1.8")
+
+  # Coverage
+  s.add_development_dependency("kettle-soup-cover", "~> 1.0", ">= 1.0.2")
+
+  # Linting
   s.add_development_dependency("rubocop-lts", "~> 18.2", ">= 18.2.1")
   s.add_development_dependency("rubocop-minitest", "~> 0.36")
   s.add_development_dependency("rubocop-packaging", "~> 0.5", ">= 0.5.2")
   s.add_development_dependency("standard", ">= 1.35.1")
-  s.add_development_dependency("webrick", "~> 1.8")
+
+  # Documentation
+  s.add_development_dependency("yard", "~> 0.9", ">= 0.9.34")
+  s.add_development_dependency("yard-junk", "~> 0.0")
 end

@@ -1,12 +1,12 @@
-require 'minitest/autorun'
-require 'testutil'
-require 'openid/urinorm'
+require_relative "test_helper"
+require_relative "testutil"
+require "openid/urinorm"
 
 class URINormTestCase < Minitest::Test
   include OpenID::TestDataMixin
 
   def test_normalize
-    lines = read_data_file('urinorm.txt')
+    lines = read_data_file("urinorm.txt")
 
     while lines.length > 0
 
@@ -15,16 +15,17 @@ class URINormTestCase < Minitest::Test
       expected = lines.shift.strip
       lines.shift #=> newline
 
-      if expected == 'fail'
+      if expected == "fail"
         begin
           OpenID::URINorm.urinorm(actual)
         rescue URI::InvalidURIError
-          assert true
+          assert(true)
         else
-          raise 'Should have gotten URI error'
+          raise "Should have gotten URI error"
         end
       else
         normalized = OpenID::URINorm.urinorm(actual)
+
         assert_equal(expected, normalized, case_name)
       end
     end

@@ -1,11 +1,11 @@
-require 'minitest/autorun'
-require 'openid/extension'
-require 'openid/message'
+require_relative "test_helper"
+require "openid/extension"
+require "openid/message"
 
 module OpenID
   class DummyExtension < OpenID::Extension
-    TEST_URI = 'http://an.extension'
-    TEST_ALIAS = 'dummy'
+    TEST_URI = "http://an.extension"
+    TEST_ALIAS = "dummy"
     def initialize
       @ns_uri = TEST_URI
       @ns_alias = TEST_ALIAS
@@ -22,13 +22,16 @@ module OpenID
       ext = DummyExtension.new
       ext.to_message(oid1_msg)
       namespaces = oid1_msg.namespaces
+
       assert(namespaces.implicit?(DummyExtension::TEST_URI))
       assert_equal(
         DummyExtension::TEST_URI,
-        namespaces.get_namespace_uri(DummyExtension::TEST_ALIAS)
+        namespaces.get_namespace_uri(DummyExtension::TEST_ALIAS),
       )
-      assert_equal(DummyExtension::TEST_ALIAS,
-                   namespaces.get_alias(DummyExtension::TEST_URI))
+      assert_equal(
+        DummyExtension::TEST_ALIAS,
+        namespaces.get_alias(DummyExtension::TEST_URI),
+      )
     end
 
     def test_OpenID2
@@ -36,13 +39,16 @@ module OpenID
       ext = DummyExtension.new
       ext.to_message(oid2_msg)
       namespaces = oid2_msg.namespaces
+
       assert(!namespaces.implicit?(DummyExtension::TEST_URI))
       assert_equal(
         DummyExtension::TEST_URI,
-        namespaces.get_namespace_uri(DummyExtension::TEST_ALIAS)
+        namespaces.get_namespace_uri(DummyExtension::TEST_ALIAS),
       )
-      assert_equal(DummyExtension::TEST_ALIAS,
-                   namespaces.get_alias(DummyExtension::TEST_URI))
+      assert_equal(
+        DummyExtension::TEST_ALIAS,
+        namespaces.get_alias(DummyExtension::TEST_URI),
+      )
     end
   end
 end

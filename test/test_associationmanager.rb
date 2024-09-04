@@ -1,34 +1,38 @@
-require 'minitest/autorun'
-require 'testutil'
-require 'openid/consumer/associationmanager'
-require 'openid/association'
-require 'openid/dh'
-require 'openid/util'
-require 'openid/cryptutil'
-require 'openid/message'
-require 'openid/protocolerror'
-require 'openid/store/memory'
-require 'util'
-require 'time'
+require_relative "test_helper"
+require_relative "testutil"
+require "openid/consumer/associationmanager"
+require "openid/association"
+require "openid/dh"
+require "openid/util"
+require "openid/cryptutil"
+require "openid/message"
+require "openid/protocolerror"
+require "openid/store/memory"
+require_relative "util"
+require "time"
 
 module OpenID
   class DHAssocSessionTest < Minitest::Test
     def test_sha1_get_request
       # Initialized without an explicit DH gets defaults
       sess = Consumer::DiffieHellmanSHA1Session.new
-      assert_equal(['dh_consumer_public'], sess.get_request.keys)
-      Util.from_base64(sess.get_request['dh_consumer_public'])
+
+      assert_equal(["dh_consumer_public"], sess.get_request.keys)
+      Util.from_base64(sess.get_request["dh_consumer_public"])
     end
 
     def test_sha1_get_request_custom_dh
       dh = DiffieHellman.new(1_299_721, 2)
       sess = Consumer::DiffieHellmanSHA1Session.new(dh)
       req = sess.get_request
-      assert_equal(%w[dh_consumer_public dh_modulus dh_gen].sort,
-                   req.keys.sort)
-      assert_equal(dh.modulus, CryptUtil.base64_to_num(req['dh_modulus']))
-      assert_equal(dh.generator, CryptUtil.base64_to_num(req['dh_gen']))
-      Util.from_base64(req['dh_consumer_public'])
+
+      assert_equal(
+        %w[dh_consumer_public dh_modulus dh_gen].sort,
+        req.keys.sort,
+      )
+      assert_equal(dh.modulus, CryptUtil.base64_to_num(req["dh_modulus"]))
+      assert_equal(dh.generator, CryptUtil.base64_to_num(req["dh_gen"]))
+      Util.from_base64(req["dh_consumer_public"])
     end
   end
 
@@ -46,9 +50,11 @@ module OpenID
       @secret = CryptUtil.random_string(session_cls.secret_size)
 
       enc_mac_key_unencoded =
-        @server_dh.xor_secret(session_cls.hashfunc,
-                              @consumer_dh.public,
-                              @secret)
+        @server_dh.xor_secret(
+          session_cls.hashfunc,
+          @consumer_dh.public,
+          @secret,
+        )
 
       @enc_mac_key = Util.to_base64(enc_mac_key_unencoded)
 
@@ -58,15 +64,16 @@ module OpenID
     end
 
     def test_extract_secret
-      @msg.set_arg(OPENID_NS, 'dh_server_public', @dh_server_public)
-      @msg.set_arg(OPENID_NS, 'enc_mac_key', @enc_mac_key)
+      @msg.set_arg(OPENID_NS, "dh_server_public", @dh_server_public)
+      @msg.set_arg(OPENID_NS, "enc_mac_key", @enc_mac_key)
 
       extracted = @consumer_session.extract_secret(@msg)
+
       assert_equal(extracted, @secret)
     end
 
     def test_absent_serve_public
-      @msg.set_arg(OPENID_NS, 'enc_mac_key', @enc_mac_key)
+      @msg.set_arg(OPENID_NS, "enc_mac_key", @enc_mac_key)
 
       assert_raises(Message::KeyNotFound) do
         @consumer_session.extract_secret(@msg)
@@ -74,7 +81,7 @@ module OpenID
     end
 
     def test_absent_mac_key
-      @msg.set_arg(OPENID_NS, 'dh_server_public', @dh_server_public)
+      @msg.set_arg(OPENID_NS, "dh_server_public", @dh_server_public)
 
       assert_raises(Message::KeyNotFound) do
         @consumer_session.extract_secret(@msg)
@@ -82,8 +89,8 @@ module OpenID
     end
 
     def test_invalid_base64_public
-      @msg.set_arg(OPENID_NS, 'dh_server_public', 'n o t b a s e 6 4.')
-      @msg.set_arg(OPENID_NS, 'enc_mac_key', @enc_mac_key)
+      @msg.set_arg(OPENID_NS, "dh_server_public", "n o t b a s e 6 4.")
+      @msg.set_arg(OPENID_NS, "enc_mac_key", @enc_mac_key)
 
       assert_raises(ArgumentError) do
         @consumer_session.extract_secret(@msg)
@@ -91,8 +98,8 @@ module OpenID
     end
 
     def test_invalid_base64_mac_key
-      @msg.set_arg(OPENID_NS, 'dh_server_public', @dh_server_public)
-      @msg.set_arg(OPENID_NS, 'enc_mac_key', 'n o t base 64')
+      @msg.set_arg(OPENID_NS, "dh_server_public", @dh_server_public)
+      @msg.set_arg(OPENID_NS, "enc_mac_key", "n o t base 64")
 
       assert_raises(ArgumentError) do
         @consumer_session.extract_secret(@msg)
@@ -136,39 +143,44 @@ module OpenID
     end
 
     def test_empty_request
-      assert_equal(@sess.get_request, {})
+      assert_empty(@sess.get_request)
     end
 
     def test_get_secret
-      secret = 'shhh!' * 4
+      secret = "shhh!" * 4
       mac_key = Util.to_base64(secret)
-      msg = Message.from_openid_args({ 'mac_key' => mac_key })
+      msg = Message.from_openid_args({"mac_key" => mac_key})
+
       assert_equal(secret, @sess.extract_secret(msg))
     end
   end
 
   class TestCreateAssociationRequest < Minitest::Test
     def setup
-      @server_url = 'http://invalid/'
+      @server_url = "http://invalid/"
       @assoc_manager = Consumer::AssociationManager.new(nil, @server_url)
       class << @assoc_manager
         attr_writer :compatibility_mode
       end
-      @assoc_type = 'HMAC-SHA1'
+      @assoc_type = "HMAC-SHA1"
     end
 
     def test_no_encryption_sends_type
-      session_type = 'no-encryption'
-      session, args = @assoc_manager.send(:create_associate_request,
-                                          @assoc_type,
-                                          session_type)
+      session_type = "no-encryption"
+      session, args = @assoc_manager.send(
+        :create_associate_request,
+        @assoc_type,
+        session_type,
+      )
 
-      assert(session.is_a?(Consumer::NoEncryptionSession))
+      assert_kind_of(Consumer::NoEncryptionSession, session)
       expected = Message.from_openid_args(
-        { 'ns' => OPENID2_NS,
-          'session_type' => session_type,
-          'mode' => 'associate',
-          'assoc_type' => @assoc_type }
+        {
+          "ns" => OPENID2_NS,
+          "session_type" => session_type,
+          "mode" => "associate",
+          "assoc_type" => @assoc_type,
+        },
       )
 
       assert_equal(expected, args)
@@ -176,64 +188,80 @@ module OpenID
 
     def test_no_encryption_compatibility
       @assoc_manager.compatibility_mode = true
-      session_type = 'no-encryption'
-      session, args = @assoc_manager.send(:create_associate_request,
-                                          @assoc_type,
-                                          session_type)
+      session_type = "no-encryption"
+      session, args = @assoc_manager.send(
+        :create_associate_request,
+        @assoc_type,
+        session_type,
+      )
 
-      assert(session.is_a?(Consumer::NoEncryptionSession))
-      assert_equal(Message.from_openid_args({ 'mode' => 'associate',
-                                              'assoc_type' => @assoc_type }), args)
+      assert_kind_of(Consumer::NoEncryptionSession, session)
+      assert_equal(
+        Message.from_openid_args({
+          "mode" => "associate",
+          "assoc_type" => @assoc_type,
+        }),
+        args,
+      )
     end
 
     def test_dh_sha1_compatibility
       @assoc_manager.compatibility_mode = true
-      session_type = 'DH-SHA1'
-      session, args = @assoc_manager.send(:create_associate_request,
-                                          @assoc_type,
-                                          session_type)
+      session_type = "DH-SHA1"
+      session, args = @assoc_manager.send(
+        :create_associate_request,
+        @assoc_type,
+        session_type,
+      )
 
-      assert(session.is_a?(Consumer::DiffieHellmanSHA1Session))
+      assert_kind_of(Consumer::DiffieHellmanSHA1Session, session)
 
       # This is a random base-64 value, so just check that it's
       # present.
-      refute_nil(args.get_arg(OPENID1_NS, 'dh_consumer_public'))
-      args.del_arg(OPENID1_NS, 'dh_consumer_public')
+      refute_nil(args.get_arg(OPENID1_NS, "dh_consumer_public"))
+      args.del_arg(OPENID1_NS, "dh_consumer_public")
 
       # OK, session_type is set here and not for no-encryption
       # compatibility
-      expected = Message.from_openid_args({ 'mode' => 'associate',
-                                            'session_type' => 'DH-SHA1',
-                                            'assoc_type' => @assoc_type })
+      expected = Message.from_openid_args({
+        "mode" => "associate",
+        "session_type" => "DH-SHA1",
+        "assoc_type" => @assoc_type,
+      })
+
       assert_equal(expected, args)
     end
   end
 
   class TestAssociationManagerExpiresIn < Minitest::Test
     def expires_in_msg(val)
-      msg = Message.from_openid_args({ 'expires_in' => val })
+      msg = Message.from_openid_args({"expires_in" => val})
       Consumer::AssociationManager.extract_expires_in(msg)
     end
 
     def test_parse_fail
-      ['',
-       '-2',
-       ' 1',
-       ' ',
-       '0x00',
-       'foosball',
-       '1\n',
-       '100,000,000,000'].each do |x|
+      [
+        "",
+        "-2",
+        " 1",
+        " ",
+        "0x00",
+        "foosball",
+        '1\n',
+        "100,000,000,000",
+      ].each do |x|
         assert_raises(ProtocolError) { expires_in_msg(x) }
       end
     end
 
     def test_parse
-      %w[0
-         1
-         1000
-         9999999
-         01].each do |n|
+      %w[
+        0
+        1
+        1000
+        9999999
+        01
+      ].each do |n|
         assert_equal(n.to_i, expires_in_msg(n))
       end
     end
@@ -242,28 +270,33 @@ module OpenID
   class TestAssociationManagerCreateSession < Minitest::Test
     def test_invalid
       assert_raises(ArgumentError) do
-        Consumer::AssociationManager.create_session('monkeys')
+        Consumer::AssociationManager.create_session("monkeys")
       end
     end
 
     def test_sha256
-      sess = Consumer::AssociationManager.create_session('DH-SHA256')
-      assert(sess.is_a?(Consumer::DiffieHellmanSHA256Session))
+      sess = Consumer::AssociationManager.create_session("DH-SHA256")
+
+      assert_kind_of(Consumer::DiffieHellmanSHA256Session, sess)
     end
   end
 
   module NegotiationTestMixin
     include TestUtil
     def mk_message(args)
-      args['ns'] = @openid_ns
+      args["ns"] = @openid_ns
       Message.from_openid_args(args)
     end
 
     def call_negotiate(responses, negotiator = nil)
       store = nil
       compat = self.class::Compat
-      assoc_manager = Consumer::AssociationManager.new(store, @server_url,
-                                                       compat, negotiator)
+      assoc_manager = Consumer::AssociationManager.new(
+        store,
+        @server_url,
+        compat,
+        negotiator,
+      )
       class << assoc_manager
         attr_accessor :responses
 
@@ -287,14 +320,14 @@ module OpenID
     Compat = false
 
     def setup
-      @server_url = 'http://invalid/'
+      @server_url = "http://invalid/"
       @openid_ns = OPENID2_NS
     end
 
     # Test the case where the response to an associate request is a
     # server error or is otherwise undecipherable.
     def test_bad_response
-      assert_log_matches('Server error when requesting an association') do
+      assert_log_matches("Server error when requesting an association") do
         assert_nil(call_negotiate([mk_message({})]))
       end
     end
@@ -302,13 +335,17 @@ module OpenID
     # Test the case where the association type (assoc_type) returned
     # in an unsupported-type response is absent.
     def test_empty_assoc_type
-      msg = mk_message({ 'error' => 'Unsupported type',
-                         'error_code' => 'unsupported-type',
-                         'session_type' => 'new-session-type' })
+      msg = mk_message({
+        "error" => "Unsupported type",
+        "error_code" => "unsupported-type",
+        "session_type" => "new-session-type",
+      })
 
-      assert_log_matches('Unsupported association type',
-                         "Server #{@server_url} responded with unsupported "\
-                         'association session but did not supply a fallback.') do
+      assert_log_matches(
+        "Unsupported association type",
+        "Server #{@server_url} responded with unsupported " \
+          "association session but did not supply a fallback.",
+      ) do
         assert_nil(call_negotiate([msg]))
       end
     end
@@ -316,13 +353,17 @@ module OpenID
     # Test the case where the session type (session_type) returned
     # in an unsupported-type response is absent.
     def test_empty_session_type
-      msg = mk_message({ 'error' => 'Unsupported type',
-                         'error_code' => 'unsupported-type',
-                         'assoc_type' => 'new-assoc-type' })
+      msg = mk_message({
+        "error" => "Unsupported type",
+        "error_code" => "unsupported-type",
+        "assoc_type" => "new-assoc-type",
+      })
 
-      assert_log_matches('Unsupported association type',
-                         "Server #{@server_url} responded with unsupported "\
-                         'association session but did not supply a fallback.') do
+      assert_log_matches(
+        "Unsupported association type",
+        "Server #{@server_url} responded with unsupported " \
+          "association session but did not supply a fallback.",
+      ) do
         assert_nil(call_negotiate([msg]))
       end
     end
@@ -335,13 +376,17 @@ module OpenID
       negotiator.instance_eval do
         @allowed_types = [%w[assoc_bogus session_bogus]]
       end
-      msg = mk_message({ 'error' => 'Unsupported type',
-                         'error_code' => 'unsupported-type',
-                         'assoc_type' => 'not-allowed',
-                         'session_type' => 'not-allowed' })
+      msg = mk_message({
+        "error" => "Unsupported type",
+        "error_code" => "unsupported-type",
+        "assoc_type" => "not-allowed",
+        "session_type" => "not-allowed",
+      })
 
-      assert_log_matches('Unsupported association type',
-                         'Server sent unsupported session/association type:') do
+      assert_log_matches(
+        "Unsupported association type",
+        "Server sent unsupported session/association type:",
+      ) do
         assert_nil(call_negotiate([msg], negotiator))
       end
     end
@@ -349,14 +394,16 @@ module OpenID
     # Test the case where an unsupported-type response triggers a
     # retry to get an association with the new preferred type.
     def test_unsupported_with_retry
-      msg = mk_message({ 'error' => 'Unsupported type',
-                         'error_code' => 'unsupported-type',
-                         'assoc_type' => 'HMAC-SHA1',
-                         'session_type' => 'DH-SHA1' })
+      msg = mk_message({
+        "error" => "Unsupported type",
+        "error_code" => "unsupported-type",
+        "assoc_type" => "HMAC-SHA1",
+        "session_type" => "DH-SHA1",
+      })
 
-      assoc = Association.new('handle', 'secret', Time.now, 10_000, 'HMAC-SHA1')
+      assoc = Association.new("handle", "secret", Time.now, 10_000, "HMAC-SHA1")
 
-      assert_log_matches('Unsupported association type') do
+      assert_log_matches("Unsupported association type") do
         assert_equal(assoc, call_negotiate([msg, assoc]))
       end
     end
@@ -364,13 +411,17 @@ module OpenID
     # Test the case where an unsupported-typ response triggers a
     # retry, but the retry fails and nil is returned instead.
     def test_unsupported_with_retry_and_fail
-      msg = mk_message({ 'error' => 'Unsupported type',
-                         'error_code' => 'unsupported-type',
-                         'assoc_type' => 'HMAC-SHA1',
-                         'session_type' => 'DH-SHA1' })
+      msg = mk_message({
+        "error" => "Unsupported type",
+        "error_code" => "unsupported-type",
+        "assoc_type" => "HMAC-SHA1",
+        "session_type" => "DH-SHA1",
+      })
 
-      assert_log_matches('Unsupported association type',
-                         "Server #{@server_url} refused") do
+      assert_log_matches(
+        "Unsupported association type",
+        "Server #{@server_url} refused",
+      ) do
         assert_nil(call_negotiate([msg, msg]))
       end
     end
@@ -378,7 +429,7 @@ module OpenID
     # Test the valid case, wherein an association is returned on the
     # first attempt to get one.
     def test_valid
-      assoc = Association.new('handle', 'secret', Time.now, 10_000, 'HMAC-SHA1')
+      assoc = Association.new("handle", "secret", Time.now, 10_000, "HMAC-SHA1")
 
       assert_log_matches do
         assert_equal(call_negotiate([assoc]), assoc)
@@ -399,35 +450,42 @@ module OpenID
     Compat = true
 
     def setup
-      @server_url = 'http://invalid/'
+      @server_url = "http://invalid/"
       @openid_ns = OPENID1_NS
     end
 
     def test_bad_response
-      assert_log_matches('Server error when requesting an association') do
+      assert_log_matches("Server error when requesting an association") do
         response = call_negotiate([mk_message({})])
+
         assert_nil(response)
       end
     end
 
     def test_empty_assoc_type
-      msg = mk_message({ 'error' => 'Unsupported type',
-                         'error_code' => 'unsupported-type',
-                         'session_type' => 'new-session-type' })
+      msg = mk_message({
+        "error" => "Unsupported type",
+        "error_code" => "unsupported-type",
+        "session_type" => "new-session-type",
+      })
 
-      assert_log_matches('Server error when requesting an association') do
+      assert_log_matches("Server error when requesting an association") do
         response = call_negotiate([msg])
+
         assert_nil(response)
       end
     end
 
     def test_empty_session_type
-      msg = mk_message({ 'error' => 'Unsupported type',
-                         'error_code' => 'unsupported-type',
-                         'assoc_type' => 'new-assoc-type' })
+      msg = mk_message({
+        "error" => "Unsupported type",
+        "error_code" => "unsupported-type",
+        "assoc_type" => "new-assoc-type",
+      })
 
-      assert_log_matches('Server error when requesting an association') do
+      assert_log_matches("Server error when requesting an association") do
         response = call_negotiate([msg])
+
         assert_nil(response)
       end
     end
@@ -438,35 +496,42 @@ module OpenID
         @allowed_types = [%w[assoc_bogus session_bogus]]
       end
 
-      msg = mk_message({ 'error' => 'Unsupported type',
-                         'error_code' => 'unsupported-type',
-                         'assoc_type' => 'not-allowed',
-                         'session_type' => 'not-allowed' })
+      msg = mk_message({
+        "error" => "Unsupported type",
+        "error_code" => "unsupported-type",
+        "assoc_type" => "not-allowed",
+        "session_type" => "not-allowed",
+      })
 
-      assert_log_matches('Server error when requesting an association') do
+      assert_log_matches("Server error when requesting an association") do
         response = call_negotiate([msg])
+
         assert_nil(response)
       end
     end
 
     def test_unsupported_with_retry
-      msg = mk_message({ 'error' => 'Unsupported type',
-                         'error_code' => 'unsupported-type',
-                         'assoc_type' => 'HMAC-SHA1',
-                         'session_type' => 'DH-SHA1' })
+      msg = mk_message({
+        "error" => "Unsupported type",
+        "error_code" => "unsupported-type",
+        "assoc_type" => "HMAC-SHA1",
+        "session_type" => "DH-SHA1",
+      })
 
-      assoc = Association.new('handle', 'secret', Time.now, 10_000, 'HMAC-SHA1')
+      assoc = Association.new("handle", "secret", Time.now, 10_000, "HMAC-SHA1")
 
-      assert_log_matches('Server error when requesting an association') do
+      assert_log_matches("Server error when requesting an association") do
         response = call_negotiate([msg, assoc])
+
         assert_nil(response)
       end
     end
 
     def test_valid
-      assoc = Association.new('handle', 'secret', Time.now, 10_000, 'HMAC-SHA1')
+      assoc = Association.new("handle", "secret", Time.now, 10_000, "HMAC-SHA1")
       assert_log_matches do
         response = call_negotiate([assoc])
+
         assert_equal(assoc, response)
       end
     end
@@ -477,10 +542,10 @@ module OpenID
 
     # An OpenID associate response (without the namespace)
     DEFAULTS = {
-      'expires_in' => '1000',
-      'assoc_handle' => 'a handle',
-      'assoc_type' => 'a type',
-      'session_type' => 'a session type'
+      "expires_in" => "1000",
+      "assoc_handle" => "a handle",
+      "assoc_type" => "a type",
+      "session_type" => "a session type",
     }
 
     def setup
@@ -502,7 +567,7 @@ module OpenID
     #
     # In OpenID 1, everything except 'session_type' and 'ns' are
     # required.
-    MISSING_FIELD_SETS = ([['no_fields', []]] +
+    MISSING_FIELD_SETS = ([["no_fields", []]] +
                           (DEFAULTS.keys.map do |f|
                              fields = DEFAULTS.keys
                              fields.delete(f)
@@ -513,7 +578,7 @@ module OpenID
     [OPENID1_NS, OPENID2_NS].each do |ns|
       MISSING_FIELD_SETS.each do |name, fields|
         # OpenID 1 is allowed to be missing session_type
-        next unless ns != OPENID1_NS and name != 'missing_session_type'
+        next unless ns != OPENID1_NS and name != "missing_session_type"
 
         test = lambda do
           msg = Message.new(ns)
@@ -524,7 +589,7 @@ module OpenID
             @assoc_manager.send(:extract_association, msg, nil)
           end
         end
-        define_method("test_#{name}", test)
+        define_method(:"test_#{name}", test)
       end
     end
 
@@ -551,22 +616,24 @@ module OpenID
       # the specified association session type
       msg = Message.new(ns)
       msg.update_args(ns, DEFAULTS)
-      msg.set_arg(ns, 'session_type', resp_type)
+      msg.set_arg(ns, "session_type", resp_type)
 
       # The request type and response type have been chosen to produce
       # a session type mismatch.
-      assert_protocol_error('Session type mismatch') do
+      assert_protocol_error("Session type mismatch") do
         @assoc_manager.send(:extract_association, msg, assoc_session)
       end
     end
 
-    [['no-encryption', '', OPENID2_NS],
-     ['DH-SHA1', 'no-encryption', OPENID2_NS],
-     ['DH-SHA256', 'no-encryption', OPENID2_NS],
-     ['no-encryption', 'DH-SHA1', OPENID2_NS],
-     ['DH-SHA1', 'DH-SHA256', OPENID1_NS],
-     ['DH-SHA256', 'DH-SHA1', OPENID1_NS],
-     ['no-encryption', 'DH-SHA1', OPENID1_NS]].each do |req_type, resp_type, ns|
+    [
+      ["no-encryption", "", OPENID2_NS],
+      ["DH-SHA1", "no-encryption", OPENID2_NS],
+      ["DH-SHA256", "no-encryption", OPENID2_NS],
+      ["no-encryption", "DH-SHA1", OPENID2_NS],
+      ["DH-SHA1", "DH-SHA256", OPENID1_NS],
+      ["DH-SHA256", "DH-SHA1", OPENID1_NS],
+      ["no-encryption", "DH-SHA1", OPENID1_NS],
+    ].each do |req_type, resp_type, ns|
       test = -> { assert_session_mismatch(req_type, resp_type, ns) }
       name = "test_mismatch_req_#{req_type}_resp_#{resp_type}_#{ns}"
       define_method(name, test)
@@ -578,60 +645,67 @@ module OpenID
 
       # An OpenID 1 no-encryption association response
       msg = Message.from_openid_args({
-                                       'expires_in' => '1000',
-                                       'assoc_handle' => 'a handle',
-                                       'assoc_type' => 'HMAC-SHA1',
-                                       'mac_key' => 'X' * 20
-                                     })
+        "expires_in" => "1000",
+        "assoc_handle" => "a handle",
+        "assoc_type" => "HMAC-SHA1",
+        "mac_key" => "X" * 20,
+      })
 
       # Should succeed
       assoc = @assoc_manager.send(:extract_association, msg, assoc_session)
-      assert_equal('a handle', assoc.handle)
-      assert_equal('HMAC-SHA1', assoc.assoc_type)
+
+      assert_equal("a handle", assoc.handle)
+      assert_equal("HMAC-SHA1", assoc.assoc_type)
       assert(assoc.expires_in.between?(999, 1000))
-      assert('X' * 20, assoc.secret)
+      assert_operator("X", :*, 20, assoc.secret)
     end
   end
 
   class GetOpenIDSessionTypeTest < Minitest::Test
     include TestUtil
 
-    SERVER_URL = 'http://invalid/'
+    SERVER_URL = "http://invalid/"
 
     def do_test(expected_session_type, session_type_value)
       # Create a Message with just 'session_type' in it, since
       # that's all this function will use. 'session_type' may be
       # absent if it's set to None.
       args = {}
-      args['session_type'] = session_type_value unless session_type_value.nil?
+      args["session_type"] = session_type_value unless session_type_value.nil?
       message = Message.from_openid_args(args)
+
       assert(message.is_openid1)
 
       assoc_manager = Consumer::AssociationManager.new(nil, SERVER_URL)
-      actual_session_type = assoc_manager.send(:get_openid1_session_type,
-                                               message)
-      error_message = "Returned session type parameter #{session_type_value}"\
-                       'was expected to yield session type '\
-                       "#{expected_session_type}, but yielded "\
-                       "#{actual_session_type}"
+      actual_session_type = assoc_manager.send(
+        :get_openid1_session_type,
+        message,
+      )
+      error_message = "Returned session type parameter #{session_type_value}" \
+        "was expected to yield session type " \
+        "#{expected_session_type}, but yielded " \
+        "#{actual_session_type}"
+
       assert_equal(expected_session_type, actual_session_type, error_message)
     end
 
-    [['nil', 'no-encryption', nil],
-     ['empty', 'no-encryption', ''],
-     ['dh_sha1', 'DH-SHA1', 'DH-SHA1'],
-     ['dh_sha256', 'DH-SHA256', 'DH-SHA256']].each do |name, expected, input|
+    [
+      ["nil", "no-encryption", nil],
+      ["empty", "no-encryption", ""],
+      ["dh_sha1", "DH-SHA1", "DH-SHA1"],
+      ["dh_sha256", "DH-SHA256", "DH-SHA256"],
+    ].each do |name, expected, input|
       # Define a test method that will check what session type will be
       # used if the OpenID 1 response to an associate call sets the
       # 'session_type' field to `session_type_value`
       test = -> { assert_log_matches { do_test(expected, input) } }
-      define_method("test_#{name}", &test)
+      define_method(:"test_#{name}", &test)
     end
 
     # This one's different because it expects log messages
     def test_explicit_no_encryption
       assert_log_matches("WARNING: #{SERVER_URL} sent 'no-encryption'") do
-        do_test('no-encryption', 'no-encryption')
+        do_test("no-encryption", "no-encryption")
       end
     end
   end
@@ -639,25 +713,25 @@ module OpenID
   class ExtractAssociationTest < Minitest::Test
     include ProtocolErrorMixin
 
-    SERVER_URL = 'http://invalid/'
+    SERVER_URL = "http://invalid/"
 
     def setup
-      @session_type = 'testing-session'
+      @session_type = "testing-session"
 
       # This must something that works for Association::from_expires_in
-      @assoc_type = 'HMAC-SHA1'
+      @assoc_type = "HMAC-SHA1"
 
-      @assoc_handle = 'testing-assoc-handle'
+      @assoc_handle = "testing-assoc-handle"
 
       # These arguments should all be valid
       @assoc_response =
         Message.from_openid_args({
-                                   'expires_in' => '1000',
-                                   'assoc_handle' => @assoc_handle,
-                                   'assoc_type' => @assoc_type,
-                                   'session_type' => @session_type,
-                                   'ns' => OPENID2_NS
-                                 })
+          "expires_in" => "1000",
+          "assoc_handle" => @assoc_handle,
+          "assoc_type" => @assoc_type,
+          "session_type" => @session_type,
+          "ns" => OPENID2_NS,
+        })
       assoc_session_cls = Class.new do
         class << self
           attr_accessor :allowed_assoc_types, :session_type
@@ -667,7 +741,7 @@ module OpenID
 
         def initialize
           @extract_secret_called = false
-          @secret = 'shhhhh!'
+          @secret = "shhhhh!"
         end
 
         def extract_secret(_)
@@ -683,13 +757,17 @@ module OpenID
     end
 
     def call_extract
-      @assoc_manager.send(:extract_association,
-                          @assoc_response, @assoc_session)
+      @assoc_manager.send(
+        :extract_association,
+        @assoc_response,
+        @assoc_session,
+      )
     end
 
     # Handle a full successful association response
     def test_works_with_good_fields
       assoc = call_extract
+
       assert(@assoc_session.extract_secret_called)
       assert_equal(@assoc_session.secret, assoc.secret)
       assert_equal(1000, assoc.lifetime)
@@ -701,68 +779,75 @@ module OpenID
       # Make sure that the assoc type in the response is not valid
       # for the given session.
       @assoc_session.class.allowed_assoc_types = []
-      assert_protocol_error('Unsupported assoc_type for sess') { call_extract }
+      assert_protocol_error("Unsupported assoc_type for sess") { call_extract }
     end
 
     def test_bad_expires_in
       # Invalid value for expires_in should cause failure
-      @assoc_response.set_arg(OPENID_NS, 'expires_in', 'forever')
-      assert_protocol_error('Invalid expires_in') { call_extract }
+      @assoc_response.set_arg(OPENID_NS, "expires_in", "forever")
+      assert_protocol_error("Invalid expires_in") { call_extract }
     end
   end
 
   class TestExtractAssociationDiffieHellman < Minitest::Test
     include ProtocolErrorMixin
 
-    SECRET = 'x' * 20
+    SECRET = "x" * 20
 
     def setup
       @assoc_manager = Consumer::AssociationManager.new(nil, nil)
     end
 
     def setup_dh
-      sess, = @assoc_manager.send(:create_associate_request,
-                                  'HMAC-SHA1', 'DH-SHA1')
+      sess, = @assoc_manager.send(
+        :create_associate_request,
+        "HMAC-SHA1",
+        "DH-SHA1",
+      )
 
       server_dh = DiffieHellman.new
-      cons_dh = sess.instance_variable_get('@dh')
+      cons_dh = sess.instance_variable_get(:@dh)
 
-      enc_mac_key = server_dh.xor_secret(CryptUtil.method(:sha1),
-                                         cons_dh.public, SECRET)
+      enc_mac_key = server_dh.xor_secret(
+        CryptUtil.method(:sha1),
+        cons_dh.public,
+        SECRET,
+      )
 
       server_resp = {
-        'dh_server_public' => CryptUtil.num_to_base64(server_dh.public),
-        'enc_mac_key' => Util.to_base64(enc_mac_key),
-        'assoc_type' => 'HMAC-SHA1',
-        'assoc_handle' => 'handle',
-        'expires_in' => '1000',
-        'session_type' => 'DH-SHA1'
+        "dh_server_public" => CryptUtil.num_to_base64(server_dh.public),
+        "enc_mac_key" => Util.to_base64(enc_mac_key),
+        "assoc_type" => "HMAC-SHA1",
+        "assoc_handle" => "handle",
+        "expires_in" => "1000",
+        "session_type" => "DH-SHA1",
       }
-      server_resp['ns'] = OPENID2_NS if @assoc_manager.instance_variable_get(:@compatibility_mode)
+      server_resp["ns"] = OPENID2_NS if @assoc_manager.instance_variable_get(:@compatibility_mode)
       [sess, Message.from_openid_args(server_resp)]
     end
 
     def test_success
       sess, server_resp = setup_dh
       ret = @assoc_manager.send(:extract_association, server_resp, sess)
+
       assert(!ret.nil?)
-      assert_equal(ret.assoc_type, 'HMAC-SHA1')
+      assert_equal("HMAC-SHA1", ret.assoc_type)
       assert_equal(ret.secret, SECRET)
-      assert_equal(ret.handle, 'handle')
-      assert_equal(ret.lifetime, 1000)
+      assert_equal("handle", ret.handle)
+      assert_equal(1000, ret.lifetime)
     end
 
     def test_openid2success
       # Use openid 1 type in endpoint so _setUpDH checks
       # compatibility mode state properly
-      @assoc_manager.instance_variable_set('@compatibility_mode', true)
+      @assoc_manager.instance_variable_set(:@compatibility_mode, true)
       test_success
     end
 
     def test_bad_dh_values
       sess, server_resp = setup_dh
-      server_resp.set_arg(OPENID_NS, 'enc_mac_key', '\x00\x00\x00')
-      assert_protocol_error('Malformed response for') do
+      server_resp.set_arg(OPENID_NS, "enc_mac_key", '\x00\x00\x00')
+      assert_protocol_error("Malformed response for") do
         @assoc_manager.send(:extract_association, server_resp, sess)
       end
     end
@@ -775,12 +860,17 @@ module OpenID
     attr_reader :negotiate_association
 
     def setup
-      @server_url = 'http://invalid/'
+      @server_url = "http://invalid/"
       @store = Store::Memory.new
       @assoc_manager = Consumer::AssociationManager.new(@store, @server_url)
       @assoc_manager.extend(Const)
-      @assoc = Association.new('handle', 'secret', Time.now, 10_000,
-                               'HMAC-SHA1')
+      @assoc = Association.new(
+        "handle",
+        "secret",
+        Time.now,
+        10_000,
+        "HMAC-SHA1",
+      )
     end
 
     def set_negotiate_response(assoc)
@@ -789,40 +879,50 @@ module OpenID
 
     def test_not_in_store_no_response
       set_negotiate_response(nil)
+
       assert_nil(@assoc_manager.get_association)
     end
 
     def test_not_in_store_negotiate_assoc
       # Not stored beforehand:
       stored_assoc = @store.get_association(@server_url, @assoc.handle)
+
       assert_nil(stored_assoc)
 
       # Returned from associate call:
       set_negotiate_response(@assoc)
+
       assert_equal(@assoc, @assoc_manager.get_association)
 
       # It should have been stored:
       stored_assoc = @store.get_association(@server_url, @assoc.handle)
+
       assert_equal(@assoc, stored_assoc)
     end
 
     def test_in_store_no_response
       set_negotiate_response(nil)
       @store.store_association(@server_url, @assoc)
+
       assert_equal(@assoc, @assoc_manager.get_association)
     end
 
     def test_request_assoc_with_status_error
       fetcher_class = Class.new do
         define_method(:fetch) do |*_args|
-          MockResponse.new(500, '')
+          MockResponse.new(500, "")
         end
       end
+
       with_fetcher(fetcher_class.new) do
-        assert_log_matches('Got HTTP status error when requesting') do
-          result = @assoc_manager.send(:request_association, 'HMAC-SHA1',
-                                       'no-encryption')
-          assert(result.nil?)
+        assert_log_matches("Got HTTP status error when requesting") do
+          result = @assoc_manager.send(
+            :request_association,
+            "HMAC-SHA1",
+            "no-encryption",
+          )
+
+          assert_nil(result)
         end
       end
     end
@@ -833,17 +933,17 @@ module OpenID
     include TestUtil
 
     def setup
-      @assoc_manager = Consumer::AssociationManager.new(nil, 'http://invalid/')
-      @assoc_type = 'HMAC-SHA1'
-      @session_type = 'no-encryption'
+      @assoc_manager = Consumer::AssociationManager.new(nil, "http://invalid/")
+      @assoc_type = "HMAC-SHA1"
+      @session_type = "no-encryption"
       @message = Message.new(OPENID2_NS)
       @message.update_args(OPENID_NS, {
-                             'assoc_type' => @assoc_type,
-                             'session_type' => @session_type,
-                             'assoc_handle' => 'kaboodle',
-                             'expires_in' => '1000',
-                             'mac_key' => 'X' * 20
-                           })
+        "assoc_type" => @assoc_type,
+        "session_type" => @session_type,
+        "assoc_handle" => "kaboodle",
+        "expires_in" => "1000",
+        "mac_key" => "X" * 20,
+      })
     end
 
     def make_request
@@ -861,14 +961,14 @@ module OpenID
     # The association we get is from valid processing of our result,
     # and that no errors are raised
     def test_success
-      assert_equal('kaboodle', make_request.handle)
+      assert_equal("kaboodle", make_request.handle)
     end
 
     # A missing parameter gets translated into a log message and
     # causes the method to return nil
     def test_missing_fields
-      @message.del_arg(OPENID_NS, 'assoc_type')
-      assert_log_matches('Missing required par') do
+      @message.del_arg(OPENID_NS, "assoc_type")
+      assert_log_matches("Missing required par") do
         assert_nil(make_request)
       end
     end
@@ -876,8 +976,8 @@ module OpenID
     # A bad value results in a log message and causes the method to
     # return nil
     def test_protocol_error
-      @message.set_arg(OPENID_NS, 'expires_in', 'goats')
-      assert_log_matches('Protocol error processing') do
+      @message.set_arg(OPENID_NS, "expires_in", "goats")
+      assert_log_matches("Protocol error processing") do
         assert_nil(make_request)
       end
     end

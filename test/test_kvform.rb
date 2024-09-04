@@ -1,7 +1,7 @@
-require 'minitest/autorun'
-require 'openid/kvform'
-require 'openid/util'
-require 'util'
+require_relative "test_helper"
+require "openid/kvform"
+require "openid/util"
+require_relative "util"
 
 include OpenID
 
@@ -11,14 +11,22 @@ class KVFormTests < Minitest::Test
   def test_kvdict
     [
       # (kvform, parsed dictionary, expected warnings)
-      ['', {}, 0],
+      ["", {}, 0],
       ["\n  \n     \n", {}, 0],
-      ["college:harvey mudd\n", { 'college' => 'harvey mudd' }, 0],
-      ["city:claremont\nstate:CA\n",
-       { 'city' => 'claremont', 'state' => 'CA' }, 0],
-      ["is_valid:true\ninvalidate_handle:{HMAC-SHA1:2398410938412093}\n",
-       { 'is_valid' => 'true',
-         'invalidate_handle' => '{HMAC-SHA1:2398410938412093}' }, 0],
+      ["college:harvey mudd\n", {"college" => "harvey mudd"}, 0],
+      [
+        "city:claremont\nstate:CA\n",
+        {"city" => "claremont", "state" => "CA"},
+        0,
+      ],
+      [
+        "is_valid:true\ninvalidate_handle:{HMAC-SHA1:2398410938412093}\n",
+        {
+          "is_valid" => "true",
+          "invalidate_handle" => "{HMAC-SHA1:2398410938412093}",
+        },
+        0,
+      ],
 
       # Warnings from lines with no colon:
       ["x\n", {}, 1],
@@ -29,17 +37,17 @@ class KVFormTests < Minitest::Test
       ["x\n\n", {}, 1],
 
       # Warning from empty key
-      [":\n", { '' => '' }, 1],
-      [":missing key\n", { '' => 'missing key' }, 1],
+      [":\n", {"" => ""}, 1],
+      [":missing key\n", {"" => "missing key"}, 1],
 
       # Warnings from leading or trailing whitespace in key or value
-      [" street:foothill blvd\n", { 'street' => 'foothill blvd' }, 1],
-      ["major: computer science\n", { 'major' => 'computer science' }, 1],
-      [" dorm : east \n", { 'dorm' => 'east' }, 2],
+      [" street:foothill blvd\n", {"street" => "foothill blvd"}, 1],
+      ["major: computer science\n", {"major" => "computer science"}, 1],
+      [" dorm : east \n", {"dorm" => "east"}, 2],
 
       # Warnings from missing trailing newline
-      ['e^(i*pi)+1:0', { 'e^(i*pi)+1' => '0' }, 1],
-      ["east:west\nnorth:south", { 'east' => 'west', 'north' => 'south' }, 1]
+      ["e^(i*pi)+1:0", {"e^(i*pi)+1" => "0"}, 1],
+      ["east:west\nnorth:south", {"east" => "west", "north" => "south"}, 1],
     ].each do |case_|
       _run_kvdictTest(case_)
     end
@@ -79,23 +87,35 @@ class KVFormTests < Minitest::Test
 
   def test_kvseq
     [
-      [[], '', 0],
+      [[], "", 0],
 
       [[%w[openid useful], %w[a b]], "openid:useful\na:b\n", 0],
 
       # Warnings about leading whitespace
-      [[[' openid', 'useful'], ['a', 'b']], " openid:useful\na:b\n", 2],
+      [[[" openid", "useful"], ["a", "b"]], " openid:useful\na:b\n", 2],
 
       # Warnings about leading and trailing whitespace
-      [[[' openid ', ' useful '],
-        [' a ', ' b ']], " openid : useful \n a : b \n", 8],
+      [
+        [
+          [" openid ", " useful "],
+          [" a ", " b "],
+        ],
+        " openid : useful \n a : b \n",
+        8,
+      ],
 
       # warnings about leading and trailing whitespace, but not about
       # internal whitespace.
-      [[[' open id ', ' use ful '],
-        [' a ', ' b ']], " open id : use ful \n a : b \n", 8],
+      [
+        [
+          [" open id ", " use ful "],
+          [" a ", " b "],
+        ],
+        " open id : use ful \n a : b \n",
+        8,
+      ],
 
-      [[%w[foo bar]], "foo:bar\n", 0]
+      [[%w[foo bar]], "foo:bar\n", 0],
     ].each do |case_|
       _run_kvseqTest(case_)
     end
@@ -115,7 +135,7 @@ class KVFormTests < Minitest::Test
       actual = Util.seq_to_kv(seq)
 
       assert_equal(kvform, actual)
-      assert actual.is_a?(String)
+      assert_kind_of(String, actual)
 
       # Strict mode should raise KVFormError instead of logging
       # messages
@@ -140,9 +160,9 @@ class KVFormTests < Minitest::Test
       [%W[openid use\nful]],
       [%W[open\nid useful]],
       [%W[open\nid use\nful]],
-      [['open:id', 'useful']],
-      [['foo', 'bar'], ["ba\n d", 'seed']],
-      [['foo', 'bar'], ['bad:', 'seed']]
+      [["open:id", "useful"]],
+      [["foo", "bar"], ["ba\n d", "seed"]],
+      [["foo", "bar"], ["bad:", "seed"]],
     ].each do |case_|
       _run_kvexcTest(case_)
     end
@@ -159,7 +179,8 @@ class KVFormTests < Minitest::Test
   def test_convert
     assert_log_line_count(2) do
       result = Util.seq_to_kv([[1, 1]])
-      assert_equal(result, "1:1\n")
+
+      assert_equal("1:1\n", result)
     end
   end
 end
