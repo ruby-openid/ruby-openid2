@@ -26,7 +26,7 @@ module OpenID
 
         raise KVFormError, "Invalid input for seq_to_kv: key contains newline: #{k.inspect}" unless k.index("\n").nil?
 
-        raise KVFormError, "Invalid input for seq_to_kv: key contains colon: #{k.inspect}" unless k.index(':').nil?
+        raise KVFormError, "Invalid input for seq_to_kv: key contains colon: #{k.inspect}" unless k.index(":").nil?
 
         err.call("Key has whitespace at beginning or end: #{k.inspect}") if k.strip != k
 
@@ -39,10 +39,10 @@ module OpenID
 
         err.call("Value has whitespace at beginning or end: #{v.inspect}") if v.strip != v
 
-        lines << k + ':' + v + "\n"
+        lines << k + ":" + v + "\n"
       end
 
-      lines.join('')
+      lines.join("")
     end
 
     def self.kv_to_seq(data, strict = false)
@@ -62,7 +62,7 @@ module OpenID
       return [] if data.empty?
 
       if data[-1].chr != "\n"
-        err.call('Does not end in a newline')
+        err.call("Does not end in a newline")
         # We don't expect the last element of lines to be an empty
         # string because split() doesn't behave that way.
       end
@@ -73,9 +73,9 @@ module OpenID
         line_num += 1
 
         # Ignore blank lines
-        next if line.strip == ''
+        next if line.strip == ""
 
-        pair = line.split(':', 2)
+        pair = line.split(":", 2)
         if pair.length == 2
           k, v = pair
           k_s = k.strip

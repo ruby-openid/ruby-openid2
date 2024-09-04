@@ -1,5 +1,9 @@
+# test helpers
 require_relative "test_helper"
 require_relative "testutil"
+
+# this library
+require "openid"
 require "openid/yadis/parsehtml"
 
 module OpenID

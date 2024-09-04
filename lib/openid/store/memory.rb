@@ -1,4 +1,5 @@
-require 'openid/store/interface'
+require_relative "interface"
+
 module OpenID
   module Store
     # An in-memory implementation of Store.  This class is mainly used
@@ -14,16 +15,15 @@ module OpenID
 
       def store_association(server_url, assoc)
         assocs = @associations[server_url]
-        @associations[server_url] = assocs.merge({ assoc.handle => deepcopy(assoc) })
+        @associations[server_url] = assocs.merge({assoc.handle => deepcopy(assoc)})
       end
 
       def get_association(server_url, handle = nil)
         assocs = @associations[server_url]
-        assoc = nil
         if handle
           assocs[handle]
         else
-          assocs.values.sort { |a, b| a.issued <=> b.issued }[-1]
+          assocs.values.sort_by(&:issued)[-1]
         end
       end
 
@@ -37,7 +37,7 @@ module OpenID
       def use_nonce(server_url, timestamp, salt)
         return false if (timestamp - Time.now.to_i).abs > Nonce.skew
 
-        nonce = [server_url, timestamp, salt].join('')
+        nonce = [server_url, timestamp, salt].join("")
         return false if @nonces[nonce]
 
         @nonces[nonce] = timestamp

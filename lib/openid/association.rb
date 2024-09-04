@@ -1,7 +1,7 @@
-require "openid/kvform"
-require "openid/util"
-require "openid/cryptutil"
-require "openid/message"
+require_relative "kvform"
+require_relative "util"
+require_relative "cryptutil"
+require_relative "message"
 
 module OpenID
   def self.get_secret_size(assoc_type)

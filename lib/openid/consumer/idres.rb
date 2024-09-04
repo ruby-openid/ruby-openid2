@@ -1,8 +1,8 @@
-require 'openid/message'
-require 'openid/protocolerror'
-require 'openid/kvpost'
-require 'openid/consumer/discovery'
-require 'openid/urinorm'
+require_relative "../message"
+require_relative "../protocolerror"
+require_relative "../kvpost"
+require_relative "../urinorm"
+require_relative "discovery"
 
 module OpenID
   class TypeURIMismatch < ProtocolError
@@ -15,19 +15,14 @@ module OpenID
   end
 
   class Consumer
-    @openid1_return_to_nonce_name = 'rp_nonce'
-    @openid1_return_to_claimed_id_name = 'openid1_claimed_id'
+    @openid1_return_to_nonce_name = "rp_nonce"
+    @openid1_return_to_claimed_id_name = "openid1_claimed_id"
 
     # Set the name of the query parameter that this library will use
     # to thread a nonce through an OpenID 1 transaction. It will be
     # appended to the return_to URL.
     class << self
-      attr_writer :openid1_return_to_nonce_name
-    end
-
-    # See openid1_return_to_nonce_name= documentation
-    class << self
-      attr_reader :openid1_return_to_nonce_name
+      attr_accessor :openid1_return_to_nonce_name
     end
 
     # Set the name of the query parameter that this library will use
@@ -35,12 +30,7 @@ module OpenID
     # use when verifying discovered information). It will be appended
     # to the return_to URL.
     class << self
-      attr_writer :openid1_return_to_claimed_id_name
-    end
-
-    # See openid1_return_to_claimed_id_name=
-    class << self
-      attr_reader :openid1_return_to_claimed_id_name
+      attr_accessor :openid1_return_to_claimed_id_name
     end
 
     # Handles an openid.mode=id_res response. This object is
@@ -60,7 +50,7 @@ module OpenID
       end
 
       def signed_fields
-        signed_list.map { |x| 'openid.' + x }
+        signed_list.map { |x| "openid." + x }
       end
 
       protected
@@ -91,10 +81,10 @@ module OpenID
 
       def signed_list
         if @signed_list.nil?
-          signed_list_str = fetch('signed', nil)
-          raise ProtocolError, 'Response missing signed list' if signed_list_str.nil?
+          signed_list_str = fetch("signed", nil)
+          raise ProtocolError, "Response missing signed list" if signed_list_str.nil?
 
-          @signed_list = signed_list_str.split(',', -1)
+          @signed_list = signed_list_str.split(",", -1)
         end
         @signed_list
       end
@@ -110,15 +100,15 @@ module OpenID
 
         case openid_namespace
         when OPENID2_NS
-          require_fields = basic_fields + ['op_endpoint']
+          require_fields = basic_fields + ["op_endpoint"]
           require_sigs = basic_sig_fields +
-                         %w[response_nonce claimed_id assoc_handle op_endpoint]
+            %w[response_nonce claimed_id assoc_handle op_endpoint]
         when OPENID1_NS, OPENID11_NS
-          require_fields = basic_fields + ['identity']
+          require_fields = basic_fields + ["identity"]
           require_sigs = basic_sig_fields
         else
-          raise "check_for_fields doesn't know about "\
-                              "namespace #{openid_namespace.inspect}"
+          raise "check_for_fields doesn't know about " \
+            "namespace #{openid_namespace.inspect}"
         end
 
         require_fields.each do |field|
@@ -135,9 +125,9 @@ module OpenID
 
       def verify_return_to
         begin
-          msg_return_to = URI.parse(URINorm.urinorm(fetch('return_to')))
+          msg_return_to = URI.parse(URINorm.urinorm(fetch("return_to")))
         rescue URI::InvalidURIError
-          raise ProtocolError, ('return_to is not a valid URI')
+          raise ProtocolError, ("return_to is not a valid URI")
         end
 
         verify_return_to_args(msg_return_to)
@@ -159,27 +149,27 @@ module OpenID
           if msg_val.nil? && !rt_val.nil?
             raise ProtocolError, "Message missing return_to argument '#{rt_key}'"
           elsif msg_val != rt_val
-            raise ProtocolError, "Parameter '#{rt_key}' value "\
-                                  "#{msg_val.inspect} does not match "\
-                                  "return_to's value #{rt_val.inspect}"
+            raise ProtocolError, "Parameter '#{rt_key}' value " \
+              "#{msg_val.inspect} does not match " \
+              "return_to's value #{rt_val.inspect}"
           end
         end
         @message.get_args(BARE_NS).each_pair do |bare_key, bare_val|
           rt_val = return_to_parsed_query[bare_key]
-          unless return_to_parsed_query.has_key? bare_key
+          unless return_to_parsed_query.has_key?(bare_key)
             # This may be caused by your web framework throwing extra
             # entries in to your parameters hash that were not GET or
             # POST parameters.  For example, Rails has been known to
             # add "controller" and "action" keys; another server adds
             # at least a "format" key.
-            raise ProtocolError, 'Unexpected parameter (not on return_to): '\
-                                  "'#{bare_key}'=#{rt_val.inspect})"
+            raise ProtocolError, "Unexpected parameter (not on return_to): " \
+              "'#{bare_key}'=#{rt_val.inspect})"
           end
           next unless rt_val != bare_val
 
-          raise ProtocolError, "Parameter '#{bare_key}' value "\
-                                "#{bare_val.inspect} does not match "\
-                                "return_to's value #{rt_val.inspect}"
+          raise ProtocolError, "Parameter '#{bare_key}' value " \
+            "#{bare_val.inspect} does not match " \
+            "return_to's value #{rt_val.inspect}"
         end
       end
 
@@ -197,11 +187,26 @@ module OpenID
 
       # Raises ProtocolError if the signature is bad
       def check_signature
+        # ----------------------------------------------------------------------
+        # The server url must be defined within the endpoint instance for the
+        # OpenID2 namespace in order for the signature check to complete
+        # successfully.
+        #
+        # This fix corrects issue #125 - Unable to complete OpenID login
+        #                                with ruby-openid 2.9.0/2.9.1
+        # ---------------------------------------------------------------------
+        set_endpoint_flag = false
+        if @endpoint.nil? && openid_namespace == OPENID2_NS
+          @endpoint = OpenIDServiceEndpoint.new
+          @endpoint.server_url = fetch("op_endpoint")
+          set_endpoint_flag = true
+        end
+
         assoc = if @store.nil?
-                  nil
-                else
-                  @store.get_association(server_url, fetch('assoc_handle'))
-                end
+          nil
+        else
+          @store.get_association(server_url, fetch("assoc_handle"))
+        end
 
         if assoc.nil?
           check_auth
@@ -215,6 +220,7 @@ module OpenID
         elsif !assoc.check_message_signature(@message)
           raise ProtocolError, "Bad signature in response from #{server_url}"
         end
+        @endpoint = nil if set_endpoint_flag  # Clear endpoint if we defined it.
       end
 
       def check_auth
@@ -222,8 +228,8 @@ module OpenID
         begin
           request = create_check_auth_request
         rescue Message::KeyNotFound => e
-          raise ProtocolError, "Could not generate 'check_authentication' "\
-                               "request: #{e.message}"
+          raise ProtocolError, "Could not generate 'check_authentication' " \
+            "request: #{e.message}"
         end
 
         response = OpenID.make_kv_post(request, server_url)
@@ -232,7 +238,7 @@ module OpenID
       end
 
       def create_check_auth_request
-        signed_list = @message.get_arg(OPENID_NS, 'signed', NO_DEFAULT).split(',')
+        signed_list = @message.get_arg(OPENID_NS, "signed", NO_DEFAULT).split(",")
 
         # check that we got all the signed arguments
         signed_list.each do |k|
@@ -240,7 +246,7 @@ module OpenID
         end
 
         ca_message = @message.copy
-        ca_message.set_arg(OPENID_NS, 'mode', 'check_authentication')
+        ca_message.set_arg(OPENID_NS, "mode", "check_authentication")
 
         ca_message
       end
@@ -248,9 +254,9 @@ module OpenID
       # Process the response message from a check_authentication
       # request, invalidating associations if requested.
       def process_check_auth_response(response)
-        is_valid = response.get_arg(OPENID_NS, 'is_valid', 'false')
+        is_valid = response.get_arg(OPENID_NS, "is_valid", "false")
 
-        invalidate_handle = response.get_arg(OPENID_NS, 'invalidate_handle')
+        invalidate_handle = response.get_arg(OPENID_NS, "invalidate_handle")
         unless invalidate_handle.nil?
           Util.log("Received 'invalidate_handle' from server #{server_url}")
           if @store.nil?
@@ -260,10 +266,10 @@ module OpenID
           end
         end
 
-        return unless is_valid != 'true'
+        return unless is_valid != "true"
 
-        raise ProtocolError, "Server #{server_url} responds that the "\
-                              "'check_authentication' call is not valid"
+        raise ProtocolError, "Server #{server_url} responds that the " \
+          "'check_authentication' call is not valid"
       end
 
       def check_nonce
@@ -274,15 +280,15 @@ module OpenID
 
           # We generated the nonce, so it uses the empty string as the
           # server URL
-          server_url = ''
+          server_url = ""
         when OPENID2_NS
-          nonce = @message.get_arg(OPENID2_NS, 'response_nonce')
+          nonce = @message.get_arg(OPENID2_NS, "response_nonce")
           server_url = self.server_url
         else
-          raise StandardError, 'Not reached'
+          raise StandardError, "Not reached"
         end
 
-        raise ProtocolError, 'Nonce missing from response' if nonce.nil?
+        raise ProtocolError, "Nonce missing from response" if nonce.nil?
 
         begin
           time, extra = Nonce.split_nonce(nonce)
@@ -292,8 +298,8 @@ module OpenID
 
         return unless !@store.nil? && !@store.use_nonce(server_url, time, extra)
 
-        raise ProtocolError, 'Nonce already used or out of range: '\
-                             "#{nonce.inspect}"
+        raise ProtocolError, "Nonce already used or out of range: " \
+          "#{nonce.inspect}"
       end
 
       def verify_discovery_results
@@ -312,16 +318,16 @@ module OpenID
       def verify_discovery_results_openid2
         to_match = OpenIDServiceEndpoint.new
         to_match.type_uris = [OPENID_2_0_TYPE]
-        to_match.claimed_id = fetch('claimed_id', nil)
-        to_match.local_id = fetch('identity', nil)
-        to_match.server_url = fetch('op_endpoint')
+        to_match.claimed_id = fetch("claimed_id", nil)
+        to_match.local_id = fetch("identity", nil)
+        to_match.server_url = fetch("op_endpoint")
 
         if to_match.claimed_id.nil? && !to_match.local_id.nil?
-          raise ProtocolError, 'openid.identity is present without '\
-                                'openid.claimed_id'
+          raise ProtocolError, "openid.identity is present without " \
+            "openid.claimed_id"
         elsif !to_match.claimed_id.nil? && to_match.local_id.nil?
-          raise ProtocolError, 'openid.claimed_id is present without '\
-                                'openid.identity'
+          raise ProtocolError, "openid.claimed_id is present without " \
+            "openid.identity"
 
         # This is a response without identifiers, so there's really no
         # checking that we can do, so return an endpoint that's for
@@ -333,15 +339,15 @@ module OpenID
         end
 
         if @endpoint.nil?
-          Util.log('No pre-discovered information supplied')
+          Util.log("No pre-discovered information supplied")
           discover_and_verify(to_match.claimed_id, [to_match])
         else
           begin
             verify_discovery_single(@endpoint, to_match)
           rescue ProtocolError => e
-            Util.log('Error attempting to use stored discovery '\
-                     "information: #{e.message}")
-            Util.log('Attempting discovery to verify endpoint')
+            Util.log("Error attempting to use stored discovery " \
+              "information: #{e.message}")
+            Util.log("Attempting discovery to verify endpoint")
             discover_and_verify(to_match.claimed_id, [to_match])
           end
         end
@@ -358,11 +364,11 @@ module OpenID
 
         if claimed_id.nil?
           if @endpoint.nil?
-            raise ProtocolError, 'When using OpenID 1, the claimed ID must '\
-                                  'be supplied, either by passing it through '\
-                                  'as a return_to parameter or by using a '\
-                                  'session, and supplied to the IdResHandler '\
-                                  'when it is constructed.'
+            raise ProtocolError, "When using OpenID 1, the claimed ID must " \
+              "be supplied, either by passing it through " \
+              "as a return_to parameter or by using a " \
+              "session, and supplied to the IdResHandler " \
+              "when it is constructed."
           else
             claimed_id = @endpoint.claimed_id
           end
@@ -370,7 +376,7 @@ module OpenID
 
         to_match = OpenIDServiceEndpoint.new
         to_match.type_uris = [OPENID_1_1_TYPE]
-        to_match.local_id = fetch('identity')
+        to_match.local_id = fetch("identity")
         # Restore delegate information from the initiation phase
         to_match.claimed_id = claimed_id
 
@@ -385,9 +391,9 @@ module OpenID
               verify_discovery_single(@endpoint, to_match_1_0)
             end
           rescue ProtocolError => e
-            Util.log('Error attempting to use stored discovery information: ' +
+            Util.log("Error attempting to use stored discovery information: " +
                      e.message)
-            Util.log('Attempting discovery to verify endpoint')
+            Util.log("Attempting discovery to verify endpoint")
           else
             return @endpoint
           end
@@ -409,8 +415,8 @@ module OpenID
         if services.length == 0
           # XXX: this might want to be something other than
           # ProtocolError. In Python, it's DiscoveryFailure
-          raise ProtocolError, 'No OpenID information found at '\
-                                "#{claimed_id}"
+          raise ProtocolError, "No OpenID information found at " \
+            "#{claimed_id}"
         end
         verify_discovered_services(claimed_id, services, to_match_endpoints)
       end
@@ -436,12 +442,12 @@ module OpenID
 
         Util.log("Discovery verification failure for #{claimed_id}")
         failure_messages.each do |failure_message|
-          Util.log(' * Endpoint mismatch: ' + failure_message)
+          Util.log(" * Endpoint mismatch: " + failure_message)
         end
 
         # XXX: is DiscoveryFailure in Python OpenID
-        raise ProtocolError, 'No matching endpoint found after '\
-                              "discovering #{claimed_id}"
+        raise ProtocolError, "No matching endpoint found after " \
+          "discovering #{claimed_id}"
       end
 
       def verify_discovery_single(endpoint, to_match)
@@ -467,20 +473,20 @@ module OpenID
               parsed.to_s
             end
           else
-            raise StandardError, 'Not reached'
+            raise StandardError, "Not reached"
           end
 
         if defragged_claimed_id != endpoint.claimed_id
-          raise ProtocolError, 'Claimed ID does not match (different '\
-                                'subjects!), Expected '\
-                                "#{defragged_claimed_id}, got "\
-                                "#{endpoint.claimed_id}"
+          raise ProtocolError, "Claimed ID does not match (different " \
+            "subjects!), Expected " \
+            "#{defragged_claimed_id}, got " \
+            "#{endpoint.claimed_id}"
         end
 
         if to_match.get_local_id != endpoint.get_local_id
-          raise ProtocolError, 'local_id mismatch. Expected '\
-                                "#{to_match.get_local_id}, got "\
-                                "#{endpoint.get_local_id}"
+          raise ProtocolError, "local_id mismatch. Expected " \
+            "#{to_match.get_local_id}, got " \
+            "#{endpoint.get_local_id}"
         end
 
         # If the server URL is nil, this must be an OpenID 1
@@ -491,15 +497,15 @@ module OpenID
         if to_match.server_url.nil?
           if to_match.preferred_namespace != OPENID1_NS
             raise StandardError,
-                  'The code calling this must ensure that OpenID 2 '\
-                  "responses have a non-none `openid.op_endpoint' and "\
-                  "that it is set as the `server_url' attribute of the "\
-                  "`to_match' endpoint."
+              "The code calling this must ensure that OpenID 2 " \
+                "responses have a non-none `openid.op_endpoint' and " \
+                "that it is set as the `server_url' attribute of the " \
+                "`to_match' endpoint."
           end
         elsif to_match.server_url != endpoint.server_url
-          raise ProtocolError, 'OP Endpoint mismatch. Expected'\
-                                "#{to_match.server_url}, got "\
-                                "#{endpoint.server_url}"
+          raise ProtocolError, "OP Endpoint mismatch. Expected" \
+            "#{to_match.server_url}, got " \
+            "#{endpoint.server_url}"
         end
       end
     end

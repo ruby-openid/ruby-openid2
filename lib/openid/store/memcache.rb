@@ -1,14 +1,17 @@
-require 'openid/util'
-require 'openid/store/interface'
-require 'openid/store/nonce'
-require 'time'
+# stdlib
+require "time"
+
+# This library
+require_relative "../util"
+require_relative "interface"
+require_relative "nonce"
 
 module OpenID
   module Store
     class Memcache < Interface
       attr_accessor :key_prefix
 
-      def initialize(cache_client, key_prefix = 'openid-store:')
+      def initialize(cache_client, key_prefix = "openid-store:")
         @cache_client = cache_client
         self.key_prefix = key_prefix
       end
@@ -58,30 +61,33 @@ module OpenID
         return false if (timestamp - Time.now.to_i).abs > Nonce.skew
 
         ts = timestamp.to_s # base 10 seconds since epoch
-        nonce_key = key_prefix + 'N' + server_url + '|' + ts + '|' + salt
-        result = @cache_client.add(nonce_key, '', expiry(Nonce.skew + 5))
-        return !!(result =~ /^STORED/) if result.is_a? String
+        nonce_key = key_prefix + "N" + server_url + "|" + ts + "|" + salt
+        result = @cache_client.add(nonce_key, "", expiry(Nonce.skew + 5))
+        return !!(result =~ /^STORED/) if result.is_a?(String)
 
         !!result
       end
 
       def assoc_key(server_url, assoc_handle = nil)
-        key = key_prefix + 'A' + server_url
-        key += '|' + assoc_handle if assoc_handle
+        key = key_prefix + "A" + server_url
+        key += "|" + assoc_handle if assoc_handle
         key
       end
 
-      def cleanup_nonces; end
+      def cleanup_nonces
+      end
 
-      def cleanup; end
+      def cleanup
+      end
 
-      def cleanup_associations; end
+      def cleanup_associations
+      end
 
       protected
 
       def delete(key)
         result = @cache_client.delete(key)
-        return !!(result =~ /^DELETED/) if result.is_a? String
+        return !!(result =~ /^DELETED/) if result.is_a?(String)
 
         !!result
       end

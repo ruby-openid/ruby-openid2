@@ -1,6 +1,6 @@
-require 'openid/yadis/filters'
-require 'openid/yadis/discovery'
-require 'openid/yadis/xrds'
+require_relative "filters"
+require_relative "discovery"
+require_relative "xrds"
 
 module OpenID
   module Yadis
@@ -14,8 +14,11 @@ module OpenID
       # BasicEndpoint objects.
       result = Yadis.discover(input_url)
       begin
-        endpoints = Yadis.apply_filter(result.normalized_uri,
-                                       result.response_text, flt)
+        endpoints = Yadis.apply_filter(
+          result.normalized_uri,
+          result.response_text,
+          flt,
+        )
       rescue XRDSError => e
         raise DiscoveryFailure.new(e.to_s, nil)
       end

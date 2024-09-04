@@ -1,11 +1,11 @@
-$:.unshift(File.dirname(__FILE__) + '/../lib')
-require 'test/unit'
-RAILS_ENV = 'test'
-require File.expand_path(File.join(File.dirname(__FILE__), '../../../../config/environment.rb'))
+$:.unshift(File.dirname(__FILE__) + "/../lib")
+require "test/unit"
+RAILS_ENV = "test"
+require File.expand_path(File.join(File.dirname(__FILE__), "../../../../config/environment.rb"))
 
 module StoreTestCase
   @@allowed_handle = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~'
-  @@allowed_nonce = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
+  @@allowed_nonce = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
   def _gen_nonce
     OpenID::CryptUtil.random_string(8, @@allowed_nonce)
@@ -22,8 +22,13 @@ module StoreTestCase
   def _gen_assoc(issued, lifetime = 600)
     secret = _gen_secret(20)
     handle = _gen_handle(128)
-    OpenID::Association.new(handle, secret, Time.now + issued, lifetime,
-                            'HMAC-SHA1')
+    OpenID::Association.new(
+      handle,
+      secret,
+      Time.now + issued,
+      lifetime,
+      "HMAC-SHA1",
+    )
   end
 
   def _check_retrieve(url, handle = nil, expected = nil)
@@ -40,11 +45,12 @@ module StoreTestCase
 
   def _check_remove(url, handle, expected)
     present = @store.remove_association(url, handle)
+
     assert_equal(expected, present)
   end
 
   def test_store
-    server_url = 'http://www.myopenid.com/openid'
+    server_url = "http://www.myopenid.com/openid"
     assoc = _gen_assoc(0)
 
     # Make sure that a missing association returns no result
@@ -62,10 +68,10 @@ module StoreTestCase
     _check_retrieve(server_url, nil, assoc)
 
     # Removing an association that does not exist returns not present
-    _check_remove(server_url, assoc.handle + 'x', false)
+    _check_remove(server_url, assoc.handle + "x", false)
 
     # Removing an association that does not exist returns not present
-    _check_remove(server_url + 'x', assoc.handle, false)
+    _check_remove(server_url + "x", assoc.handle, false)
 
     # Removing an association that is present returns present
     _check_remove(server_url, assoc.handle, true)
@@ -136,24 +142,26 @@ module StoreTestCase
     assoc_expired_2 = _gen_assoc(-7200, 3600)
 
     @store.cleanup_associations
-    @store.store_association(server_url + '1', assoc_valid_1)
-    @store.store_association(server_url + '1', assoc_expired_1)
-    @store.store_association(server_url + '2', assoc_expired_2)
-    @store.store_association(server_url + '3', assoc_valid_2)
+    @store.store_association(server_url + "1", assoc_valid_1)
+    @store.store_association(server_url + "1", assoc_expired_1)
+    @store.store_association(server_url + "2", assoc_expired_2)
+    @store.store_association(server_url + "3", assoc_valid_2)
 
     cleaned = @store.cleanup_associations
-    assert_equal(2, cleaned, 'cleaned up associations')
+
+    assert_equal(2, cleaned, "cleaned up associations")
   end
 
-  def _check_use_nonce(nonce, expected, server_url, msg = '')
+  def _check_use_nonce(nonce, expected, server_url, msg = "")
     stamp, salt = OpenID::Nonce.split_nonce(nonce)
     actual = @store.use_nonce(server_url, stamp, salt)
+
     assert_equal(expected, actual, msg)
   end
 
   def test_nonce
-    server_url = 'http://www.myopenid.com/openid'
-    [server_url, ''].each do |url|
+    server_url = "http://www.myopenid.com/openid"
+    [server_url, ""].each do |url|
       nonce1 = OpenID::Nonce.mk_nonce
 
       _check_use_nonce(nonce1, true, url, "#{url}: nonce allowed by default")
@@ -175,23 +183,30 @@ module StoreTestCase
     @store.cleanup_nonces
     OpenID::Nonce.skew = 1_000_000
     ts, salt = OpenID::Nonce.split_nonce(old_nonce1)
-    assert(@store.use_nonce(server_url, ts, salt), 'oldnonce1')
+
+    assert(@store.use_nonce(server_url, ts, salt), "oldnonce1")
     ts, salt = OpenID::Nonce.split_nonce(old_nonce2)
-    assert(@store.use_nonce(server_url, ts, salt), 'oldnonce2')
+
+    assert(@store.use_nonce(server_url, ts, salt), "oldnonce2")
     ts, salt = OpenID::Nonce.split_nonce(recent_nonce)
-    assert(@store.use_nonce(server_url, ts, salt), 'recent_nonce')
+
+    assert(@store.use_nonce(server_url, ts, salt), "recent_nonce")
 
     OpenID::Nonce.skew = 1000
     cleaned = @store.cleanup_nonces
+
     assert_equal(2, cleaned, "Cleaned #{cleaned} nonces")
 
     OpenID::Nonce.skew = 100_000
     ts, salt = OpenID::Nonce.split_nonce(old_nonce1)
-    assert(@store.use_nonce(server_url, ts, salt), 'oldnonce1 after cleanup')
+
+    assert(@store.use_nonce(server_url, ts, salt), "oldnonce1 after cleanup")
     ts, salt = OpenID::Nonce.split_nonce(old_nonce2)
-    assert(@store.use_nonce(server_url, ts, salt), 'oldnonce2 after cleanup')
+
+    assert(@store.use_nonce(server_url, ts, salt), "oldnonce2 after cleanup")
     ts, salt = OpenID::Nonce.split_nonce(recent_nonce)
-    assert(!@store.use_nonce(server_url, ts, salt), 'recent_nonce after cleanup')
+
+    assert(!@store.use_nonce(server_url, ts, salt), "recent_nonce after cleanup")
 
     OpenID::Nonce.skew = orig_skew
   end

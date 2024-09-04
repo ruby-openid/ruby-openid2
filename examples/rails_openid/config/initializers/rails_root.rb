@@ -1,1 +1,1 @@
-::RAILS_ROOT = Rails.root
+RAILS_ROOT = Rails.root

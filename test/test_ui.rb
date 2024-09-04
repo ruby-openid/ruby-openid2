@@ -1,7 +1,11 @@
+# test helpers
+require_relative "test_helper"
+
+# this library
+require "openid"
 require "openid/extensions/ui"
 require "openid/message"
 require "openid/server"
-require_relative "test_helper"
 
 module OpenID
   module UITest

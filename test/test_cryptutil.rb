@@ -1,8 +1,14 @@
 # coding: ascii-8bit
 
-require_relative "test_helper"
-require "openid/cryptutil"
+# stdlib
 require "pathname"
+
+# test helpers
+require_relative "test_helper"
+
+# this library
+require "openid"
+require "openid/cryptutil"
 
 class CryptUtilTestCase < Minitest::Test
   BIG = 2**256

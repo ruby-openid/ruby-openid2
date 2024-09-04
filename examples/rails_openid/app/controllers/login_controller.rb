@@ -1,19 +1,21 @@
 # Controller for handling the login, logout process for "users" of our
 # little server.  Users have no password.  This is just an example.
 
-require 'openid'
+require "openid"
 
 class LoginController < ApplicationController
-  layout 'server'
+  layout "server"
 
   def base_url
-    url_for(controller: 'login', action: nil, only_path: false)
+    url_for(controller: "login", action: nil, only_path: false)
   end
 
   def index
-    response.headers['X-XRDS-Location'] = url_for(controller: 'server',
-                                                  action: 'idp_xrds',
-                                                  only_path: false)
+    response.headers["X-XRDS-Location"] = url_for(
+      controller: "server",
+      action: "idp_xrds",
+      only_path: false,
+    )
     @base_url = base_url
     # just show the login page
   end
@@ -31,13 +33,13 @@ class LoginController < ApplicationController
       flash[:notice] = "Your OpenID URL is <b>#{base_url}user/#{user}</b><br/><br/>Proceed to step 2 below."
     end
 
-    redirect_to action: 'index'
+    redirect_to(action: "index")
   end
 
   def logout
     # delete the username from the session hash
     session[:username] = nil
     session[:approvals] = nil
-    redirect_to action: 'index'
+    redirect_to(action: "index")
   end
 end

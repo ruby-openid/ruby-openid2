@@ -1,13 +1,16 @@
-require 'openid/cryptutil'
-require 'date'
-require 'time'
+# stdlib
+require "date"
+require "time"
+
+# This library
+require_relative "../cryptutil"
 
 module OpenID
   module Nonce
     DEFAULT_SKEW = 60 * 60 * 5
-    TIME_FMT = '%Y-%m-%dT%H:%M:%SZ'
-    TIME_STR_LEN = '0000-00-00T00:00:00Z'.size
-    @@NONCE_CHRS = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
+    TIME_FMT = "%Y-%m-%dT%H:%M:%SZ"
+    TIME_STR_LEN = "0000-00-00T00:00:00Z".size
+    @@NONCE_CHRS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
     TIME_VALIDATOR = /\d\d\d\d-\d\d-\d\dT\d\d:\d\d:\d\dZ/
 
     @skew = DEFAULT_SKEW
@@ -58,10 +61,10 @@ module OpenID
     def self.mk_nonce(time = nil)
       salt = CryptUtil.random_string(6, @@NONCE_CHRS)
       t = if time.nil?
-            Time.now.getutc
-          else
-            Time.at(time).getutc
-          end
+        Time.now.getutc
+      else
+        Time.at(time).getutc
+      end
       time_str = t.strftime(TIME_FMT)
       time_str + salt
     end

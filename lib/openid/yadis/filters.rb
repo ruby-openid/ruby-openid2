@@ -133,7 +133,7 @@ module OpenID
     # Exception raised when something is not able to be turned into a
     # filter
     @@filter_type_error = TypeError.new(
-      'Expected a filter, an endpoint, a callable or a list of any of these.'
+      "Expected a filter, an endpoint, a callable or a list of any of these.",
     )
 
     # Convert a filter-convertable thing into a filter
@@ -155,7 +155,7 @@ module OpenID
     #
     # parts should be a list of things that can be passed to make_filter
     def self.mk_compound_filter(parts)
-      raise TypeError, "#{parts.inspect} is not iterable" unless parts.respond_to?('each')
+      raise TypeError, "#{parts.inspect} is not iterable" unless parts.respond_to?(:each)
 
       # Separate into a list of callables and a list of filter objects
       transformers = []
@@ -163,14 +163,14 @@ module OpenID
       parts.each do |subfilter|
         if !subfilter.is_a?(Array)
           # If it's not an iterable
-          if subfilter.respond_to?('get_service_endpoints')
+          if subfilter.respond_to?(:get_service_endpoints)
             # It's a full filter
             filters << subfilter
-          elsif subfilter.respond_to?('from_basic_service_endpoint')
+          elsif subfilter.respond_to?(:from_basic_service_endpoint)
             # It's an endpoint object, so put its endpoint conversion
             # attribute into the list of endpoint transformers
-            transformers << subfilter.method('from_basic_service_endpoint')
-          elsif subfilter.respond_to?('call')
+            transformers << subfilter.method(:from_basic_service_endpoint)
+          elsif subfilter.respond_to?(:call)
             # It's a proc, so add it to the list of endpoint
             # transformers
             transformers << subfilter

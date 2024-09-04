@@ -1,5 +1,5 @@
-require 'openid/util'
-require 'openid/cryptutil'
+require_relative "util"
+require_relative "cryptutil"
 
 module OpenID
   # Encapsulates a Diffie-Hellman key exchange.  This class is used
@@ -52,15 +52,15 @@ module OpenID
     def self.strxor(s, t)
       if s.length != t.length
         raise ArgumentError, "strxor: lengths don't match. " +
-                             "Inputs were #{s.inspect} and #{t.inspect}"
+          "Inputs were #{s.inspect} and #{t.inspect}"
       end
 
-      if String.method_defined? :bytes
-        s.bytes.to_a.zip(t.bytes.to_a).map { |sb, tb| sb ^ tb }.pack('C*')
+      if String.method_defined?(:bytes)
+        s.bytes.to_a.zip(t.bytes.to_a).map { |sb, tb| sb ^ tb }.pack("C*")
       else
         indices = 0...(s.length)
         chrs = indices.collect { |i| (s[i] ^ t[i]).chr }
-        chrs.join('')
+        chrs.join("")
       end
     end
 

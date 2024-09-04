@@ -1,6 +1,10 @@
 # last synced with Python openid.test.test_message on 6/29/2007.
+# test helpers
 require_relative "test_helper"
 require_relative "util"
+
+# this library
+require "openid"
 require "openid/message"
 require "rexml/document"
 

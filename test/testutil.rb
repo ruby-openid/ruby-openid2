@@ -1,4 +1,5 @@
-require 'pathname'
+# external libraries
+require "pathname"
 
 if defined? Minitest::Test
   # We're on Minitest 5+. Nothing to do here.
@@ -10,7 +11,7 @@ end
 module OpenID
   module TestDataMixin
     TESTS_DIR = Pathname.new(__FILE__).dirname
-    TEST_DATA_DIR = Pathname.new('data')
+    TEST_DATA_DIR = Pathname.new("data")
 
     def read_data_file(filename, lines = true, data_dir = TEST_DATA_DIR)
       fname = TESTS_DIR.join(data_dir, filename)
@@ -56,8 +57,9 @@ module OpenID
     def assert_protocol_error(str_prefix)
       result = yield
     rescue ProtocolError => e
-      message = "Expected prefix #{str_prefix.inspect}, got "\
-                "#{e.message.inspect}"
+      message = "Expected prefix #{str_prefix.inspect}, got " \
+        "#{e.message.inspect}"
+
       assert(e.message.start_with?(str_prefix), message)
     else
       raise("Expected ProtocolError. Got #{result.inspect}")
@@ -76,9 +78,9 @@ module OpenID
         $VERBOSE = verbose
         yield
       ensure
-        if original.respond_to? :owner
+        if original.respond_to?(:owner)
           original.owner.send(:undef_method, method_name)
-          original.owner.send :define_method, method_name, original
+          original.owner.send(:define_method, method_name, original)
         else
           define_method(method_name, original)
           module_function(method_name)
@@ -107,26 +109,26 @@ module OpenID
     end
   end
 
-  GOODSIG = '[A Good Signature]'
+  GOODSIG = "[A Good Signature]"
 
   class GoodAssoc
     attr_accessor :handle, :expires_in
 
-    def initialize(handle = '-blah-')
+    def initialize(handle = "-blah-")
       @handle = handle
       @expires_in = 3600
     end
 
     def check_message_signature(msg)
-      msg.get_arg(OPENID_NS, 'sig') == GOODSIG
+      msg.get_arg(OPENID_NS, "sig") == GOODSIG
     end
   end
 
   class HTTPResponse
-    def self._from_raw_data(status, body = '', headers = {}, final_url = nil)
-      resp = Net::HTTPResponse.new('1.1', status.to_s, 'NONE')
+    def self._from_raw_data(status, body = "", headers = {}, final_url = nil)
+      resp = Net::HTTPResponse.new("1.1", status.to_s, "NONE")
       me = _from_net_response(resp, final_url)
-      me.initialize_http_header headers
+      me.initialize_http_header(headers)
       me.body = body
       me
     end

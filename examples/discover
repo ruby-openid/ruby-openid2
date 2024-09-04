@@ -1,20 +1,22 @@
 #!/usr/bin/env ruby
-require 'openid/consumer/discovery'
-require 'openid/fetchers'
+require "openid/consumer/discovery"
+require "openid/fetchers"
 
 OpenID.fetcher_use_env_http_proxy
 
-$names = [[:server_url,   'Server URL  '],
-          [:local_id,     'Local ID    '],
-          [:canonical_id, 'Canonical ID']]
+$names = [
+  [:server_url, "Server URL  "],
+  [:local_id, "Local ID    "],
+  [:canonical_id, "Canonical ID"],
+]
 
 def show_services(_user_input, normalized, services)
   puts " Claimed identifier: #{normalized}"
   if services.empty?
-    puts ' No OpenID services found'
+    puts " No OpenID services found"
     puts
   else
-    puts ' Discovered services:'
+    puts " Discovered services:"
     n = 0
     services.each do |service|
       n += 1
@@ -23,7 +25,7 @@ def show_services(_user_input, normalized, services)
         val = service.send(meth)
         printf("     %s: %s\n", name, val) if val
       end
-      puts '     Type URIs:'
+      puts "     Type URIs:"
       for type_uri in service.type_uris
         puts "       * #{type_uri}"
       end
@@ -33,7 +35,7 @@ def show_services(_user_input, normalized, services)
 end
 
 ARGV.each do |openid_identifier|
-  puts '=' * 50
+  puts "=" * 50
   puts "Running discovery on #{openid_identifier}"
   begin
     normalized_identifier, services = OpenID.discover(openid_identifier)

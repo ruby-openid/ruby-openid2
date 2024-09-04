@@ -33,10 +33,10 @@ module OpenID
         current_val = @current.respond_to?(:to_session_value) ? @current.to_session_value : @current
 
         {
-          'starting_url' => @starting_url,
-          'yadis_url' => @yadis_url,
-          'services' => services,
-          'current' => current_val
+          "starting_url" => @starting_url,
+          "yadis_url" => @yadis_url,
+          "services" => services,
+          "current" => current_val,
         }
       end
 
@@ -47,11 +47,11 @@ module OpenID
       def self.from_session_value(value)
         return value unless value.is_a?(Hash)
 
-        services = value['services'].map { |s| OpenID::OpenIDServiceEndpoint.from_session_value(s) }
-        current = OpenID::OpenIDServiceEndpoint.from_session_value(value['current'])
+        services = value["services"].map { |s| OpenID::OpenIDServiceEndpoint.from_session_value(s) }
+        current = OpenID::OpenIDServiceEndpoint.from_session_value(value["current"])
 
-        obj = new(value['starting_url'], value['yadis_url'], services)
-        obj.instance_variable_set('@current', current)
+        obj = new(value["starting_url"], value["yadis_url"], services)
+        obj.instance_variable_set(:@current, current)
         obj
       end
     end
@@ -63,7 +63,7 @@ module OpenID
         @url = url
 
         @session = OpenID::Consumer::Session.new(session, DiscoveredServices)
-        @session_key_suffix = session_key_suffix || 'auth'
+        @session_key_suffix = session_key_suffix || "auth"
       end
 
       def get_next_service
@@ -111,7 +111,7 @@ module OpenID
       def create_manager(yadis_url, services)
         manager = get_manager
         raise StandardError, "There is already a manager for #{yadis_url}" unless manager.nil?
-        return nil if services.empty?
+        return if services.empty?
 
         manager = DiscoveredServices.new(@url, yadis_url, services)
         store(manager)
@@ -125,7 +125,7 @@ module OpenID
       end
 
       def session_key
-        'OpenID::Consumer::DiscoveredServices::' + @session_key_suffix
+        "OpenID::Consumer::DiscoveredServices::" + @session_key_suffix
       end
 
       def store(manager)

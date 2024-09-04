@@ -1,4 +1,4 @@
-require 'openid/message'
+require_relative "message"
 
 module OpenID
   # An interface for OpenID extensions.

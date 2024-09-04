@@ -1,4 +1,4 @@
-require 'openid/util'
+require_relative "../util"
 
 module OpenID
   # Stores for Associations and nonces. Used by both the Consumer and

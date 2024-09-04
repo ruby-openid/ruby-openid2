@@ -1,7 +1,7 @@
-require 'openid/util'
-require 'openid/fetchers'
-require 'openid/yadis/constants'
-require 'openid/yadis/parsehtml'
+require_relative "../util"
+require_relative "../fetchers"
+require_relative "constants"
+require_relative "parsehtml"
 
 module OpenID
   # Raised when a error occurs in the discovery process
@@ -70,14 +70,15 @@ module OpenID
     def self.discover(uri)
       result = DiscoveryResult.new(uri)
       begin
-        resp = OpenID.fetch(uri, nil, { 'Accept' => YADIS_ACCEPT_HEADER })
+        resp = OpenID.fetch(uri, nil, {"Accept" => YADIS_ACCEPT_HEADER})
       rescue Exception
         raise DiscoveryFailure.new("Failed to fetch identity URL #{uri} : #{$!}", $!)
       end
-      if resp.code != '200' and resp.code != '206'
+      if resp.code != "200" and resp.code != "206"
         raise DiscoveryFailure.new(
-          'HTTP Response status from identity URL host is not "200".'\
-          "Got status #{resp.code.inspect} for #{resp.final_url}", resp
+          'HTTP Response status from identity URL host is not "200".' \
+            "Got status #{resp.code.inspect} for #{resp.final_url}",
+          resp,
         )
       end
 
@@ -86,7 +87,7 @@ module OpenID
 
       # Attempt to find out where to go to discover the document or if
       # we already have it
-      result.content_type = resp['content-type']
+      result.content_type = resp["content-type"]
 
       result.xrds_uri = where_is_yadis?(resp)
 
@@ -96,16 +97,17 @@ module OpenID
         rescue StandardError
           raise DiscoveryFailure.new("Failed to fetch Yadis URL #{result.xrds_uri} : #{$!}", $!)
         end
-        if resp.code != '200' and resp.code != '206'
+        if resp.code != "200" and resp.code != "206"
           exc = DiscoveryFailure.new(
             'HTTP Response status from Yadis host is not "200". ' +
-                                 "Got status #{resp.code.inspect} for #{resp.final_url}", resp
+                                 "Got status #{resp.code.inspect} for #{resp.final_url}",
+            resp,
           )
           exc.identity_url = result.normalized_uri
           raise exc
         end
 
-        result.content_type = resp['content-type']
+        result.content_type = resp["content-type"]
       end
 
       result.response_text = resp.body
@@ -122,12 +124,12 @@ module OpenID
     def self.where_is_yadis?(resp)
       # Attempt to find out where to go to discover the document or if
       # we already have it
-      content_type = resp['content-type']
+      content_type = resp["content-type"]
 
       # According to the spec, the content-type header must be an
       # exact match, or else we have to look for an indirection.
       if !content_type.nil? and !content_type.to_s.empty? and
-         content_type.split(';', 2)[0].downcase == YADIS_CONTENT_TYPE
+          content_type.split(";", 2)[0].downcase == YADIS_CONTENT_TYPE
         return resp.final_url
       else
         # Try the header
