@@ -2,7 +2,7 @@ require "rexml/document"
 require "rexml/element"
 require "rexml/xpath"
 
-require "openid/yadis/xri"
+require_relative "xri"
 
 module OpenID
   module Yadis

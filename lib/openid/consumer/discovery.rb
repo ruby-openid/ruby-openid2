@@ -1,17 +1,17 @@
 # Functions to discover OpenID endpoints from identifiers.
 
 require "uri"
-require "openid/util"
-require "openid/fetchers"
-require "openid/urinorm"
-require "openid/message"
-require "openid/yadis/discovery"
-require "openid/yadis/xrds"
-require "openid/yadis/xri"
-require "openid/yadis/services"
-require "openid/yadis/filters"
-require "openid/consumer/html_parse"
-require "openid/yadis/xrires"
+require_relative "../util"
+require_relative "../fetchers"
+require_relative "../urinorm"
+require_relative "../message"
+require_relative "../yadis/discovery"
+require_relative "../yadis/xrds"
+require_relative "../yadis/xri"
+require_relative "../yadis/services"
+require_relative "../yadis/filters"
+require_relative "../consumer/html_parse"
+require_relative "../yadis/xrires"
 
 module OpenID
   OPENID_1_0_NS = "http://openid.net/xmlns/1.0"

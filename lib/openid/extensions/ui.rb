@@ -1,7 +1,7 @@
 # An implementation of the OpenID User Interface Extension 1.0 - DRAFT 0.5
 # see: http://svn.openid.net/repos/specifications/user_interface/1.0/trunk/openid-user-interface-extension-1_0.html
 
-require "openid/extension"
+require_relative "../extension"
 
 module OpenID
   module UI

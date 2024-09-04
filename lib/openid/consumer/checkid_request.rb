@@ -1,5 +1,5 @@
-require "openid/message"
-require "openid/util"
+require_relative "../message"
+require_relative "../util"
 
 module OpenID
   class Consumer

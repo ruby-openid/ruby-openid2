@@ -1,10 +1,18 @@
-require_relative "test_helper"
+# stdlib
+require "stringio"
+
+# external libraries
 require "net/http"
 require "webrick"
+
+# test helpers
+require_relative "test_helper"
 require_relative "testutil"
 require_relative "util"
+
+# this library
+require "openid"
 require "openid/fetchers"
-require "stringio"
 
 begin
   require "net/https"

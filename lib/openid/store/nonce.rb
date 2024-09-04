@@ -1,6 +1,9 @@
-require "openid/cryptutil"
+# stdlib
 require "date"
 require "time"
+
+# This library
+require_relative "../cryptutil"
 
 module OpenID
   module Nonce

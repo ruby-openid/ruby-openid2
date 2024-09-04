@@ -1,7 +1,7 @@
-require "openid/util"
-require "openid/fetchers"
-require "openid/yadis/constants"
-require "openid/yadis/parsehtml"
+require_relative "../util"
+require_relative "../fetchers"
+require_relative "constants"
+require_relative "parsehtml"
 
 module OpenID
   # Raised when a error occurs in the discovery process

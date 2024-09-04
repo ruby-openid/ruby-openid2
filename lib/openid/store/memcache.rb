@@ -1,7 +1,10 @@
-require "openid/util"
-require "openid/store/interface"
-require "openid/store/nonce"
+# stdlib
 require "time"
+
+# This library
+require_relative "../util"
+require_relative "interface"
+require_relative "nonce"
 
 module OpenID
   module Store

@@ -1,4 +1,4 @@
-require "openid/yadis/htmltokenizer"
+require_relative "../yadis/htmltokenizer"
 
 module OpenID
   # Stuff to remove before we start looking for tags

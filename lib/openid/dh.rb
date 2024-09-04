@@ -1,5 +1,5 @@
-require "openid/util"
-require "openid/cryptutil"
+require_relative "util"
+require_relative "cryptutil"
 
 module OpenID
   # Encapsulates a Diffie-Hellman key exchange.  This class is used

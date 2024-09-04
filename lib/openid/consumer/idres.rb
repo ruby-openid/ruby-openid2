@@ -1,8 +1,8 @@
-require "openid/message"
-require "openid/protocolerror"
-require "openid/kvpost"
-require "openid/consumer/discovery"
-require "openid/urinorm"
+require_relative "../message"
+require_relative "../protocolerror"
+require_relative "../kvpost"
+require_relative "../urinorm"
+require_relative "discovery"
 
 module OpenID
   class TypeURIMismatch < ProtocolError

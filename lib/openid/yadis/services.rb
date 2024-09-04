@@ -1,6 +1,6 @@
-require "openid/yadis/filters"
-require "openid/yadis/discovery"
-require "openid/yadis/xrds"
+require_relative "filters"
+require_relative "discovery"
+require_relative "xrds"
 
 module OpenID
   module Yadis

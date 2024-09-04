@@ -1,5 +1,8 @@
-require "openid/yadis/htmltokenizer"
+# stdlib
 require "cgi"
+
+# This library
+require_relative "htmltokenizer"
 
 module OpenID
   module Yadis

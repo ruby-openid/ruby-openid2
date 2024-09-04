@@ -1,6 +1,10 @@
 # encoding: ascii-8bit
 
+# test helpers
 require_relative "test_helper"
+
+# this library
+require "openid"
 require "openid/util"
 
 module OpenID

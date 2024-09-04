@@ -1,6 +1,10 @@
+# test helpers
 require_relative "test_helper"
 require_relative "testutil"
 require_relative "util"
+
+# this library
+require "openid"
 require "openid/consumer/idres"
 require "openid/protocolerror"
 require "openid/store/memory"

@@ -1,8 +1,8 @@
 # Implements the OpenID attribute exchange specification, version 1.0
 
-require "openid/extension"
-require "openid/trustroot"
-require "openid/message"
+require_relative "../extension"
+require_relative "../trustroot"
+require_relative "../message"
 
 module OpenID
   module AX

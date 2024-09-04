@@ -1,7 +1,10 @@
+# stdlib
 require "cgi"
-require "openid/yadis/xri"
-require "openid/yadis/xrds"
-require "openid/fetchers"
+
+# This library
+require_relative "xri"
+require_relative "xrds"
+require_relative "../fetchers"
 
 module OpenID
   module Yadis

@@ -1,10 +1,16 @@
+# stdlib
+require "uri"
+
+# test helpers
 require_relative "test_helper"
 require_relative "testutil"
-require "uri"
+require_relative "discoverdata"
+
+# this library
+require "openid"
 require "openid/yadis/discovery"
 require "openid/fetchers"
 require "openid/util"
-require "discoverdata"
 
 module OpenID
   module YadisDiscovery

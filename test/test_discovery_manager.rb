@@ -1,6 +1,10 @@
+# test helpers
 require_relative "test_helper"
-require "openid/consumer"
 require_relative "testutil"
+
+# this library
+require "openid"
+require "openid/consumer"
 
 module OpenID
   class TestDiscoveredServices < Minitest::Test

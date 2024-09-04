@@ -1,10 +1,10 @@
-require "openid/cryptutil"
-require "openid/util"
-require "openid/dh"
-require "openid/store/nonce"
-require "openid/trustroot"
-require "openid/association"
-require "openid/message"
+require_relative "cryptutil"
+require_relative "util"
+require_relative "dh"
+require_relative "store/nonce"
+require_relative "trustroot"
+require_relative "association"
+require_relative "message"
 
 require "time"
 

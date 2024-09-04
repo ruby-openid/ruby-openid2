@@ -1,9 +1,9 @@
-require "openid/dh"
-require "openid/util"
-require "openid/kvpost"
-require "openid/cryptutil"
-require "openid/protocolerror"
-require "openid/association"
+require_relative "../dh"
+require_relative "../util"
+require_relative "../kvpost"
+require_relative "../cryptutil"
+require_relative "../protocolerror"
+require_relative "../association"
 
 module OpenID
   class Consumer
@@ -137,7 +137,7 @@ module OpenID
             assoc_type, session_type = supported_types
             begin
               request_association(assoc_type, session_type)
-            rescue ServerError => why
+            rescue ServerError
               Util.log("Server #{@server_url} refused its suggested " \
                 "association type: session_type=#{session_type}, " \
                 "assoc_type=#{assoc_type}")

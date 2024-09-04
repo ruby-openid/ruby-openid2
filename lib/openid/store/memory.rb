@@ -1,4 +1,5 @@
-require "openid/store/interface"
+require_relative "interface"
+
 module OpenID
   module Store
     # An in-memory implementation of Store.  This class is mainly used

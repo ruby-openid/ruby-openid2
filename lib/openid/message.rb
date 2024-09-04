@@ -1,5 +1,5 @@
-require "openid/util"
-require "openid/kvform"
+require_relative "util"
+require_relative "kvform"
 
 module OpenID
   IDENTIFIER_SELECT = "http://specs.openid.net/auth/2.0/identifier_select"

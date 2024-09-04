@@ -18,9 +18,9 @@ require "version_gem"
 module OpenID
 end
 
-require "openid/version"
-require "openid/consumer"
-require "openid/server"
+require_relative "openid/version"
+require_relative "openid/consumer"
+require_relative "openid/server"
 
 OpenID::Version.class_eval do
   extend VersionGem::Basic

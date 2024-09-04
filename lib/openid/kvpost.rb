@@ -1,5 +1,5 @@
-require "openid/message"
-require "openid/fetchers"
+require_relative "message"
+require_relative "fetchers"
 
 module OpenID
   # Exception that is raised when the server returns a 400 response

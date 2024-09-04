@@ -1,3 +1,4 @@
+# external libraries
 require "pathname"
 
 if defined? Minitest::Test

@@ -1,6 +1,8 @@
+# External dependencies
 require "net/http"
-require "openid/util"
-require "openid/version"
+
+# This library
+require_relative "util"
 
 begin
   require "net/https"

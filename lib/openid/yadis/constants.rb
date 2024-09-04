@@ -1,4 +1,4 @@
-require "openid/yadis/accept"
+require_relative "accept"
 
 module OpenID
   module Yadis

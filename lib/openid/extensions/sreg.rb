@@ -1,6 +1,6 @@
-require "openid/extension"
-require "openid/util"
-require "openid/message"
+require_relative "../extension"
+require_relative "../util"
+require_relative "../message"
 
 module OpenID
   module SReg

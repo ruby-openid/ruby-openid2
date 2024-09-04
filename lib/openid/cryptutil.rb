@@ -1,4 +1,4 @@
-require "openid/util"
+# stdlib
 require "digest/sha1"
 require "digest/sha2"
 begin
@@ -10,10 +10,13 @@ rescue LoadError
     require "hmac-sha2"
   rescue LoadError
     # Nothing exists use included hmac files
-    require "hmac/sha1"
-    require "hmac/sha2"
+    require_relative "../hmac/sha1"
+    require_relative "../hmac/sha2"
   end
 end
+
+# This library
+require_relative "util"
 
 module OpenID
   # This module contains everything needed to perform low-level

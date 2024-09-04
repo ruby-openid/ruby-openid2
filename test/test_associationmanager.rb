@@ -1,5 +1,13 @@
+# stdlib
+require "time"
+
+# test helpers
 require_relative "test_helper"
 require_relative "testutil"
+require_relative "util"
+
+# this library
+require "openid"
 require "openid/consumer/associationmanager"
 require "openid/association"
 require "openid/dh"
@@ -8,8 +16,6 @@ require "openid/cryptutil"
 require "openid/message"
 require "openid/protocolerror"
 require "openid/store/memory"
-require_relative "util"
-require "time"
 
 module OpenID
   class DHAssocSessionTest < Minitest::Test

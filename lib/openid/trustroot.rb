@@ -1,5 +1,8 @@
+# stdlib
 require "uri"
-require "openid/urinorm"
+
+# This library
+require_relative "urinorm"
 
 module OpenID
   class RealmVerificationRedirected < Exception

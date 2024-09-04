@@ -1,8 +1,12 @@
+# test helpers
 require_relative "test_helper"
 require_relative "testutil"
+require_relative "util"
+
+# this library
+require "openid"
 require "openid/consumer/checkid_request"
 require "openid/message"
-require_relative "util"
 
 module OpenID
   class Consumer

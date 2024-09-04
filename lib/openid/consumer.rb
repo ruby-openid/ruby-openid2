@@ -1,13 +1,13 @@
-require "openid/consumer/idres"
-require "openid/consumer/checkid_request"
-require "openid/consumer/associationmanager"
-require "openid/consumer/responses"
-require "openid/consumer/session"
-require "openid/consumer/discovery_manager"
-require "openid/consumer/discovery"
-require "openid/message"
-require "openid/yadis/discovery"
-require "openid/store/nonce"
+require_relative "consumer/idres"
+require_relative "consumer/checkid_request"
+require_relative "consumer/associationmanager"
+require_relative "consumer/responses"
+require_relative "consumer/session"
+require_relative "consumer/discovery_manager"
+require_relative "consumer/discovery"
+require_relative "message"
+require_relative "yadis/discovery"
+require_relative "store/nonce"
 
 module OpenID
   # OpenID support for Relying Parties (aka Consumers).

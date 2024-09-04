@@ -1,10 +1,12 @@
+# stdlib
 require "fileutils"
 require "pathname"
 require "tempfile"
 
-require "openid/util"
-require "openid/store/interface"
-require "openid/association"
+# This library
+require_relative "../util"
+require_relative "../association"
+require_relative "interface"
 
 module OpenID
   module Store

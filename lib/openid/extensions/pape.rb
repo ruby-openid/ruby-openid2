@@ -2,7 +2,7 @@
 # Extension 1.0
 # see: http://openid.net/specs/
 
-require "openid/extension"
+require_relative "../extension"
 
 module OpenID
   module PAPE

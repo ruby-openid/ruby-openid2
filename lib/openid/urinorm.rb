@@ -1,3 +1,4 @@
+# stdlib
 require "uri"
 
 module OpenID

@@ -1,4 +1,6 @@
 # Utilities that are only used in the testing code
+
+# stdlib
 require "stringio"
 
 module OpenID

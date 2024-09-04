@@ -1,4 +1,4 @@
-require "openid/fetchers"
+require_relative "../fetchers"
 
 module OpenID
   module Yadis

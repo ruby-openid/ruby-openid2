@@ -1,7 +1,13 @@
+# stdlib
+require "uri"
+
+# test helpers
 require_relative "test_helper"
 require_relative "testutil"
 require_relative "util"
-require "uri"
+
+# this library
+require "openid"
 require "openid/server"
 require "openid/cryptutil"
 require "openid/association"

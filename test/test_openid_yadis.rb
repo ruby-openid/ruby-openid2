@@ -1,4 +1,8 @@
+# test helpers
 require_relative "test_helper"
+
+# this library
+require "openid"
 require "openid/consumer/discovery"
 require "openid/yadis/services"
 

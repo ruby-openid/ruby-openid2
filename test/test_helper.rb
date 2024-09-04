@@ -1,4 +1,6 @@
 # External dependencies
+require "byebug" if ENV.fetch("DEBUG", "false").casecmp?("true")
+
 ## Last thing before loading this gem is to setup code coverage
 begin
   # This does not require "simplecov", but

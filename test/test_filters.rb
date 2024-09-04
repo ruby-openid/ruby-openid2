@@ -1,6 +1,12 @@
+# external libraries
+require "rexml/document"
+
+# test helpers
 require_relative "test_helper"
 require_relative "testutil"
-require "rexml/document"
+
+# this library
+require "openid"
 require "openid/yadis/xrds"
 require "openid/yadis/filters"
 

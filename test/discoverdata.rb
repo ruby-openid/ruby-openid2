@@ -1,5 +1,11 @@
+# stdlib
 require "uri"
+
+# test helpers
 require_relative "test_helper"
+
+# this library
+require "openid"
 require "openid/yadis/constants"
 require "openid/yadis/discovery"
 require "openid/util"
