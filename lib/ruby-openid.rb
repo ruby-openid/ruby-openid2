@@ -1,1 +1,1 @@
-require 'openid'
+require "openid"

@@ -1,13 +1,13 @@
-require 'openid/consumer/idres'
-require 'openid/consumer/checkid_request'
-require 'openid/consumer/associationmanager'
-require 'openid/consumer/responses'
-require 'openid/consumer/session'
-require 'openid/consumer/discovery_manager'
-require 'openid/consumer/discovery'
-require 'openid/message'
-require 'openid/yadis/discovery'
-require 'openid/store/nonce'
+require "openid/consumer/idres"
+require "openid/consumer/checkid_request"
+require "openid/consumer/associationmanager"
+require "openid/consumer/responses"
+require "openid/consumer/session"
+require "openid/consumer/discovery_manager"
+require "openid/consumer/discovery"
+require "openid/message"
+require "openid/yadis/discovery"
+require "openid/store/nonce"
 
 module OpenID
   # OpenID support for Relying Parties (aka Consumers).
@@ -193,7 +193,7 @@ module OpenID
       @origin_session = session
       @session = Session.new(session, OpenID::OpenIDServiceEndpoint)
       @store = store
-      @session_key_prefix = 'OpenID::Consumer::'
+      @session_key_prefix = "OpenID::Consumer::"
     end
 
     # Start the OpenID authentication process. See steps 1-2 in the
@@ -224,8 +224,11 @@ module OpenID
       service = manager.get_next_service(&method(:discover))
 
       if service.nil?
-        raise DiscoveryFailure.new('No usable OpenID services were found '\
-                                   "for #{openid_identifier.inspect}", nil)
+        raise DiscoveryFailure.new(
+          "No usable OpenID services were found " \
+            "for #{openid_identifier.inspect}",
+          nil,
+        )
       else
         begin_without_discovery(service, anonymous)
       end
@@ -282,9 +285,9 @@ module OpenID
     # SUCCESS, CANCEL, FAILURE, or SETUP_NEEDED.
     def complete(query, current_url)
       message = Message.from_post_args(query)
-      mode = message.get_arg(OPENID_NS, 'mode', 'invalid')
+      mode = message.get_arg(OPENID_NS, "mode", "invalid")
       begin
-        meth = method('complete_' + mode)
+        meth = method("complete_" + mode)
       rescue NameError
         meth = method(:complete_invalid)
       end
@@ -309,15 +312,15 @@ module OpenID
     end
 
     def last_requested_endpoint
-      session_get('last_requested_endpoint')
+      session_get("last_requested_endpoint")
     end
 
     def last_requested_endpoint=(endpoint)
-      session_set('last_requested_endpoint', endpoint)
+      session_set("last_requested_endpoint", endpoint)
     end
 
     def cleanup_last_requested_endpoint
-      @session[session_key('last_requested_endpoint')] = nil
+      @session[session_key("last_requested_endpoint")] = nil
     end
 
     def discovery_manager(openid_identifier)
@@ -337,8 +340,12 @@ module OpenID
     end
 
     def association_manager(service)
-      AssociationManager.new(@store, service.server_url,
-                             service.compatibility_mode, negotiator)
+      AssociationManager.new(
+        @store,
+        service.server_url,
+        service.compatibility_mode,
+        negotiator,
+      )
     end
 
     def handle_idres(message, current_url)
@@ -346,9 +353,11 @@ module OpenID
     end
 
     def complete_invalid(message, _unused_return_to)
-      mode = message.get_arg(OPENID_NS, 'mode', '<No mode set>')
-      FailureResponse.new(last_requested_endpoint,
-                          "Invalid openid.mode: #{mode}")
+      mode = message.get_arg(OPENID_NS, "mode", "<No mode set>")
+      FailureResponse.new(
+        last_requested_endpoint,
+        "Invalid openid.mode: #{mode}",
+      )
     end
 
     def complete_cancel(_unused_message, _unused_return_to)
@@ -356,24 +365,28 @@ module OpenID
     end
 
     def complete_error(message, _unused_return_to)
-      error = message.get_arg(OPENID_NS, 'error')
-      contact = message.get_arg(OPENID_NS, 'contact')
-      reference = message.get_arg(OPENID_NS, 'reference')
+      error = message.get_arg(OPENID_NS, "error")
+      contact = message.get_arg(OPENID_NS, "contact")
+      reference = message.get_arg(OPENID_NS, "reference")
 
-      FailureResponse.new(last_requested_endpoint,
-                          error, contact, reference)
+      FailureResponse.new(
+        last_requested_endpoint,
+        error,
+        contact,
+        reference,
+      )
     end
 
     def complete_setup_needed(message, _unused_return_to)
       return complete_invalid(message, nil) if message.is_openid1
 
-      setup_url = message.get_arg(OPENID2_NS, 'user_setup_url')
+      setup_url = message.get_arg(OPENID2_NS, "user_setup_url")
       SetupNeededResponse.new(last_requested_endpoint, setup_url)
     end
 
     def complete_id_res(message, current_url)
       if message.is_openid1
-        setup_url = message.get_arg(OPENID_NS, 'user_setup_url')
+        setup_url = message.get_arg(OPENID_NS, "user_setup_url")
         return SetupNeededResponse.new(last_requested_endpoint, setup_url) unless setup_url.nil?
       end
 
@@ -382,8 +395,11 @@ module OpenID
       rescue OpenIDError => e
         FailureResponse.new(last_requested_endpoint, e.message)
       else
-        SuccessResponse.new(idres.endpoint, message,
-                            idres.signed_fields)
+        SuccessResponse.new(
+          idres.endpoint,
+          message,
+          idres.signed_fields,
+        )
       end
     end
   end

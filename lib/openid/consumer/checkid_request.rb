@@ -1,5 +1,5 @@
-require 'openid/message'
-require 'openid/util'
+require "openid/message"
+require "openid/util"
 
 module OpenID
   class Consumer
@@ -36,8 +36,8 @@ module OpenID
       # with OpenID 1.
       def anonymous=(is_anonymous)
         if is_anonymous && @message.is_openid1
-          raise ArgumentError, 'OpenID1 requests MUST include the '\
-                                'identifier in the request'
+          raise ArgumentError, "OpenID1 requests MUST include the " \
+            "identifier in the request"
         end
         @anonymous = is_anonymous
       end
@@ -76,25 +76,25 @@ module OpenID
         if !return_to.nil?
           return_to = Util.append_args(return_to, @return_to_args)
         elsif immediate
-          raise ArgumentError, '"return_to" is mandatory when using '\
-                                '"checkid_immediate"'
+          raise ArgumentError, '"return_to" is mandatory when using ' \
+            '"checkid_immediate"'
         elsif @message.is_openid1
-          raise ArgumentError, '"return_to" is mandatory for OpenID 1 '\
-                                'requests'
+          raise ArgumentError, '"return_to" is mandatory for OpenID 1 ' \
+            "requests"
         elsif @return_to_args.empty?
-          raise ArgumentError, 'extra "return_to" arguments were specified, '\
-                                'but no return_to was specified'
+          raise ArgumentError, 'extra "return_to" arguments were specified, ' \
+            "but no return_to was specified"
         end
 
         message = @message.copy
 
-        mode = immediate ? 'checkid_immediate' : 'checkid_setup'
-        message.set_arg(OPENID_NS, 'mode', mode)
+        mode = immediate ? "checkid_immediate" : "checkid_setup"
+        message.set_arg(OPENID_NS, "mode", mode)
 
-        realm_key = message.is_openid1 ? 'trust_root' : 'realm'
+        realm_key = message.is_openid1 ? "trust_root" : "realm"
         message.set_arg(OPENID_NS, realm_key, realm)
 
-        message.set_arg(OPENID_NS, 'return_to', return_to) unless return_to.nil?
+        message.set_arg(OPENID_NS, "return_to", return_to) unless return_to.nil?
 
         unless @anonymous
           if @endpoint.is_op_identifier
@@ -109,20 +109,20 @@ module OpenID
           end
 
           # This is true for both OpenID 1 and 2
-          message.set_arg(OPENID_NS, 'identity', request_identity)
+          message.set_arg(OPENID_NS, "identity", request_identity)
 
-          message.set_arg(OPENID2_NS, 'claimed_id', claimed_id) if message.is_openid2
+          message.set_arg(OPENID2_NS, "claimed_id", claimed_id) if message.is_openid2
         end
 
         if @assoc && (message.is_openid1 || !%w[checkid_setup checkid_immediate].include?(mode))
-          message.set_arg(OPENID_NS, 'assoc_handle', @assoc.handle)
+          message.set_arg(OPENID_NS, "assoc_handle", @assoc.handle)
           assoc_log_msg = "with assocication #{@assoc.handle}"
         else
-          assoc_log_msg = 'using stateless mode.'
+          assoc_log_msg = "using stateless mode."
         end
 
-        Util.log("Generated #{mode} request to #{@endpoint.server_url} "\
-                 "#{assoc_log_msg}")
+        Util.log("Generated #{mode} request to #{@endpoint.server_url} " \
+          "#{assoc_log_msg}")
         message
       end
 
@@ -146,7 +146,7 @@ module OpenID
       # overridden. If a value is supplied for 'action' or 'method',
       # it will be replaced.
       def form_markup(realm, return_to = nil, immediate = false,
-                      form_tag_attrs = nil)
+        form_tag_attrs = nil)
         message = get_message(realm, return_to, immediate)
         message.to_form_markup(@endpoint.server_url, form_tag_attrs)
       end
@@ -155,11 +155,13 @@ module OpenID
       # with javascript.  This method wraps form_markup - see that method's
       # documentation for help with the parameters.
       def html_markup(realm, return_to = nil, immediate = false,
-                      form_tag_attrs = nil)
-        Util.auto_submit_html(form_markup(realm,
-                                          return_to,
-                                          immediate,
-                                          form_tag_attrs))
+        form_tag_attrs = nil)
+        Util.auto_submit_html(form_markup(
+          realm,
+          return_to,
+          immediate,
+          form_tag_attrs,
+        ))
       end
 
       # Should this OpenID authentication request be sent as a HTTP

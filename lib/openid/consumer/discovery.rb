@@ -1,24 +1,24 @@
 # Functions to discover OpenID endpoints from identifiers.
 
-require 'uri'
-require 'openid/util'
-require 'openid/fetchers'
-require 'openid/urinorm'
-require 'openid/message'
-require 'openid/yadis/discovery'
-require 'openid/yadis/xrds'
-require 'openid/yadis/xri'
-require 'openid/yadis/services'
-require 'openid/yadis/filters'
-require 'openid/consumer/html_parse'
-require 'openid/yadis/xrires'
+require "uri"
+require "openid/util"
+require "openid/fetchers"
+require "openid/urinorm"
+require "openid/message"
+require "openid/yadis/discovery"
+require "openid/yadis/xrds"
+require "openid/yadis/xri"
+require "openid/yadis/services"
+require "openid/yadis/filters"
+require "openid/consumer/html_parse"
+require "openid/yadis/xrires"
 
 module OpenID
-  OPENID_1_0_NS = 'http://openid.net/xmlns/1.0'
-  OPENID_IDP_2_0_TYPE = 'http://specs.openid.net/auth/2.0/server'
-  OPENID_2_0_TYPE = 'http://specs.openid.net/auth/2.0/signon'
-  OPENID_1_1_TYPE = 'http://openid.net/signon/1.1'
-  OPENID_1_0_TYPE = 'http://openid.net/signon/1.0'
+  OPENID_1_0_NS = "http://openid.net/xmlns/1.0"
+  OPENID_IDP_2_0_TYPE = "http://specs.openid.net/auth/2.0/server"
+  OPENID_2_0_TYPE = "http://specs.openid.net/auth/2.0/signon"
+  OPENID_1_1_TYPE = "http://openid.net/signon/1.1"
+  OPENID_1_0_TYPE = "http://openid.net/signon/1.0"
 
   OPENID_1_0_MESSAGE_NS = OPENID1_NS
   OPENID_2_0_MESSAGE_NS = OPENID2_NS
@@ -32,7 +32,7 @@ module OpenID
 
       OPENID_2_0_TYPE,
       OPENID_1_1_TYPE,
-      OPENID_1_0_TYPE
+      OPENID_1_0_TYPE,
     ]
 
     # the verified identifier.
@@ -80,7 +80,7 @@ module OpenID
 
     def preferred_namespace
       if @type_uris.member?(OPENID_IDP_2_0_TYPE) or
-         @type_uris.member?(OPENID_2_0_TYPE)
+          @type_uris.member?(OPENID_2_0_TYPE)
         OPENID_2_0_MESSAGE_NS
       else
         OPENID_1_0_MESSAGE_NS
@@ -117,8 +117,10 @@ module OpenID
       # XXX: This has crappy implications for Service elements that
       # contain both 'server' and 'signon' Types.  But that's a
       # pathological configuration anyway, so I don't think I care.
-      @local_id = OpenID.find_op_local_identifier(service_element,
-                                                  @type_uris)
+      @local_id = OpenID.find_op_local_identifier(
+        service_element,
+        @type_uris,
+      )
       @claimed_id = yadis_url
     end
 
@@ -133,7 +135,7 @@ module OpenID
     end
 
     def to_session_value
-      Hash[*instance_variables.map { |name| [name, instance_variable_get(name)] }.flatten(1)]
+      Hash[*instance_variables.flat_map { |name| [name, instance_variable_get(name)] }]
     end
 
     def ==(other)
@@ -166,7 +168,7 @@ module OpenID
           endpoint.yadis_url,
           endpoint.uri,
           endpoint.type_uris,
-          endpoint.service_element
+          endpoint.service_element,
         )
       else
         openid_endpoint = nil
@@ -182,8 +184,8 @@ module OpenID
       # @rtype: [OpenIDServiceEndpoint]
 
       discovery_types = [
-        [OPENID_2_0_TYPE, 'openid2.provider', 'openid2.local_id'],
-        [OPENID_1_1_TYPE, 'openid.server', 'openid.delegate']
+        [OPENID_2_0_TYPE, "openid2.provider", "openid2.local_id"],
+        [OPENID_1_1_TYPE, "openid.server", "openid.delegate"],
       ]
 
       link_attrs = OpenID.parse_link_attrs(html)
@@ -223,13 +225,15 @@ module OpenID
       #
       # @raises L{XRDSError}: When the XRDS does not parse.
       meth = if discovery_result.is_xrds
-               method('from_xrds')
-             else
-               method('from_html')
-             end
+        method(:from_xrds)
+      else
+        method(:from_html)
+      end
 
-      meth.call(discovery_result.normalized_uri,
-                discovery_result.response_text)
+      meth.call(
+        discovery_result.normalized_uri,
+        discovery_result.response_text,
+      )
     end
 
     def self.from_op_endpoint_url(op_endpoint_url)
@@ -245,10 +249,16 @@ module OpenID
     end
 
     def to_s
-      format('<%s server_url=%s claimed_id=%s ' +
-                     'local_id=%s canonical_id=%s used_yadis=%s>',
-             self.class, @server_url, @claimed_id,
-             @local_id, @canonical_id, @used_yadis)
+      format(
+        "<%s server_url=%s claimed_id=%s " +
+                             "local_id=%s canonical_id=%s used_yadis=%s>",
+        self.class,
+        @server_url,
+        @claimed_id,
+        @local_id,
+        @canonical_id,
+        @used_yadis,
+      )
     end
   end
 
@@ -270,16 +280,16 @@ module OpenID
     # Identifier
     local_id_tags = []
     if type_uris.member?(OPENID_1_1_TYPE) or
-       type_uris.member?(OPENID_1_0_TYPE)
+        type_uris.member?(OPENID_1_0_TYPE)
       # local_id_tags << Yadis::nsTag(OPENID_1_0_NS, 'openid', 'Delegate')
-      service_element.add_namespace('openid', OPENID_1_0_NS)
-      local_id_tags << 'openid:Delegate'
+      service_element.add_namespace("openid", OPENID_1_0_NS)
+      local_id_tags << "openid:Delegate"
     end
 
     if type_uris.member?(OPENID_2_0_TYPE)
       # local_id_tags.append(Yadis::nsTag(XRD_NS_2_0, 'xrd', 'LocalID'))
-      service_element.add_namespace('xrd', Yadis::XRD_NS_2_0)
-      local_id_tags << 'xrd:LocalID'
+      service_element.add_namespace("xrd", Yadis::XRD_NS_2_0)
+      local_id_tags << "xrd:LocalID"
     end
 
     # Walk through all the matching tags and make sure that they all
@@ -290,7 +300,7 @@ module OpenID
         if local_id.nil?
           local_id = local_id_element.text
         elsif local_id != local_id_element.text
-          format = 'More than one %s tag found in one service element'
+          format = "More than one %s tag found in one service element"
           message = format(format, local_id_tag)
           raise DiscoveryFailure.new(message, nil)
         end
@@ -369,8 +379,10 @@ module OpenID
 
     op_services = arrange_by_type(openid_services, [OPENID_IDP_2_0_TYPE])
 
-    openid_services = arrange_by_type(openid_services,
-                                      OpenIDServiceEndpoint::OPENID_TYPE_URIS)
+    openid_services = arrange_by_type(
+      openid_services,
+      OpenIDServiceEndpoint::OPENID_TYPE_URIS,
+    )
 
     if !op_services.empty?
       op_services
@@ -432,7 +444,7 @@ module OpenID
     begin
       canonical_id, services = Yadis::XRI::ProxyResolver.new.query(iname)
 
-      raise Yadis::XRDSError.new(format('No CanonicalID found for XRI %s', iname)) if canonical_id.nil?
+      raise Yadis::XRDSError.new(format("No CanonicalID found for XRI %s", iname)) if canonical_id.nil?
 
       flt = Yadis.make_filter(OpenIDServiceEndpoint)
 
@@ -440,7 +452,7 @@ module OpenID
         endpoints += flt.get_service_endpoints(iname, service_element)
       end
     rescue Yadis::XRDSError, Yadis::XRI::XRIHTTPError => e
-      Util.log('xrds error on ' + iname + ': ' + e.to_s)
+      Util.log("xrds error on " + iname + ": " + e.to_s)
     end
 
     endpoints.each do |endpoint|
@@ -457,10 +469,11 @@ module OpenID
 
   def self.discover_no_yadis(uri)
     http_resp = OpenID.fetch(uri)
-    if http_resp.code != '200' and http_resp.code != '206'
+    if http_resp.code != "200" and http_resp.code != "206"
       raise DiscoveryFailure.new(
-        'HTTP Response status from identity URL host is not "200". '\
-        "Got status #{http_resp.code.inspect}", http_resp
+        'HTTP Response status from identity URL host is not "200". ' \
+          "Got status #{http_resp.code.inspect}",
+        http_resp,
       )
     end
 
@@ -473,7 +486,7 @@ module OpenID
 
   def self.discover_uri(uri)
     # Hack to work around URI parsing for URls with *no* scheme.
-    uri = 'http://' + uri if uri.index('://').nil?
+    uri = "http://" + uri if uri.index("://").nil?
 
     begin
       parsed = URI.parse(uri)

@@ -2,17 +2,17 @@
 # Extension 1.0
 # see: http://openid.net/specs/
 
-require 'openid/extension'
+require "openid/extension"
 
 module OpenID
   module PAPE
-    NS_URI = 'http://specs.openid.net/extensions/pape/1.0'
+    NS_URI = "http://specs.openid.net/extensions/pape/1.0"
     AUTH_MULTI_FACTOR_PHYSICAL =
-      'http://schemas.openid.net/pape/policies/2007/06/multi-factor-physical'
+      "http://schemas.openid.net/pape/policies/2007/06/multi-factor-physical"
     AUTH_MULTI_FACTOR =
-      'http://schemas.openid.net/pape/policies/2007/06/multi-factor'
+      "http://schemas.openid.net/pape/policies/2007/06/multi-factor"
     AUTH_PHISHING_RESISTANT =
-      'http://schemas.openid.net/pape/policies/2007/06/phishing-resistant'
+      "http://schemas.openid.net/pape/policies/2007/06/phishing-resistant"
     TIME_VALIDATOR = /\d\d\d\d-\d\d-\d\dT\d\d:\d\d:\d\dZ/
     # A Provider Authentication Policy request, sent from a relying
     # party to a provider
@@ -20,7 +20,7 @@ module OpenID
       attr_accessor :preferred_auth_policies, :max_auth_age, :ns_alias, :ns_uri
 
       def initialize(preferred_auth_policies = [], max_auth_age = nil)
-        @ns_alias = 'pape'
+        @ns_alias = "pape"
         @ns_uri = NS_URI
         @preferred_auth_policies = preferred_auth_policies
         @max_auth_age = max_auth_age
@@ -30,16 +30,16 @@ module OpenID
       # This method is intended to be used by the relying party to add
       # acceptable authentication types to the request.
       def add_policy_uri(policy_uri)
-        return if @preferred_auth_policies.member? policy_uri
+        return if @preferred_auth_policies.member?(policy_uri)
 
         @preferred_auth_policies << policy_uri
       end
 
       def get_extension_args
         ns_args = {
-          'preferred_auth_policies' => @preferred_auth_policies.join(' ')
+          "preferred_auth_policies" => @preferred_auth_policies.join(" "),
         }
-        ns_args['max_auth_age'] = @max_auth_age.to_s if @max_auth_age
+        ns_args["max_auth_age"] = @max_auth_age.to_s if @max_auth_age
         ns_args
       end
 
@@ -49,7 +49,7 @@ module OpenID
       def self.from_openid_request(oid_req)
         pape_req = new
         args = oid_req.message.get_args(NS_URI)
-        return nil if args == {}
+        return if args == {}
 
         pape_req.parse_extension_args(args)
         pape_req
@@ -59,14 +59,14 @@ module OpenID
       # PAPE arguments
       def parse_extension_args(args)
         @preferred_auth_policies = []
-        policies_str = args['preferred_auth_policies']
+        policies_str = args["preferred_auth_policies"]
         if policies_str
-          policies_str.split(' ').each do |uri|
+          policies_str.split(" ").each do |uri|
             add_policy_uri(uri)
           end
         end
 
-        max_auth_age_str = args['max_auth_age']
+        max_auth_age_str = args["max_auth_age"]
         @max_auth_age = (max_auth_age_str.to_i if max_auth_age_str)
       end
 
@@ -74,7 +74,7 @@ module OpenID
       # supports, this method returns the subset of those types
       # that are preferred by the relying party.
       def preferred_types(supported_types)
-        @preferred_auth_policies.select { |uri| supported_types.member? uri }
+        @preferred_auth_policies.select { |uri| supported_types.member?(uri) }
       end
     end
 
@@ -84,7 +84,7 @@ module OpenID
       attr_accessor :ns_alias, :auth_policies, :auth_time, :nist_auth_level
 
       def initialize(auth_policies = [], auth_time = nil, nist_auth_level = nil)
-        @ns_alias = 'pape'
+        @ns_alias = "pape"
         @ns_uri = NS_URI
         @auth_policies = auth_policies
         @auth_time = auth_time
@@ -100,7 +100,7 @@ module OpenID
       # Create a Response object from an OpenID::Consumer::SuccessResponse
       def self.from_success_response(success_response)
         args = success_response.get_signed_ns(NS_URI)
-        return nil if args.nil?
+        return if args.nil?
 
         pape_resp = new
         pape_resp.parse_extension_args(args)
@@ -112,13 +112,13 @@ module OpenID
       # if strict is specified, raise an exception when bad data is
       # encountered
       def parse_extension_args(args, strict = false)
-        policies_str = args['auth_policies']
-        @auth_policies = policies_str.split(' ') if policies_str and policies_str != 'none'
+        policies_str = args["auth_policies"]
+        @auth_policies = policies_str.split(" ") if policies_str and policies_str != "none"
 
-        nist_level_str = args['nist_auth_level']
+        nist_level_str = args["nist_auth_level"]
         if nist_level_str
           # special handling of zero to handle to_i behavior
-          if nist_level_str.strip == '0'
+          if nist_level_str.strip == "0"
             nist_level = 0
           else
             nist_level = nist_level_str.to_i
@@ -132,36 +132,36 @@ module OpenID
           end
         end
 
-        auth_time_str = args['auth_time']
+        auth_time_str = args["auth_time"]
         return unless auth_time_str
 
         # validate time string
-        if auth_time_str =~ TIME_VALIDATOR
+        if TIME_VALIDATOR.match?(auth_time_str)
           @auth_time = auth_time_str
         elsif strict
-          raise ArgumentError, 'auth_time must be in RFC3339 format'
+          raise ArgumentError, "auth_time must be in RFC3339 format"
         end
       end
 
       def get_extension_args
         ns_args = {}
-        ns_args['auth_policies'] = if @auth_policies.empty?
-                                     'none'
-                                   else
-                                     @auth_policies.join(' ')
-                                   end
+        ns_args["auth_policies"] = if @auth_policies.empty?
+          "none"
+        else
+          @auth_policies.join(" ")
+        end
         if @nist_auth_level
-          unless (0..4).member? @nist_auth_level
+          unless (0..4).member?(@nist_auth_level)
             raise ArgumentError, "nist_auth_level must be an integer 0 through 4, not #{@nist_auth_level.inspect}"
           end
 
-          ns_args['nist_auth_level'] = @nist_auth_level.to_s
+          ns_args["nist_auth_level"] = @nist_auth_level.to_s
         end
 
         if @auth_time
-          raise ArgumentError, 'auth_time must be in RFC3339 format' unless @auth_time =~ TIME_VALIDATOR
+          raise ArgumentError, "auth_time must be in RFC3339 format" unless TIME_VALIDATOR.match?(@auth_time)
 
-          ns_args['auth_time'] = @auth_time
+          ns_args["auth_time"] = @auth_time
         end
         ns_args
       end

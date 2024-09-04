@@ -1,5 +1,5 @@
-require 'openid/message'
-require 'openid/fetchers'
+require "openid/message"
+require "openid/fetchers"
 
 module OpenID
   # Exception that is raised when the server returns a 400 response
@@ -15,9 +15,12 @@ module OpenID
     end
 
     def self.from_message(msg)
-      error_text = msg.get_arg(OPENID_NS, 'error',
-                               '<no error message supplied>')
-      error_code = msg.get_arg(OPENID_NS, 'error_code')
+      error_text = msg.get_arg(
+        OPENID_NS,
+        "error",
+        "<no error message supplied>",
+      )
+      error_code = msg.get_arg(OPENID_NS, "error_code")
       new(error_text, error_code, msg)
     end
   end
@@ -39,8 +42,8 @@ module OpenID
       when 400
         raise ServerError.from_message(msg)
       else
-        error_message = "bad status code from server #{server_url}: "\
-        "#{response.code}"
+        error_message = "bad status code from server #{server_url}: " \
+          "#{response.code}"
         raise HTTPStatusError.new(error_message)
       end
     end

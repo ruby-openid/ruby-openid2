@@ -1,5 +1,5 @@
-require File.dirname(__FILE__) + '/../test_helper'
-require 'login_controller'
+require File.dirname(__FILE__) + "./../test_helper"
+require "login_controller"
 
 # Re-raise errors caught by the controller.
 class LoginController
@@ -10,12 +10,12 @@ class LoginController
 class LoginControllerTest < Test::Unit::TestCase
   def setup
     @controller = LoginController.new
-    @request    = ActionController::TestRequest.new
-    @response   = ActionController::TestResponse.new
+    @request = ActionController::TestRequest.new
+    @response = ActionController::TestResponse.new
   end
 
   # Replace this with your real tests.
   def test_truth
-    assert true
+    assert(true)
   end
 end

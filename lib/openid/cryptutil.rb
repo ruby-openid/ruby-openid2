@@ -1,17 +1,17 @@
-require 'openid/util'
-require 'digest/sha1'
-require 'digest/sha2'
+require "openid/util"
+require "digest/sha1"
+require "digest/sha2"
 begin
-  require 'openssl'
+  require "openssl"
 rescue LoadError
   begin
     # Try loading the ruby-hmac files if they exist
-    require 'hmac-sha1'
-    require 'hmac-sha2'
+    require "hmac-sha1"
+    require "hmac-sha2"
   rescue LoadError
     # Nothing exists use included hmac files
-    require 'hmac/sha1'
-    require 'hmac/sha2'
+    require "hmac/sha1"
+    require "hmac/sha2"
   end
 end
 
@@ -38,7 +38,7 @@ module OpenID
     def self.hmac_sha1(key, text)
       return HMAC::SHA1.digest(key, text) unless defined? OpenSSL
 
-      OpenSSL::HMAC.digest(OpenSSL::Digest.new('SHA1'), key, text)
+      OpenSSL::HMAC.digest(OpenSSL::Digest.new("SHA1"), key, text)
     end
 
     def self.sha256(text)
@@ -48,14 +48,14 @@ module OpenID
     def self.hmac_sha256(key, text)
       return HMAC::SHA256.digest(key, text) unless defined? OpenSSL
 
-      OpenSSL::HMAC.digest(OpenSSL::Digest.new('SHA256'), key, text)
+      OpenSSL::HMAC.digest(OpenSSL::Digest.new("SHA256"), key, text)
     end
 
     # Generate a random string of the given length, composed of the
     # specified characters.  If chars is nil, generate a string
     # composed of characters in the range 0..255.
     def self.random_string(length, chars = nil)
-      s = ''
+      s = ""
 
       if chars.nil?
         length.times { s << rand(256).chr }
@@ -70,8 +70,8 @@ module OpenID
     def self.num_to_binary(n)
       bits = n.to_s(2)
       prepend = (8 - bits.length % 8)
-      bits = ('0' * prepend) + bits
-      [bits].pack('B*')
+      bits = ("0" * prepend) + bits
+      [bits].pack("B*")
     end
 
     # Convert a string of bytes into a number.
@@ -79,7 +79,7 @@ module OpenID
       # taken from openid-ruby 0.0.1
       s = "\000" * (4 - (s.length % 4)) + s
       num = 0
-      s.unpack('N*').each do |x|
+      s.unpack("N*").each do |x|
         num <<= 32
         num |= x
       end

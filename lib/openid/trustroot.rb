@@ -1,5 +1,5 @@
-require 'uri'
-require 'openid/urinorm'
+require "uri"
+require "openid/urinorm"
 
 module OpenID
   class RealmVerificationRedirected < Exception
@@ -17,24 +17,286 @@ module OpenID
 
   module TrustRoot
     TOP_LEVEL_DOMAINS = %w[
-      ac ad ae aero af ag ai al am an ao aq ar arpa as asia at
-      au aw ax az ba bb bd be bf bg bh bi biz bj bm bn bo br bs bt
-      bv bw by bz ca cat cc cd cf cg ch ci ck cl cm cn co com coop
-      cr cu cv cx cy cz de dj dk dm do dz ec edu ee eg er es et eu
-      fi fj fk fm fo fr ga gb gd ge gf gg gh gi gl gm gn gov gp gq
-      gr gs gt gu gw gy hk hm hn hr ht hu id ie il im in info int
-      io iq ir is it je jm jo jobs jp ke kg kh ki km kn kp kr kw
-      ky kz la lb lc li lk lr ls lt lu lv ly ma mc md me mg mh mil
-      mk ml mm mn mo mobi mp mq mr ms mt mu museum mv mw mx my mz
-      na name nc ne net nf ng ni nl no np nr nu nz om org pa pe pf
-      pg ph pk pl pm pn pr pro ps pt pw py qa re ro rs ru rw sa sb
-      sc sd se sg sh si sj sk sl sm sn so sr st su sv sy sz tc td
-      tel tf tg th tj tk tl tm tn to tp tr travel tt tv tw tz ua
-      ug uk us uy uz va vc ve vg vi vn vu wf ws xn--0zwm56d
-      xn--11b5bs3a9aj6g xn--80akhbyknj4f xn--9t4b11yi5a
-      xn--deba0ad xn--g6w251d xn--hgbk6aj7f53bba
-      xn--hlcj6aya9esc7a xn--jxalpdlp xn--kgbechtv xn--zckzah ye
-      yt yu za zm zw
+      ac
+      ad
+      ae
+      aero
+      af
+      ag
+      ai
+      al
+      am
+      an
+      ao
+      aq
+      ar
+      arpa
+      as
+      asia
+      at
+      au
+      aw
+      ax
+      az
+      ba
+      bb
+      bd
+      be
+      bf
+      bg
+      bh
+      bi
+      biz
+      bj
+      bm
+      bn
+      bo
+      br
+      bs
+      bt
+      bv
+      bw
+      by
+      bz
+      ca
+      cat
+      cc
+      cd
+      cf
+      cg
+      ch
+      ci
+      ck
+      cl
+      cm
+      cn
+      co
+      com
+      coop
+      cr
+      cu
+      cv
+      cx
+      cy
+      cz
+      de
+      dj
+      dk
+      dm
+      do
+      dz
+      ec
+      edu
+      ee
+      eg
+      er
+      es
+      et
+      eu
+      fi
+      fj
+      fk
+      fm
+      fo
+      fr
+      ga
+      gb
+      gd
+      ge
+      gf
+      gg
+      gh
+      gi
+      gl
+      gm
+      gn
+      gov
+      gp
+      gq
+      gr
+      gs
+      gt
+      gu
+      gw
+      gy
+      hk
+      hm
+      hn
+      hr
+      ht
+      hu
+      id
+      ie
+      il
+      im
+      in
+      info
+      int
+      io
+      iq
+      ir
+      is
+      it
+      je
+      jm
+      jo
+      jobs
+      jp
+      ke
+      kg
+      kh
+      ki
+      km
+      kn
+      kp
+      kr
+      kw
+      ky
+      kz
+      la
+      lb
+      lc
+      li
+      lk
+      lr
+      ls
+      lt
+      lu
+      lv
+      ly
+      ma
+      mc
+      md
+      me
+      mg
+      mh
+      mil
+      mk
+      ml
+      mm
+      mn
+      mo
+      mobi
+      mp
+      mq
+      mr
+      ms
+      mt
+      mu
+      museum
+      mv
+      mw
+      mx
+      my
+      mz
+      na
+      name
+      nc
+      ne
+      net
+      nf
+      ng
+      ni
+      nl
+      no
+      np
+      nr
+      nu
+      nz
+      om
+      org
+      pa
+      pe
+      pf
+      pg
+      ph
+      pk
+      pl
+      pm
+      pn
+      pr
+      pro
+      ps
+      pt
+      pw
+      py
+      qa
+      re
+      ro
+      rs
+      ru
+      rw
+      sa
+      sb
+      sc
+      sd
+      se
+      sg
+      sh
+      si
+      sj
+      sk
+      sl
+      sm
+      sn
+      so
+      sr
+      st
+      su
+      sv
+      sy
+      sz
+      tc
+      td
+      tel
+      tf
+      tg
+      th
+      tj
+      tk
+      tl
+      tm
+      tn
+      to
+      tp
+      tr
+      travel
+      tt
+      tv
+      tw
+      tz
+      ua
+      ug
+      uk
+      us
+      uy
+      uz
+      va
+      vc
+      ve
+      vg
+      vi
+      vn
+      vu
+      wf
+      ws
+      xn--0zwm56d
+      xn--11b5bs3a9aj6g
+      xn--80akhbyknj4f
+      xn--9t4b11yi5a
+      xn--deba0ad
+      xn--g6w251d
+      xn--hgbk6aj7f53bba
+      xn--hlcj6aya9esc7a
+      xn--jxalpdlp
+      xn--kgbechtv
+      xn--zckzah
+      ye
+      yt
+      yu
+      za
+      zm
+      zw
     ]
 
     ALLOWED_PROTOCOLS = %w[http https]
@@ -43,7 +305,7 @@ module OpenID
     #
     # XXX: This should probably live somewhere else (like in
     # OpenID or OpenID::Yadis somewhere)
-    RP_RETURN_TO_URL_TYPE = 'http://specs.openid.net/auth/2.0/return_to'
+    RP_RETURN_TO_URL_TYPE = "http://specs.openid.net/auth/2.0/return_to"
 
     # If the endpoint is a relying party OpenID return_to endpoint,
     # return the endpoint URL. Otherwise, return None.
@@ -74,11 +336,11 @@ module OpenID
         return_realm = TrustRoot.parse(allowed_return_to)
         if !return_realm.nil? and
 
-           # Does not have a wildcard
-           !return_realm.wildcard and
+            # Does not have a wildcard
+            !return_realm.wildcard and
 
-           # Matches the return_to that we passed in with it
-           return_realm.validate_url(return_to) # Parses as a trust root
+            # Matches the return_to that we passed in with it
+            return_realm.validate_url(return_to) # Parses as a trust root
 
           return true
         end
@@ -116,9 +378,9 @@ module OpenID
     # true if the return_to URL is valid for the realm
     def self.verify_return_to(realm_str, return_to, _vrfy = nil)
       # _vrfy parameter is there to make testing easier
-      _vrfy = method('get_allowed_return_urls') if _vrfy.nil?
+      _vrfy = method(:get_allowed_return_urls) if _vrfy.nil?
 
-      raise ArgumentError, '_vrfy must be a Proc or Method' unless _vrfy.is_a?(Proc) or _vrfy.is_a?(Method)
+      raise ArgumentError, "_vrfy must be a Proc or Method" unless _vrfy.is_a?(Proc) or _vrfy.is_a?(Method)
 
       realm = TrustRoot.parse(realm_str)
       if realm.nil?
@@ -148,12 +410,12 @@ module OpenID
       def self._build_path(path, query = nil, frag = nil)
         s = path.dup
 
-        frag = nil if frag == ''
-        query = nil if query == ''
+        frag = nil if frag == ""
+        query = nil if query == ""
 
-        s << '?' << query if query
+        s << "?" << query if query
 
-        s << '#' << frag if frag
+        s << "#" << frag if frag
 
         s
       end
@@ -168,15 +430,21 @@ module OpenID
         begin
           parsed = URI::DEFAULT_PARSER.parse(url)
         rescue URI::InvalidURIError
-          return nil
+          return
         end
 
-        path = TrustRoot._build_path(parsed.path,
-                                     parsed.query,
-                                     parsed.fragment)
+        path = TrustRoot._build_path(
+          parsed.path,
+          parsed.query,
+          parsed.fragment,
+        )
 
-        [parsed.scheme || '', parsed.host || '',
-         parsed.port || '', path || '']
+        [
+          parsed.scheme || "",
+          parsed.host || "",
+          parsed.port || "",
+          path || "",
+        ]
       end
 
       def self.parse(trust_root)
@@ -184,26 +452,26 @@ module OpenID
         unparsed = trust_root.dup
 
         # look for wildcard
-        wildcard = !trust_root.index('://*.').nil?
-        trust_root.sub!('*.', '') if wildcard
+        wildcard = !trust_root.index("://*.").nil?
+        trust_root.sub!("*.", "") if wildcard
 
         # handle http://*/ case
         if !wildcard and @@empty_re.match(trust_root)
-          proto = trust_root.split(':')[0]
-          port = proto == 'http' ? 80 : 443
-          return new(unparsed, proto, true, '', port, '/')
+          proto = trust_root.split(":")[0]
+          port = (proto == "http") ? 80 : 443
+          return new(unparsed, proto, true, "", port, "/")
         end
 
         parts = TrustRoot._parse_url(trust_root)
-        return nil if parts.nil?
+        return if parts.nil?
 
         proto, host, port, path = parts
-        return nil if host[0] == '.'
+        return if host[0] == "."
 
         # check for URI fragment
-        return nil if path and !path.index('#').nil?
+        return if path and !path.index("#").nil?
 
-        return nil unless %w[http https].member?(proto)
+        return unless %w[http https].member?(proto)
 
         new(unparsed, proto, wildcard, host, port, path)
       end
@@ -236,8 +504,8 @@ module OpenID
         return @unparsed unless wildcard
 
         # Use "www." in place of the star
-        www_domain = 'www.' + @host
-        port = (!@port.nil? and ![80, 443].member?(@port)) ? (':' + @port.to_s) : ''
+        www_domain = "www." + @host
+        port = (!@port.nil? and ![80, 443].member?(@port)) ? (":" + @port.to_s) : ""
         "#{@proto}://#{www_domain}#{port}#{@path}"
       end
 
@@ -251,9 +519,9 @@ module OpenID
       end
 
       def sane?
-        return true if @host == 'localhost'
+        return true if @host == "localhost"
 
-        host_parts = @host.split('.')
+        host_parts = @host.split(".")
 
         # a note: ruby string split does not put an empty string at
         # the end of the list if the split element is last.  for
@@ -263,7 +531,7 @@ module OpenID
         return false if host_parts.length == 0
 
         # no adjacent dots
-        return false if host_parts.member?('')
+        return false if host_parts.member?("")
 
         # last part must be a tld
         tld = host_parts[-1]
@@ -289,13 +557,13 @@ module OpenID
 
         return false unless proto == @proto
         return false unless port == @port
-        return false unless host.index('*').nil?
+        return false unless host.index("*").nil?
 
         if !@wildcard
           return false if host != @host
-        elsif (@host != '') and
-              !host.end_with?('.' + @host) and
-              (host != @host)
+        elsif (@host != "") and
+            !host.end_with?("." + @host) and
+            (host != @host)
           return false
         end
 
@@ -309,11 +577,11 @@ module OpenID
 
           # These characters must be on the boundary between the end
           # of the trust root's path and the start of the URL's path.
-          allowed = if !@path.index('?').nil?
-                      '&'
-                    else
-                      '?/'
-                    end
+          allowed = if !@path.index("?").nil?
+            "&"
+          else
+            "?/"
+          end
 
           return (!allowed.index(@path[-1]).nil? or
                   !allowed.index(path[path_len]).nil?)

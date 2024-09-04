@@ -1,5 +1,5 @@
 # Utilities that are only used in the testing code
-require 'stringio'
+require "stringio"
 
 module OpenID
   module TestUtil
@@ -14,8 +14,12 @@ module OpenID
       end
       log_output.rewind
       log_lines = log_output.readlines
-      assert_equal(regexes.length, log_lines.length,
-                   [regexes, log_lines].inspect)
+
+      assert_equal(
+        regexes.length,
+        log_lines.length,
+        [regexes, log_lines].inspect,
+      )
       log_lines.zip(regexes) do |line, regex|
         assert_match(regex, line)
       end
@@ -33,6 +37,7 @@ module OpenID
       end
       log_output.rewind
       log_lines = log_output.readlines
+
       assert_equal(num_lines, log_lines.length)
       result
     end

@@ -7,14 +7,14 @@ module OpenID
       parts = []
       elements.each do |element|
         if element.is_a?(String)
-          qs = '1.0'
+          qs = "1.0"
           mtype = element
         else
           mtype, q = element
           q = q.to_f
           raise ArgumentError.new("Invalid preference factor: #{q}") if q > 1 or q <= 0
 
-          qs = format('%0.1f', q)
+          qs = format("%0.1f", q)
         end
 
         parts << [qs, mtype]
@@ -23,14 +23,14 @@ module OpenID
       parts.sort!
       chunks = []
       parts.each do |q, mtype|
-        chunks << if q == '1.0'
-                    mtype
-                  else
-                    format('%s; q=%s', mtype, q)
-                  end
+        chunks << if q == "1.0"
+          mtype
+        else
+          format("%s; q=%s", mtype, q)
+        end
       end
 
-      chunks.join(', ')
+      chunks.join(", ")
     end
 
     def self.parse_accept_header(value)
@@ -40,24 +40,24 @@ module OpenID
       # subtype, and quality markdown.
       #
       # str -> [(str, str, float)]
-      chunks = value.split(',', -1).collect { |v| v.strip }
+      chunks = value.split(",", -1).collect { |v| v.strip }
       accept = []
       chunks.each do |chunk|
-        parts = chunk.split(';', -1).collect { |s| s.strip }
+        parts = chunk.split(";", -1).collect { |s| s.strip }
 
         mtype = parts.shift
-        if mtype.index('/').nil?
+        if mtype.index("/").nil?
           # This is not a MIME type, so ignore the bad data
           next
         end
 
-        main, sub = mtype.split('/', 2)
+        main, sub = mtype.split("/", 2)
 
         q = nil
         parts.each do |ext|
-          unless ext.index('=').nil?
-            k, v = ext.split('=', 2)
-            q = v.to_f if k == 'q'
+          unless ext.index("=").nil?
+            k, v = ext.split("=", 2)
+            q = v.to_f if k == "q"
           end
         end
 
@@ -85,19 +85,19 @@ module OpenID
       #
       # Type signature: ([(str, str, float)], [str]) -> [(str, float)]
       default = if accept_types.nil? or accept_types == []
-                  # Accept all of them
-                  1
-                else
-                  0
-                end
+        # Accept all of them
+        1
+      else
+        0
+      end
 
       match_main = {}
       match_sub = {}
       accept_types.each do |main, sub, q|
-        if main == '*'
+        if main == "*"
           default = [default, q].max
           next
-        elsif sub == '*'
+        elsif sub == "*"
           match_main[main] = [match_main.fetch(main, 0), q].max
         else
           match_sub[[main, sub]] = [match_sub.fetch([main, sub], 0), q].max
@@ -107,12 +107,12 @@ module OpenID
       accepted_list = []
       order_maintainer = 0
       have_types.each do |mtype|
-        main, sub = mtype.split('/', 2)
+        main, sub = mtype.split("/", 2)
         q = if match_sub.member?([main, sub])
-              match_sub[[main, sub]]
-            else
-              match_main.fetch(main, default)
-            end
+          match_sub[[main, sub]]
+        else
+          match_main.fetch(main, default)
+        end
 
         if q != 0
           accepted_list << [1 - q, order_maintainer, q, mtype]

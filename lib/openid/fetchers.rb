@@ -1,13 +1,13 @@
-require 'net/http'
-require 'openid/util'
-require 'openid/version'
+require "net/http"
+require "openid/util"
+require "openid/version"
 
 begin
-  require 'net/https'
+  require "net/https"
 rescue LoadError
-  OpenID::Util.log('WARNING: no SSL support found.  Will not be able ' +
-                   'to fetch HTTPS URLs!')
-  require 'net/http'
+  OpenID::Util.log("WARNING: no SSL support found.  Will not be able " +
+                   "to fetch HTTPS URLs!")
+  require "net/http"
 end
 
 MAX_RESPONSE_KB = 10_485_760 # 10 MB (can be smaller, I guess)
@@ -18,13 +18,13 @@ module Net
       check_common_name = true
       cert = @socket.io.peer_cert
       cert.extensions.each do |ext|
-        next if ext.oid != 'subjectAltName'
+        next if ext.oid != "subjectAltName"
 
         ext.value.split(/,\s+/).each do |general_name|
           if /\ADNS:(.*)/ =~ general_name
             check_common_name = false
-            reg = Regexp.escape(::Regexp.last_match(1)).gsub(/\\\*/, '[^.]+')
-            return true if /\A#{reg}\z/i =~ hostname
+            reg = Regexp.escape(::Regexp.last_match(1)).gsub("\\*", "[^.]+")
+            return true if /\A#{reg}\z/i.match?(hostname)
           elsif /\AIP Address:(.*)/ =~ general_name
             check_common_name = false
             return true if ::Regexp.last_match(1) == hostname
@@ -33,13 +33,13 @@ module Net
       end
       if check_common_name
         cert.subject.to_a.each do |oid, value|
-          if oid == 'CN'
-            reg = Regexp.escape(value).gsub(/\\\*/, '[^.]+')
-            return true if /\A#{reg}\z/i =~ hostname
+          if oid == "CN"
+            reg = Regexp.escape(value).gsub("\\*", "[^.]+")
+            return true if /\A#{reg}\z/i.match?(hostname)
           end
         end
       end
-      raise OpenSSL::SSL::SSLError, 'hostname does not match'
+      raise OpenSSL::SSL::SSLError, "hostname does not match"
     end
   end
 end
@@ -62,13 +62,13 @@ module OpenID
     end
 
     def body=(s)
-      @_response.instance_variable_set('@body', s)
+      @_response.instance_variable_set(:@body, s)
       # XXX Hack to work around ruby's HTTP library behavior.  @body
       # is only returned if it has been read from the response
       # object's socket, but since we're not using a socket in this
       # case, we need to set the @read flag to true to avoid a bug in
       # Net::HTTPResponse.stream_check when @socket is nil.
-      @_response.instance_variable_set('@read', true)
+      @_response.instance_variable_set(:@read, true)
     end
   end
 
@@ -84,7 +84,7 @@ module OpenID
   @fetcher = nil
 
   def self.fetch(url, body = nil, headers = nil,
-                 redirect_limit = StandardFetcher::REDIRECT_LIMIT)
+    redirect_limit = StandardFetcher::REDIRECT_LIMIT)
     fetcher.fetch(url, body, headers, redirect_limit)
   end
 
@@ -101,25 +101,29 @@ module OpenID
   # Set the default fetcher to use the HTTP proxy defined in the environment
   # variable 'http_proxy'.
   def self.fetcher_use_env_http_proxy
-    proxy_string = ENV['http_proxy']
+    proxy_string = ENV["http_proxy"]
     return unless proxy_string
 
     proxy_uri = URI.parse(proxy_string)
-    @fetcher = StandardFetcher.new(proxy_uri.host, proxy_uri.port,
-                                   proxy_uri.user, proxy_uri.password)
+    @fetcher = StandardFetcher.new(
+      proxy_uri.host,
+      proxy_uri.port,
+      proxy_uri.user,
+      proxy_uri.password,
+    )
   end
 
   class StandardFetcher
     USER_AGENT = "ruby-openid/#{OpenID::VERSION} (#{RUBY_PLATFORM})"
 
     REDIRECT_LIMIT = 5
-    TIMEOUT = ENV['RUBY_OPENID_FETCHER_TIMEOUT'] || 60
+    TIMEOUT = ENV["RUBY_OPENID_FETCHER_TIMEOUT"] || 60
 
     attr_accessor :ca_file, :timeout, :ssl_verify_peer
 
     # I can fetch through a HTTP proxy; arguments are as for Net::HTTP::Proxy.
     def initialize(proxy_addr = nil, proxy_port = nil,
-                   proxy_user = nil, proxy_pass = nil)
+      proxy_user = nil, proxy_pass = nil)
       @ca_file = nil
       @proxy = Net::HTTP::Proxy(proxy_addr, proxy_port, proxy_user, proxy_pass)
       @timeout = TIMEOUT
@@ -139,21 +143,23 @@ module OpenID
 
     def set_verified(conn, verify)
       conn.verify_mode = if verify
-                           OpenSSL::SSL::VERIFY_PEER
-                         else
-                           OpenSSL::SSL::VERIFY_NONE
-                         end
+        OpenSSL::SSL::VERIFY_PEER
+      else
+        OpenSSL::SSL::VERIFY_NONE
+      end
     end
 
     def make_connection(uri)
       conn = make_http(uri)
 
       unless conn.is_a?(Net::HTTP)
-        raise format('Expected Net::HTTP object from make_http; got %s',
-                     conn.class).to_s
+        raise format(
+          "Expected Net::HTTP object from make_http; got %s",
+          conn.class,
+        ).to_s
       end
 
-      if uri.scheme == 'https'
+      if uri.scheme == "https"
         raise "SSL support not found; cannot fetch #{uri}" unless supports_ssl?(conn)
 
         conn.use_ssl = true
@@ -165,7 +171,7 @@ module OpenID
           set_verified(conn, true)
         else
           Util.log("WARNING: making https request to #{uri} without verifying " +
-                   'server certificate; no CA path was specified.')
+                   "server certificate; no CA path was specified.")
           set_verified(conn, false)
         end
 
@@ -180,17 +186,17 @@ module OpenID
       raise FetchingError, "Invalid URL: #{unparsed_url}" if url.nil?
 
       headers ||= {}
-      headers['User-agent'] ||= USER_AGENT
+      headers["User-agent"] ||= USER_AGENT
 
       begin
         conn = make_connection(url)
         response = nil
 
-        whole_body = ''
+        whole_body = ""
         body_size_limitter = lambda do |r|
           r.read_body do |partial| # read body now
             whole_body << partial
-            raise FetchingError.new('Response Too Large') if whole_body.length > MAX_RESPONSE_KB
+            raise FetchingError.new("Response Too Large") if whole_body.length > MAX_RESPONSE_KB
           end
           whole_body
         end
@@ -201,7 +207,7 @@ module OpenID
           if body.nil?
             conn.request_get(url.request_uri, headers, &body_size_limitter)
           else
-            headers['Content-type'] ||= 'application/x-www-form-urlencoded'
+            headers["Content-type"] ||= "application/x-www-form-urlencoded"
             conn.request_post(url.request_uri, body, headers, &body_size_limitter)
           end
         end
@@ -221,11 +227,11 @@ module OpenID
       when Net::HTTPRedirection
         if redirect_limit <= 0
           raise HTTPRedirectLimitReached.new(
-            "Too many redirects, not fetching #{response['location']}"
+            "Too many redirects, not fetching #{response["location"]}",
           )
         end
         begin
-          fetch(response['location'], body, headers, redirect_limit - 1)
+          fetch(response["location"], body, headers, redirect_limit - 1)
         rescue HTTPRedirectLimitReached => e
           raise e
         rescue FetchingError => e
@@ -243,11 +249,12 @@ module OpenID
 
     def setup_encoding(response)
       return unless defined?(Encoding.default_external)
-      return unless charset = response.type_params['charset']
+      return unless charset = response.type_params["charset"]
 
       begin
         encoding = Encoding.find(charset)
       rescue ArgumentError
+        # NOOP
       end
       encoding ||= Encoding.default_external
 

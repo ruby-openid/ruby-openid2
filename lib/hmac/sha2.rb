@@ -1,5 +1,5 @@
-require 'hmac/hmac'
-require 'digest/sha2'
+require "hmac/hmac"
+require "digest/sha2"
 
 module HMAC
   class SHA256 < Base

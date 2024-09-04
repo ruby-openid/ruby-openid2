@@ -1,21 +1,21 @@
-require 'fileutils'
-require 'pathname'
-require 'tempfile'
+require "fileutils"
+require "pathname"
+require "tempfile"
 
-require 'openid/util'
-require 'openid/store/interface'
-require 'openid/association'
+require "openid/util"
+require "openid/store/interface"
+require "openid/association"
 
 module OpenID
   module Store
     class Filesystem < Interface
-      @@FILENAME_ALLOWED = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ.-'.split('')
+      @@FILENAME_ALLOWED = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ.-".split("")
 
       # Create a Filesystem store instance, putting all data in +directory+.
       def initialize(directory)
-        @nonce_dir = File.join(directory, 'nonces')
-        @association_dir = File.join(directory, 'associations')
-        @temp_dir = File.join(directory, 'temp')
+        @nonce_dir = File.join(directory, "nonces")
+        @association_dir = File.join(directory, "associations")
+        @temp_dir = File.join(directory, "temp")
 
         ensure_dir(@nonce_dir)
         ensure_dir(@association_dir)
@@ -26,17 +26,17 @@ module OpenID
       # filename that is returned will contain the domain name from the
       # server URL for ease of human inspection of the data dir.
       def get_association_filename(server_url, handle)
-        raise ArgumentError, "Bad server URL: #{server_url}" unless server_url.index('://')
+        raise ArgumentError, "Bad server URL: #{server_url}" unless server_url.index("://")
 
-        proto, rest = server_url.split('://', 2)
-        domain = filename_escape(rest.split('/', 2)[0])
+        proto, rest = server_url.split("://", 2)
+        domain = filename_escape(rest.split("/", 2)[0])
         url_hash = safe64(server_url)
         handle_hash = if handle
-                        safe64(handle)
-                      else
-                        ''
-                      end
-        filename = [proto, domain, url_hash, handle_hash].join('-')
+          safe64(handle)
+        else
+          ""
+        end
+        filename = [proto, domain, url_hash, handle_hash].join("-")
         File.join(@association_dir, filename)
       end
 
@@ -78,7 +78,7 @@ module OpenID
         filename = get_association_filename(server_url, handle)
         return _get_association(filename) if handle
 
-        assoc_filenames = Dir.glob(filename.to_s + '*')
+        assoc_filenames = Dir.glob(filename.to_s + "*")
 
         assocs = assoc_filenames.collect do |f|
           _get_association(f)
@@ -87,13 +87,13 @@ module OpenID
         assocs = assocs.find_all { |a| !a.nil? }
         assocs = assocs.sort_by { |a| a.issued }
 
-        return nil if assocs.empty?
+        return if assocs.empty?
 
         assocs[-1]
       end
 
       def _get_association(filename)
-        assoc_file = File.open(filename, 'r')
+        assoc_file = File.open(filename, "r")
       rescue Errno::ENOENT
         nil
       else
@@ -107,7 +107,7 @@ module OpenID
           association = Association.deserialize(assoc_s)
         rescue StandardError
           remove_if_present(filename)
-          return nil
+          return
         end
 
         # clean up expired associations
@@ -132,18 +132,18 @@ module OpenID
         return false if (timestamp - Time.now.to_i).abs > Nonce.skew
 
         if server_url and !server_url.empty?
-          proto, rest = server_url.split('://', 2)
+          proto, rest = server_url.split("://", 2)
         else
-          proto = ''
-          rest = ''
+          proto = ""
+          rest = ""
         end
-        raise 'Bad server URL' unless proto && rest
+        raise "Bad server URL" unless proto && rest
 
-        domain = filename_escape(rest.split('/', 2)[0])
+        domain = filename_escape(rest.split("/", 2)[0])
         url_hash = safe64(server_url)
         salt_hash = safe64(salt)
 
-        nonce_fn = format('%08x-%s-%s-%s-%s', timestamp, proto, domain, url_hash, salt_hash)
+        nonce_fn = format("%08x-%s-%s-%s-%s", timestamp, proto, domain, url_hash, salt_hash)
 
         filename = File.join(@nonce_dir, nonce_fn)
 
@@ -164,10 +164,10 @@ module OpenID
       end
 
       def cleanup_associations
-        association_filenames = Dir[File.join(@association_dir, '*')]
+        association_filenames = Dir[File.join(@association_dir, "*")]
         count = 0
         association_filenames.each do |af|
-          f = File.open(af, 'r')
+          f = File.open(af, "r")
         rescue Errno::ENOENT
           next
         else
@@ -192,13 +192,13 @@ module OpenID
       end
 
       def cleanup_nonces
-        nonces = Dir[File.join(@nonce_dir, '*')]
+        nonces = Dir[File.join(@nonce_dir, "*")]
         now = Time.now.to_i
 
         count = 0
         nonces.each do |filename|
-          nonce = filename.split('/')[-1]
-          timestamp = nonce.split('-', 2)[0].to_i(16)
+          nonce = filename.split("/")[-1]
+          timestamp = nonce.split("-", 2)[0].to_i(16)
           nonce_age = (timestamp - now).abs
           if nonce_age > Nonce.skew
             remove_if_present(filename)
@@ -212,19 +212,19 @@ module OpenID
 
       # Create a temporary file and return the File object and filename.
       def mktemp
-        f = Tempfile.new('tmp', @temp_dir)
+        f = Tempfile.new("tmp", @temp_dir)
         [f, f.path]
       end
 
       # create a safe filename from a url
       def filename_escape(s)
-        s = '' if s.nil?
+        s = "" if s.nil?
         s.each_char.flat_map do |c|
           if @@FILENAME_ALLOWED.include?(c)
             c
           else
             c.bytes.map do |b|
-              '_%02X' % b
+              "_%02X" % b
             end
           end
         end.join
@@ -233,9 +233,9 @@ module OpenID
       def safe64(s)
         s = OpenID::CryptUtil.sha1(s)
         s = OpenID::Util.to_base64(s)
-        s.gsub!('+', '_')
-        s.gsub!('/', '.')
-        s.gsub!('=', '')
+        s.tr!("+", "_")
+        s.tr!("/", ".")
+        s.delete!("=")
         s
       end
 

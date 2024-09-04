@@ -1,4 +1,4 @@
-require 'openid/message'
+require "openid/message"
 
 module OpenID
   # An interface for OpenID extensions.

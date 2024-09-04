@@ -1,4 +1,4 @@
-require 'openid/util'
+require "openid/util"
 
 module OpenID
   # An error in the OpenID protocol

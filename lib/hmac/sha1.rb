@@ -1,5 +1,5 @@
-require 'hmac/hmac'
-require 'digest/sha1'
+require "hmac/hmac"
+require "digest/sha1"
 
 module HMAC
   class SHA1 < Base

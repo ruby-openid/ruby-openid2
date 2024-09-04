@@ -1,7 +1,7 @@
-require 'cgi'
-require 'openid/yadis/xri'
-require 'openid/yadis/xrds'
-require 'openid/fetchers'
+require "cgi"
+require "openid/yadis/xri"
+require "openid/yadis/xrds"
+require "openid/fetchers"
 
 module OpenID
   module Yadis
@@ -9,12 +9,12 @@ module OpenID
       class XRIHTTPError < StandardError; end
 
       class ProxyResolver
-        DEFAULT_PROXY = 'http://proxy.xri.net/'
+        DEFAULT_PROXY = "http://proxy.xri.net/"
 
         def initialize(proxy_url = nil)
           @proxy_url = proxy_url || DEFAULT_PROXY
 
-          @proxy_url += '/' unless @proxy_url.match('/$')
+          @proxy_url += "/" unless @proxy_url.match?("/$")
         end
 
         def query_url(xri, service_type = nil)
@@ -23,12 +23,12 @@ module OpenID
           # XRI Resolution WD 11.
           qxri = XRI.to_uri_normal(xri)[6..-1]
           hxri = @proxy_url + qxri
-          args = { '_xrd_r' => 'application/xrds+xml' }
+          args = {"_xrd_r" => "application/xrds+xml"}
           if service_type
-            args['_xrd_t'] = service_type
+            args["_xrd_t"] = service_type
           else
             # don't perform service endpoint selection
-            args['_xrd_r'] += ';sep=false'
+            args["_xrd_r"] += ";sep=false"
           end
 
           XRI.append_args(hxri, args)
@@ -46,9 +46,9 @@ module OpenID
           raise XRIHTTPError, "Could not fetch #{xri}" if response.nil?
 
           xrds = Yadis.parseXRDS(response.body)
-          canonicalID = Yadis.get_canonical_id(xri, xrds)
+          canonical_id = Yadis.get_canonical_id(xri, xrds)
 
-          [canonicalID, Yadis.services(xrds)]
+          [canonical_id, Yadis.services(xrds)]
           # TODO:
           #  * If we do get hits for multiple service_types, we're almost
           #    certainly going to have duplicated service entries and
@@ -59,9 +59,9 @@ module OpenID
       def self.urlencode(args)
         a = []
         args.each do |key, val|
-          a << (CGI.escape(key) + '=' + CGI.escape(val))
+          a << (CGI.escape(key) + "=" + CGI.escape(val))
         end
-        a.join('&')
+        a.join("&")
       end
 
       def self.append_args(url, args)
@@ -69,13 +69,13 @@ module OpenID
 
         # rstrip question marks
         rstripped = url.dup
-        rstripped = rstripped[0...rstripped.length - 1] while rstripped[-1].chr == '?'
+        rstripped = rstripped[0...rstripped.length - 1] while rstripped[-1].chr == "?"
 
-        sep = if rstripped.index('?')
-                '&'
-              else
-                '?'
-              end
+        sep = if rstripped.index("?")
+          "&"
+        else
+          "?"
+        end
 
         url + sep + XRI.urlencode(args)
       end

@@ -15,6 +15,6 @@
 module OpenID
 end
 
-require 'openid/version'
-require 'openid/consumer'
-require 'openid/server'
+require "openid/version"
+require "openid/consumer"
+require "openid/server"

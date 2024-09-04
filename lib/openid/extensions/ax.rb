@@ -1,20 +1,20 @@
 # Implements the OpenID attribute exchange specification, version 1.0
 
-require 'openid/extension'
-require 'openid/trustroot'
-require 'openid/message'
+require "openid/extension"
+require "openid/trustroot"
+require "openid/message"
 
 module OpenID
   module AX
-    UNLIMITED_VALUES = 'unlimited'
+    UNLIMITED_VALUES = "unlimited"
     MINIMUM_SUPPORTED_ALIAS_LENGTH = 32
 
     # check alias for invalid characters, raise AXError if found
     def self.check_alias(name)
-      return unless name.match(/(,|\.)/)
+      return unless /(,|\.)/.match?(name)
 
-      raise Error, "Alias #{name.inspect} must not contain a "\
-                    'comma or period.'
+      raise Error, "Alias #{name.inspect} must not contain a " \
+        "comma or period."
     end
 
     # Raised when data does not comply with AX 1.0 specification
@@ -25,16 +25,16 @@ module OpenID
     class AXMessage < Extension
       attr_accessor :ns_alias, :mode, :ns_uri
 
-      NS_URI = 'http://openid.net/srv/ax/1.0'
+      NS_URI = "http://openid.net/srv/ax/1.0"
 
       begin
-        Message.register_namespace_alias(NS_URI, 'ax')
+        Message.register_namespace_alias(NS_URI, "ax")
       rescue NamespaceAliasRegistrationError => e
         Util.log(e)
       end
 
       def initialize
-        @ns_alias = 'ax'
+        @ns_alias = "ax"
         @ns_uri = NS_URI
         @mode = nil
       end
@@ -44,14 +44,14 @@ module OpenID
       # Raise an exception if the mode in the attribute exchange
       # arguments does not match what is expected for this class.
       def check_mode(ax_args)
-        actual_mode = ax_args ? ax_args['mode'] : nil
+        actual_mode = ax_args ? ax_args["mode"] : nil
         return unless actual_mode != @mode
 
         raise Error, "Expected mode #{mode.inspect}, got #{actual_mode.inspect}"
       end
 
       def new_args
-        { 'mode' => @mode }
+        {"mode" => @mode}
       end
     end
 
@@ -104,7 +104,7 @@ module OpenID
     def self.to_type_uris(namespace_map, alias_list_s)
       return [] if alias_list_s.nil?
 
-      alias_list_s.split(',').inject([]) do |uris, name|
+      alias_list_s.split(",").inject([]) do |uris, name|
         type_uri = namespace_map.get_namespace_uri(name)
         raise IndexError, "No type defined for attribute name #{name.inspect}" if type_uri.nil?
 
@@ -119,7 +119,7 @@ module OpenID
       attr_reader :requested_attributes
       attr_accessor :update_url
 
-      MODE = 'fetch_request'
+      MODE = "fetch_request"
 
       def initialize(update_url = nil)
         super()
@@ -149,10 +149,10 @@ module OpenID
         ax_args = new_args
         @requested_attributes.each do |type_uri, attribute|
           name = if attribute.ns_alias
-                   aliases.add_alias(type_uri, attribute.ns_alias)
-                 else
-                   aliases.add(type_uri)
-                 end
+            aliases.add_alias(type_uri, attribute.ns_alias)
+          else
+            aliases.add(type_uri)
+          end
           if attribute.required
             required << name
           else
@@ -162,8 +162,8 @@ module OpenID
           ax_args["type.#{name}"] = type_uri
         end
 
-        ax_args['required'] = required.join(',') unless required.empty?
-        ax_args['if_available'] = if_available.join(',') unless if_available.empty?
+        ax_args["required"] = required.join(",") unless required.empty?
+        ax_args["if_available"] = if_available.join(",") unless if_available.empty?
         ax_args
       end
 
@@ -185,14 +185,17 @@ module OpenID
       def self.from_openid_request(oidreq)
         message = oidreq.message
         ax_args = message.get_args(NS_URI)
-        return nil if ax_args == {} or ax_args['mode'] != MODE
+        return if ax_args == {} or ax_args["mode"] != MODE
 
         req = new
         req.parse_extension_args(ax_args)
 
         if req.update_url
-          realm = message.get_arg(OPENID_NS, 'realm',
-                                  message.get_arg(OPENID_NS, 'return_to'))
+          realm = message.get_arg(
+            OPENID_NS,
+            "realm",
+            message.get_arg(OPENID_NS, "return_to"),
+          )
           if realm.nil? or realm.empty?
             raise Error, "Cannot validate update_url #{req.update_url.inspect} against absent realm"
           end
@@ -211,14 +214,14 @@ module OpenID
 
         aliases = NamespaceMap.new
 
-        ax_args.each  do |k, v|
-          next unless k.index('type.') == 0
+        ax_args.each do |k, v|
+          next unless k.index("type.") == 0
 
           name = k[5..-1]
           type_uri = v
           aliases.add_alias(type_uri, name)
 
-          count_key = 'count.' + name
+          count_key = "count." + name
           count_s = ax_args[count_key]
           count = 1
           if count_s
@@ -232,20 +235,20 @@ module OpenID
           add(AttrInfo.new(type_uri, name, false, count))
         end
 
-        required = AX.to_type_uris(aliases, ax_args['required'])
+        required = AX.to_type_uris(aliases, ax_args["required"])
         required.each do |type_uri|
           @requested_attributes[type_uri].required = true
         end
-        if_available = AX.to_type_uris(aliases, ax_args['if_available'])
+        if_available = AX.to_type_uris(aliases, ax_args["if_available"])
         all_type_uris = required + if_available
 
         aliases.namespace_uris.each do |type_uri|
-          unless all_type_uris.member? type_uri
+          unless all_type_uris.member?(type_uri)
             raise Error,
-                  "Type URI #{type_uri.inspect} was in the request but not present in 'required' or 'if_available'"
+              "Type URI #{type_uri.inspect} was in the request but not present in 'required' or 'if_available'"
           end
         end
-        @update_url = ax_args['update_url']
+        @update_url = ax_args["update_url"]
       end
 
       # return the list of AttrInfo objects contained in the FetchRequest
@@ -270,7 +273,7 @@ module OpenID
       attr_reader :data
 
       def initialize
-        super()
+        super
         @mode = nil
         @data = Hash.new { |hash, key| hash[key] = [] }
       end
@@ -298,9 +301,9 @@ module OpenID
 
         @data.each do |type_uri, values|
           name = aliases.add(type_uri)
-          ax_args['type.' + name] = type_uri
+          ax_args["type." + name] = type_uri
           if values.size > 1
-            ax_args['count.' + name] = values.size.to_s
+            ax_args["count." + name] = values.size.to_s
 
             values.each_with_index do |value, i|
               key = "value.#{name}.#{i + 1}"
@@ -324,8 +327,8 @@ module OpenID
         check_mode(ax_args)
         aliases = NamespaceMap.new
 
-        ax_args.each  do |k, v|
-          next unless k.index('type.') == 0
+        ax_args.each do |k, v|
+          next unless k.index("type.") == 0
 
           type_uri = v
           name = k[5..-1]
@@ -335,12 +338,12 @@ module OpenID
         end
 
         aliases.each do |type_uri, name|
-          count_s = ax_args['count.' + name]
+          count_s = ax_args["count." + name]
           count = count_s.to_i
           if count_s.nil?
-            value = ax_args['value.' + name]
+            value = ax_args["value." + name]
             if value.nil?
-              raise IndexError, "Missing #{'value.' + name} in FetchResponse"
+              raise IndexError, "Missing #{"value." + name} in FetchResponse"
             elsif value.empty?
               values = []
             else
@@ -399,7 +402,7 @@ module OpenID
 
       def initialize(update_url = nil)
         super()
-        @mode = 'fetch_response'
+        @mode = "fetch_response"
         @update_url = update_url
         @aliases = NamespaceMap.new
       end
@@ -418,7 +421,7 @@ module OpenID
           # counts in the response must be no more than the counts
           # in the request)
           @data.keys.each do |type_uri|
-            unless request.member? type_uri
+            unless request.member?(type_uri)
               raise IndexError, "Response attribute not present in request: #{type_uri.inspect}"
             end
           end
@@ -448,18 +451,18 @@ module OpenID
 
         zero_value_types.each do |attr_info|
           name = @aliases.get_alias(attr_info.type_uri)
-          kv_args['type.' + name] = attr_info.type_uri
-          kv_args['count.' + name] = '0'
+          kv_args["type." + name] = attr_info.type_uri
+          kv_args["count." + name] = "0"
         end
         update_url = (request and request.update_url or @update_url)
-        ax_args['update_url'] = update_url unless update_url.nil?
+        ax_args["update_url"] = update_url unless update_url.nil?
         ax_args.update(kv_args)
         ax_args
       end
 
       def parse_extension_args(ax_args)
         super
-        @update_url = ax_args['update_url']
+        @update_url = ax_args["update_url"]
       end
 
       # Construct a FetchResponse object from an OpenID library
@@ -467,10 +470,10 @@ module OpenID
       def self.from_success_response(success_response, signed = true)
         obj = new
         ax_args = if signed
-                    success_response.get_signed_ns(obj.ns_uri)
-                  else
-                    success_response.message.get_args(obj.ns_uri)
-                  end
+          success_response.get_signed_ns(obj.ns_uri)
+        else
+          success_response.message.get_args(obj.ns_uri)
+        end
 
         begin
           obj.parse_extension_args(ax_args)
@@ -483,7 +486,7 @@ module OpenID
 
     # A store request attribute exchange message representation
     class StoreRequest < KeyValueMessage
-      MODE = 'store_request'
+      MODE = "store_request"
 
       def initialize
         super
@@ -496,7 +499,7 @@ module OpenID
       def self.from_openid_request(oidreq)
         message = oidreq.message
         ax_args = message.get_args(NS_URI)
-        return nil if ax_args.empty? or ax_args['mode'] != MODE
+        return if ax_args.empty? or ax_args["mode"] != MODE
 
         req = new
         req.parse_extension_args(ax_args)
@@ -514,25 +517,25 @@ module OpenID
     # An indication that the store request was processed along with
     # this OpenID transaction.
     class StoreResponse < AXMessage
-      SUCCESS_MODE = 'store_response_success'
-      FAILURE_MODE = 'store_response_failure'
+      SUCCESS_MODE = "store_response_success"
+      FAILURE_MODE = "store_response_failure"
       attr_reader :error_message
 
       def initialize(succeeded = true, error_message = nil)
         super()
-        raise Error, 'Error message included in a success response' if succeeded and error_message
+        raise Error, "Error message included in a success response" if succeeded and error_message
 
         @mode = if succeeded
-                  SUCCESS_MODE
-                else
-                  FAILURE_MODE
-                end
+          SUCCESS_MODE
+        else
+          FAILURE_MODE
+        end
         @error_message = error_message
       end
 
       def self.from_success_response(success_response)
         ax_args = success_response.message.get_args(NS_URI)
-        ax_args.key?('error') ? new(false, ax_args['error']) : new
+        ax_args.key?("error") ? new(false, ax_args["error"]) : new
       end
 
       def succeeded?
@@ -541,7 +544,7 @@ module OpenID
 
       def get_extension_args
         ax_args = new_args
-        ax_args['error'] = @error_message if !succeeded? and error_message
+        ax_args["error"] = @error_message if !succeeded? and error_message
         ax_args
       end
     end

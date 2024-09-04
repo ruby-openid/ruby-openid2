@@ -18,8 +18,8 @@ module HMAC
       @block_size = block_size
       @output_length = output_length
       @status = STATUS_UNDEFINED
-      @key_xor_ipad = ''
-      @key_xor_opad = ''
+      @key_xor_ipad = ""
+      @key_xor_opad = ""
       set_key(key) unless key.nil?
     end
 
@@ -28,7 +28,7 @@ module HMAC
     def check_status
       return if @status == STATUS_INITIALIZED
 
-      raise 'The underlying hash algorithm has not yet been initialized.'
+      raise "The underlying hash algorithm has not yet been initialized."
     end
 
     public
@@ -50,10 +50,10 @@ module HMAC
     end
 
     def reset_key
-      @key_xor_ipad.gsub!(/./, '?')
-      @key_xor_opad.gsub!(/./, '?')
-      @key_xor_ipad[0..-1] = ''
-      @key_xor_opad[0..-1] = ''
+      @key_xor_ipad.gsub!(/./, "?")
+      @key_xor_opad.gsub!(/./, "?")
+      @key_xor_ipad[0..-1] = ""
+      @key_xor_opad[0..-1] = ""
       @status = STATUS_UNDEFINED
     end
 
@@ -70,7 +70,7 @@ module HMAC
       md.update(str)
       @md = md
     end
-    alias << update
+    alias_method :<<, :update
 
     def digest
       check_status
@@ -81,7 +81,7 @@ module HMAC
       check_status
       @md.hexdigest
     end
-    alias to_s hexdigest
+    alias_method :to_s, :hexdigest
 
     # These two class methods below are safer than using above
     # instance methods combinatorially because an instance will have

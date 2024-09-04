@@ -1,4 +1,4 @@
-require 'openid/yadis/htmltokenizer'
+require "openid/yadis/htmltokenizer"
 
 module OpenID
   # Stuff to remove before we start looking for tags
@@ -20,12 +20,12 @@ module OpenID
   }mix
 
   def self.openid_unescape(s)
-    s.gsub('&amp;', '&').gsub('&lt;', '<').gsub('&gt;', '>').gsub('&quot;', '"')
+    s.gsub("&amp;", "&").gsub("&lt;", "<").gsub("&gt;", ">").gsub("&quot;", '"')
   end
 
   def self.unescape_hash(h)
     newh = {}
-    h.map  do |k, v|
+    h.map do |k, v|
       newh[k] = openid_unescape(v)
     end
     newh
@@ -33,17 +33,17 @@ module OpenID
 
   def self.parse_link_attrs(html)
     begin
-      stripped = html.gsub(REMOVED_RE, '')
+      stripped = html.gsub(REMOVED_RE, "")
     rescue ArgumentError
       begin
-        stripped = html.encode('UTF-8', 'binary', invalid: :replace, undef: :replace, replace: '').gsub(
-          REMOVED_RE, ''
+        stripped = html.encode("UTF-8", "binary", invalid: :replace, undef: :replace, replace: "").gsub(
+          REMOVED_RE, ""
         )
       rescue Encoding::UndefinedConversionError, Encoding::ConverterNotFoundError
         # needed for a problem in JRuby where it can't handle the conversion.
         # see details here: https://github.com/jruby/jruby/issues/829
-        stripped = html.encode('UTF-8', 'ASCII', invalid: :replace, undef: :replace, replace: '').gsub(
-          REMOVED_RE, ''
+        stripped = html.encode("UTF-8", "ASCII", invalid: :replace, undef: :replace, replace: "").gsub(
+          REMOVED_RE, ""
         )
       end
     end
@@ -56,17 +56,24 @@ module OpenID
     saw_head = false
 
     begin
-      while el = parser.getTag('head', '/head', 'link', 'body', '/body',
-                               'html', '/html')
+      while el = parser.getTag(
+        "head",
+        "/head",
+        "link",
+        "body",
+        "/body",
+        "html",
+        "/html",
+      )
 
         # we are leaving head or have reached body, so we bail
-        return links if ['/head', 'body', '/body', '/html'].member?(el.tag_name)
+        return links if ["/head", "body", "/body", "/html"].member?(el.tag_name)
 
         # enforce html > head > link
-        in_html = true if el.tag_name == 'html'
+        in_html = true if el.tag_name == "html"
         next unless in_html
 
-        if el.tag_name == 'head'
+        if el.tag_name == "head"
           if saw_head
             return links # only allow one head
           end
@@ -76,9 +83,9 @@ module OpenID
         end
         next unless in_head
 
-        return links if el.tag_name == 'html'
+        return links if el.tag_name == "html"
 
-        links << unescape_hash(el.attr_hash) if el.tag_name == 'link'
+        links << unescape_hash(el.attr_hash) if el.tag_name == "link"
 
       end
     rescue Exception # just stop parsing if there's an error
@@ -102,7 +109,7 @@ module OpenID
     # Does this link have target_rel as a relationship?
 
     # XXX: TESTME
-    rel_attr = link_attrs['rel']
+    rel_attr = link_attrs["rel"]
     (rel_attr and rel_matches(rel_attr, target_rel))
   end
 
@@ -127,9 +134,9 @@ module OpenID
 
     # XXX: TESTME
     matches = find_links_rel(link_attrs_list, target_rel)
-    return nil if !matches or matches.empty?
+    return if !matches or matches.empty?
 
     first = matches[0]
-    first['href']
+    first["href"]
   end
 end
