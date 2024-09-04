@@ -11,8 +11,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Removed
 
 ## 3.0.0
-3831 relevant lines, 3510 lines covered and 321 lines missed. ( 91.62% )
-1228 total branches, 1070 branches covered and 158 branches missed. ( 87.13% )
+3839 relevant lines, 3521 lines covered and 318 lines missed. ( 91.72% )
+1234 total branches, 1073 branches covered and 161 branches missed. ( 86.95% )
 ### Fixed
 - Compatibility with Ruby 2.7+
 ### Removed
