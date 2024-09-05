@@ -1,8 +1,27 @@
 # Ruby OpenID
 
-A Ruby library for verifying and serving OpenID identities.
+<div id="badges">
 
-[![Build Status](https://secure.travis-ci.org/openid/ruby-openid.svg)](http://travis-ci.org/openid/ruby-openid)
+[![CI Supported Build][🚎s-wfi]][🚎s-wf]
+[![CI Unsupported Build][🚎us-wfi]][🚎us-wf]
+[![CI Style Build][🚎st-wfi]][🚎st-wf]
+[![CI Coverage Build][🚎cov-wfi]][🚎cov-wf]
+[![CI Heads Build][🚎hd-wfi]][🚎hd-wf]
+
+[🚎s-wf]: https://github.com/VitalConnectInc/ruby-openid2/actions/workflows/supported.yml
+[🚎s-wfi]: https://github.com/VitalConnectInc/ruby-openid2/actions/workflows/supported.yml/badge.svg
+[🚎us-wf]: https://github.com/VitalConnectInc/ruby-openid2/actions/workflows/unsupported.yml
+[🚎us-wfi]: https://github.com/VitalConnectInc/ruby-openid2/actions/workflows/unsupported.yml/badge.svg
+[🚎st-wf]: https://github.com/VitalConnectInc/ruby-openid2/actions/workflows/style.yml
+[🚎st-wfi]: https://github.com/VitalConnectInc/ruby-openid2/actions/workflows/style.yml/badge.svg
+[🚎cov-wf]: https://github.com/VitalConnectInc/ruby-openid2/actions/workflows/coverage.yml
+[🚎cov-wfi]: https://github.com/VitalConnectInc/ruby-openid2/actions/workflows/coverage.yml/badge.svg
+[🚎hd-wf]: https://github.com/VitalConnectInc/ruby-openid2/actions/workflows/heads.yml
+[🚎hd-wfi]: https://github.com/VitalConnectInc/ruby-openid2/actions/workflows/heads.yml/badge.svg
+
+</div>
+
+A Ruby library for verifying and serving OpenID identities.
 
 ## Features
 
