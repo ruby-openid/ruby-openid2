@@ -1,8 +1,8 @@
 name: Ruby - Coverage
 
 env:
-  K_SOUP_COV_MIN_BRANCH: 71
-  K_SOUP_COV_MIN_LINE: 89
+  K_SOUP_COV_MIN_BRANCH: 86
+  K_SOUP_COV_MIN_LINE: 91
   K_SOUP_COV_MIN_HARD: true
   K_SOUP_COV_DO: true
   K_SOUP_COV_COMMAND_NAME: "MiniTest Coverage"
@@ -73,7 +73,7 @@ jobs:
           hide_complexity: true
           indicators: true
           output: both
-          thresholds: '93 82'
+          thresholds: '91 86'
         continue-on-error: ${{ matrix.experimental != 'false' }}
 
       - name: Add Coverage PR Comment
