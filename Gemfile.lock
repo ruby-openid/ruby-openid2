@@ -124,7 +124,7 @@ GEM
     unicode-display_width (2.5.0)
     version_gem (1.1.4)
     webrick (1.8.1)
-    yard (0.9.36)
+    yard (0.9.37)
     yard-junk (0.0.9)
       backports (>= 3.18)
       rainbow
