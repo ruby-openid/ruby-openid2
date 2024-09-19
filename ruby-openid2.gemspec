@@ -42,11 +42,11 @@ Gem::Specification.new do |spec|
   spec.metadata["wiki_uri"] = "#{spec.homepage}/wiki"
   spec.metadata["rubygems_mfa_required"] = "true"
 
+  spec.add_dependency("rexml", "~> 3.3", ">= 3.3.7")
   spec.add_dependency("version_gem", "~> 1.1", ">= 1.1.4")
 
   spec.add_development_dependency("minitest", ">= 5")
   spec.add_development_dependency("rake", ">= 13")
-  spec.add_development_dependency("rexml", "~> 3.2")
   spec.add_development_dependency("webrick", "~> 1.8")
 
   # Coverage
@@ -60,5 +60,5 @@ Gem::Specification.new do |spec|
 
   # Documentation
   spec.add_development_dependency("yard", "~> 0.9", ">= 0.9.34")
-  spec.add_development_dependency("yard-junk", "~> 0.0")
+  spec.add_development_dependency("yard-junk", "~> 0.0", ">= 0.0.10")
 end
