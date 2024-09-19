@@ -60,6 +60,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency("standard", ">= 1.35.1")
 
   # Documentation
-  spec.add_development_dependency("yard", "~> 0.9", ">= 0.9.34")
+  spec.add_development_dependency("yard", "~> 0.9", ">= 0.9.37")
   spec.add_development_dependency("yard-junk", "~> 0.0", ">= 0.0.10")
 end
