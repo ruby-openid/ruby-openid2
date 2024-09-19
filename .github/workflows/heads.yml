@@ -26,7 +26,7 @@ concurrency:
 
 jobs:
   test:
-    name: Specs - Ruby ${{ matrix.ruby }} ${{ matrix.name_extra || '' }}
+    name: Specs - Ruby ${{ matrix.ruby }}${{ matrix.name_extra || '' }}
     if: "!contains(github.event.commits[0].message, '[ci skip]') && !contains(github.event.commits[0].message, '[skip ci]')"
     env: # $BUNDLE_GEMFILE must be set at the job level, so it is set for all steps
       BUNDLE_GEMFILE: ${{ github.workspace }}/gemfiles/${{ matrix.gemfile }}.gemfile
