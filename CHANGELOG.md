@@ -21,7 +21,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## 2.9.2
 
 * Perform all checks before verifying endpoints.
-  [#126](https://github.com/openid/ruby-openid/pull/126)
+  [#126](https://github.com/oauth-xx/ruby-openid2/pull/126)
 
 ## 2.9.1
 
@@ -30,62 +30,62 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## 2.9.0
 
 * Remove deprecated `autorequire` from gemspec.
-  [#123](https://github.com/openid/ruby-openid/pull/123)
+  [#123](https://github.com/oauth-xx/ruby-openid2/pull/123)
 * Rescue from `Yadis::XRI::XRIHTTPError` on discovery.
-  [#106](https://github.com/openid/ruby-openid/pull/106)
+  [#106](https://github.com/oauth-xx/ruby-openid2/pull/106)
 * Avoid SSRF for claimed_id request.
-  [#121](https://github.com/openid/ruby-openid/pull/121)
+  [#121](https://github.com/oauth-xx/ruby-openid2/pull/121)
 * Updated documentation.
-  [#115](https://github.com/openid/ruby-openid/pull/115), [#116](https://github.com/openid/ruby-openid/pull/116), [#117](https://github.com/openid/ruby-openid/pull/117), [#118](https://github.com/openid/ruby-openid/pull/118)
+  [#115](https://github.com/oauth-xx/ruby-openid2/pull/115), [#116](https://github.com/oauth-xx/ruby-openid2/pull/116), [#117](https://github.com/oauth-xx/ruby-openid2/pull/117), [#118](https://github.com/oauth-xx/ruby-openid2/pull/118)
 * Reduce warnings output in test runs.
-  [#119](https://github.com/openid/ruby-openid/pull/119)
+  [#119](https://github.com/oauth-xx/ruby-openid2/pull/119)
 * Drop deprecated option from gemspec.
-  [#120](https://github.com/openid/ruby-openid/pull/120)
+  [#120](https://github.com/oauth-xx/ruby-openid2/pull/120)
 * Remove circular require.
-  [#113](https://github.com/openid/ruby-openid/pull/113)
+  [#113](https://github.com/oauth-xx/ruby-openid2/pull/113)
 * Updated Travis CI config with Ruby 2.6
-  [#114](https://github.com/openid/ruby-openid/pull/114)
+  [#114](https://github.com/oauth-xx/ruby-openid2/pull/114)
 * Simplify Bundler require; remove need for extra `:require`.
-  [#112](https://github.com/openid/ruby-openid/pull/112)
+  [#112](https://github.com/oauth-xx/ruby-openid2/pull/112)
 
 ## 2.8.0
 
 * Fix `admin/mkassoc` script.
-  See https://github.com/openid/ruby-openid/pull/103
+  See https://github.com/oauth-xx/ruby-openid2/pull/103
 * Allow specifying timeout for `OpenID::StandardFetcher` in environment variables.
-  See https://github.com/openid/ruby-openid/pull/109
+  See https://github.com/oauth-xx/ruby-openid2/pull/109
 * Fixed some documentation.
-  See https://github.com/openid/ruby-openid/pull/111
+  See https://github.com/oauth-xx/ruby-openid2/pull/111
 * Fixed example server.
-  See https://github.com/openid/ruby-openid/pull/91
+  See https://github.com/oauth-xx/ruby-openid2/pull/91
 * Fixed tests.
-  See https://github.com/openid/ruby-openid/pull/86
+  See https://github.com/oauth-xx/ruby-openid2/pull/86
 * Misc. changes to the CI setup.
   See
-  - https://github.com/openid/ruby-openid/pull/110
-  - https://github.com/openid/ruby-openid/pull/108
-  - https://github.com/openid/ruby-openid/pull/107
+  - https://github.com/oauth-xx/ruby-openid2/pull/110
+  - https://github.com/oauth-xx/ruby-openid2/pull/108
+  - https://github.com/oauth-xx/ruby-openid2/pull/107
 
 ## 2.7.0
 
 * Use RFC 2396 compatible URI parser for trustroot - 7c84ec9ced3ccbdad575e02dbfa81e53b52f909e
-  See https://github.com/openid/ruby-openid/pull/85
+  See https://github.com/oauth-xx/ruby-openid2/pull/85
 * Use HMAC from OpenSSL rather than Digest - ce2e30d7ff3308f17ef7d8c19d6f4752f76c9c40
-  See https://github.com/openid/ruby-openid/pull/84
+  See https://github.com/oauth-xx/ruby-openid2/pull/84
 * Check if OpenSSL is loaded - 751e55820d958ee781f5abb466a576d83ddde6fd
 
 ## 2.6.0
 
 * More safely build filenames - 1c4a90630b183e7572b8ab5f2e3a3e0c0fecd2c7
-  See https://github.com/openid/ruby-openid/pull/80
+  See https://github.com/oauth-xx/ruby-openid2/pull/80
 * The session serializer of Rails4.1 is json - b44a1eb511dec3be25a07930121bc80cacec0f1c
 * Handle boolean value to fix signature issue - d65076269b77754da7db6e4b189edeeb9201600d
-  See https://github.com/openid/ruby-openid/pull/76
+  See https://github.com/oauth-xx/ruby-openid2/pull/76
 
 ## 2.5.0
 
 * Revert json serialization - 8dc60e553369df2300ebb4b83a29618aff643c2c
-  See https://github.com/openid/ruby-openid/pull/73
+  See https://github.com/oauth-xx/ruby-openid2/pull/73
 
 ## 2.4.0
 

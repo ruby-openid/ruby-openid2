@@ -14,7 +14,7 @@ Gem::Specification.new do |spec|
 
   spec.authors = ["JanRain, Inc", "Peter Boling"]
   spec.email = "peter.boling@gmail.com"
-  spec.homepage = "https://github.com/VitalConnectInc/#{spec.name}"
+  spec.homepage = "https://github.com/oauth-xx/#{spec.name}"
   spec.summary = "A library for consuming and serving OpenID identities."
 
   # Specify which files should be added to the gem when it is released.
@@ -40,6 +40,7 @@ Gem::Specification.new do |spec|
   spec.metadata["bug_tracker_uri"] = "#{spec.homepage}/issues"
   spec.metadata["documentation_uri"] = "https://www.rubydoc.info/gems/#{spec.name}/#{spec.version}"
   spec.metadata["wiki_uri"] = "#{spec.homepage}/wiki"
+  spec.metadata["funding_uri"] = "https://liberapay.com/pboling"
   spec.metadata["rubygems_mfa_required"] = "true"
 
   spec.add_dependency("rexml", "~> 3.3", ">= 3.3.7")
