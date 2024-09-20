@@ -43,6 +43,7 @@ Gem::Specification.new do |spec|
   spec.metadata["funding_uri"] = "https://liberapay.com/pboling"
   spec.metadata["rubygems_mfa_required"] = "true"
 
+  spec.add_dependency("net-http", "~> 0.4", ">= 0.4.1")
   spec.add_dependency("rexml", "~> 3.3", ">= 3.3.7")
   spec.add_dependency("version_gem", "~> 1.1", ">= 1.1.4")
 
