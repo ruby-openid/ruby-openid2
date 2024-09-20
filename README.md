@@ -198,7 +198,7 @@ See [CHANGELOG.md][📌changelog] for list of releases.
 
 ### © Copyright
 
-* Copyright (c) 2006-2012, JanRain, Inc.
+* Copyright (c) 2006-2012 JanRain, Inc.
 * Copyright (c) 2024 [Peter H. Boling][peterboling] of [Rails Bling][railsbling]
 
 [railsbling]: http://www.railsbling.com
