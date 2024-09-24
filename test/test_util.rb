@@ -4,7 +4,7 @@
 require_relative "test_helper"
 
 # this library
-require "openid"
+require "ruby-openid2"
 require "openid/util"
 
 module OpenID

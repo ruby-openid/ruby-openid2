@@ -7,7 +7,7 @@ require_relative "testutil"
 require_relative "discoverdata"
 
 # this library
-require "openid"
+require "ruby-openid2"
 require "openid/yadis/discovery"
 require "openid/fetchers"
 require "openid/util"

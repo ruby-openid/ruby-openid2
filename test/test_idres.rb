@@ -4,7 +4,7 @@ require_relative "testutil"
 require_relative "util"
 
 # this library
-require "openid"
+require "ruby-openid2"
 require "openid/consumer/idres"
 require "openid/protocolerror"
 require "openid/store/memory"

@@ -5,7 +5,7 @@ require "uri"
 require_relative "test_helper"
 
 # this library
-require "openid"
+require "ruby-openid2"
 require "openid/yadis/constants"
 require "openid/yadis/discovery"
 require "openid/util"

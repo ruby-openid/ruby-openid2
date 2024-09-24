@@ -428,10 +428,10 @@
     [62, 7, 170, "Style/ClassMethodsDefinitions: Use `class << self` to define a class method.", 430146384],
     [70, 7, 356, "Style/ClassMethodsDefinitions: Use `class << self` to define a class method.", 3699337347]
   ],
-  "test/test_accept.rb:44082637": [
+  "test/test_accept.rb:689302766": [
     [35, 29, 2, "Style/AndOr: Use `||` instead of `or`.", 5861240]
   ],
-  "test/test_association.rb:1559540304": [
+  "test/test_association.rb:1230377299": [
     [241, 7, 41, "Minitest/RefuteFalse: Prefer using `refute(assoc.check_message_signature(m))`.", 1974080929],
     [287, 7, 45, "Minitest/RefuteFalse: Prefer using `refute(neg.allowed?(\"HMAC-SHA1\", \"DH-SHA1\"))`.", 2533672708],
     [288, 7, 51, "Minitest/RefuteFalse: Prefer using `refute(neg.allowed?(\"HMAC-SHA1\", \"no-encryption\"))`.", 124193517],
@@ -442,7 +442,7 @@
     [302, 7, 53, "Minitest/RefuteFalse: Prefer using `refute(neg.allowed?(\"HMAC-SHA256\", \"no-encryption\"))`.", 3634276237],
     [331, 7, 69, "Minitest/RefuteFalse: Prefer using `refute(EncryptedNegotiator.allowed?(\"HMAC-SHA256\", \"no-encryption\"))`.", 4209870257]
   ],
-  "test/test_associationmanager.rb:3730352557": [
+  "test/test_associationmanager.rb:4251496942": [
     [169, 9, 31, "ThreadSafety/ClassAndModuleAttributes: Avoid mutating class and module attributes.", 4153333934],
     [307, 9, 24, "ThreadSafety/ClassAndModuleAttributes: Avoid mutating class and module attributes.", 2990482522],
     [310, 15, 10, "ThreadSafety/InstanceVariableInClassMethod: Avoid instance variables in class methods.", 1640279285],
@@ -455,7 +455,7 @@
     [774, 5, 313, "Minitest/MultipleAssertions: Test case has too many assertions [5/3].", 1298333944],
     [839, 7, 17, "Minitest/RefuteFalse: Prefer using `refute(ret.nil?)`.", 1970104094]
   ],
-  "test/test_ax.rb:3755793700": [
+  "test/test_ax.rb:4271077895": [
     [15, 15, 7, "ThreadSafety/MutableClassInstanceVariable: Freeze mutable objects assigned to class instance variables.", 480804425],
     [46, 7, 317, "Minitest/MultipleAssertions: Test case has too many assertions [5/3].", 2981613125],
     [53, 9, 35, "Minitest/RefuteFalse: Prefer using `refute(ainfo.required)`.", 2720445676],
@@ -470,14 +470,14 @@
     [805, 9, 26, "Minitest/RefuteFalse: Prefer using `refute(msg.error_message)`.", 3132408732],
     [816, 9, 23, "Minitest/RefuteFalse: Prefer using `refute(msg.succeeded?)`.", 527737196]
   ],
-  "test/test_checkid_request.rb:1229444522": [
+  "test/test_checkid_request.rb:2885544617": [
     [301, 13, 35, "Naming/ClassAndModuleCamelCase: Use CamelCase for classes and modules.", 4259957932]
   ],
-  "test/test_dh.rb:231225915": [
+  "test/test_dh.rb:2043081656": [
     [11, 5, 81, "Style/ClassMethodsDefinitions: Use `class << self` to define a class method.", 1962538541],
     [93, 7, 33, "Minitest/RefuteFalse: Prefer using `refute(dh.using_default_values?)`.", 3432763311]
   ],
-  "test/test_discover.rb:1574949676": [
+  "test/test_discover.rb:1968388399": [
     [89, 20, 9, "Lint/InheritException: Inherit from `RuntimeError` instead of `Exception`.", 3513723378],
     [177, 9, 19, "Minitest/RefuteFalse: Prefer using `refute(claimed_id)`.", 1240093182],
     [178, 9, 17, "Minitest/RefuteFalse: Prefer using `refute(local_id)`.", 900303800],
@@ -504,7 +504,7 @@
     [893, 11, 107, "Minitest/AssertWithExpectedArgument: Did you mean to use `assert_equal(!@endpoint.supports_type(t), format(\"Shouldn't support %s\", t))`?", 954251792],
     [893, 11, 107, "Minitest/RefuteFalse: Prefer using `refute(@endpoint.supports_type(t), format(\"Shouldn't support %s\", t))`.", 954251792]
   ],
-  "test/test_discovery_manager.rb:3215442323": [
+  "test/test_discovery_manager.rb:1377548080": [
     [38, 7, 38, "Minitest/RefuteFalse: Prefer using `refute(@disco_services.for_url?(nil))`.", 603865808],
     [39, 7, 44, "Minitest/RefuteFalse: Prefer using `refute(@disco_services.for_url?(\"invalid\"))`.", 2196506506],
     [43, 7, 33, "Minitest/RefuteFalse: Prefer using `refute(@disco_services.started?)`.", 4092600212],
@@ -513,21 +513,21 @@
     [70, 5, 64, "Style/MissingRespondToMissing: When using `method_missing`, define `respond_to_missing?`.", 281345496],
     [90, 7, 59, "Minitest/RefuteFalse: Prefer using `refute(m.instance_variable_get(:@session_key_suffix).nil?)`.", 1408692002]
   ],
-  "test/test_extension.rb:614181318": [
+  "test/test_extension.rb:620029381": [
     [47, 7, 55, "Minitest/RefuteFalse: Prefer using `refute(namespaces.implicit?(DummyExtension::TEST_URI))`.", 1478049918]
   ],
-  "test/test_fetchers.rb:189338639": [
+  "test/test_fetchers.rb:3563767116": [
     [160, 22, 10, "ThreadSafety/NewThread: Avoid starting new threads.", 3411682361],
     [251, 27, 4, "Lint/UselessAssignment: Useless assignment to variable - `body`.", 2087730517],
     [251, 39, 7, "Lint/UselessAssignment: Useless assignment to variable - `headers`.", 643017641],
     [251, 54, 14, "Lint/UselessAssignment: Useless assignment to variable - `redirect_limit`.", 3383958005],
     [291, 5, 901, "Style/For: Prefer `each` over `for`.", 316016311]
   ],
-  "test/test_filters.rb:3795604977": [
+  "test/test_filters.rb:3444445650": [
     [15, 5, 932, "Minitest/MultipleAssertions: Test case has too many assertions [8/3].", 4216474825],
     [238, 5, 776, "Minitest/MultipleAssertions: Test case has too many assertions [5/3].", 2440747337]
   ],
-  "test/test_idres.rb:1552300430": [
+  "test/test_idres.rb:2896214861": [
     [119, 9, 1622, "Minitest/MultipleAssertions: Test case has too many assertions [5/3].", 2912808174],
     [506, 13, 31, "ThreadSafety/ClassAndModuleAttributes: Avoid mutating class and module attributes.", 406405732],
     [509, 15, 7, "ThreadSafety/InstanceVariableInClassMethod: Avoid instance variables in class methods.", 764524831],
@@ -536,7 +536,7 @@
     [806, 9, 1272, "Minitest/MultipleAssertions: Test case has too many assertions [4/3].", 1885911750],
     [858, 38, 9, "Lint/InheritException: Inherit from `RuntimeError` instead of `Exception`.", 3513723378]
   ],
-  "test/test_linkparse.rb:563070408": [
+  "test/test_linkparse.rb:2695875339": [
     [20, 29, 3, "Style/AndOr: Use `&&` instead of `and`.", 193409806],
     [32, 24, 3, "Style/AndOr: Use `&&` instead of `and`.", 193409806],
     [57, 21, 39, "Minitest/AssertWithExpectedArgument: Did you mean to use `assert_equal(attr_cmp(c[0], c[1]), c.inspect)`?", 4229811215],
@@ -545,7 +545,7 @@
     [99, 54, 3, "Style/AndOr: Use `&&` instead of `and`.", 193409806],
     [99, 76, 3, "Style/AndOr: Use `&&` instead of `and`.", 193409806]
   ],
-  "test/test_message.rb:725400553": [
+  "test/test_message.rb:1250921098": [
     [112, 7, 48, "Minitest/RefuteFalse: Prefer using `refute(@m.has_key?(BARE_NS, \"foo\"))`.", 2768469367],
     [116, 7, 51, "Minitest/RefuteFalse: Prefer using `refute(@m.has_key?(OPENID1_NS, \"foo\"))`.", 1991266283],
     [120, 7, 51, "Minitest/RefuteFalse: Prefer using `refute(@m.has_key?(OPENID2_NS, \"foo\"))`.", 1246013416],
@@ -577,18 +577,18 @@
     [1292, 9, 44, "Minitest/RefuteFalse: Prefer using `refute(nsm.member?(uripat % i))`.", 154326771],
     [1296, 25, 6, "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.", 3498751916]
   ],
-  "test/test_openid_yadis.rb:803050587": [
+  "test/test_openid_yadis.rb:333763544": [
     [21, 3, 70, "Style/ClassMethodsDefinitions: Use `class << self` to define a class method.", 2241541269],
     [25, 3, 727, "Style/ClassMethodsDefinitions: Use `class << self` to define a class method.", 435754601],
     [28, 5, 125, "Style/SafeNavigation: Use safe navigation (`&.`) instead of checking if an object exists before calling the method.", 290464717],
     [34, 5, 293, "Style/SafeNavigation: Use safe navigation (`&.`) instead of checking if an object exists before calling the method.", 3013004962],
     [69, 3, 152, "Style/ClassMethodsDefinitions: Use `class << self` to define a class method.", 2562815488]
   ],
-  "test/test_parsehtml.rb:1972586883": [
+  "test/test_parsehtml.rb:3808821728": [
     [21, 9, 39, "Minitest/RefuteFalse: Prefer using `refute(reserved_values.member?(found))`.", 2704632914],
     [35, 9, 20, "Naming/ClassAndModuleCamelCase: Use CamelCase for classes and modules.", 1514831161]
   ],
-  "test/test_server.rb:2483966117": [
+  "test/test_server.rb:2816717222": [
     [151, 7, 24, "Minitest/RefuteFalse: Prefer using `refute(e.has_return_to)`.", 2657654983],
     [222, 9, 36, "Minitest/RefuteFalse: Prefer using `refute(e.to_s.index(\"values\").nil?)`.", 657105768],
     [242, 7, 31, "Minitest/AssertTruthy: Prefer using `assert(r.immediate)`.", 1416352194],
@@ -645,7 +645,7 @@
     [2576, 7, 14, "Minitest/RefuteFalse: Prefer using `refute(assoc)`.", 168107178],
     [2658, 9, 14, "Minitest/RefuteFalse: Prefer using `refute(assoc)`.", 168107178]
   ],
-  "test/test_sreg.rb:3096799311": [
+  "test/test_sreg.rb:3389295916": [
     [40, 11, 40, "Minitest/RefuteFalse: Prefer using `refute(OpenID.supports_sreg?(endpoint))`.", 1330659053],
     [162, 9, 219, "Minitest/MultipleAssertions: Test case has too many assertions [4/3].", 794229251],
     [171, 9, 344, "Minitest/MultipleAssertions: Test case has too many assertions [4/3].", 1722648752],
@@ -657,7 +657,7 @@
     [417, 9, 1096, "Minitest/MultipleAssertions: Test case has too many assertions [6/3].", 1076119837],
     [477, 9, 325, "Minitest/MultipleAssertions: Test case has too many assertions [4/3].", 311804901]
   ],
-  "test/test_stores.rb:1689036944": [
+  "test/test_stores.rb:4255321139": [
     [63, 28, 6, "Lint/UselessAssignment: Useless assignment to variable - `issued`.", 1645597496],
     [95, 29, 6, "Lint/UselessAssignment: Useless assignment to variable - `issued`.", 1645597496],
     [112, 29, 6, "Lint/UselessAssignment: Useless assignment to variable - `issued`.", 1645597496],
@@ -671,7 +671,7 @@
     [163, 52, 11, "Naming/VariableName: Use snake_case for variable names.", 3460325804],
     [229, 9, 77, "Minitest/RefuteFalse: Prefer using `refute(@store.use_nonce(server_url, ts, salt), \"recent_nonce after cleanup\")`.", 3891537003]
   ],
-  "test/test_trustroot.rb:450936637": [
+  "test/test_trustroot.rb:849667934": [
     [15, 7, 16, "Minitest/RefuteFalse: Prefer using `refute(tr.nil?)`.", 3450525467],
     [17, 7, 81, "Minitest/AssertWithExpectedArgument: Did you mean to use `assert_equal(OpenID::TrustRoot::TrustRoot.check_sanity(case_), [case_, desc].join(\" \"))`?", 916980427],
     [19, 7, 42, "Minitest/AssertWithExpectedArgument: Did you mean to use `assert_equal(!tr.sane?, [case_, desc].join(\" \"))`?", 3255143832],
@@ -683,16 +683,16 @@
     [33, 7, 80, "Minitest/RefuteFalse: Prefer using `refute(actual_match, [expected_match, actual_match, trust_root, url].join(\" \"))`.", 3810436984],
     [34, 7, 64, "Minitest/RefuteFalse: Prefer using `refute(OpenID::TrustRoot::TrustRoot.check_url(trust_root, url))`.", 1484346761]
   ],
-  "test/test_ui.rb:68124450": [
+  "test/test_ui.rb:1535314081": [
     [26, 9, 29, "Minitest/AssertTruthy: Prefer using `assert(req2.icon)`.", 591024350],
     [39, 9, 29, "Minitest/AssertTruthy: Prefer using `assert(@req.icon)`.", 1633148460],
     [66, 9, 29, "Minitest/AssertTruthy: Prefer using `assert(@req.icon)`.", 1633148460],
     [92, 9, 28, "Minitest/AssertTruthy: Prefer using `assert(req.icon)`.", 1476625708]
   ],
-  "test/test_urinorm.rb:1759769870": [
+  "test/test_urinorm.rb:1533719597": [
     [26, 11, 12, "Minitest/UselessAssertion: Useless assertion detected.", 2511510896]
   ],
-  "test/test_xrds.rb:3561804079": [
+  "test/test_xrds.rb:784263724": [
     [52, 9, 41, "Minitest/RefuteFalse: Prefer using `refute(Yadis.is_xrds?(isnt))`.", 2709875658],
     [139, 9, 5, "Lint/UselessAssignment: Useless assignment to variable - `types`. Use `_` or `_types` as a variable name to indicate that it won't be used.", 182678350],
     [139, 21, 14, "Lint/UselessAssignment: Useless assignment to variable - `result_element`. Use `_` or `_result_element` as a variable name to indicate that it won't be used.", 1272947533],
@@ -700,7 +700,7 @@
     [142, 21, 14, "Lint/UselessAssignment: Useless assignment to variable - `result_element`. Use `_` or `_result_element` as a variable name to indicate that it won't be used.", 1272947533],
     [151, 9, 56, "Style/SafeNavigation: Use safe navigation (`&.`) instead of checking if an object exists before calling the method.", 2495284533]
   ],
-  "test/test_yadis_discovery.rb:2050267650": [
+  "test/test_yadis_discovery.rb:1756797249": [
     [22, 5, 437, "Style/ClassMethodsDefinitions: Use `class << self` to define a class method.", 1189860280],
     [49, 9, 5, "Style/InfiniteLoop: Use `Kernel#loop` for infinite loops.", 191284826],
     [134, 46, 3, "Style/AndOr: Use `&&` instead of `and`.", 193409806],

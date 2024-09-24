@@ -10,6 +10,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 ### Removed
 
+## 3.0.2 - 2024-09-24
+COVERAGE:  91.72% -- 3522/3840 lines in 49 files
+BRANCH COVERAGE:  87.03% -- 1074/1234 branches in 49 files
+63.08% documented
+### Added
+- Automatic loading via bundler
+
 ## 3.0.1 - 2024-09-20
 COVERAGE:  91.72% -- 3521/3839 lines in 48 files
 BRANCH COVERAGE:  87.03% -- 1074/1234 branches in 48 files

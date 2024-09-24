@@ -7,7 +7,7 @@ require "pathname"
 require_relative "test_helper"
 
 # this library
-require "openid"
+require "ruby-openid2"
 require "openid/cryptutil"
 
 class CryptUtilTestCase < Minitest::Test

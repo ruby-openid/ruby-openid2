@@ -2,7 +2,7 @@
 require_relative "test_helper"
 
 # this library
-require "openid"
+require "ruby-openid2"
 require "openid/extensions/pape"
 require "openid/message"
 require "openid/server"

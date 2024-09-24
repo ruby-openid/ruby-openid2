@@ -3,7 +3,7 @@ require_relative "test_helper"
 require_relative "testutil"
 
 # this library
-require "openid"
+require "ruby-openid2"
 require "openid/consumer/html_parse"
 
 class LinkParseTestCase < Minitest::Test
