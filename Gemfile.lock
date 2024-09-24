@@ -2,6 +2,7 @@ PATH
   remote: .
   specs:
     ruby-openid2 (3.0.2)
+      logger (~> 1.6, >= 1.6.1)
       net-http (~> 0.4, >= 0.4.1)
       rexml (~> 3.3, >= 3.3.7)
       version_gem (~> 1.1, >= 1.1.4)
@@ -28,6 +29,7 @@ GEM
       version_gem (~> 1.1, >= 1.1.4)
     language_server-protocol (3.17.0.3)
     lint_roller (1.1.0)
+    logger (1.6.1)
     minitest (5.25.1)
     net-http (0.4.1)
       uri
@@ -42,13 +44,13 @@ GEM
     regexp_parser (2.9.2)
     rexml (3.3.7)
     rspec-block_is_expected (1.0.6)
-    rubocop (1.64.1)
+    rubocop (1.65.1)
       json (~> 2.3)
       language_server-protocol (>= 3.17.0)
       parallel (~> 1.10)
       parser (>= 3.3.0.2)
       rainbow (>= 2.2.2, < 4.0)
-      regexp_parser (>= 1.8, < 3.0)
+      regexp_parser (>= 2.4, < 3.0)
       rexml (>= 3.2.5, < 4.0)
       rubocop-ast (>= 1.31.1, < 2.0)
       ruby-progressbar (~> 1.7)
@@ -106,10 +108,10 @@ GEM
     simplecov-rcov (0.3.7)
       simplecov (>= 0.4.1)
     simplecov_json_formatter (0.1.4)
-    standard (1.37.0)
+    standard (1.40.0)
       language_server-protocol (~> 3.17.0.2)
       lint_roller (~> 1.0)
-      rubocop (~> 1.64.0)
+      rubocop (~> 1.65.0)
       standard-custom (~> 1.0.0)
       standard-performance (~> 1.4)
     standard-custom (1.0.2)
@@ -139,11 +141,12 @@ GEM
 
 PLATFORMS
   arm64-darwin-22
+  arm64-darwin-23
 
 DEPENDENCIES
   byebug (>= 11)
   kettle-soup-cover (~> 1.0, >= 1.0.2)
-  minitest (>= 5)
+  minitest (>= 5, < 6)
   rake (>= 13)
   rubocop-lts (~> 18.2, >= 18.2.1)
   rubocop-minitest (~> 0.36)

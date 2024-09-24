@@ -43,11 +43,12 @@ Gem::Specification.new do |spec|
   spec.metadata["funding_uri"] = "https://liberapay.com/pboling"
   spec.metadata["rubygems_mfa_required"] = "true"
 
+  spec.add_dependency("logger", "~> 1.6", ">= 1.6.1")
   spec.add_dependency("net-http", "~> 0.4", ">= 0.4.1")
   spec.add_dependency("rexml", "~> 3.3", ">= 3.3.7")
   spec.add_dependency("version_gem", "~> 1.1", ">= 1.1.4")
 
-  spec.add_development_dependency("minitest", ">= 5")
+  spec.add_development_dependency("minitest", ">= 5", "< 6") # Use assert_nil if expecting nil
   spec.add_development_dependency("rake", ">= 13")
   spec.add_development_dependency("webrick", "~> 1.8")
 

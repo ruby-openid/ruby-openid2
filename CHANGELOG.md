@@ -10,6 +10,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 ### Removed
 
+## 3.0.3 - 2024-09-24
+### Fixed
+- Add logger gem for Ruby 3.5 compatibility
+- Restrict minitest to < 6, because first we must use assert_nil if expecting nil
+
 ## 3.0.2 - 2024-09-24
 COVERAGE:  91.72% -- 3522/3840 lines in 49 files
 BRANCH COVERAGE:  87.03% -- 1074/1234 branches in 49 files
