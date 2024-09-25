@@ -10,22 +10,33 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 ### Removed
 
+## 3.1.0 - 2024-09-24
+- COVERAGE:  91.81% -- 3520/3834 lines in 49 files
+- BRANCH COVERAGE:  87.03% -- 1074/1234 branches in 49 files
+- 63.08% documented
+### Removed
+- Direct dependency on logger, rexml, net-http, & uri
+  - these stdlib gems became deprecated in favor of the stand alone versions in Ruby 3.3
+  - they will begin to raise an error in Ruby 3.5.
+  - Downstream code should add them explicitly to move away from the stdlib versions sooner than Ruby 3.5
+  - Ref: https://github.com/rubygems/rubygems/issues/7178#issuecomment-2372558363
+
 ## 3.0.3 - 2024-09-24
 ### Fixed
 - Add logger gem for Ruby 3.5 compatibility
 - Restrict minitest to < 6, because first we must use assert_nil if expecting nil
 
 ## 3.0.2 - 2024-09-24
-COVERAGE:  91.72% -- 3522/3840 lines in 49 files
-BRANCH COVERAGE:  87.03% -- 1074/1234 branches in 49 files
-63.08% documented
+- COVERAGE:  91.72% -- 3522/3840 lines in 49 files
+- BRANCH COVERAGE:  87.03% -- 1074/1234 branches in 49 files
+- 63.08% documented
 ### Added
 - Automatic loading via bundler
 
 ## 3.0.1 - 2024-09-20
-COVERAGE:  91.72% -- 3521/3839 lines in 48 files
-BRANCH COVERAGE:  87.03% -- 1074/1234 branches in 48 files
-63.08% documented
+- COVERAGE:  91.72% -- 3521/3839 lines in 48 files
+- BRANCH COVERAGE:  87.03% -- 1074/1234 branches in 48 files
+- 63.08% documented
 ### Added
 - More and better documentation
 ### Fixed
@@ -38,8 +49,8 @@ BRANCH COVERAGE:  87.03% -- 1074/1234 branches in 48 files
 - Copyright years in LICENSE.txt
 
 ## 3.0.0 - 2024-09-04
-3839 relevant lines, 3521 lines covered and 318 lines missed. ( 91.72% )
-1234 total branches, 1073 branches covered and 161 branches missed. ( 86.95% )
+- 3839 relevant lines, 3521 lines covered and 318 lines missed. ( 91.72% )
+- 1234 total branches, 1073 branches covered and 161 branches missed. ( 86.95% )
 ### Fixed
 - Compatibility with Ruby 2.7+
 ### Removed

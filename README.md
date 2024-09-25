@@ -110,6 +110,17 @@ Check the installation:
 
 The library is known to work with Ruby 1.9.2 and above on Unix, Max OS X and Win32.
 
+### Note about the deprecation of stdlib gems `logger`, `rexml`, `net-http`, and `uri`
+
+Versions 3.0.x were released with hard dependencies on the new stand alone gem replacements
+for the old stdlib gems.
+
+This made it impossible for downstream libraries to make the choice to stay on the old stdlib gems.
+
+As a result, starting with version 3.1.0, they will not be direct dependencies.
+
+See [this discussion](https://github.com/rubygems/rubygems/issues/7178#issuecomment-2372558363) for more information.
+
 ## Getting Started
 
 The best way to start is to look at the rails_openid example.
