@@ -54,7 +54,6 @@ A Ruby library for verifying and serving OpenID identities.
   * Comprehensive test suite
   * Supports both OpenID 1 and OpenID 2 transparently
 
-
 ## Installation
 
 Install the gem and add to the application's Gemfile by executing:
