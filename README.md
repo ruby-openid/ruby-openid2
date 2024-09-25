@@ -65,6 +65,17 @@ A Ruby library for verifying and serving OpenID identities.
   * Comprehensive test suite
   * Supports both OpenID 1 and OpenID 2 transparently
 
+
+## Installation
+
+Install the gem and add to the application's Gemfile by executing:
+
+    $ bundle add ruby-openid2
+
+If bundler is not being used to manage dependencies, install the gem by executing:
+
+    $ gem install ruby-openid2
+
 | Primary Namespace | OpenID                                                                                                                                                                                                                                                                                                                                                                                                                                                |
 |-------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | gem name          | [ruby-openid2](https://rubygems.org/gems/ruby-openid2)                                                                                                                                                                                                                                                                                                                                                                                                |
@@ -92,23 +103,6 @@ A Ruby library for verifying and serving OpenID identities.
 <!-- Maintainer Contact Links -->
 [aboutme]: https://about.me/peter.boling
 [coderme]: https://coderwall.com/Peter%20Boling
-
-## Installing
-
-Before running the examples or writing your own code you'll need to install
-the library.  See the INSTALL file or use rubygems:
-
-    gem install ruby-openid
-
-Check the installation:
-
-    $ irb
-    irb> require 'rubygems'
-    => false
-    irb> gem 'ruby-openid'
-    => true
-
-The library is known to work with Ruby 1.9.2 and above on Unix, Max OS X and Win32.
 
 ### Note about the deprecation of stdlib gems `logger`, `rexml`, `net-http`, and `uri`
 
