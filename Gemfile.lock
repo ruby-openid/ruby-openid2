@@ -16,7 +16,7 @@ GEM
     diff-lcs (1.5.1)
     diffy (3.4.2)
     docile (1.4.1)
-    json (2.10.1)
+    json (2.10.2)
     kettle-soup-cover (1.0.4)
       simplecov (~> 0.22)
       simplecov-cobertura (~> 2.1)
