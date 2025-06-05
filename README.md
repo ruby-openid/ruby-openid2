@@ -203,11 +203,12 @@ Apache Software License.  For more information see the LICENSE file.
 
 ## 🤑 One more thing
 
-You made it to the bottom of the page!
-If you think maintaining this gem is more difficult than parsing a README,
-or if you think I've done a bang up job with this gem,
-please consider supporting my efforts via this link,
-or one of the others at the head.
+You made it to the bottom of the page,
+so perhaps you'll indulge me for another 20 seconds.
+I maintain many dozens of gems, including this one,
+because I want Ruby to be a great place for people to solve problems, big and small.
+Please consider supporting my efforts via the giant yellow link below,
+or one of the others at the head of this README.
 
 [![Buy me a latte][🖇buyme-img]][🖇buyme]
 
