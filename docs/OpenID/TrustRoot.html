@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  Module: OpenID::TrustRoot
+  
+    &mdash; Documentation by YARD 0.9.37
+  
+</title>
+
+  <link rel="stylesheet" href="../css/style.css" type="text/css" />
+
+  <link rel="stylesheet" href="../css/common.css" type="text/css" />
+
+<script type="text/javascript">
+  pathId = "OpenID::TrustRoot";
+  relpath = '../';
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div class="nav_wrap">
+      <iframe id="nav" src="../class_list.html?1"></iframe>
+      <div id="resizer"></div>
+    </div>
+
+    <div id="main" tabindex="-1">
+      <div id="header">
+        <div id="menu">
+  
+    <a href="../_index.html">Index (T)</a> &raquo;
+    <span class='title'><span class='object_link'><a href="../OpenID.html" title="OpenID (module)">OpenID</a></span></span>
+     &raquo; 
+    <span class="title">TrustRoot</span>
+  
+</div>
+
+        <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="../class_list.html">
+
+        <svg width="24" height="24">
+          <rect x="0" y="4" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="12" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="20" width="24" height="4" rx="1" ry="1"></rect>
+        </svg>
+    </a>
+  
+</div>
+        <div class="clear"></div>
+      </div>
+
+      <div id="content"><h1>Module: OpenID::TrustRoot
+  
+  
+  
+</h1>
+<div class="box_info">
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+  <dl>
+    <dt>Defined in:</dt>
+    <dd>lib/openid/trustroot.rb</dd>
+  </dl>
+  
+</div>
+
+<h2>Defined Under Namespace</h2>
+<p class="children">
+  
+    
+  
+    
+      <strong class="classes">Classes:</strong> <span class='object_link'><a href="TrustRoot/TrustRoot.html" title="OpenID::TrustRoot::TrustRoot (class)">TrustRoot</a></span>
+    
+  
+</p>
+
+  
+    <h2>
+      Constant Summary
+      <small><a href="#" class="constants_summary_toggle">collapse</a></small>
+    </h2>
+
+    <dl class="constants">
+      
+        <dt id="TOP_LEVEL_DOMAINS-constant" class="">TOP_LEVEL_DOMAINS =
+          
+        </dt>
+        <dd><pre class="code"><span class='qwords_beg'>%w[</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>ac</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>ad</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>ae</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>aero</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>af</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>ag</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>ai</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>al</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>am</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>an</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>ao</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>aq</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>ar</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>arpa</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>as</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>asia</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>at</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>au</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>aw</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>ax</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>az</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>ba</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>bb</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>bd</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>be</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>bf</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>bg</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>bh</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>bi</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>biz</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>bj</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>bm</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>bn</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>bo</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>br</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>bs</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>bt</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>bv</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>bw</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>by</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>bz</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>ca</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>cat</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>cc</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>cd</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>cf</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>cg</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>ch</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>ci</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>ck</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>cl</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>cm</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>cn</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>co</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>com</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>coop</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>cr</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>cu</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>cv</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>cx</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>cy</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>cz</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>de</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>dj</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>dk</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>dm</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>do</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>dz</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>ec</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>edu</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>ee</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>eg</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>er</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>es</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>et</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>eu</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>fi</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>fj</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>fk</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>fm</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>fo</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>fr</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>ga</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>gb</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>gd</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>ge</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>gf</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>gg</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>gh</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>gi</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>gl</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>gm</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>gn</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>gov</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>gp</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>gq</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>gr</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>gs</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>gt</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>gu</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>gw</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>gy</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>hk</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>hm</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>hn</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>hr</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>ht</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>hu</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>id</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>ie</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>il</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>im</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>in</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>info</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>int</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>io</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>iq</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>ir</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>is</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>it</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>je</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>jm</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>jo</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>jobs</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>jp</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>ke</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>kg</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>kh</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>ki</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>km</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>kn</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>kp</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>kr</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>kw</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>ky</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>kz</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>la</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>lb</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>lc</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>li</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>lk</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>lr</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>ls</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>lt</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>lu</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>lv</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>ly</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>ma</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>mc</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>md</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>me</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>mg</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>mh</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>mil</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>mk</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>ml</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>mm</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>mn</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>mo</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>mobi</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>mp</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>mq</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>mr</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>ms</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>mt</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>mu</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>museum</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>mv</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>mw</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>mx</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>my</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>mz</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>na</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>name</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>nc</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>ne</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>net</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>nf</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>ng</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>ni</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>nl</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>no</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>np</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>nr</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>nu</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>nz</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>om</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>org</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>pa</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>pe</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>pf</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>pg</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>ph</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>pk</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>pl</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>pm</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>pn</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>pr</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>pro</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>ps</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>pt</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>pw</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>py</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>qa</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>re</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>ro</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>rs</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>ru</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>rw</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>sa</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>sb</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>sc</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>sd</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>se</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>sg</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>sh</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>si</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>sj</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>sk</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>sl</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>sm</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>sn</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>so</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>sr</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>st</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>su</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>sv</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>sy</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>sz</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>tc</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>td</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>tel</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>tf</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>tg</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>th</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>tj</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>tk</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>tl</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>tm</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>tn</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>to</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>tp</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>tr</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>travel</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>tt</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>tv</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>tw</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>tz</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>ua</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>ug</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>uk</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>us</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>uy</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>uz</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>va</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>vc</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>ve</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>vg</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>vi</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>vn</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>vu</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>wf</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>ws</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>xn--0zwm56d</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>xn--11b5bs3a9aj6g</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>xn--80akhbyknj4f</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>xn--9t4b11yi5a</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>xn--deba0ad</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>xn--g6w251d</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>xn--hgbk6aj7f53bba</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>xn--hlcj6aya9esc7a</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>xn--jxalpdlp</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>xn--kgbechtv</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>xn--zckzah</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>ye</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>yt</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>yu</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>za</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>zm</span><span class='words_sep'>
+</span><span class='words_sep'>  </span><span class='tstring_content'>zw</span><span class='words_sep'>
+</span><span class='tstring_end'>]</span></span></pre></dd>
+      
+        <dt id="ALLOWED_PROTOCOLS-constant" class="">ALLOWED_PROTOCOLS =
+          
+        </dt>
+        <dd><pre class="code"><span class='qwords_beg'>%w[</span><span class='tstring_content'>http</span><span class='words_sep'> </span><span class='tstring_content'>https</span><span class='tstring_end'>]</span></span></pre></dd>
+      
+        <dt id="RP_RETURN_TO_URL_TYPE-constant" class="">RP_RETURN_TO_URL_TYPE =
+          <div class="docstring">
+  <div class="discussion">
+    <p>The URI for relying party discovery, used in realm verification.</p>
+
+<p>XXX: This should probably live somewhere else (like in<br />
+OpenID or OpenID::Yadis somewhere)</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+        </dt>
+        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>http://specs.openid.net/auth/2.0/return_to</span><span class='tstring_end'>&quot;</span></span></pre></dd>
+      
+    </dl>
+  
+
+
+
+
+
+
+
+  
+    <h2>
+      Class Method Summary
+      <small><a href="#" class="summary_toggle">collapse</a></small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#_extract_return_url-class_method" title="_extract_return_url (class method)">.<strong>_extract_return_url</strong>(endpoint)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>If the endpoint is a relying party OpenID return_to endpoint, return the endpoint URL.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#get_allowed_return_urls-class_method" title="get_allowed_return_urls (class method)">.<strong>get_allowed_return_urls</strong>(relying_party_url)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Given a relying party discovery URL return a list of return_to URLs.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#return_to_matches-class_method" title="return_to_matches (class method)">.<strong>return_to_matches</strong>(allowed_return_to_urls, return_to)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Is the return_to URL under one of the supplied allowed return_to URLs?.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#verify_return_to-class_method" title="verify_return_to (class method)">.<strong>verify_return_to</strong>(realm_str, return_to, _vrfy = nil)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Verify that a return_to URL is valid for the given realm.</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+
+  <div id="class_method_details" class="method_details_list">
+    <h2>Class Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="_extract_return_url-class_method">
+  
+    .<strong>_extract_return_url</strong>(endpoint)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>If the endpoint is a relying party OpenID return_to endpoint,<br />
+return the endpoint URL. Otherwise, return None.</p>
+
+<p>This function is intended to be used as a filter for the Yadis<br />
+filtering interface.</p>
+
+<p>endpoint: An XRDS BasicServiceEndpoint, as returned by<br />
+performing Yadis dicovery.</p>
+
+<p>returns the endpoint URL or None if the endpoint is not a<br />
+relying party endpoint.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+324
+325
+326
+327
+328</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openid/trustroot.rb', line 324</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid__extract_return_url'>_extract_return_url</span><span class='lparen'>(</span><span class='id identifier rubyid_endpoint'>endpoint</span><span class='rparen'>)</span>
+  <span class='kw'>return</span> <span class='id identifier rubyid_endpoint'>endpoint</span><span class='period'>.</span><span class='id identifier rubyid_uri'>uri</span> <span class='kw'>if</span> <span class='id identifier rubyid_endpoint'>endpoint</span><span class='period'>.</span><span class='id identifier rubyid_matchTypes'>matchTypes</span><span class='lparen'>(</span><span class='lbracket'>[</span><span class='const'><span class='object_link'><a href="#RP_RETURN_TO_URL_TYPE-constant" title="OpenID::TrustRoot::RP_RETURN_TO_URL_TYPE (constant)">RP_RETURN_TO_URL_TYPE</a></span></span><span class='rbracket'>]</span><span class='rparen'>)</span>
+
+  <span class='kw'>nil</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="get_allowed_return_urls-class_method">
+  
+    .<strong>get_allowed_return_urls</strong>(relying_party_url)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Given a relying party discovery URL return a list of return_to<br />
+URLs.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+358
+359
+360
+361
+362
+363
+364
+365
+366
+367
+368
+369
+370
+371</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openid/trustroot.rb', line 358</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_get_allowed_return_urls'>get_allowed_return_urls</span><span class='lparen'>(</span><span class='id identifier rubyid_relying_party_url'>relying_party_url</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_rp_url_after_redirects'>rp_url_after_redirects</span><span class='comma'>,</span> <span class='id identifier rubyid_return_to_urls'>return_to_urls</span> <span class='op'>=</span> <span class='id identifier rubyid_services'>services</span><span class='period'>.</span><span class='id identifier rubyid_get_service_endpoints'>get_service_endpoints</span><span class='lparen'>(</span>
+    <span class='id identifier rubyid_relying_party_url'>relying_party_url</span><span class='comma'>,</span> <span class='id identifier rubyid__extract_return_url'>_extract_return_url</span>
+  <span class='rparen'>)</span>
+
+  <span class='kw'>if</span> <span class='id identifier rubyid_rp_url_after_redirects'>rp_url_after_redirects</span> <span class='op'>!=</span> <span class='id identifier rubyid_relying_party_url'>relying_party_url</span>
+    <span class='comment'># Verification caused a redirect
+</span>    <span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="RealmVerificationRedirected.html" title="OpenID::RealmVerificationRedirected (class)">RealmVerificationRedirected</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="RealmVerificationRedirected.html#initialize-instance_method" title="OpenID::RealmVerificationRedirected#initialize (method)">new</a></span></span><span class='lparen'>(</span>
+      <span class='id identifier rubyid_relying_party_url'>relying_party_url</span><span class='comma'>,</span> <span class='id identifier rubyid_rp_url_after_redirects'>rp_url_after_redirects</span>
+    <span class='rparen'>)</span>
+  <span class='kw'>end</span>
+
+  <span class='id identifier rubyid_return_to_urls'>return_to_urls</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="return_to_matches-class_method">
+  
+    .<strong>return_to_matches</strong>(allowed_return_to_urls, return_to)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Is the return_to URL under one of the supplied allowed<br />
+return_to URLs?</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+332
+333
+334
+335
+336
+337
+338
+339
+340
+341
+342
+343
+344
+345
+346
+347
+348
+349
+350
+351
+352
+353
+354</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openid/trustroot.rb', line 332</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_return_to_matches'>return_to_matches</span><span class='lparen'>(</span><span class='id identifier rubyid_allowed_return_to_urls'>allowed_return_to_urls</span><span class='comma'>,</span> <span class='id identifier rubyid_return_to'>return_to</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_allowed_return_to_urls'>allowed_return_to_urls</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_allowed_return_to'>allowed_return_to</span><span class='op'>|</span>
+    <span class='comment'># A return_to pattern works the same as a realm, except that
+</span>    <span class='comment'># it&#39;s not allowed to use a wildcard. We&#39;ll model this by
+</span>    <span class='comment'># parsing it as a realm, and not trying to match it if it has
+</span>    <span class='comment'># a wildcard.
+</span>
+    <span class='id identifier rubyid_return_realm'>return_realm</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="TrustRoot/TrustRoot.html" title="OpenID::TrustRoot::TrustRoot (class)">TrustRoot</a></span></span><span class='period'>.</span><span class='id identifier rubyid_parse'><span class='object_link'><a href="TrustRoot/TrustRoot.html#parse-class_method" title="OpenID::TrustRoot::TrustRoot.parse (method)">parse</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_allowed_return_to'>allowed_return_to</span><span class='rparen'>)</span>
+    <span class='kw'>if</span> <span class='op'>!</span><span class='id identifier rubyid_return_realm'>return_realm</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span> <span class='kw'>and</span>
+
+        <span class='comment'># Does not have a wildcard
+</span>        <span class='op'>!</span><span class='id identifier rubyid_return_realm'>return_realm</span><span class='period'>.</span><span class='id identifier rubyid_wildcard'>wildcard</span> <span class='kw'>and</span>
+
+        <span class='comment'># Matches the return_to that we passed in with it
+</span>        <span class='id identifier rubyid_return_realm'>return_realm</span><span class='period'>.</span><span class='id identifier rubyid_validate_url'>validate_url</span><span class='lparen'>(</span><span class='id identifier rubyid_return_to'>return_to</span><span class='rparen'>)</span> <span class='comment'># Parses as a trust root
+</span>
+      <span class='kw'>return</span> <span class='kw'>true</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+
+  <span class='comment'># No URL in the list matched
+</span>  <span class='kw'>false</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="verify_return_to-class_method">
+  
+    .<strong>verify_return_to</strong>(realm_str, return_to, _vrfy = nil)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Verify that a return_to URL is valid for the given realm.</p>
+
+<p>This function builds a discovery URL, performs Yadis discovery<br />
+on it, makes sure that the URL does not redirect, parses out<br />
+the return_to URLs, and finally checks to see if the current<br />
+return_to URL matches the return_to.</p>
+
+<p>raises DiscoveryFailure when Yadis discovery fails returns<br />
+true if the return_to URL is valid for the realm</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Raises:</p>
+<ul class="raise">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>ArgumentError</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+382
+383
+384
+385
+386
+387
+388
+389
+390
+391
+392
+393
+394
+395
+396
+397
+398
+399
+400
+401
+402
+403
+404
+405
+406</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openid/trustroot.rb', line 382</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_verify_return_to'>verify_return_to</span><span class='lparen'>(</span><span class='id identifier rubyid_realm_str'>realm_str</span><span class='comma'>,</span> <span class='id identifier rubyid_return_to'>return_to</span><span class='comma'>,</span> <span class='id identifier rubyid__vrfy'>_vrfy</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
+  <span class='comment'># _vrfy parameter is there to make testing easier
+</span>  <span class='id identifier rubyid__vrfy'>_vrfy</span> <span class='op'>=</span> <span class='id identifier rubyid_method'>method</span><span class='lparen'>(</span><span class='symbol'>:get_allowed_return_urls</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid__vrfy'>_vrfy</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
+
+  <span class='id identifier rubyid_raise'>raise</span> <span class='const'>ArgumentError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>_vrfy must be a Proc or Method</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>unless</span> <span class='id identifier rubyid__vrfy'>_vrfy</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>Proc</span><span class='rparen'>)</span> <span class='kw'>or</span> <span class='id identifier rubyid__vrfy'>_vrfy</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>Method</span><span class='rparen'>)</span>
+
+  <span class='id identifier rubyid_realm'>realm</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="TrustRoot/TrustRoot.html" title="OpenID::TrustRoot::TrustRoot (class)">TrustRoot</a></span></span><span class='period'>.</span><span class='id identifier rubyid_parse'><span class='object_link'><a href="TrustRoot/TrustRoot.html#parse-class_method" title="OpenID::TrustRoot::TrustRoot.parse (method)">parse</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_realm_str'>realm_str</span><span class='rparen'>)</span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_realm'>realm</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
+    <span class='comment'># The realm does not parse as a URL pattern
+</span>    <span class='kw'>return</span> <span class='kw'>false</span>
+  <span class='kw'>end</span>
+
+  <span class='kw'>begin</span>
+    <span class='id identifier rubyid_allowable_urls'>allowable_urls</span> <span class='op'>=</span> <span class='id identifier rubyid__vrfy'>_vrfy</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='id identifier rubyid_realm'>realm</span><span class='period'>.</span><span class='id identifier rubyid_build_discovery_url'>build_discovery_url</span><span class='rparen'>)</span>
+  <span class='kw'>rescue</span> <span class='const'><span class='object_link'><a href="RealmVerificationRedirected.html" title="OpenID::RealmVerificationRedirected (class)">RealmVerificationRedirected</a></span></span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_e'>e</span>
+    <span class='const'><span class='object_link'><a href="Util.html" title="OpenID::Util (module)">Util</a></span></span><span class='period'>.</span><span class='id identifier rubyid_log'><span class='object_link'><a href="Util.html#log-class_method" title="OpenID::Util.log (method)">log</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_e'>e</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='rparen'>)</span>
+    <span class='kw'>return</span> <span class='kw'>false</span>
+  <span class='kw'>end</span>
+
+  <span class='kw'>return</span> <span class='kw'>true</span> <span class='kw'>if</span> <span class='id identifier rubyid_return_to_matches'>return_to_matches</span><span class='lparen'>(</span><span class='id identifier rubyid_allowable_urls'>allowable_urls</span><span class='comma'>,</span> <span class='id identifier rubyid_return_to'>return_to</span><span class='rparen'>)</span>
+
+  <span class='const'><span class='object_link'><a href="Util.html" title="OpenID::Util (module)">Util</a></span></span><span class='period'>.</span><span class='id identifier rubyid_log'><span class='object_link'><a href="Util.html#log-class_method" title="OpenID::Util.log (method)">log</a></span></span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Failed to validate return_to </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_return_to'>return_to</span><span class='embexpr_end'>}</span><span class='tstring_content'> for </span><span class='tstring_end'>&quot;</span></span> <span class='op'>+</span>
+      <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>realm </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_realm_str'>realm_str</span><span class='embexpr_end'>}</span><span class='tstring_content'>, was not in </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_allowable_urls'>allowable_urls</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+  <span class='kw'>false</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+      <div id="footer">
+  Generated on Tue Jun 10 09:45:39 2025 by
+  <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.9.37 (ruby-3.4.3).
+</div>
+
+    </div>
+  </body>
+</html>

@@ -261,7 +261,7 @@ module OpenID
     end
 
     def test_noOpenID
-      services = _discover(
+      _discover(
         "text/plain",
         "junk",
         0,

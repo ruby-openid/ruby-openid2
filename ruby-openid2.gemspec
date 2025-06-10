@@ -53,7 +53,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency("kettle-soup-cover", "~> 1.0", ">= 1.0.2")
 
   # Linting
-  spec.add_development_dependency("rubocop-lts", "~> 18.2", ">= 18.2.1")
+  spec.add_development_dependency("rubocop-lts", ["~> 18.2", ">= 18.2.1"]) # Lint & Style Support for Ruby 2.7+
   spec.add_development_dependency("rubocop-minitest", "~> 0.36")
   spec.add_development_dependency("rubocop-packaging", "~> 0.5", ">= 0.5.2")
   spec.add_development_dependency("standard", "~> 1.37") # v1.37 is last to support Ruby < 3

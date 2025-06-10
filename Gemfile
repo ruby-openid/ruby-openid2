@@ -1,15 +1,13 @@
-# frozen_string_literal: true
+#### IMPORTANT #######################################################
+# Gemfile is for local development ONLY; Gemfile is NOT loaded in CI #
+####################################################### IMPORTANT ####
+# On CI we only need the gemspecs' dependencies (including development dependencies).
+# Exceptions, if any, such as for Appraisals, are in gemfiles/*.gemfile
 
 source "https://rubygems.org"
 
 git_source(:github) { |repo_name| "https://github.com/#{repo_name}" }
-
-#### IMPORTANT #######################################################
-# Gemfile is for local development ONLY; Gemfile is NOT loaded in CI #
-####################################################### IMPORTANT ####
-# Root Gemfile is only for local development only. It is not loaded on CI.
-# On CI we only need the gemspecs' dependencies (including development dependencies).
-# Exceptions, if any, will be found in gemfiles/*.gemfile
+git_source(:gitlab) { |repo_name| "https://gitlab.com/#{repo_name}" }
 
 # When depended on directly, these previously stdlib gems,
 #   deprecated in Ruby 3.3 & removed in Ruby 3.5
@@ -27,7 +25,13 @@ gem "cgi", ">= 0.5"
 # Specify your gem's dependencies in ruby-openid.gemspec
 gemspec
 
+### Documentation
+eval_gemfile "gemfiles/modular/documentation.gemfile"
+
+### Testing
+gem "appraisal", github: "pboling/appraisal", branch: "galtzo"
+
 platform :mri do
   # Debugging
-  gem "byebug", ">= 11"
+  gem "debug"
 end

@@ -61,7 +61,7 @@ class TrustRootTest < Minitest::Test
     gdat = dat.split("-" * 40 + "\n").collect { |i| i.strip }
 
     assert_equal("", gdat[0])
-    assert_equal(gdat.length, (grps.length * 2 + 1))
+    assert_equal(gdat.length, grps.length * 2 + 1)
     i = 1
     grps.each do |x|
       n, desc = gdat[i].split(": ")

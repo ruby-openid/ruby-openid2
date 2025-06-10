@@ -1,2 +1,2 @@
-# for compatibility with original ruby-openid integrations
+# for compatibility with require "ruby-openid" integrations
 require_relative "openid"

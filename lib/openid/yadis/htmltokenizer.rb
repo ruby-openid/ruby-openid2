@@ -72,14 +72,14 @@ class HTMLTokenizer
       # Next token is a tag of some kind
       if "!--" == @page[(@cur_pos + 1), 3]
         # Token is a comment
-        tag_end = @page.index("-->", (@cur_pos + 1))
+        tag_end = @page.index("-->", @cur_pos + 1)
         raise HTMLTokenizerError, "No end found to started comment:\n#{@page[@cur_pos, 80]}" if tag_end.nil?
 
         # p @page[@cur_pos .. (tag_end+2)]
         HTMLComment.new(@page[@cur_pos..(tag_end + 2)])
       else
         # Token is a html tag
-        tag_end = @page.index(">", (@cur_pos + 1))
+        tag_end = @page.index(">", @cur_pos + 1)
         raise HTMLTokenizerError, "No end found to started tag:\n#{@page[@cur_pos, 80]}" if tag_end.nil?
 
         # p @page[@cur_pos .. tag_end]
