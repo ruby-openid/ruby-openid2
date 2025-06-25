@@ -35,7 +35,6 @@ begin
 
   YARD::Rake::YardocTask.new do |t|
     t.files = ["lib/**/*.rb"]
-    t.options = ["--debug", "--markup", "markdown", "--markup-provider", "commonmarker"]
     t.stats_options = ["--list-undoc"] if ENV.fetch("VERBOSE", "false").casecmp?("true")
   end
 rescue LoadError
