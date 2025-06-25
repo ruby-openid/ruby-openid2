@@ -20,6 +20,10 @@ gem "uri", ">= 0.13.1"
 gem "logger", "~> 1.6", ">= 1.6.1"
 gem "rexml", "~> 3.3", ">= 3.3.7"
 
+# Ruby 3.5 may remove cgi from std lib
+# See: https://bugs.ruby-lang.org/issues/21258
+gem "cgi", ">= 0.5"
+
 # Specify your gem's dependencies in ruby-openid.gemspec
 gemspec
 

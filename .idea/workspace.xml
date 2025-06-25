@@ -4,12 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="93d48b1a-c179-44bf-b84b-ec878661df4e" name="Changes" comment="🚨 Linting&#10;&#10;- Remove commonmarker">
+    <list default="true" id="93d48b1a-c179-44bf-b84b-ec878661df4e" name="Changes" comment="👷 Unsupported builds run on ubuntu-24.04">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.rubocop_gradual.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.rubocop_gradual.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.tool-versions" beforeDir="false" afterPath="$PROJECT_DIR$/.tool-versions" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Gemfile" beforeDir="false" afterPath="$PROJECT_DIR$/Gemfile" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Gemfile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Gemfile.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ruby-openid2.gemspec" beforeDir="false" afterPath="$PROJECT_DIR$/ruby-openid2.gemspec" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -293,7 +291,7 @@
       <workItem from="1750788731058" duration="10783000" />
       <workItem from="1750880414712" duration="229000" />
       <workItem from="1750881399375" duration="319000" />
-      <workItem from="1750881735892" duration="3122000" />
+      <workItem from="1750881735892" duration="5172000" />
     </task>
     <task id="LOCAL-00001" summary="🙈 modernize .gitignore">
       <option name="closed" value="true" />
@@ -375,7 +373,23 @@
       <option name="project" value="LOCAL" />
       <updated>1750884716710</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="🚨 More Linting">
+      <option name="closed" value="true" />
+      <created>1750887541651</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1750887541651</updated>
+    </task>
+    <task id="LOCAL-00012" summary="👷 Unsupported builds run on ubuntu-24.04">
+      <option name="closed" value="true" />
+      <created>1750887693512</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1750887693512</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -413,7 +427,9 @@
     <MESSAGE value=" Configure QLTY.sh" />
     <MESSAGE value="WIP" />
     <MESSAGE value=" Linting&#10;&#10;- Remove commonmarker" />
-    <option name="LAST_COMMIT_MESSAGE" value=" Linting&#10;&#10;- Remove commonmarker" />
+    <MESSAGE value=" More Linting" />
+    <MESSAGE value=" Unsupported builds run on ubuntu-24.04" />
+    <option name="LAST_COMMIT_MESSAGE" value=" Unsupported builds run on ubuntu-24.04" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
