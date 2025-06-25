@@ -39,7 +39,7 @@ jobs:
             rubygems:  "3.3.27"
             bundler: none
             gemfile: vanilla
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
     continue-on-error: ${{ matrix.experimental || endsWith(matrix.ruby, 'head') }}
     steps:
       - name: Checkout
