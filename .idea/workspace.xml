@@ -4,12 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="93d48b1a-c179-44bf-b84b-ec878661df4e" name="Changes" comment="WIP">
+    <list default="true" id="93d48b1a-c179-44bf-b84b-ec878661df4e" name="Changes" comment="🚨 Linting&#10;&#10;- Remove commonmarker">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.rubocop_gradual.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.rubocop_gradual.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Gemfile" beforeDir="false" afterPath="$PROJECT_DIR$/Gemfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.tool-versions" beforeDir="false" afterPath="$PROJECT_DIR$/.tool-versions" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Gemfile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Gemfile.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Rakefile" beforeDir="false" afterPath="$PROJECT_DIR$/Rakefile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/bundle" beforeDir="false" afterPath="$PROJECT_DIR$/bin/bundle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ruby-openid2.gemspec" beforeDir="false" afterPath="$PROJECT_DIR$/ruby-openid2.gemspec" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -82,7 +82,6 @@
     &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;com.github.patou.gitmoji.display-icon&quot;: &quot;emoji&quot;,
     &quot;com.github.patou.gitmoji.text-after-unicode&quot;: &quot; &quot;,
     &quot;com.github.patou.gitmoji.use-unicode&quot;: &quot;true&quot;,
@@ -294,7 +293,7 @@
       <workItem from="1750788731058" duration="10783000" />
       <workItem from="1750880414712" duration="229000" />
       <workItem from="1750881399375" duration="319000" />
-      <workItem from="1750881735892" duration="2118000" />
+      <workItem from="1750881735892" duration="3122000" />
     </task>
     <task id="LOCAL-00001" summary="🙈 modernize .gitignore">
       <option name="closed" value="true" />
@@ -368,7 +367,15 @@
       <option name="project" value="LOCAL" />
       <updated>1750834010430</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="🚨 Linting&#10;&#10;- Remove commonmarker">
+      <option name="closed" value="true" />
+      <created>1750884716710</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1750884716710</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -405,7 +412,8 @@
     <MESSAGE value="‍ Improve yard task &amp; debugging setup" />
     <MESSAGE value=" Configure QLTY.sh" />
     <MESSAGE value="WIP" />
-    <option name="LAST_COMMIT_MESSAGE" value="WIP" />
+    <MESSAGE value=" Linting&#10;&#10;- Remove commonmarker" />
+    <option name="LAST_COMMIT_MESSAGE" value=" Linting&#10;&#10;- Remove commonmarker" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
