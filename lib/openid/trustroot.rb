@@ -408,7 +408,7 @@ module OpenID
     class TrustRoot
       attr_reader :unparsed, :proto, :wildcard, :host, :port, :path
 
-      @@empty_re = Regexp.new('^http[s]*:\/\/\*\/$')
+      @@empty_re = Regexp.new('^http[s]?:\/\/\*\/$')
 
       def self._build_path(path, query = nil, frag = nil)
         s = path.dup
@@ -457,7 +457,6 @@ module OpenID
         # look for wildcard
         wildcard = !trust_root.index("://*.").nil?
         trust_root.sub!("*.", "") if wildcard
-
         # handle http://*/ case
         if !wildcard and @@empty_re.match(trust_root)
           proto = trust_root.split(":")[0]
@@ -522,9 +521,17 @@ module OpenID
       end
 
       def sane?
+        return false if @host.nil? || @host.empty?
         return true if @host == "localhost"
 
         host_parts = @host.split(".")
+
+        # a note: Something changed in the way Ruby parsed URIs,
+        #   where it used to be very strict (probably incorrectly so),
+        #   and now it is much more permissive (and probably more standards compliant).
+        # Handle cases Ruby used to consider "insane" here to prevent them from being considered "sane".
+        wild_check = host_parts[-2, 2]
+        return false if wild_check && wild_check.detect { |wild| wild["*"] }
 
         # a note: ruby string split does not put an empty string at
         # the end of the list if the split element is last.  for

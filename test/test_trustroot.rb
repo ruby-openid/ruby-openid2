@@ -12,12 +12,13 @@ class TrustRootTest < Minitest::Test
   def _test_sanity(case_, sanity, desc)
     tr = OpenID::TrustRoot::TrustRoot.parse(case_)
     if sanity == "sane"
-      assert(!tr.nil?)
+      refute_nil(tr)
       assert_predicate(tr, :sane?, [case_, desc].join(" "))
       assert(OpenID::TrustRoot::TrustRoot.check_sanity(case_), [case_, desc].join(" "))
     elsif sanity == "insane"
-      assert(!tr.sane?, [case_, desc].join(" "))
-      assert(!OpenID::TrustRoot::TrustRoot.check_sanity(case_), [case_, desc].join(" "))
+      sanity = tr.sane?
+      refute(sanity, [case_, desc, tr.host, sanity].join(" "))
+      refute(OpenID::TrustRoot::TrustRoot.check_sanity(case_), [case_, desc].join(" "))
     else
       assert_nil(tr, case_)
     end
@@ -30,8 +31,8 @@ class TrustRootTest < Minitest::Test
       assert(actual_match, [trust_root, url].join(" "))
       assert(OpenID::TrustRoot::TrustRoot.check_url(trust_root, url))
     else
-      assert(!actual_match, [expected_match, actual_match, trust_root, url].join(" "))
-      assert(!OpenID::TrustRoot::TrustRoot.check_url(trust_root, url))
+      refute(actual_match, [expected_match, actual_match, trust_root, url].join(" "))
+      refute(OpenID::TrustRoot::TrustRoot.check_url(trust_root, url))
     end
   end
 

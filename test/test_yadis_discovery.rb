@@ -168,7 +168,11 @@ module OpenID
             exp_v = @expected.instance_variable_get(k)
             act_v = result.instance_variable_get(k)
 
-            @testcase.assert_equal(act_v, exp_v, [k, exp_v, act_v])
+            if act_v.nil?
+              @testcase.assert_nil(exp_v, [k, exp_v, act_v])
+            else
+              @testcase.assert_equal(act_v, exp_v, [k, exp_v, act_v])
+            end
           end
         end
       end

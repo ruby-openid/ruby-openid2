@@ -1,0 +1,2 @@
+# Ruby >= 2.5
+gem "net-http", github: "ruby/net-http", branch: "master"

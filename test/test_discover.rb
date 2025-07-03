@@ -209,12 +209,17 @@ module OpenID
       type_uris = types.collect { |t| openid_types[t] }
 
       assert_equal(type_uris, s.type_uris)
-      assert_equal(canonical_id, s.canonical_id)
 
       if canonical_id.nil?
-        assert_equal(claimed_id, s.display_identifier)
+        if claimed_id.nil?
+          assert_nil(s.display_identifier)
+        else
+          assert_equal(claimed_id, s.display_identifier)
+        end
+        assert_nil(s.canonical_id)
       else
         assert_equal(display_identifier, s.display_identifier)
+        assert_equal(canonical_id, s.canonical_id)
       end
     end
 

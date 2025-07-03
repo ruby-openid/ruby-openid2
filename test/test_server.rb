@@ -1586,11 +1586,16 @@ module OpenID
       @request.message = message
 
       @request.instance_variables.each do |var|
-        assert_equal(
-          @request.instance_variable_get(var),
-          rebuilt_request.instance_variable_get(var),
-          var,
-        )
+        ivar = @request.instance_variable_get(var)
+        if ivar.nil?
+          assert_nil(rebuilt_request.instance_variable_get(var), var)
+        else
+          assert_equal(
+            ivar,
+            rebuilt_request.instance_variable_get(var),
+            var,
+          )
+        end
       end
     end
 

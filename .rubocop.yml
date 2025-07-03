@@ -6,3 +6,6 @@ require:
 
 Style/EmptyElse:
   Enabled: false
+
+MiniTest/AssertWithExpectedArgument:
+  Enabled: false

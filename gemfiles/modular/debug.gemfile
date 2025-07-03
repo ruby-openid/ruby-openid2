@@ -4,7 +4,5 @@ gem "irb", "~> 1.15", ">= 1.15.2" # removed from stdlib in 3.5
 platform :mri do
   # Debugging
   # Use binding.break, binding.b, or debugger in code
-  gem "debug", "~> 1.10"
+  gem "debug", "~> 1.11"
 end
-
-gem "require_bench", "~> 1.0", ">= 1.0.4"

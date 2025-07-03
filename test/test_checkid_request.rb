@@ -143,7 +143,7 @@ module OpenID
             assert_operator(url.length, :<, OPENID1_URL_LIMIT)
             assert(@checkid_req.send_redirect?(@realm, @return_to, immediate))
 
-            @return_to << "/foo" * 1000
+            @return_to += "/foo" * 1000
             url = @checkid_req.redirect_url(@realm, @return_to, immediate)
 
             assert_operator(url.length, :>, OPENID1_URL_LIMIT)
