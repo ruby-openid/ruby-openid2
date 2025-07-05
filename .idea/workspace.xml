@@ -4,77 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="93d48b1a-c179-44bf-b84b-ec878661df4e" name="Changes" comment="🧑‍💻 .idea config">
-      <change afterPath="$PROJECT_DIR$/Appraisal.root.gemfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Appraisals" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gemfiles/audit.gemfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gemfiles/dep_heads.gemfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gemfiles/modular/audit.gemfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gemfiles/modular/cgi/r2/v0.1.gemfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gemfiles/modular/cgi/r2/v0.2.gemfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gemfiles/modular/cgi/r3/v1.7.gemfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gemfiles/modular/cgi/vHEAD.gemfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gemfiles/modular/coverage.gemfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gemfiles/modular/logger/r2/v1.5.gemfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gemfiles/modular/logger/r3/v1.7.gemfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gemfiles/modular/logger/vHEAD.gemfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gemfiles/modular/net-http/r2/v0.1.gemfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gemfiles/modular/net-http/r2/v0.2.gemfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gemfiles/modular/net-http/r2/v0.3.gemfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gemfiles/modular/net-http/r3/v0.4.gemfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gemfiles/modular/net-http/r3/v0.5.gemfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gemfiles/modular/net-http/r3/v0.6.gemfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gemfiles/modular/net-http/vHEAD.gemfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gemfiles/modular/rexml/r2/v3.1.gemfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gemfiles/modular/rexml/r2/v3.2.gemfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gemfiles/modular/rexml/r3/v3.3.gemfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gemfiles/modular/rexml/r3/v3.4.gemfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gemfiles/modular/rexml/vHEAD.gemfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gemfiles/modular/runtime_heads.gemfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gemfiles/modular/style.gemfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gemfiles/modular/uri/r2/v0.gemfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gemfiles/modular/uri/r3/v1.gemfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gemfiles/modular/uri/vHEAD.gemfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gemfiles/modular/x_std_libs/r2/libs.gemfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gemfiles/modular/x_std_libs/r2/set-1.gemfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gemfiles/modular/x_std_libs/r2/set-2.gemfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gemfiles/modular/x_std_libs/r3/libs.gemfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gemfiles/modular/x_std_libs/r3/set-1.gemfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gemfiles/modular/x_std_libs/r3/set-2.gemfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gemfiles/modular/x_std_libs/vHEAD.gemfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gemfiles/r2.gemfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gemfiles/r2_set_1.gemfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gemfiles/r2_set_2.gemfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gemfiles/r3.gemfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gemfiles/r3_set_1.gemfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gemfiles/r3_set_2.gemfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.envrc" beforeDir="false" afterPath="$PROJECT_DIR$/.envrc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.github/workflows/coverage.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/coverage.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/git_toolbox_prj.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_rebase_[Changes]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_rebase__Changes_.xml" beforeDir="false" />
+    <list default="true" id="93d48b1a-c179-44bf-b84b-ec878661df4e" name="Changes" comment="🐛 Handle newly parsed, but still insane, URIs">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.rubocop.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.rubocop.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Gemfile" beforeDir="false" afterPath="$PROJECT_DIR$/Gemfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Gemfile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Gemfile.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/examples/rails_openid/app/controllers/consumer_controller.rb" beforeDir="false" afterPath="$PROJECT_DIR$/examples/rails_openid/app/controllers/consumer_controller.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gemfiles/coverage.gemfile" beforeDir="false" afterPath="$PROJECT_DIR$/gemfiles/coverage.gemfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gemfiles/modular/debug.gemfile" beforeDir="false" afterPath="$PROJECT_DIR$/gemfiles/modular/debug.gemfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gemfiles/style.gemfile" beforeDir="false" afterPath="$PROJECT_DIR$/gemfiles/style.gemfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gemfiles/vanilla.gemfile" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/openid/cryptutil.rb" beforeDir="false" afterPath="$PROJECT_DIR$/lib/openid/cryptutil.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/openid/fetchers.rb" beforeDir="false" afterPath="$PROJECT_DIR$/lib/openid/fetchers.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/openid/trustroot.rb" beforeDir="false" afterPath="$PROJECT_DIR$/lib/openid/trustroot.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ruby-openid2.gemspec" beforeDir="false" afterPath="$PROJECT_DIR$/ruby-openid2.gemspec" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/data/trustroot.txt" beforeDir="false" afterPath="$PROJECT_DIR$/test/data/trustroot.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/test_checkid_request.rb" beforeDir="false" afterPath="$PROJECT_DIR$/test/test_checkid_request.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/test_discover.rb" beforeDir="false" afterPath="$PROJECT_DIR$/test/test_discover.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/test_openid_yadis.rb" beforeDir="false" afterPath="$PROJECT_DIR$/test/test_openid_yadis.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/test_server.rb" beforeDir="false" afterPath="$PROJECT_DIR$/test/test_server.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/test_trustroot.rb" beforeDir="false" afterPath="$PROJECT_DIR$/test/test_trustroot.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/test_yadis_discovery.rb" beforeDir="false" afterPath="$PROJECT_DIR$/test/test_yadis_discovery.rb" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -151,8 +82,8 @@
     "com.github.patou.gitmoji.display-icon": "emoji",
     "com.github.patou.gitmoji.text-after-unicode": " ",
     "com.github.patou.gitmoji.use-unicode": "true",
-    "com.intellij.lang.ruby.rbs.tools.collection.workspace.sync.RbsCollectionUpdateProjectActivity#LAST_UPDATE_TIMESTAMP": "1751491903283",
-    "git-widget-placeholder": "next",
+    "com.intellij.lang.ruby.rbs.tools.collection.workspace.sync.RbsCollectionUpdateProjectActivity#LAST_UPDATE_TIMESTAMP": "1751695854511",
+    "git-widget-placeholder": "#59 on next",
     "junie.onboarding.icon.badge.shown": "true",
     "last_opened_file_path": "/home/pboling/src/ruby-openid/ruby-openid2",
     "node.js.detected.package.eslint": "true",
@@ -190,7 +121,11 @@
       <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="ALTERN_SDK_NAME" VALUE="" />
       <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="myPassParentEnvs" VALUE="true" />
       <EXTENSION ID="BundlerRunConfigurationExtension" BUNDLE_MODE="AUTO" bundleExecEnabled="true" />
-      <EXTENSION ID="RubyCoverageRunConfigurationExtension" runner="rcov" />
+      <EXTENSION ID="RubyCoverageRunConfigurationExtension" runner="rcov">
+        <COVERAGE_PATTERN ENABLED="true">
+          <PATTERN REGEXPS="/.rvm/" INCLUDED="false" />
+        </COVERAGE_PATTERN>
+      </EXTENSION>
       <EXTENSION ID="org.jetbrains.plugins.ruby.rails.run.RailsRunConfigurationExtension" SCRATCH_USE_RAILS_RUNNER="false" />
       <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="TEST_FILE_MASK" VALUE="**/*.feature" />
       <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="TEST_TEST_TYPE" VALUE="TEST_SCRIPT" />
@@ -219,7 +154,11 @@
       <RSPEC_RUN_CONFIG_SETTINGS_ID NAME="ALTERN_SDK_NAME" VALUE="" />
       <RSPEC_RUN_CONFIG_SETTINGS_ID NAME="myPassParentEnvs" VALUE="true" />
       <EXTENSION ID="BundlerRunConfigurationExtension" BUNDLE_MODE="AUTO" bundleExecEnabled="true" />
-      <EXTENSION ID="RubyCoverageRunConfigurationExtension" runner="rcov" />
+      <EXTENSION ID="RubyCoverageRunConfigurationExtension" runner="rcov">
+        <COVERAGE_PATTERN ENABLED="true">
+          <PATTERN REGEXPS="/.rvm/" INCLUDED="false" />
+        </COVERAGE_PATTERN>
+      </EXTENSION>
       <EXTENSION ID="org.jetbrains.plugins.ruby.rails.run.RailsRunConfigurationExtension" SCRATCH_USE_RAILS_RUNNER="false" />
       <RSPEC_RUN_CONFIG_SETTINGS_ID NAME="TESTS_FOLDER_PATH" VALUE="" />
       <RSPEC_RUN_CONFIG_SETTINGS_ID NAME="TEST_SCRIPT_PATH" VALUE="" />
@@ -246,7 +185,11 @@
       <RACK_CONFIG_SETTINGS_ID NAME="ALTERN_SDK_NAME" VALUE="" />
       <RACK_CONFIG_SETTINGS_ID NAME="myPassParentEnvs" VALUE="true" />
       <EXTENSION ID="BundlerRunConfigurationExtension" BUNDLE_MODE="AUTO" bundleExecEnabled="true" />
-      <EXTENSION ID="RubyCoverageRunConfigurationExtension" runner="rcov" />
+      <EXTENSION ID="RubyCoverageRunConfigurationExtension" runner="rcov">
+        <COVERAGE_PATTERN ENABLED="true">
+          <PATTERN REGEXPS="/.rvm/" INCLUDED="false" />
+        </COVERAGE_PATTERN>
+      </EXTENSION>
       <EXTENSION ID="org.jetbrains.plugins.ruby.rails.run.RailsRunConfigurationExtension" SCRATCH_USE_RAILS_RUNNER="false" />
       <RACK_CONFIG_SETTINGS_ID NAME="PORT" VALUE="9292" />
       <RACK_CONFIG_SETTINGS_ID NAME="IP" VALUE="127.0.0.1" />
@@ -263,7 +206,11 @@
       <RAKE_RUN_CONFIG_SETTINGS_ID NAME="ALTERN_SDK_NAME" VALUE="" />
       <RAKE_RUN_CONFIG_SETTINGS_ID NAME="myPassParentEnvs" VALUE="true" />
       <EXTENSION ID="BundlerRunConfigurationExtension" BUNDLE_MODE="AUTO" bundleExecEnabled="true" />
-      <EXTENSION ID="RubyCoverageRunConfigurationExtension" runner="rcov" />
+      <EXTENSION ID="RubyCoverageRunConfigurationExtension" runner="rcov">
+        <COVERAGE_PATTERN ENABLED="true">
+          <PATTERN REGEXPS="/.rvm/" INCLUDED="false" />
+        </COVERAGE_PATTERN>
+      </EXTENSION>
       <EXTENSION ID="org.jetbrains.plugins.ruby.rails.run.RailsRunConfigurationExtension" SCRATCH_USE_RAILS_RUNNER="false" />
       <RAKE_RUN_CONFIG_SETTINGS_ID NAME="RAKE_TASK_NAME" VALUE="" />
       <RAKE_RUN_CONFIG_SETTINGS_ID NAME="RAKE_TASK_ARGS" VALUE="" />
@@ -281,7 +228,11 @@
       <RUBY_RUN_CONFIG NAME="ALTERN_SDK_NAME" VALUE="" />
       <RUBY_RUN_CONFIG NAME="myPassParentEnvs" VALUE="true" />
       <EXTENSION ID="BundlerRunConfigurationExtension" BUNDLE_MODE="AUTO" bundleExecEnabled="true" />
-      <EXTENSION ID="RubyCoverageRunConfigurationExtension" runner="rcov" />
+      <EXTENSION ID="RubyCoverageRunConfigurationExtension" runner="rcov">
+        <COVERAGE_PATTERN ENABLED="true">
+          <PATTERN REGEXPS="/.rvm/" INCLUDED="false" />
+        </COVERAGE_PATTERN>
+      </EXTENSION>
       <EXTENSION ID="org.jetbrains.plugins.ruby.rails.run.RailsRunConfigurationExtension" SCRATCH_USE_RAILS_RUNNER="false" />
       <RUBY_RUN_CONFIG NAME="SCRIPT_PATH" VALUE="" />
       <RUBY_RUN_CONFIG NAME="SCRIPT_ARGS" VALUE="" />
@@ -295,7 +246,11 @@
       <RTEST_RUN_CONFIG_SETTINGS_ID NAME="ALTERN_SDK_NAME" VALUE="" />
       <RTEST_RUN_CONFIG_SETTINGS_ID NAME="myPassParentEnvs" VALUE="true" />
       <EXTENSION ID="BundlerRunConfigurationExtension" BUNDLE_MODE="AUTO" bundleExecEnabled="true" />
-      <EXTENSION ID="RubyCoverageRunConfigurationExtension" runner="rcov" />
+      <EXTENSION ID="RubyCoverageRunConfigurationExtension" runner="rcov">
+        <COVERAGE_PATTERN ENABLED="true">
+          <PATTERN REGEXPS="/.rvm/" INCLUDED="false" />
+        </COVERAGE_PATTERN>
+      </EXTENSION>
       <EXTENSION ID="org.jetbrains.plugins.ruby.rails.run.RailsRunConfigurationExtension" SCRATCH_USE_RAILS_RUNNER="false" />
       <RTEST_RUN_CONFIG_SETTINGS_ID NAME="TESTS_FOLDER_PATH" VALUE="" />
       <RTEST_RUN_CONFIG_SETTINGS_ID NAME="TEST_SCRIPT_PATH" VALUE="" />
@@ -342,7 +297,8 @@
       <workItem from="1751057451302" duration="1039000" />
       <workItem from="1751491611711" duration="114000" />
       <workItem from="1751491802864" duration="31000" />
-      <workItem from="1751491844385" duration="10742000" />
+      <workItem from="1751491844385" duration="11053000" />
+      <workItem from="1751695793007" duration="829000" />
     </task>
     <task id="LOCAL-00001" summary="🙈 modernize .gitignore">
       <option name="closed" value="true" />
@@ -448,7 +404,15 @@
       <option name="project" value="LOCAL" />
       <updated>1750889541434</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="🐛 Handle newly parsed, but still insane, URIs">
+      <option name="closed" value="true" />
+      <created>1751522939381</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1751522939381</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -465,7 +429,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="main" />
+                        <option value="next" />
                       </list>
                     </value>
                   </entry>
@@ -489,7 +453,8 @@
     <MESSAGE value=" More Linting" />
     <MESSAGE value=" Unsupported builds run on ubuntu-24.04" />
     <MESSAGE value="➕ cgi&#10;&#10;- Ruby 3.5 may remove cgi from std lib&#10;- See: https://bugs.ruby-lang.org/issues/21258" />
-    <option name="LAST_COMMIT_MESSAGE" value="➕ cgi&#10;&#10;- Ruby 3.5 may remove cgi from std lib&#10;- See: https://bugs.ruby-lang.org/issues/21258" />
+    <MESSAGE value=" Handle newly parsed, but still insane, URIs" />
+    <option name="LAST_COMMIT_MESSAGE" value=" Handle newly parsed, but still insane, URIs" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
