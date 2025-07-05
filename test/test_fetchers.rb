@@ -248,7 +248,7 @@ class FetcherTestCase < Minitest::Test
     @_redirect_counter = 0
     uri = _uri_build("/redirect_loop")
     assert_raises(OpenID::HTTPRedirectLimitReached) do
-      @fetcher.fetch(uri, body = nil, headers = nil, redirect_limit = 0)
+      @fetcher.fetch(uri, nil, nil, 0)
     end
   end
 

@@ -61,9 +61,9 @@ module OpenID
       s = ""
 
       if chars.nil?
-        length.times { s << rand(256).chr }
+        length.times { s += rand(256).chr }
       else
-        length.times { s << chars[rand(chars.length)] }
+        length.times { s += chars[rand(chars.length)] }
       end
       s
     end

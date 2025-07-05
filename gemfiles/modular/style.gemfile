@@ -1,0 +1,25 @@
+# frozen_string_literal: true
+
+# We run rubocop on the latest version of Ruby,
+#   but in support of the oldest supported version of Ruby
+
+gem "reek", "~> 6.4"
+gem "rubocop", "~> 1.73", ">= 1.73.2"
+gem "rubocop-minitest", "~> 0.36"
+gem "rubocop-packaging", "~> 0.6", ">= 0.6.0" # Ruby >= 2.7
+gem "standard", "~> 1.47"
+
+# Std Lib extractions
+gem "benchmark", "~> 0.4" # Removed from Std Lib in Ruby 3.5
+
+if ENV.fetch("RUBOCOP_LTS_LOCAL", "false").casecmp("true").zero?
+  home = ENV["HOME"]
+  gem "rubocop-lts", path: "#{home}/src/rubocop-lts/rubocop-lts"
+  gem "rubocop-ruby2_7", path: "#{home}/src/rubocop-lts/rubocop-ruby2_7"
+  gem "standard-rubocop-lts", path: "#{home}/src/rubocop-lts/standard-rubocop-lts"
+else
+  # rubocop-lts v18 is a rubocop wrapper for Ruby >= 2.7;
+  #   Only bump when dropping old Ruby support
+  # see: https://rubocop-lts.gitlab.io
+  gem "rubocop-lts", "~> 18.2", ">= 18.2.1" # Lint & Style Support for Ruby 2.7+
+end

@@ -136,10 +136,10 @@ module OpenID
         assert_same(service_element, result_element)
         assert_equal("http://0.invalid/", uri)
         assert_equal(["urn://foo", "urn://bar"], types)
-        types, uri, result_element = result[1]
+        _, uri, _ = result[1]
 
         assert_equal("http://1.invalid/", uri)
-        types, uri, result_element = result[2]
+        _, uri, _ = result[2]
 
         assert_equal("http://2.invalid/", uri)
       end

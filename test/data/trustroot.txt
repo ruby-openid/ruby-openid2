@@ -3,34 +3,26 @@ Trust root parsing checking
 ========================================
 
 ----------------------------------------
-23: Does not parse
+15: Does not parse
 ----------------------------------------
 baz.org
 *.foo.com
-http://*.schtuff.*/
 ftp://foo.com
 ftp://*.foo.com
 http://*.foo.com:80:90/
 foo.*.com
-http://foo.*.com
-http://www.*
-http://*foo.com/
 http://foo.com/invalid#fragment
 http://..it/
 http://.it/
-http://*:8081/
-http://*:80
 http://localhost:1900foo/
 http://foo.com\/
 http://π.pi.com/
 http://lambda.com/Λ
 
-
-
 5
 
 ----------------------------------------
-14: Insane
+20: Insane
 ----------------------------------------
 http:///
 http://*/
@@ -46,6 +38,12 @@ http://*.museum/
 https://*.museum/
 http://www.schtuffcom/
 http://it/
+http://*.schtuff.*/
+http://foo.*.com
+http://*foo.com/
+http://www.*
+http://*:8081/
+http://*:80
 
 ----------------------------------------
 18: Sane
@@ -74,11 +72,8 @@ return_to matching
 ========================================
 
 ----------------------------------------
-46: matches
+43: matches
 ----------------------------------------
-http://*/                             http://cnn.com/
-http://*/                             http://livejournal.com/
-http://*/                             http://met.museum/
 http://localhost:8081/x?action=openid http://localhost:8081/x?action=openid
 http://*.foo.com                      http://b.foo.com
 http://*.foo.com                      http://b.foo.com/

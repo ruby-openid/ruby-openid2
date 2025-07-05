@@ -74,11 +74,11 @@ class ConsumerController < ApplicationController
         sreg_resp = OpenID::SReg::Response.from_success_response(oidresp)
         sreg_message = "Simple Registration data was requested"
         if sreg_resp.empty?
-          sreg_message << ", but none was returned."
+          sreg_message += ", but none was returned."
         else
-          sreg_message << ". The following data were sent:"
+          sreg_message += ". The following data were sent:"
           sreg_resp.data.each do |k, v|
-            sreg_message << "<br/><b>#{k}</b>: #{v}"
+            sreg_message += "<br/><b>#{k}</b>: #{v}"
           end
         end
         flash[:sreg_results] = sreg_message
@@ -91,8 +91,8 @@ class ConsumerController < ApplicationController
         else
           ", but the server did not report one."
         end
-        pape_message << "<br><b>Authentication time:</b> #{pape_resp.auth_time} seconds" if pape_resp.auth_time
-        pape_message << "<br><b>NIST Auth Level:</b> #{pape_resp.nist_auth_level}" if pape_resp.nist_auth_level
+        pape_message += "<br><b>Authentication time:</b> #{pape_resp.auth_time} seconds" if pape_resp.auth_time
+        pape_message += "<br><b>NIST Auth Level:</b> #{pape_resp.nist_auth_level}" if pape_resp.nist_auth_level
         flash[:pape_results] = pape_message
       end
     when OpenID::Consumer::SETUP_NEEDED

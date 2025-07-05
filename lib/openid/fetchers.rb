@@ -203,7 +203,7 @@ module OpenID
         whole_body = ""
         body_size_limitter = lambda do |r|
           r.read_body do |partial| # read body now
-            whole_body << partial
+            whole_body += partial
             raise FetchingError.new("Response Too Large") if whole_body.length > MAX_RESPONSE_KB
           end
           whole_body
