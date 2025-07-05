@@ -1,4 +1,4 @@
-name: MRI 2.7 (Unsupported)
+name: MRI 3.0 (Legacy)
 
 permissions:
   contents: read
@@ -37,25 +37,13 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          # Ruby 2.7
-          - ruby: "2.7"
-            appraisal_name: "r2"
+          # Ruby 3.0
+          - ruby: "3.0"
+            appraisal_name: "r3"
             exec_cmd: "rake test"
             gemfile: "Appraisal.root"
-            rubygems: '3.4.22'
-            bundler: '2.4.22'
-          - ruby: "2.7"
-            appraisal_name: "r2-set-1"
-            exec_cmd: "rake test"
-            gemfile: "Appraisal.root"
-            rubygems: '3.4.22'
-            bundler: '2.4.22'
-          - ruby: "2.7"
-            appraisal_name: "r2-set-2"
-            exec_cmd: "rake test"
-            gemfile: "Appraisal.root"
-            rubygems: '3.4.22'
-            bundler: '2.4.22'
+            rubygems: '3.5.23'
+            bundler: '2.5.23'
 
     steps:
       - name: Checkout

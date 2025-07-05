@@ -61,12 +61,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency("minitest", ">= 5", "< 6") # Use assert_nil if expecting nil
   spec.add_development_dependency("webrick", "~> 1.8")
 
-  # Linting - rubocop-lts v18 is a rubocop wrapper for Ruby >= 2.7;
-  #   Only bump when dropping old Ruby support
-  # see: https://rubocop-lts.gitlab.io
-  spec.add_development_dependency("rubocop-lts", "~> 18.2", ">= 18.2.1") # Lint & Style Support for Ruby 2.7+
-  spec.add_development_dependency("rubocop-minitest", "~> 0.36")
-  spec.add_development_dependency("rubocop-packaging", "~> 0.6", ">= 0.6.0") # Ruby >= 2.7
 
   # Documentation
   spec.add_development_dependency("yard", "~> 0.9", ">= 0.9.37")

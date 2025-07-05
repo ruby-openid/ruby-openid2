@@ -63,6 +63,11 @@ appraise "r3-set-2" do
   remove_gem "appraisal" # only present because it must be in the gemfile because we target a git branch
 end
 
+appraise "heads" do
+  eval_gemfile "modular/x_std_libs/vHEAD.gemfile"
+  remove_gem "appraisal" # only present because it must be in the gemfile because we target a git branch
+end
+
 # Only run security audit on the latest version of Ruby
 appraise "audit" do
   eval_gemfile "modular/audit.gemfile"

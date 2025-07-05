@@ -1,4 +1,6 @@
-name: MRI 2.7 (Unsupported)
+# Targets the evergreen latest release of ruby, truffleruby, and jruby
+#   and tests against the HEAD of runtime dependencies
+name: Runtime Deps @ HEAD
 
 permissions:
   contents: read
@@ -10,7 +12,7 @@ on:
   push:
     branches:
       - 'main'
-      - "*-stable"
+      - '*-stable'
     tags:
       - '!*' # Do not execute on tags
   pull_request:
@@ -27,35 +29,39 @@ concurrency:
 
 jobs:
   test:
-    name: Specs ${{ matrix.ruby }} ${{ matrix.appraisal_name }}${{ matrix.name_extra || '' }}
+    name: Specs ${{ matrix.ruby }}@${{ matrix.appraisal_name }}
     if: "!contains(github.event.commits[0].message, '[ci skip]') && !contains(github.event.commits[0].message, '[skip ci]')"
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     continue-on-error: ${{ matrix.experimental || endsWith(matrix.ruby, 'head') }}
     env: # $BUNDLE_GEMFILE - set at job level, so applies to all steps
       BUNDLE_GEMFILE: ${{ github.workspace }}/${{ matrix.gemfile }}.gemfile
     strategy:
-      fail-fast: false
       matrix:
         include:
-          # Ruby 2.7
-          - ruby: "2.7"
-            appraisal_name: "r2"
+          # Ruby 3.4
+          - ruby: "ruby"
+            appraisal_name: "dep-heads"
             exec_cmd: "rake test"
             gemfile: "Appraisal.root"
-            rubygems: '3.4.22'
-            bundler: '2.4.22'
-          - ruby: "2.7"
-            appraisal_name: "r2-set-1"
+            rubygems: latest
+            bundler: latest
+
+          # truffleruby-24.1
+          - ruby: "truffleruby"
+            appraisal_name: "dep-heads"
             exec_cmd: "rake test"
             gemfile: "Appraisal.root"
-            rubygems: '3.4.22'
-            bundler: '2.4.22'
-          - ruby: "2.7"
-            appraisal_name: "r2-set-2"
+            rubygems: default
+            bundler: default
+
+          # jruby-10.0 (targets Ruby 3.4 compatibility)
+          - ruby: "jruby"
+            appraisal_name: "dep-heads"
             exec_cmd: "rake test"
             gemfile: "Appraisal.root"
-            rubygems: '3.4.22'
-            bundler: '2.4.22'
+            experimental: true
+            rubygems: default
+            bundler: default
 
     steps:
       - name: Checkout
@@ -71,7 +77,7 @@ jobs:
 
       # Raw `bundle` will use the BUNDLE_GEMFILE set to matrix.gemfile (i.e. Appraisal.root)
       # We need to do this first to get appraisal installed.
-      # NOTE: This does not use the main Gemfile at all.
+      # NOTE: This does not use the primary Gemfile at all.
       - name: Install Root Appraisal
         run: bundle
       - name: Appraisal for ${{ matrix.ruby }}@${{ matrix.appraisal_name }}

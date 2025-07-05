@@ -17,13 +17,13 @@ env:
 on:
   push:
     branches:
-      - 'main'
-      - '*-stable'
+      - "main"
+      - "*-stable"
     tags:
-      - '!*' # Do not execute on tags
+      - "!*" # Do not execute on tags
   pull_request:
     branches:
-      - '*'
+      - "*"
   # Allow manually triggering the workflow.
   workflow_dispatch:
 
@@ -36,10 +36,10 @@ concurrency:
 jobs:
   coverage:
     name: Code Coverage on ${{ matrix.ruby }}@current
-    if: ${{!contains(github.event.commits[0].message, '[ci skip]') && !contains(github.event.commits[0].message, '[skip ci]')}}
+    if: "!contains(github.event.commits[0].message, '[ci skip]') && !contains(github.event.commits[0].message, '[skip ci]')"
     runs-on: ubuntu-latest
     continue-on-error: ${{ matrix.experimental || endsWith(matrix.ruby, 'head') }}
-    env: # $BUNDLE_GEMFILE must be set at job level, so it is set for all steps
+    env: # $BUNDLE_GEMFILE - set at job level, so applies to all steps
       BUNDLE_GEMFILE: ${{ github.workspace }}/${{ matrix.gemfile }}.gemfile
     strategy:
       fail-fast: false
@@ -47,7 +47,7 @@ jobs:
         include:
           # Coverage
           - ruby: "ruby"
-            appraisal: "coverage"
+            appraisal_name: "coverage"
             exec_cmd: "rake test"
             gemfile: "Appraisal.root"
             rubygems: latest
@@ -68,12 +68,12 @@ jobs:
       # Raw `bundle` will use the BUNDLE_GEMFILE set to matrix.gemfile (i.e. Appraisal.root)
       # We need to do this first to get appraisal installed.
       # NOTE: This does not use the primary Gemfile at all.
-#      - name: Install Root Appraisal
-#        run: bundle
-      - name: Appraisal for ${{ matrix.appraisal }}
-        run: bundle exec appraisal ${{ matrix.appraisal }} bundle
-      - name: Tests for ${{ matrix.ruby }}@current via ${{ matrix.exec_cmd }}
-        run: bundle exec appraisal ${{ matrix.appraisal }} bundle exec ${{ matrix.exec_cmd }}
+      - name: Install Root Appraisal
+        run: bundle
+      - name: Appraisal for ${{ matrix.ruby }}@${{ matrix.appraisal_name }}
+        run: bundle exec appraisal ${{ matrix.appraisal_name }} bundle
+      - name: Run ${{ matrix.exec_cmd }} on ${{ matrix.ruby }}@${{ matrix.appraisal_name }}
+        run: bundle exec appraisal ${{ matrix.appraisal_name }} bundle exec ${{ matrix.exec_cmd }}
 
       # Do SaaS coverage uploads first
       - name: Upload coverage to Coveralls
@@ -90,6 +90,15 @@ jobs:
           token: ${{secrets.QLTY_COVERAGE_TOKEN}}
           files: coverage/.resultset.json
         continue-on-error: ${{ matrix.experimental != 'false' }}
+
+      # Build will fail here if coverage upload fails
+      #   which will hopefully be noticed for the lack of code coverage comments
+      - name: Upload coverage to CodeCov
+        uses: codecov/codecov-action@v5
+        with:
+          use_oidc: true
+          fail_ci_if_error: true # optional (default = false)
+          verbose: true # optional (default = false)
 
       # Then PR comments
       - name: Code Coverage Summary Report

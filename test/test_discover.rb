@@ -216,6 +216,7 @@ module OpenID
         else
           assert_equal(claimed_id, s.display_identifier)
         end
+
         assert_nil(s.canonical_id)
       else
         assert_equal(display_identifier, s.display_identifier)
