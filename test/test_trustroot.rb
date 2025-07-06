@@ -16,7 +16,7 @@ class TrustRootTest < Minitest::Test
       assert_predicate(tr, :sane?, [case_, desc].join(" "))
       assert(OpenID::TrustRoot::TrustRoot.check_sanity(case_), [case_, desc].join(" "))
     elsif sanity == "insane"
-      sanity = tr && tr.sane?
+      sanity = tr&.sane?
 
       refute(sanity, [case_, desc, tr&.host, sanity].join(" "))
       refute(OpenID::TrustRoot::TrustRoot.check_sanity(case_), [case_, desc].join(" "))

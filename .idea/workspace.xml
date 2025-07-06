@@ -4,34 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="93d48b1a-c179-44bf-b84b-ec878661df4e" name="Changes" comment="🧑‍💻 IDE settings for RubyMine">
-      <change afterPath="$PROJECT_DIR$/.github/workflows/codeql-analysis.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.github/workflows/current-runtime-heads.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.github/workflows/current.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.github/workflows/dependency-review.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.github/workflows/jruby.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.github/workflows/legacy.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.github/workflows/coverage.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/coverage.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.github/workflows/heads.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/heads.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.github/workflows/style.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/style.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.github/workflows/supported.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/supported.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.github/workflows/unsupported.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/unsupported.yml" afterDir="false" />
+    <list default="true" id="93d48b1a-c179-44bf-b84b-ec878661df4e" name="Changes" comment="💚 Improve CI">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Appraisals" beforeDir="false" afterPath="$PROJECT_DIR$/Appraisals" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.rubocop.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.rubocop.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.rubocop_gradual.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.rubocop_gradual.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Gemfile" beforeDir="false" afterPath="$PROJECT_DIR$/Gemfile" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Gemfile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Gemfile.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gemfiles/audit.gemfile" beforeDir="false" afterPath="$PROJECT_DIR$/gemfiles/audit.gemfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gemfiles/coverage.gemfile" beforeDir="false" afterPath="$PROJECT_DIR$/gemfiles/coverage.gemfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gemfiles/dep_heads.gemfile" beforeDir="false" afterPath="$PROJECT_DIR$/gemfiles/dep_heads.gemfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gemfiles/modular/style.gemfile" beforeDir="false" afterPath="$PROJECT_DIR$/gemfiles/modular/style.gemfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gemfiles/r2.gemfile" beforeDir="false" afterPath="$PROJECT_DIR$/gemfiles/r2.gemfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gemfiles/r2_set_1.gemfile" beforeDir="false" afterPath="$PROJECT_DIR$/gemfiles/r2_set_1.gemfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gemfiles/r2_set_2.gemfile" beforeDir="false" afterPath="$PROJECT_DIR$/gemfiles/r2_set_2.gemfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gemfiles/r3.gemfile" beforeDir="false" afterPath="$PROJECT_DIR$/gemfiles/r3.gemfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gemfiles/r3_set_1.gemfile" beforeDir="false" afterPath="$PROJECT_DIR$/gemfiles/r3_set_1.gemfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gemfiles/r3_set_2.gemfile" beforeDir="false" afterPath="$PROJECT_DIR$/gemfiles/r3_set_2.gemfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gemfiles/style.gemfile" beforeDir="false" afterPath="$PROJECT_DIR$/gemfiles/style.gemfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/OpenID/TrustRoot/TrustRoot.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/OpenID/TrustRoot/TrustRoot.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/openid/trustroot.rb" beforeDir="false" afterPath="$PROJECT_DIR$/lib/openid/trustroot.rb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ruby-openid2.gemspec" beforeDir="false" afterPath="$PROJECT_DIR$/ruby-openid2.gemspec" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/test_discover.rb" beforeDir="false" afterPath="$PROJECT_DIR$/test/test_discover.rb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test/test_trustroot.rb" beforeDir="false" afterPath="$PROJECT_DIR$/test/test_trustroot.rb" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -325,7 +306,7 @@
       <workItem from="1751491611711" duration="114000" />
       <workItem from="1751491802864" duration="31000" />
       <workItem from="1751491844385" duration="11053000" />
-      <workItem from="1751695793007" duration="15287000" />
+      <workItem from="1751695793007" duration="17396000" />
     </task>
     <task id="LOCAL-00001" summary="🙈 modernize .gitignore">
       <option name="closed" value="true" />
@@ -447,7 +428,15 @@
       <option name="project" value="LOCAL" />
       <updated>1751702276051</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="💚 Improve CI">
+      <option name="closed" value="true" />
+      <created>1751755398483</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1751755398483</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -490,7 +479,8 @@
     <MESSAGE value="➕ cgi&#10;&#10;- Ruby 3.5 may remove cgi from std lib&#10;- See: https://bugs.ruby-lang.org/issues/21258" />
     <MESSAGE value=" Handle newly parsed, but still insane, URIs" />
     <MESSAGE value="‍ IDE settings for RubyMine" />
-    <option name="LAST_COMMIT_MESSAGE" value="‍ IDE settings for RubyMine" />
+    <MESSAGE value=" Improve CI" />
+    <option name="LAST_COMMIT_MESSAGE" value=" Improve CI" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

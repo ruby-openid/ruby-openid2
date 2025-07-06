@@ -7,5 +7,5 @@ require:
 Style/EmptyElse:
   Enabled: false
 
-MiniTest/AssertWithExpectedArgument:
+Minitest/AssertWithExpectedArgument:
   Enabled: false

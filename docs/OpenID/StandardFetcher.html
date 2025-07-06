@@ -676,7 +676,7 @@
     <span class='id identifier rubyid_whole_body'>whole_body</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span>
     <span class='id identifier rubyid_body_size_limitter'>body_size_limitter</span> <span class='op'>=</span> <span class='id identifier rubyid_lambda'>lambda</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_r'>r</span><span class='op'>|</span>
       <span class='id identifier rubyid_r'>r</span><span class='period'>.</span><span class='id identifier rubyid_read_body'>read_body</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_partial'>partial</span><span class='op'>|</span> <span class='comment'># read body now
-</span>        <span class='id identifier rubyid_whole_body'>whole_body</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_partial'>partial</span>
+</span>        <span class='id identifier rubyid_whole_body'>whole_body</span> <span class='op'>+=</span> <span class='id identifier rubyid_partial'>partial</span>
         <span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="FetchingError.html" title="OpenID::FetchingError (class)">FetchingError</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Response Too Large</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_whole_body'>whole_body</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span> <span class='op'>&gt;</span> <span class='const'><span class='object_link'><a href="../top-level-namespace.html#MAX_RESPONSE_KB-constant" title="MAX_RESPONSE_KB (constant)">MAX_RESPONSE_KB</a></span></span>
       <span class='kw'>end</span>
       <span class='id identifier rubyid_whole_body'>whole_body</span>
@@ -946,9 +946,9 @@
 </div>
 
       <div id="footer">
-  Generated on Tue Jun 10 09:45:40 2025 by
+  Generated on Sun Jul  6 06:29:40 2025 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.37 (ruby-3.4.3).
+  0.9.37 (ruby-3.4.4).
 </div>
 
     </div>

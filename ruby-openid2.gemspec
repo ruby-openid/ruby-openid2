@@ -61,7 +61,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency("minitest", ">= 5", "< 6") # Use assert_nil if expecting nil
   spec.add_development_dependency("webrick", "~> 1.8")
 
-
   # Documentation
   spec.add_development_dependency("yard", "~> 0.9", ">= 0.9.37")
   spec.add_development_dependency("yard-junk", "~> 0.0", ">= 0.0.10")

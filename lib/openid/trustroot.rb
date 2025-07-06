@@ -408,88 +408,90 @@ module OpenID
     class TrustRoot
       attr_reader :unparsed, :proto, :wildcard, :host, :port, :path
 
-      @@empty_re = Regexp.new('^http[s]?:\/\/\*\/$')
+      EMPTY_RE = Regexp.new('^http[s]?:\/\/\*\/$').freeze
 
-      def self._build_path(path, query = nil, frag = nil)
-        s = path.dup
+      class << self
+        def _build_path(path, query = nil, frag = nil)
+          s = path.dup
 
-        frag = nil if frag == ""
-        query = nil if query == ""
+          frag = nil if frag == ""
+          query = nil if query == ""
 
-        s << "?" << query if query
+          s << "?" << query if query
 
-        s << "#" << frag if frag
+          s << "#" << frag if frag
 
-        s
-      end
-
-      def self._parse_url(url)
-        begin
-          url = URINorm.urinorm(url)
-        rescue URI::InvalidURIError
-          nil
+          s
         end
 
-        begin
-          parsed = URI::DEFAULT_PARSER.parse(url)
-        rescue URI::InvalidURIError
-          return
+        def _parse_url(url)
+          begin
+            url = URINorm.urinorm(url)
+          rescue URI::InvalidURIError
+            nil
+          end
+
+          begin
+            parsed = URI::DEFAULT_PARSER.parse(url)
+          rescue URI::InvalidURIError
+            return
+          end
+
+          path = TrustRoot._build_path(
+            parsed.path,
+            parsed.query,
+            parsed.fragment,
+          )
+
+          [
+            parsed.scheme || "",
+            parsed.host || "",
+            parsed.port || "",
+            path || "",
+          ]
         end
 
-        path = TrustRoot._build_path(
-          parsed.path,
-          parsed.query,
-          parsed.fragment,
-        )
+        def parse(trust_root)
+          trust_root = trust_root.dup
+          unparsed = trust_root.dup
 
-        [
-          parsed.scheme || "",
-          parsed.host || "",
-          parsed.port || "",
-          path || "",
-        ]
-      end
+          # look for wildcard
+          wildcard = !trust_root.index("://*.").nil?
+          trust_root.sub!("*.", "") if wildcard
+          # handle http://*/ case
+          if !wildcard and EMPTY_RE.match(trust_root)
+            proto = trust_root.split(":")[0]
+            port = (proto == "http") ? 80 : 443
+            return new(unparsed, proto, true, "", port, "/")
+          end
 
-      def self.parse(trust_root)
-        trust_root = trust_root.dup
-        unparsed = trust_root.dup
+          parts = TrustRoot._parse_url(trust_root)
+          return if parts.nil?
 
-        # look for wildcard
-        wildcard = !trust_root.index("://*.").nil?
-        trust_root.sub!("*.", "") if wildcard
-        # handle http://*/ case
-        if !wildcard and @@empty_re.match(trust_root)
-          proto = trust_root.split(":")[0]
-          port = (proto == "http") ? 80 : 443
-          return new(unparsed, proto, true, "", port, "/")
+          proto, host, port, path = parts
+          return if host[0] == "."
+
+          # check for URI fragment
+          return if path and !path.index("#").nil?
+
+          return unless %w[http https].member?(proto)
+
+          new(unparsed, proto, wildcard, host, port, path)
         end
 
-        parts = TrustRoot._parse_url(trust_root)
-        return if parts.nil?
+        def check_sanity(trust_root_string)
+          trust_root = TrustRoot.parse(trust_root_string)
+          return false if trust_root.nil?
 
-        proto, host, port, path = parts
-        return if host[0] == "."
+          trust_root.sane?
+        end
 
-        # check for URI fragment
-        return if path and !path.index("#").nil?
-
-        return unless %w[http https].member?(proto)
-
-        new(unparsed, proto, wildcard, host, port, path)
-      end
-
-      def self.check_sanity(trust_root_string)
-        trust_root = TrustRoot.parse(trust_root_string)
-        return false if trust_root.nil?
-
-        trust_root.sane?
-      end
-
-      # quick func for validating a url against a trust root.  See the
-      # TrustRoot class if you need more control.
-      def self.check_url(trust_root, url)
-        tr = parse(trust_root)
-        (!tr.nil? and tr.validate_url(url))
+        # quick func for validating a url against a trust root.  See the
+        # TrustRoot class if you need more control.
+        def check_url(trust_root, url)
+          tr = parse(trust_root)
+          (!tr.nil? and tr.validate_url(url))
+        end
       end
 
       # Return a discovery URL for this realm.
@@ -531,7 +533,7 @@ module OpenID
         #   and now it is much more permissive (and probably more standards compliant).
         # Handle cases Ruby used to consider "insane" here to prevent them from being considered "sane".
         wild_check = host_parts[-2, 2]
-        return false if wild_check && wild_check.detect { |wild| wild["*"] }
+        return false if wild_check&.detect { |wild| wild["*"] }
 
         # a note: ruby string split does not put an empty string at
         # the end of the list if the split element is last.  for
