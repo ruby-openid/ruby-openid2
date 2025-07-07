@@ -87,7 +87,6 @@ module OpenID
           endpoint = BasicServiceEndpoint.new(
             yadis_url, type_uris, uri, service_element
           )
-
           e = apply_filters(endpoint)
           endpoints << e unless e.nil?
         end
