@@ -13,7 +13,11 @@ latest_ruby_version = Gem::Version.create("3.4")
 current_ruby_version = Gem::Version.create(RUBY_VERSION)
 
 ### Std Lib Extracted Gems
-eval_gemfile "gemfiles/modular/x_std_libs/r3/libs.gemfile"
+if ENV.fetch("DEP_HEADS", "false").casecmp?("true")
+  eval_gemfile("gemfiles/modular/runtime_heads.gemfile")
+else
+  eval_gemfile "gemfiles/modular/x_std_libs/r3/libs.gemfile"
+end
 
 # Specify your gem's dependencies in ruby-openid.gemspec
 gemspec

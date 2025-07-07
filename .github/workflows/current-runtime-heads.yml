@@ -29,7 +29,7 @@ concurrency:
 
 jobs:
   test:
-    name: Specs ${{ matrix.ruby }}@${{ matrix.appraisal_name }}
+    name: Tests ${{ matrix.ruby }}@${{ matrix.appraisal_name }}
     if: "!contains(github.event.commits[0].message, '[ci skip]') && !contains(github.event.commits[0].message, '[skip ci]')"
     runs-on: ubuntu-latest
     continue-on-error: ${{ matrix.experimental || endsWith(matrix.ruby, 'head') }}
@@ -56,6 +56,7 @@ jobs:
 
           # jruby-10.0 (targets Ruby 3.4 compatibility)
           - ruby: "jruby"
+            if: ${{ !env.ACT }}
             appraisal_name: "dep-heads"
             exec_cmd: "rake test"
             gemfile: "Appraisal.root"

@@ -17,7 +17,7 @@ Gem::Specification.new do |spec|
   spec.homepage = "https://github.com/oauth-xx/#{spec.name}"
   spec.summary = "A library for consuming and serving OpenID identities."
 
-  # Specify which files should be added to the gem when it is released.
+  # Specify which files are part of each release.
   spec.files = Dir[
     # Splats (alphabetical)
     "lib/**/*.rb",
