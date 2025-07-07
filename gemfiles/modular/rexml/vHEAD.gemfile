@@ -1,2 +1,5 @@
 # Ruby >= 2.5
-gem "rexml", github: "ruby/rexml", branch: "master"
+# NOTE: There is a bug in HEAD which breaks the test suite, fixed here:
+# https://github.com/ruby/rexml/pull/261
+# gem "rexml", github: "ruby/rexml", branch: "master"
+gem "rexml", github: "pboling/rexml", branch: "master"

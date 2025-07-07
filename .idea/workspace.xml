@@ -4,20 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="93d48b1a-c179-44bf-b84b-ec878661df4e" name="Changes" comment="💚 More CI fixes and linting">
-      <change beforePath="$PROJECT_DIR$/.envrc" beforeDir="false" afterPath="$PROJECT_DIR$/.envrc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.github/workflows/current-runtime-heads.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/current-runtime-heads.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.github/workflows/current.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/current.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.github/workflows/heads.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/heads.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.github/workflows/jruby.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/jruby.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.github/workflows/legacy.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/legacy.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.github/workflows/supported.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/supported.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.github/workflows/unsupported.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/unsupported.yml" afterDir="false" />
+    <list default="true" id="93d48b1a-c179-44bf-b84b-ec878661df4e" name="Changes" comment="💚 More CI fixes">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Gemfile" beforeDir="false" afterPath="$PROJECT_DIR$/Gemfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ruby-openid2.gemspec" beforeDir="false" afterPath="$PROJECT_DIR$/ruby-openid2.gemspec" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/test_filters.rb" beforeDir="false" afterPath="$PROJECT_DIR$/test/test_filters.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/test_helper.rb" beforeDir="false" afterPath="$PROJECT_DIR$/test/test_helper.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gemfiles/modular/rexml/vHEAD.gemfile" beforeDir="false" afterPath="$PROJECT_DIR$/gemfiles/modular/rexml/vHEAD.gemfile" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -94,7 +83,7 @@
     "com.github.patou.gitmoji.display-icon": "emoji",
     "com.github.patou.gitmoji.text-after-unicode": " ",
     "com.github.patou.gitmoji.use-unicode": "true",
-    "com.intellij.lang.ruby.rbs.tools.collection.workspace.sync.RbsCollectionUpdateProjectActivity#LAST_UPDATE_TIMESTAMP": "1751695854511",
+    "com.intellij.lang.ruby.rbs.tools.collection.workspace.sync.RbsCollectionUpdateProjectActivity#LAST_UPDATE_TIMESTAMP": "1751922175320",
     "git-widget-placeholder": "#59 on next",
     "junie.onboarding.icon.badge.shown": "true",
     "last_opened_file_path": "/home/pboling/src/ruby-openid/ruby-openid2/.github/workflows",
@@ -310,7 +299,8 @@
       <workItem from="1751491611711" duration="114000" />
       <workItem from="1751491802864" duration="31000" />
       <workItem from="1751491844385" duration="11053000" />
-      <workItem from="1751695793007" duration="28738000" />
+      <workItem from="1751695793007" duration="35667000" />
+      <workItem from="1751922114665" duration="5138000" />
     </task>
     <task id="LOCAL-00001" summary="🙈 modernize .gitignore">
       <option name="closed" value="true" />
@@ -456,7 +446,15 @@
       <option name="project" value="LOCAL" />
       <updated>1751783465351</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="💚 More CI fixes">
+      <option name="closed" value="true" />
+      <created>1751899321897</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1751899321897</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -501,7 +499,8 @@
     <MESSAGE value="‍ IDE settings for RubyMine" />
     <MESSAGE value=" Improve CI" />
     <MESSAGE value=" More CI fixes and linting" />
-    <option name="LAST_COMMIT_MESSAGE" value=" More CI fixes and linting" />
+    <MESSAGE value=" More CI fixes" />
+    <option name="LAST_COMMIT_MESSAGE" value=" More CI fixes" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
