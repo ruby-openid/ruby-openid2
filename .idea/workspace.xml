@@ -4,9 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="93d48b1a-c179-44bf-b84b-ec878661df4e" name="Changes" comment="💚 More CI fixes">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gemfiles/modular/rexml/vHEAD.gemfile" beforeDir="false" afterPath="$PROJECT_DIR$/gemfiles/modular/rexml/vHEAD.gemfile" afterDir="false" />
+    <list default="true" id="93d48b1a-c179-44bf-b84b-ec878661df4e" name="Changes" comment="💚 Skip every step if indicated&#10;&#10;- https://github.com/actions/runner/issues/662&#10;- https://github.com/actions/toolkit/issues/146">
+      <change beforePath="$PROJECT_DIR$/.github/workflows/current-runtime-heads.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/current-runtime-heads.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.github/workflows/current.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/current.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.github/workflows/heads.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/heads.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.github/workflows/jruby.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/jruby.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -300,7 +302,7 @@
       <workItem from="1751491802864" duration="31000" />
       <workItem from="1751491844385" duration="11053000" />
       <workItem from="1751695793007" duration="35667000" />
-      <workItem from="1751922114665" duration="5138000" />
+      <workItem from="1751922114665" duration="8097000" />
     </task>
     <task id="LOCAL-00001" summary="🙈 modernize .gitignore">
       <option name="closed" value="true" />
@@ -454,7 +456,23 @@
       <option name="project" value="LOCAL" />
       <updated>1751899321897</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="💚 Temp Switch to pboling/rexml&#10;&#10;- https://github.com/ruby/rexml/issues/260&#10;- https://github.com/ruby/rexml/pull/261">
+      <option name="closed" value="true" />
+      <created>1751927555291</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1751927555291</updated>
+    </task>
+    <task id="LOCAL-00021" summary="💚 Skip every step if indicated&#10;&#10;- https://github.com/actions/runner/issues/662&#10;- https://github.com/actions/toolkit/issues/146">
+      <option name="closed" value="true" />
+      <created>1751929813651</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1751929813651</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -500,7 +518,9 @@
     <MESSAGE value=" Improve CI" />
     <MESSAGE value=" More CI fixes and linting" />
     <MESSAGE value=" More CI fixes" />
-    <option name="LAST_COMMIT_MESSAGE" value=" More CI fixes" />
+    <MESSAGE value=" Temp Switch to pboling/rexml&#10;&#10;- https://github.com/ruby/rexml/issues/260&#10;- https://github.com/ruby/rexml/pull/261" />
+    <MESSAGE value=" Skip every step if indicated&#10;&#10;- https://github.com/actions/runner/issues/662&#10;- https://github.com/actions/toolkit/issues/146" />
+    <option name="LAST_COMMIT_MESSAGE" value=" Skip every step if indicated&#10;&#10;- https://github.com/actions/runner/issues/662&#10;- https://github.com/actions/toolkit/issues/146" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

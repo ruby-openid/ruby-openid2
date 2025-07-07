@@ -28,7 +28,7 @@ concurrency:
 jobs:
   test:
     name: Tests ${{ matrix.ruby }}@${{ matrix.appraisal_name }}${{ matrix.name_extra || '' }}
-    if: "!contains(github.event.commits[0].message, '[ci skip]') && !contains(github.event.commits[0].message, '[skip ci]')"
+    if: ${{ !contains(github.event.commits[0].message, '[ci skip]') && !contains(github.event.commits[0].message, '[skip ci]') }}
     runs-on: ubuntu-latest
     continue-on-error: ${{ matrix.experimental || endsWith(matrix.ruby, 'head') }}
     env: # $BUNDLE_GEMFILE - set at job level, so applies to all steps
@@ -56,7 +56,6 @@ jobs:
 
           # jruby-head
           - ruby: "jruby-head"
-            if: ${{ !env.ACT }}
             appraisal_name: "heads"
             exec_cmd: "rake test"
             gemfile: "Appraisal.root"
@@ -65,9 +64,11 @@ jobs:
 
     steps:
       - name: Checkout
+        if: ${{ !env.ACT || !startsWith(matrix.ruby, 'jruby') }}
         uses: actions/checkout@v4
 
       - name: Setup Ruby & RubyGems
+        if: ${{ !env.ACT || !startsWith(matrix.ruby, 'jruby') }}
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: ${{ matrix.ruby }}
@@ -79,8 +80,11 @@ jobs:
       # We need to do this first to get appraisal installed.
       # NOTE: This does not use the main Gemfile at all.
       - name: Install Root Appraisal
+        if: ${{ !env.ACT || !startsWith(matrix.ruby, 'jruby') }}
         run: bundle
       - name: Appraisal for ${{ matrix.ruby }}@${{ matrix.appraisal_name }}
+        if: ${{ !env.ACT || !startsWith(matrix.ruby, 'jruby') }}
         run: bundle exec appraisal ${{ matrix.appraisal_name }} bundle
       - name: Run ${{ matrix.exec_cmd }} on ${{ matrix.ruby }}@${{ matrix.appraisal_name }}
+        if: ${{ !env.ACT || !startsWith(matrix.ruby, 'jruby') }}
         run: bundle exec appraisal ${{ matrix.appraisal_name }} bundle exec ${{ matrix.exec_cmd }}

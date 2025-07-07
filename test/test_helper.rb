@@ -2,7 +2,7 @@
 begin
   require "debug" if ENV.fetch("DEBUG", "false").casecmp?("true")
 rescue LoadError => error
-  warn "[test_helper.rb] failed to load debug gem" unless ENV["BUNDLE_GEMFILE"]
+  warn("[test_helper.rb] failed to load debug gem") unless ENV["BUNDLE_GEMFILE"]
   raise error unless error.message.include?("debug")
 end
 
@@ -16,11 +16,11 @@ if ENV.fetch("COVERAGE", "false").casecmp?("true")
 
     SimpleCov.external_at_exit = true
   rescue LoadError => error
-    warn "[test_helper.rb] failed to load test coverage gems" unless ENV["BUNDLE_GEMFILE"]
+    warn("[test_helper.rb] failed to load test coverage gems") unless ENV["BUNDLE_GEMFILE"]
     raise error unless error.message.include?("kettle")
   end
-else
-  warn("[test_helper.rb] not loading test coverage gems; override with COVERAGE=true") if ENV["BUNDLE_GEMFILE"]
+elsif ENV["BUNDLE_GEMFILE"]
+  warn("[test_helper.rb] not loading test coverage gems; override with COVERAGE=true")
 end
 
 # Testing libraries
