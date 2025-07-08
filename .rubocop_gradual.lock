@@ -362,10 +362,10 @@
     [131, 29, 3, "Style/AndOr: Use `&&` instead of `and`.", 193409806],
     [131, 59, 3, "Style/AndOr: Use `&&` instead of `and`.", 193409806]
   ],
-  "lib/openid/yadis/filters.rb:3219868769": [
+  "lib/openid/yadis/filters.rb:1581603627": [
     [41, 7, 73, "Style/ClassMethodsDefinitions: Use `class << self` to define a class method.", 2334760220],
-    [143, 5, 253, "Style/ClassMethodsDefinitions: Use `class << self` to define a class method.", 178241044],
-    [157, 5, 1242, "Style/ClassMethodsDefinitions: Use `class << self` to define a class method.", 4135749621]
+    [142, 5, 253, "Style/ClassMethodsDefinitions: Use `class << self` to define a class method.", 178241044],
+    [156, 5, 1242, "Style/ClassMethodsDefinitions: Use `class << self` to define a class method.", 4135749621]
   ],
   "lib/openid/yadis/htmltokenizer.rb:770607703": [
     [50, 3, 36, "Style/ClassMethodsDefinitions: Use `class << self` to define a class method.", 2915883728],
@@ -503,9 +503,9 @@
     [160, 22, 10, "ThreadSafety/NewThread: Avoid starting new threads.", 3411682361],
     [291, 5, 901, "Style/For: Prefer `each` over `for`.", 316016311]
   ],
-  "test/test_filters.rb:3444445650": [
+  "test/test_filters.rb:3790324670": [
     [15, 5, 932, "Minitest/MultipleAssertions: Test case has too many assertions [8/3].", 4216474825],
-    [238, 5, 776, "Minitest/MultipleAssertions: Test case has too many assertions [5/3].", 2440747337]
+    [239, 5, 776, "Minitest/MultipleAssertions: Test case has too many assertions [5/3].", 2440747337]
   ],
   "test/test_idres.rb:2896214861": [
     [119, 9, 1622, "Minitest/MultipleAssertions: Test case has too many assertions [5/3].", 2912808174],
