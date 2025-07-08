@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  Class: OpenID::Server::CheckAuthRequest
+  
+    &mdash; Documentation by YARD 0.9.37
+  
+</title>
+
+  <link rel="stylesheet" href="../../css/style.css" type="text/css" />
+
+  <link rel="stylesheet" href="../../css/common.css" type="text/css" />
+
+<script type="text/javascript">
+  pathId = "OpenID::Server::CheckAuthRequest";
+  relpath = '../../';
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="../../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div class="nav_wrap">
+      <iframe id="nav" src="../../class_list.html?1"></iframe>
+      <div id="resizer"></div>
+    </div>
+
+    <div id="main" tabindex="-1">
+      <div id="header">
+        <div id="menu">
+  
+    <a href="../../_index.html">Index (C)</a> &raquo;
+    <span class='title'><span class='object_link'><a href="../../OpenID.html" title="OpenID (module)">OpenID</a></span></span> &raquo; <span class='title'><span class='object_link'><a href="../Server.html" title="OpenID::Server (module)">Server</a></span></span>
+     &raquo; 
+    <span class="title">CheckAuthRequest</span>
+  
+</div>
+
+        <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="../../class_list.html">
+
+        <svg width="24" height="24">
+          <rect x="0" y="4" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="12" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="20" width="24" height="4" rx="1" ry="1"></rect>
+        </svg>
+    </a>
+  
+</div>
+        <div class="clear"></div>
+      </div>
+
+      <div id="content"><h1>Class: OpenID::Server::CheckAuthRequest
+  
+  
+  
+</h1>
+<div class="box_info">
+  
+  <dl>
+    <dt>Inherits:</dt>
+    <dd>
+      <span class="inheritName"><span class='object_link'><a href="OpenIDRequest.html" title="OpenID::Server::OpenIDRequest (class)">OpenIDRequest</a></span></span>
+      
+        <ul class="fullTree">
+          <li>Object</li>
+          
+            <li class="next"><span class='object_link'><a href="OpenIDRequest.html" title="OpenID::Server::OpenIDRequest (class)">OpenIDRequest</a></span></li>
+          
+            <li class="next">OpenID::Server::CheckAuthRequest</li>
+          
+        </ul>
+        <a href="#" class="inheritanceTree">show all</a>
+      
+    </dd>
+  </dl>
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+  <dl>
+    <dt>Defined in:</dt>
+    <dd>lib/openid/server.rb</dd>
+  </dl>
+  
+</div>
+
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    <p>A request to verify the validity of a previous response.</p>
+
+<p>See OpenID Specs, Verifying Directly with the OpenID Provider<br />
+<a href="http://openid.net/specs/openid-authentication-2_0-12.html#verifying_signatures">http://openid.net/specs/openid-authentication-2_0-12.html#verifying_signatures</a></p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+
+
+
+  <h2>Instance Attribute Summary <small><a href="#" class="summary_toggle">collapse</a></small></h2>
+  <ul class="summary">
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#assoc_handle-instance_method" title="#assoc_handle (instance method)">#<strong>assoc_handle</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>The association handle the response was signed with.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#invalidate_handle-instance_method" title="#invalidate_handle (instance method)">#<strong>invalidate_handle</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>An association handle the client is asking about the validity of.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#sig-instance_method" title="#sig (instance method)">#<strong>sig</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns the value of attribute sig.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#signed-instance_method" title="#signed (instance method)">#<strong>signed</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>The message with the signature which wants checking.</p>
+</div></span>
+  
+</li>
+
+    
+  </ul>
+
+
+
+  
+  
+  <h3 class="inherited">Attributes inherited from <span class='object_link'><a href="OpenIDRequest.html" title="OpenID::Server::OpenIDRequest (class)">OpenIDRequest</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="OpenIDRequest.html#message-instance_method" title="OpenID::Server::OpenIDRequest#message (method)">#message</a></span>, <span class='object_link'><a href="OpenIDRequest.html#mode-instance_method" title="OpenID::Server::OpenIDRequest#mode (method)">#mode</a></span></p>
+
+
+  
+    <h2>
+      Class Method Summary
+      <small><a href="#" class="summary_toggle">collapse</a></small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#from_message-class_method" title="from_message (class method)">.<strong>from_message</strong>(message, _op_endpoint = UNUSED)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Construct me from an OpenID::Message.</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+    <h2>
+      Instance Method Summary
+      <small><a href="#" class="summary_toggle">collapse</a></small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#answer-instance_method" title="#answer (instance method)">#<strong>answer</strong>(signatory)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Respond to this request.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(assoc_handle, signed, invalidate_handle = nil)  &#x21d2; CheckAuthRequest </a>
+    
+
+    
+  </span>
+  
+  
+    <span class="note title constructor">constructor</span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Construct me.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#to_s-instance_method" title="#to_s (instance method)">#<strong>to_s</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods inherited from <span class='object_link'><a href="OpenIDRequest.html" title="OpenID::Server::OpenIDRequest (class)">OpenIDRequest</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="OpenIDRequest.html#namespace-instance_method" title="OpenID::Server::OpenIDRequest#namespace (method)">#namespace</a></span></p>
+<div id="constructor_details" class="method_details_list">
+  <h2>Constructor Details</h2>
+  
+    <div class="method_details first">
+  <h3 class="signature first" id="initialize-instance_method">
+  
+    #<strong>initialize</strong>(assoc_handle, signed, invalidate_handle = nil)  &#x21d2; <tt><span class='object_link'><a href="" title="OpenID::Server::CheckAuthRequest (class)">CheckAuthRequest</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Construct me.</p>
+
+<p>These parameters are assigned directly as class attributes.</p>
+
+<p>Parameters:<br />
+assoc_handle:: the association handle for this request<br />
+signed:: The signed message<br />
+invalidate_handle:: An association handle that the relying<br />
+                    party is checking to see if it is invalid</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openid/server.rb', line 70</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_assoc_handle'>assoc_handle</span><span class='comma'>,</span> <span class='id identifier rubyid_signed'>signed</span><span class='comma'>,</span> <span class='id identifier rubyid_invalidate_handle'>invalidate_handle</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
+  <span class='kw'>super</span><span class='lparen'>(</span><span class='rparen'>)</span>
+
+  <span class='ivar'>@mode</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>check_authentication</span><span class='tstring_end'>&quot;</span></span>
+  <span class='ivar'>@required_fields</span> <span class='op'>=</span> <span class='qwords_beg'>%w[</span><span class='tstring_content'>identity</span><span class='words_sep'> </span><span class='tstring_content'>return_to</span><span class='words_sep'> </span><span class='tstring_content'>response_nonce</span><span class='tstring_end'>]</span></span><span class='period'>.</span><span class='id identifier rubyid_freeze'>freeze</span>
+
+  <span class='ivar'>@sig</span> <span class='op'>=</span> <span class='kw'>nil</span>
+  <span class='ivar'>@assoc_handle</span> <span class='op'>=</span> <span class='id identifier rubyid_assoc_handle'>assoc_handle</span>
+  <span class='ivar'>@signed</span> <span class='op'>=</span> <span class='id identifier rubyid_signed'>signed</span>
+  <span class='ivar'>@invalidate_handle</span> <span class='op'>=</span> <span class='id identifier rubyid_invalidate_handle'>invalidate_handle</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+  
+</div>
+
+  <div id="instance_attr_details" class="attr_details">
+    <h2>Instance Attribute Details</h2>
+    
+      
+      <span id="assoc_handle=-instance_method"></span>
+      <div class="method_details first">
+  <h3 class="signature first" id="assoc_handle-instance_method">
+  
+    #<strong>assoc_handle</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>The association handle the response was signed with.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+50
+51
+52</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openid/server.rb', line 50</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_assoc_handle'>assoc_handle</span>
+  <span class='ivar'>@assoc_handle</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id="invalidate_handle=-instance_method"></span>
+      <div class="method_details ">
+  <h3 class="signature " id="invalidate_handle-instance_method">
+  
+    #<strong>invalidate_handle</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>An association handle the client is asking about the validity<br />
+of. May be nil.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+57
+58
+59</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openid/server.rb', line 57</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_invalidate_handle'>invalidate_handle</span>
+  <span class='ivar'>@invalidate_handle</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id="sig=-instance_method"></span>
+      <div class="method_details ">
+  <h3 class="signature " id="sig-instance_method">
+  
+    #<strong>sig</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns the value of attribute sig.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+59
+60
+61</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openid/server.rb', line 59</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_sig'>sig</span>
+  <span class='ivar'>@sig</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id="signed=-instance_method"></span>
+      <div class="method_details ">
+  <h3 class="signature " id="signed-instance_method">
+  
+    #<strong>signed</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>The message with the signature which wants checking.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+53
+54
+55</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openid/server.rb', line 53</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_signed'>signed</span>
+  <span class='ivar'>@signed</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+
+  <div id="class_method_details" class="method_details_list">
+    <h2>Class Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="from_message-class_method">
+  
+    .<strong>from_message</strong>(message, _op_endpoint = UNUSED)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Construct me from an OpenID::Message.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openid/server.rb', line 83</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_from_message'>from_message</span><span class='lparen'>(</span><span class='id identifier rubyid_message'>message</span><span class='comma'>,</span> <span class='id identifier rubyid__op_endpoint'>_op_endpoint</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Server.html#UNUSED-constant" title="OpenID::Server::UNUSED (constant)">UNUSED</a></span></span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_assoc_handle'>assoc_handle</span> <span class='op'>=</span> <span class='id identifier rubyid_message'>message</span><span class='period'>.</span><span class='id identifier rubyid_get_arg'>get_arg</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../../OpenID.html#OPENID_NS-constant" title="OpenID::OPENID_NS (constant)">OPENID_NS</a></span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>assoc_handle</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_invalidate_handle'>invalidate_handle</span> <span class='op'>=</span> <span class='id identifier rubyid_message'>message</span><span class='period'>.</span><span class='id identifier rubyid_get_arg'>get_arg</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../../OpenID.html#OPENID_NS-constant" title="OpenID::OPENID_NS (constant)">OPENID_NS</a></span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>invalidate_handle</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+
+  <span class='id identifier rubyid_signed'>signed</span> <span class='op'>=</span> <span class='id identifier rubyid_message'>message</span><span class='period'>.</span><span class='id identifier rubyid_copy'>copy</span>
+  <span class='comment'># openid.mode is currently check_authentication because
+</span>  <span class='comment'># that&#39;s the mode of this request.  But the signature
+</span>  <span class='comment'># was made on something with a different openid.mode.
+</span>  <span class='comment'># http://article.gmane.org/gmane.comp.web.openid.general/537
+</span>  <span class='id identifier rubyid_signed'>signed</span><span class='period'>.</span><span class='id identifier rubyid_set_arg'>set_arg</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../../OpenID.html#OPENID_NS-constant" title="OpenID::OPENID_NS (constant)">OPENID_NS</a></span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>mode</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>id_res</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_signed'>signed</span><span class='period'>.</span><span class='id identifier rubyid_has_key?'>has_key?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../../OpenID.html#OPENID_NS-constant" title="OpenID::OPENID_NS (constant)">OPENID_NS</a></span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>mode</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+
+  <span class='id identifier rubyid_obj'>obj</span> <span class='op'>=</span> <span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_assoc_handle'>assoc_handle</span><span class='comma'>,</span> <span class='id identifier rubyid_signed'>signed</span><span class='comma'>,</span> <span class='id identifier rubyid_invalidate_handle'>invalidate_handle</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_obj'>obj</span><span class='period'>.</span><span class='id identifier rubyid_message'>message</span> <span class='op'>=</span> <span class='id identifier rubyid_message'>message</span>
+  <span class='id identifier rubyid_obj'>obj</span><span class='period'>.</span><span class='id identifier rubyid_sig'>sig</span> <span class='op'>=</span> <span class='id identifier rubyid_message'>message</span><span class='period'>.</span><span class='id identifier rubyid_get_arg'>get_arg</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../../OpenID.html#OPENID_NS-constant" title="OpenID::OPENID_NS (constant)">OPENID_NS</a></span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>sig</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+
+  <span class='kw'>if</span> <span class='op'>!</span><span class='id identifier rubyid_obj'>obj</span><span class='period'>.</span><span class='id identifier rubyid_assoc_handle'>assoc_handle</span> <span class='kw'>or</span>
+      <span class='op'>!</span><span class='id identifier rubyid_obj'>obj</span><span class='period'>.</span><span class='id identifier rubyid_sig'>sig</span>
+    <span class='id identifier rubyid_msg'>msg</span> <span class='op'>=</span> <span class='id identifier rubyid_format'>format</span><span class='lparen'>(</span>
+      <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>%s request missing required parameter from message %s</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+      <span class='id identifier rubyid_obj'>obj</span><span class='period'>.</span><span class='id identifier rubyid_mode'>mode</span><span class='comma'>,</span>
+      <span class='id identifier rubyid_message'>message</span><span class='comma'>,</span>
+    <span class='rparen'>)</span>
+    <span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="ProtocolError.html" title="OpenID::Server::ProtocolError (class)">ProtocolError</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="ProtocolError.html#initialize-instance_method" title="OpenID::Server::ProtocolError#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_message'>message</span><span class='comma'>,</span> <span class='id identifier rubyid_msg'>msg</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+
+  <span class='id identifier rubyid_obj'>obj</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="answer-instance_method">
+  
+    #<strong>answer</strong>(signatory)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Respond to this request.</p>
+
+<p>Given a Signatory, I can check the validity of the signature<br />
+and the invalidate_handle.  I return a response with an<br />
+is_valid (and, if appropriate invalidate_handle) field.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openid/server.rb', line 116</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_answer'>answer</span><span class='lparen'>(</span><span class='id identifier rubyid_signatory'>signatory</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_is_valid'>is_valid</span> <span class='op'>=</span> <span class='id identifier rubyid_signatory'>signatory</span><span class='period'>.</span><span class='id identifier rubyid_verify'>verify</span><span class='lparen'>(</span><span class='ivar'>@assoc_handle</span><span class='comma'>,</span> <span class='ivar'>@signed</span><span class='rparen'>)</span>
+  <span class='comment'># Now invalidate that assoc_handle so it this checkAuth
+</span>  <span class='comment'># message cannot be replayed.
+</span>  <span class='id identifier rubyid_signatory'>signatory</span><span class='period'>.</span><span class='id identifier rubyid_invalidate'>invalidate</span><span class='lparen'>(</span><span class='ivar'>@assoc_handle</span><span class='comma'>,</span> <span class='kw'>true</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_response'>response</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="OpenIDResponse.html" title="OpenID::Server::OpenIDResponse (class)">OpenIDResponse</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="OpenIDResponse.html#initialize-instance_method" title="OpenID::Server::OpenIDResponse#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='kw'>self</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_valid_str'>valid_str</span> <span class='op'>=</span> <span class='id identifier rubyid_is_valid'>is_valid</span> <span class='op'>?</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>true</span><span class='tstring_end'>&quot;</span></span> <span class='op'>:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>false</span><span class='tstring_end'>&quot;</span></span>
+  <span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_fields'>fields</span><span class='period'>.</span><span class='id identifier rubyid_set_arg'>set_arg</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../../OpenID.html#OPENID_NS-constant" title="OpenID::OPENID_NS (constant)">OPENID_NS</a></span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>is_valid</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_valid_str'>valid_str</span><span class='rparen'>)</span>
+
+  <span class='kw'>if</span> <span class='ivar'>@invalidate_handle</span>
+    <span class='id identifier rubyid_assoc'>assoc</span> <span class='op'>=</span> <span class='id identifier rubyid_signatory'>signatory</span><span class='period'>.</span><span class='id identifier rubyid_get_association'>get_association</span><span class='lparen'>(</span><span class='ivar'>@invalidate_handle</span><span class='comma'>,</span> <span class='kw'>false</span><span class='rparen'>)</span>
+    <span class='kw'>unless</span> <span class='id identifier rubyid_assoc'>assoc</span>
+      <span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_fields'>fields</span><span class='period'>.</span><span class='id identifier rubyid_set_arg'>set_arg</span><span class='lparen'>(</span>
+        <span class='const'><span class='object_link'><a href="../../OpenID.html#OPENID_NS-constant" title="OpenID::OPENID_NS (constant)">OPENID_NS</a></span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>invalidate_handle</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='ivar'>@invalidate_handle</span>
+      <span class='rparen'>)</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+
+  <span class='id identifier rubyid_response'>response</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="to_s-instance_method">
+  
+    #<strong>to_s</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openid/server.rb', line 137</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_to_s'>to_s</span>
+  <span class='id identifier rubyid_ih'>ih</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='ivar'>@invalidate_handle</span>
+    <span class='id identifier rubyid_format'>format</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'> invalidate? %s</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='ivar'>@invalidate_handle</span><span class='rparen'>)</span>
+  <span class='kw'>else</span>
+    <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>end</span>
+
+  <span class='id identifier rubyid_format'>format</span><span class='lparen'>(</span>
+    <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&lt;%s handle: %s sig: %s: signed: %s%s&gt;</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+    <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='comma'>,</span>
+    <span class='ivar'>@assoc_handle</span><span class='comma'>,</span>
+    <span class='ivar'>@sig</span><span class='comma'>,</span>
+    <span class='ivar'>@signed</span><span class='comma'>,</span>
+    <span class='id identifier rubyid_ih'>ih</span><span class='comma'>,</span>
+  <span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+      <div id="footer">
+  Generated on Sun Jul  6 06:29:39 2025 by
+  <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.9.37 (ruby-3.4.4).
+</div>
+
+    </div>
+  </body>
+</html>

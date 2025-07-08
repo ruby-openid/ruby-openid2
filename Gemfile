@@ -1,33 +1,41 @@
-# frozen_string_literal: true
+#### IMPORTANT #######################################################
+# Gemfile is for local development ONLY; Gemfile is NOT loaded in CI #
+####################################################### IMPORTANT ####
+# On CI we only need the gemspecs' dependencies (including development dependencies).
+# Exceptions, if any, such as for Appraisals, are in gemfiles/*.gemfile
 
 source "https://rubygems.org"
 
 git_source(:github) { |repo_name| "https://github.com/#{repo_name}" }
+git_source(:gitlab) { |repo_name| "https://gitlab.com/#{repo_name}" }
 
-#### IMPORTANT #######################################################
-# Gemfile is for local development ONLY; Gemfile is NOT loaded in CI #
-####################################################### IMPORTANT ####
-# Root Gemfile is only for local development only. It is not loaded on CI.
-# On CI we only need the gemspecs' dependencies (including development dependencies).
-# Exceptions, if any, will be found in gemfiles/*.gemfile
+latest_ruby_version = Gem::Version.create("3.4")
+current_ruby_version = Gem::Version.create(RUBY_VERSION)
 
-# When depended on directly, these previously stdlib gems,
-#   deprecated in Ruby 3.3 & removed in Ruby 3.5
-#   make it difficult to build on GA CI with Ruby 2.7 and bundler v2.4.22.
-# See: https://github.com/rubygems/rubygems/issues/7178#issuecomment-2372558363
-gem "net-http", "~> 0.4", ">= 0.4.1"
-gem "uri", ">= 0.13.1"
-gem "logger", "~> 1.6", ">= 1.6.1"
-gem "rexml", "~> 3.3", ">= 3.3.7"
-
-# Ruby 3.5 may remove cgi from std lib
-# See: https://bugs.ruby-lang.org/issues/21258
-gem "cgi", ">= 0.5"
+### Std Lib Extracted Gems
+if ENV.fetch("DEP_HEADS", "false").casecmp?("true")
+  eval_gemfile("gemfiles/modular/runtime_heads.gemfile")
+else
+  eval_gemfile "gemfiles/modular/x_std_libs/r3/libs.gemfile"
+end
 
 # Specify your gem's dependencies in ruby-openid.gemspec
 gemspec
 
-platform :mri do
-  # Debugging
-  gem "byebug", ">= 11"
+### Debugging
+eval_gemfile "gemfiles/modular/debug.gemfile"
+
+### Testing
+gem "appraisal", github: "pboling/appraisal", branch: "galtzo"
+
+# Only runs on the latest Ruby
+if current_ruby_version >= latest_ruby_version
+  ### Security Audit
+  eval_gemfile "gemfiles/modular/audit.gemfile"
+  ### Test Coverage
+  eval_gemfile "gemfiles/modular/coverage.gemfile"
+  ### Documentation
+  eval_gemfile "gemfiles/modular/documentation.gemfile"
+  ### Linting
+  eval_gemfile "gemfiles/modular/style.gemfile"
 end

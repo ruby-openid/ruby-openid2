@@ -135,8 +135,6 @@ module OpenID
       end
 
       def to_s
-        ih = nil
-
         ih = if @invalidate_handle
           format(" invalidate? %s", @invalidate_handle)
         else

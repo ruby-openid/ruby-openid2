@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  Class: OpenID::Consumer
+  
+    &mdash; Documentation by YARD 0.9.37
+  
+</title>
+
+  <link rel="stylesheet" href="../css/style.css" type="text/css" />
+
+  <link rel="stylesheet" href="../css/common.css" type="text/css" />
+
+<script type="text/javascript">
+  pathId = "OpenID::Consumer";
+  relpath = '../';
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div class="nav_wrap">
+      <iframe id="nav" src="../class_list.html?1"></iframe>
+      <div id="resizer"></div>
+    </div>
+
+    <div id="main" tabindex="-1">
+      <div id="header">
+        <div id="menu">
+  
+    <a href="../_index.html">Index (C)</a> &raquo;
+    <span class='title'><span class='object_link'><a href="../OpenID.html" title="OpenID (module)">OpenID</a></span></span>
+     &raquo; 
+    <span class="title">Consumer</span>
+  
+</div>
+
+        <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="../class_list.html">
+
+        <svg width="24" height="24">
+          <rect x="0" y="4" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="12" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="20" width="24" height="4" rx="1" ry="1"></rect>
+        </svg>
+    </a>
+  
+</div>
+        <div class="clear"></div>
+      </div>
+
+      <div id="content"><h1>Class: OpenID::Consumer
+  
+  
+  
+</h1>
+<div class="box_info">
+  
+  <dl>
+    <dt>Inherits:</dt>
+    <dd>
+      <span class="inheritName">Object</span>
+      
+        <ul class="fullTree">
+          <li>Object</li>
+          
+            <li class="next">OpenID::Consumer</li>
+          
+        </ul>
+        <a href="#" class="inheritanceTree">show all</a>
+      
+    </dd>
+  </dl>
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+  <dl>
+    <dt>Defined in:</dt>
+    <dd>lib/openid/consumer.rb<span class="defines">,<br />
+  lib/openid/consumer/idres.rb,<br /> lib/openid/consumer/session.rb,<br /> lib/openid/consumer/responses.rb,<br /> lib/openid/consumer/checkid_request.rb,<br /> lib/openid/consumer/discovery_manager.rb,<br /> lib/openid/consumer/associationmanager.rb</span>
+</dd>
+  </dl>
+  
+</div>
+
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    <p>OpenID support for Relying Parties (aka Consumers).</p>
+
+<p>This module documents the main interface with the OpenID consumer<br />
+library.  The only part of the library which has to be used and<br />
+isn’t documented in full here is the store required to create an<br />
+Consumer instance.</p>
+
+<p>= OVERVIEW</p>
+
+<p>The OpenID identity verification process most commonly uses the<br />
+following steps, as visible to the user of this library:</p>
+
+<ol>
+  <li>
+    <p>The user enters their OpenID into a field on the consumer’s<br />
+site, and hits a login button.</p>
+  </li>
+  <li>
+    <p>The consumer site discovers the user’s OpenID provider using<br />
+the Yadis protocol.</p>
+  </li>
+  <li>
+    <p>The consumer site sends the browser a redirect to the OpenID<br />
+provider.  This is the authentication request as described in<br />
+the OpenID specification.</p>
+  </li>
+  <li>
+    <p>The OpenID provider’s site sends the browser a redirect back to<br />
+the consumer site.  This redirect contains the provider’s<br />
+response to the authentication request.</p>
+  </li>
+</ol>
+
+<p>The most important part of the flow to note is the consumer’s site<br />
+must handle two separate HTTP requests in order to perform the<br />
+full identity check.</p>
+
+<p>= LIBRARY DESIGN</p>
+
+<p>This consumer library is designed with that flow in mind.  The<br />
+goal is to make it as easy as possible to perform the above steps<br />
+securely.</p>
+
+<p>At a high level, there are two important parts in the consumer<br />
+library.  The first important part is this module, which contains<br />
+the interface to actually use this library.  The second is<br />
+openid/store/interface.rb, which describes the interface to use if<br />
+you need to create a custom method for storing the state this<br />
+library needs to maintain between requests.</p>
+
+<p>In general, the second part is less important for users of the<br />
+library to know about, as several implementations are provided<br />
+which cover a wide variety of situations in which consumers may<br />
+use the library.</p>
+
+<p>The Consumer class has methods corresponding to the actions<br />
+necessary in each of steps 2, 3, and 4 described in the overview.<br />
+Use of this library should be as easy as creating an Consumer<br />
+instance and calling the methods appropriate for the action the<br />
+site wants to take.</p>
+
+<p>This library automatically detects which version of the OpenID<br />
+protocol should be used for a transaction and constructs the<br />
+proper requests and responses.  Users of this library do not need<br />
+to worry about supporting multiple protocol versions; the library<br />
+supports them implicitly.  Depending on the version of the<br />
+protocol in use, the OpenID transaction may be more secure.  See<br />
+the OpenID specifications for more information.</p>
+
+<p>= SESSIONS, STORES, AND STATELESS MODE</p>
+
+<p>The Consumer object keeps track of two types of state:</p>
+
+<ol>
+  <li>
+    <p>State of the user’s current authentication attempt.  Things<br />
+like the identity URL, the list of endpoints discovered for<br />
+that URL, and in case where some endpoints are unreachable, the<br />
+list of endpoints already tried.  This state needs to be held<br />
+from Consumer.begin() to Consumer.complete(), but it is only<br />
+applicable to a single session with a single user agent, and at<br />
+the end of the authentication process (i.e. when an OP replies<br />
+with either <tt>id_res</tt>. or <tt>cancel</tt> it may be<br />
+discarded.</p>
+  </li>
+  <li>
+    <p>State of relationships with servers, i.e. shared secrets<br />
+(associations) with servers and nonces seen on signed messages.<br />
+This information should persist from one session to the next<br />
+and should not be bound to a particular user-agent.</p>
+  </li>
+</ol>
+
+<p>These two types of storage are reflected in the first two<br />
+arguments of Consumer’s constructor, <tt>session</tt> and<br />
+<tt>store</tt>.  <tt>session</tt> is a dict-like object and we<br />
+hope your web framework provides you with one of these bound to<br />
+the user agent.  <tt>store</tt> is an instance of Store.</p>
+
+<p>Since the store does hold secrets shared between your application<br />
+and the OpenID provider, you should be careful about how you use<br />
+it in a shared hosting environment.  If the filesystem or database<br />
+permissions of your web host allow strangers to read from them, do<br />
+not store your data there!  If you have no safe place to store<br />
+your data, construct your consumer with nil for the store, and it<br />
+will operate only in stateless mode.  Stateless mode may be<br />
+slower, put more load on the OpenID provider, and trusts the<br />
+provider to keep you safe from replay attacks.</p>
+
+<p>Several store implementation are provided, and the interface is<br />
+fully documented so that custom stores can be used as well.  See<br />
+the documentation for the Consumer class for more information on<br />
+the interface for stores.  The implementations that are provided<br />
+allow the consumer site to store the necessary data in several<br />
+different ways, including several SQL databases and normal files<br />
+on disk.</p>
+
+<p>= IMMEDIATE MODE</p>
+
+<p>In the flow described above, the user may need to confirm to the<br />
+OpenID provider that it’s ok to disclose his or her identity.  The<br />
+provider may draw pages asking for information from the user<br />
+before it redirects the browser back to the consumer’s site.  This<br />
+is generally transparent to the consumer site, so it is typically<br />
+ignored as an implementation detail.</p>
+
+<p>There can be times, however, where the consumer site wants to get<br />
+a response immediately.  When this is the case, the consumer can<br />
+put the library in immediate mode.  In immediate mode, there is an<br />
+extra response possible from the server, which is essentially the<br />
+server reporting that it doesn’t have enough information to answer<br />
+the question yet.</p>
+
+<p>= USING THIS LIBRARY</p>
+
+<p>Integrating this library into an application is usually a<br />
+relatively straightforward process.  The process should basically<br />
+follow this plan:</p>
+
+<p>Add an OpenID login field somewhere on your site.  When an OpenID<br />
+is entered in that field and the form is submitted, it should make<br />
+a request to the site that includes that OpenID URL.</p>
+
+<p>First, the application should instantiate a Consumer with a<br />
+session for per-user state and store for shared state using the<br />
+store of choice.</p>
+
+<p>Next, the application should call the <tt>begin</tt> method of<br />
+Consumer instance.  This method takes the OpenID URL as entered by<br />
+the user.  The <tt>begin</tt> method returns a CheckIDRequest<br />
+object.</p>
+
+<p>Next, the application should call the redirect_url method on the<br />
+CheckIDRequest object.  The parameter <tt>return_to</tt> is the<br />
+URL that the OpenID server will send the user back to after<br />
+attempting to verify his or her identity.  The <tt>realm</tt><br />
+parameter is the URL (or URL pattern) that identifies your web<br />
+site to the user when he or she is authorizing it.  Send a<br />
+redirect to the resulting URL to the user’s browser.</p>
+
+<p>That’s the first half of the authentication process.  The second<br />
+half of the process is done after the user’s OpenID Provider sends<br />
+the user’s browser a redirect back to your site to complete their<br />
+login.</p>
+
+<p>When that happens, the user will contact your site at the URL<br />
+given as the <tt>return_to</tt> URL to the redirect_url call made<br />
+above.  The request will have several query parameters added to<br />
+the URL by the OpenID provider as the information necessary to<br />
+finish the request.</p>
+
+<p>Get a Consumer instance with the same session and store as before<br />
+and call its complete() method, passing in all the received query<br />
+arguments and URL currently being handled.</p>
+
+<p>There are multiple possible return types possible from that<br />
+method. These indicate the whether or not the login was<br />
+successful, and include any additional information appropriate for<br />
+their type.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><h2>Defined Under Namespace</h2>
+<p class="children">
+  
+    
+      <strong class="modules">Modules:</strong> <span class='object_link'><a href="Consumer/Response.html" title="OpenID::Consumer::Response (module)">Response</a></span>
+    
+  
+    
+      <strong class="classes">Classes:</strong> <span class='object_link'><a href="Consumer/AssociationManager.html" title="OpenID::Consumer::AssociationManager (class)">AssociationManager</a></span>, <span class='object_link'><a href="Consumer/CancelResponse.html" title="OpenID::Consumer::CancelResponse (class)">CancelResponse</a></span>, <span class='object_link'><a href="Consumer/CheckIDRequest.html" title="OpenID::Consumer::CheckIDRequest (class)">CheckIDRequest</a></span>, <span class='object_link'><a href="Consumer/DiffieHellmanSHA1Session.html" title="OpenID::Consumer::DiffieHellmanSHA1Session (class)">DiffieHellmanSHA1Session</a></span>, <span class='object_link'><a href="Consumer/DiffieHellmanSHA256Session.html" title="OpenID::Consumer::DiffieHellmanSHA256Session (class)">DiffieHellmanSHA256Session</a></span>, <span class='object_link'><a href="Consumer/DiffieHellmanSession.html" title="OpenID::Consumer::DiffieHellmanSession (class)">DiffieHellmanSession</a></span>, <span class='object_link'><a href="Consumer/DiscoveredServices.html" title="OpenID::Consumer::DiscoveredServices (class)">DiscoveredServices</a></span>, <span class='object_link'><a href="Consumer/DiscoveryManager.html" title="OpenID::Consumer::DiscoveryManager (class)">DiscoveryManager</a></span>, <span class='object_link'><a href="Consumer/FailureResponse.html" title="OpenID::Consumer::FailureResponse (class)">FailureResponse</a></span>, <span class='object_link'><a href="Consumer/IdResHandler.html" title="OpenID::Consumer::IdResHandler (class)">IdResHandler</a></span>, <span class='object_link'><a href="Consumer/NoEncryptionSession.html" title="OpenID::Consumer::NoEncryptionSession (class)">NoEncryptionSession</a></span>, <span class='object_link'><a href="Consumer/Session.html" title="OpenID::Consumer::Session (class)">Session</a></span>, <span class='object_link'><a href="Consumer/SetupNeededResponse.html" title="OpenID::Consumer::SetupNeededResponse (class)">SetupNeededResponse</a></span>, <span class='object_link'><a href="Consumer/SuccessResponse.html" title="OpenID::Consumer::SuccessResponse (class)">SuccessResponse</a></span>
+    
+  
+</p>
+
+  
+    <h2>
+      Constant Summary
+      <small><a href="#" class="constants_summary_toggle">collapse</a></small>
+    </h2>
+
+    <dl class="constants">
+      
+        <dt id="SUCCESS-constant" class="">SUCCESS =
+          <div class="docstring">
+  <div class="discussion">
+    <p>Code returned when either the of the<br />
+OpenID::OpenIDConsumer.begin_auth or OpenID::OpenIDConsumer.complete_auth<br />
+methods return successfully.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+        </dt>
+        <dd><pre class="code"><span class='symbol'>:success</span></pre></dd>
+      
+        <dt id="FAILURE-constant" class="">FAILURE =
+          <div class="docstring">
+  <div class="discussion">
+    <p>Code OpenID::OpenIDConsumer.complete_auth<br />
+returns when the value it received indicated an invalid login.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+        </dt>
+        <dd><pre class="code"><span class='symbol'>:failure</span></pre></dd>
+      
+        <dt id="CANCEL-constant" class="">CANCEL =
+          <div class="docstring">
+  <div class="discussion">
+    <p>Code returned by OpenIDConsumer.complete_auth when the user<br />
+cancels the operation from the server.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+        </dt>
+        <dd><pre class="code"><span class='symbol'>:cancel</span></pre></dd>
+      
+        <dt id="SETUP_NEEDED-constant" class="">SETUP_NEEDED =
+          <div class="docstring">
+  <div class="discussion">
+    <p>Code returned by OpenID::OpenIDConsumer.complete_auth when the<br />
+OpenIDConsumer instance is in immediate mode and ther server sends back a<br />
+URL for the user to login with.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+        </dt>
+        <dd><pre class="code"><span class='symbol'>:setup_needed</span></pre></dd>
+      
+    </dl>
+  
+
+
+
+
+  <h2>Class Attribute Summary <small><a href="#" class="summary_toggle">collapse</a></small></h2>
+  <ul class="summary">
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#openid1_return_to_claimed_id_name-class_method" title="openid1_return_to_claimed_id_name (class method)">.<strong>openid1_return_to_claimed_id_name</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns the value of attribute openid1_return_to_claimed_id_name.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#openid1_return_to_nonce_name-class_method" title="openid1_return_to_nonce_name (class method)">.<strong>openid1_return_to_nonce_name</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns the value of attribute openid1_return_to_nonce_name.</p>
+</div></span>
+  
+</li>
+
+    
+  </ul>
+
+  <h2>Instance Attribute Summary <small><a href="#" class="summary_toggle">collapse</a></small></h2>
+  <ul class="summary">
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#session_key_prefix-instance_method" title="#session_key_prefix (instance method)">#<strong>session_key_prefix</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns the value of attribute session_key_prefix.</p>
+</div></span>
+  
+</li>
+
+    
+  </ul>
+
+
+
+
+  
+    <h2>
+      Instance Method Summary
+      <small><a href="#" class="summary_toggle">collapse</a></small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#begin-instance_method" title="#begin (instance method)">#<strong>begin</strong>(openid_identifier, anonymous = false)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Start the OpenID authentication process.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#begin_without_discovery-instance_method" title="#begin_without_discovery (instance method)">#<strong>begin_without_discovery</strong>(service, anonymous)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Start OpenID verification without doing OpenID server discovery.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#complete-instance_method" title="#complete (instance method)">#<strong>complete</strong>(query, current_url)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns a subclass of Response.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(session, store)  &#x21d2; Consumer </a>
+    
+
+    
+  </span>
+  
+  
+    <span class="note title constructor">constructor</span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Initialize a Consumer instance.</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+<div id="constructor_details" class="method_details_list">
+  <h2>Constructor Details</h2>
+  
+    <div class="method_details first">
+  <h3 class="signature first" id="initialize-instance_method">
+  
+    #<strong>initialize</strong>(session, store)  &#x21d2; <tt><span class='object_link'><a href="" title="OpenID::Consumer (class)">Consumer</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Initialize a Consumer instance.</p>
+
+<p>You should create a new instance of the Consumer object with<br />
+every HTTP request that handles OpenID transactions.</p>
+
+<p>session: the session object to use to store request information.<br />
+The session should behave like a hash.</p>
+
+<p>store: an object that implements the interface in Store.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+192
+193
+194
+195
+196
+197</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openid/consumer.rb', line 192</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_session'>session</span><span class='comma'>,</span> <span class='id identifier rubyid_store'>store</span><span class='rparen'>)</span>
+  <span class='ivar'>@origin_session</span> <span class='op'>=</span> <span class='id identifier rubyid_session'>session</span>
+  <span class='ivar'>@session</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Consumer/Session.html" title="OpenID::Consumer::Session (class)">Session</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Consumer/Session.html#initialize-instance_method" title="OpenID::Consumer::Session#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_session'>session</span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="../OpenID.html" title="OpenID (module)">OpenID</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="OpenIDServiceEndpoint.html" title="OpenID::OpenIDServiceEndpoint (class)">OpenIDServiceEndpoint</a></span></span><span class='rparen'>)</span>
+  <span class='ivar'>@store</span> <span class='op'>=</span> <span class='id identifier rubyid_store'>store</span>
+  <span class='ivar'>@session_key_prefix</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>OpenID::Consumer::</span><span class='tstring_end'>&quot;</span></span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+  
+</div>
+
+  <div id="class_attr_details" class="attr_details">
+    <h2>Class Attribute Details</h2>
+    
+      
+      <span id="openid1_return_to_claimed_id_name=-class_method"></span>
+      <div class="method_details first">
+  <h3 class="signature first" id="openid1_return_to_claimed_id_name-class_method">
+  
+    .<strong>openid1_return_to_claimed_id_name</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns the value of attribute openid1_return_to_claimed_id_name.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+33
+34
+35</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openid/consumer/idres.rb', line 33</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_openid1_return_to_claimed_id_name'>openid1_return_to_claimed_id_name</span>
+  <span class='ivar'>@openid1_return_to_claimed_id_name</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id="openid1_return_to_nonce_name=-class_method"></span>
+      <div class="method_details ">
+  <h3 class="signature " id="openid1_return_to_nonce_name-class_method">
+  
+    .<strong>openid1_return_to_nonce_name</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns the value of attribute openid1_return_to_nonce_name.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+25
+26
+27</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openid/consumer/idres.rb', line 25</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_openid1_return_to_nonce_name'>openid1_return_to_nonce_name</span>
+  <span class='ivar'>@openid1_return_to_nonce_name</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+  <div id="instance_attr_details" class="attr_details">
+    <h2>Instance Attribute Details</h2>
+    
+      
+      <span id="session_key_prefix=-instance_method"></span>
+      <div class="method_details first">
+  <h3 class="signature first" id="session_key_prefix-instance_method">
+  
+    #<strong>session_key_prefix</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns the value of attribute session_key_prefix.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+181
+182
+183</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openid/consumer.rb', line 181</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_session_key_prefix'>session_key_prefix</span>
+  <span class='ivar'>@session_key_prefix</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="begin-instance_method">
+  
+    #<strong>begin</strong>(openid_identifier, anonymous = false)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Start the OpenID authentication process. See steps 1-2 in the<br />
+overview for the Consumer class.</p>
+
+<p>user_url: Identity URL given by the user. This method performs a<br />
+textual transformation of the URL to try and make sure it is<br />
+normalized. For example, a user_url of example.com will be<br />
+normalized to http://example.com/ normalizing and resolving any<br />
+redirects the server might issue.</p>
+
+<p>anonymous: A boolean value.  Whether to make an anonymous<br />
+request of the OpenID provider.  Such a request does not ask for<br />
+an authorization assertion for an OpenID identifier, but may be<br />
+used with extensions to pass other data.  e.g. “I don’t care who<br />
+you are, but I’d like to know your time zone.”</p>
+
+<p>Returns a CheckIDRequest object containing the discovered<br />
+information, with a method for building a redirect URL to the<br />
+server, as described in step 3 of the overview. This object may<br />
+also be used to add extension arguments to the request, using<br />
+its add_extension_arg method.</p>
+
+<p>Raises DiscoveryFailure when no OpenID server can be found for<br />
+this URL.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openid/consumer.rb', line 222</span>
+
+<span class='kw'>def</span> <span class='kw'>begin</span><span class='lparen'>(</span><span class='id identifier rubyid_openid_identifier'>openid_identifier</span><span class='comma'>,</span> <span class='id identifier rubyid_anonymous'>anonymous</span> <span class='op'>=</span> <span class='kw'>false</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_manager'>manager</span> <span class='op'>=</span> <span class='id identifier rubyid_discovery_manager'>discovery_manager</span><span class='lparen'>(</span><span class='id identifier rubyid_openid_identifier'>openid_identifier</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_service'>service</span> <span class='op'>=</span> <span class='id identifier rubyid_manager'>manager</span><span class='period'>.</span><span class='id identifier rubyid_get_next_service'>get_next_service</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_method'>method</span><span class='lparen'>(</span><span class='symbol'>:discover</span><span class='rparen'>)</span><span class='rparen'>)</span>
+
+  <span class='kw'>if</span> <span class='id identifier rubyid_service'>service</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
+    <span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="DiscoveryFailure.html" title="OpenID::DiscoveryFailure (class)">DiscoveryFailure</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="DiscoveryFailure.html#initialize-instance_method" title="OpenID::DiscoveryFailure#initialize (method)">new</a></span></span><span class='lparen'>(</span>
+      <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>No usable OpenID services were found </span><span class='tstring_end'>&quot;</span></span> \
+        <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>for </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_openid_identifier'>openid_identifier</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+      <span class='kw'>nil</span><span class='comma'>,</span>
+    <span class='rparen'>)</span>
+  <span class='kw'>else</span>
+    <span class='id identifier rubyid_begin_without_discovery'>begin_without_discovery</span><span class='lparen'>(</span><span class='id identifier rubyid_service'>service</span><span class='comma'>,</span> <span class='id identifier rubyid_anonymous'>anonymous</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="begin_without_discovery-instance_method">
+  
+    #<strong>begin_without_discovery</strong>(service, anonymous)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Start OpenID verification without doing OpenID server<br />
+discovery. This method is used internally by Consumer.begin()<br />
+after discovery is performed, and exists to provide an interface<br />
+for library users needing to perform their own discovery.</p>
+
+<p>service: an OpenID service endpoint descriptor.  This object and<br />
+factories for it are found in the openid/consumer/discovery.rb<br />
+module.</p>
+
+<p>Returns an OpenID authentication request object.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+247
+248
+249
+250
+251
+252
+253
+254
+255
+256
+257
+258
+259
+260
+261</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openid/consumer.rb', line 247</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_begin_without_discovery'>begin_without_discovery</span><span class='lparen'>(</span><span class='id identifier rubyid_service'>service</span><span class='comma'>,</span> <span class='id identifier rubyid_anonymous'>anonymous</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_assoc'>assoc</span> <span class='op'>=</span> <span class='id identifier rubyid_association_manager'>association_manager</span><span class='lparen'>(</span><span class='id identifier rubyid_service'>service</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_get_association'>get_association</span>
+  <span class='id identifier rubyid_checkid_request'>checkid_request</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Consumer/CheckIDRequest.html" title="OpenID::Consumer::CheckIDRequest (class)">CheckIDRequest</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Consumer/CheckIDRequest.html#initialize-instance_method" title="OpenID::Consumer::CheckIDRequest#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_assoc'>assoc</span><span class='comma'>,</span> <span class='id identifier rubyid_service'>service</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_checkid_request'>checkid_request</span><span class='period'>.</span><span class='id identifier rubyid_anonymous'>anonymous</span> <span class='op'>=</span> <span class='id identifier rubyid_anonymous'>anonymous</span>
+
+  <span class='kw'>if</span> <span class='id identifier rubyid_service'>service</span><span class='period'>.</span><span class='id identifier rubyid_compatibility_mode'>compatibility_mode</span>
+    <span class='id identifier rubyid_rt_args'>rt_args</span> <span class='op'>=</span> <span class='id identifier rubyid_checkid_request'>checkid_request</span><span class='period'>.</span><span class='id identifier rubyid_return_to_args'>return_to_args</span>
+    <span class='id identifier rubyid_rt_args'>rt_args</span><span class='lbracket'>[</span><span class='const'><span class='object_link'><a href="" title="OpenID::Consumer (class)">Consumer</a></span></span><span class='period'>.</span><span class='id identifier rubyid_openid1_return_to_nonce_name'><span class='object_link'><a href="#openid1_return_to_nonce_name-class_method" title="OpenID::Consumer.openid1_return_to_nonce_name (method)">openid1_return_to_nonce_name</a></span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Nonce.html" title="OpenID::Nonce (module)">Nonce</a></span></span><span class='period'>.</span><span class='id identifier rubyid_mk_nonce'><span class='object_link'><a href="Nonce.html#mk_nonce-class_method" title="OpenID::Nonce.mk_nonce (method)">mk_nonce</a></span></span>
+    <span class='id identifier rubyid_rt_args'>rt_args</span><span class='lbracket'>[</span><span class='const'><span class='object_link'><a href="" title="OpenID::Consumer (class)">Consumer</a></span></span><span class='period'>.</span><span class='id identifier rubyid_openid1_return_to_claimed_id_name'><span class='object_link'><a href="#openid1_return_to_claimed_id_name-class_method" title="OpenID::Consumer.openid1_return_to_claimed_id_name (method)">openid1_return_to_claimed_id_name</a></span></span><span class='rbracket'>]</span> <span class='op'>=</span>
+      <span class='id identifier rubyid_service'>service</span><span class='period'>.</span><span class='id identifier rubyid_claimed_id'>claimed_id</span>
+  <span class='kw'>end</span>
+
+  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_last_requested_endpoint'>last_requested_endpoint</span> <span class='op'>=</span> <span class='id identifier rubyid_service'>service</span>
+  <span class='id identifier rubyid_checkid_request'>checkid_request</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="complete-instance_method">
+  
+    #<strong>complete</strong>(query, current_url)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns a subclass of Response. The type of response is<br />
+indicated by the status attribute, which will be one of<br />
+SUCCESS, CANCEL, FAILURE, or SETUP_NEEDED.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+286
+287
+288
+289
+290
+291
+292
+293
+294
+295
+296
+297
+298</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openid/consumer.rb', line 286</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_complete'>complete</span><span class='lparen'>(</span><span class='id identifier rubyid_query'>query</span><span class='comma'>,</span> <span class='id identifier rubyid_current_url'>current_url</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_message'>message</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Message.html" title="OpenID::Message (class)">Message</a></span></span><span class='period'>.</span><span class='id identifier rubyid_from_post_args'><span class='object_link'><a href="Message.html#from_post_args-class_method" title="OpenID::Message.from_post_args (method)">from_post_args</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_query'>query</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_mode'>mode</span> <span class='op'>=</span> <span class='id identifier rubyid_message'>message</span><span class='period'>.</span><span class='id identifier rubyid_get_arg'>get_arg</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../OpenID.html#OPENID_NS-constant" title="OpenID::OPENID_NS (constant)">OPENID_NS</a></span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>mode</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>invalid</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+  <span class='kw'>begin</span>
+    <span class='id identifier rubyid_meth'>meth</span> <span class='op'>=</span> <span class='id identifier rubyid_method'>method</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>complete_</span><span class='tstring_end'>&quot;</span></span> <span class='op'>+</span> <span class='id identifier rubyid_mode'>mode</span><span class='rparen'>)</span>
+  <span class='kw'>rescue</span> <span class='const'>NameError</span>
+    <span class='id identifier rubyid_meth'>meth</span> <span class='op'>=</span> <span class='id identifier rubyid_method'>method</span><span class='lparen'>(</span><span class='symbol'>:complete_invalid</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+  <span class='id identifier rubyid_response'>response</span> <span class='op'>=</span> <span class='id identifier rubyid_meth'>meth</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='id identifier rubyid_message'>message</span><span class='comma'>,</span> <span class='id identifier rubyid_current_url'>current_url</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_cleanup_last_requested_endpoint'>cleanup_last_requested_endpoint</span>
+  <span class='id identifier rubyid_cleanup_session'>cleanup_session</span> <span class='kw'>if</span> <span class='lbracket'>[</span><span class='const'><span class='object_link'><a href="#SUCCESS-constant" title="OpenID::Consumer::SUCCESS (constant)">SUCCESS</a></span></span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="#CANCEL-constant" title="OpenID::Consumer::CANCEL (constant)">CANCEL</a></span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_member?'>member?</span><span class='lparen'>(</span><span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_status'>status</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_response'>response</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+      <div id="footer">
+  Generated on Sun Jul  6 06:29:40 2025 by
+  <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.9.37 (ruby-3.4.4).
+</div>
+
+    </div>
+  </body>
+</html>

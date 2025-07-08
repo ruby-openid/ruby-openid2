@@ -127,7 +127,11 @@ module OpenID
         testcase.assert_equal(@yadis_url, endpoint.claimed_id)
 
         # and local_id
-        testcase.assert_equal(@local_id, endpoint.local_id)
+        if @local_id.nil?
+          testcase.assert_nil(endpoint.local_id)
+        else
+          testcase.assert_equal(@local_id, endpoint.local_id)
+        end
 
         # and types
         actual_types = endpoint.type_uris.dup

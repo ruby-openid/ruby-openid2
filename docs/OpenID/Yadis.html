@@ -1,0 +1,2204 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  Module: OpenID::Yadis
+  
+    &mdash; Documentation by YARD 0.9.37
+  
+</title>
+
+  <link rel="stylesheet" href="../css/style.css" type="text/css" />
+
+  <link rel="stylesheet" href="../css/common.css" type="text/css" />
+
+<script type="text/javascript">
+  pathId = "OpenID::Yadis";
+  relpath = '../';
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div class="nav_wrap">
+      <iframe id="nav" src="../class_list.html?1"></iframe>
+      <div id="resizer"></div>
+    </div>
+
+    <div id="main" tabindex="-1">
+      <div id="header">
+        <div id="menu">
+  
+    <a href="../_index.html">Index (Y)</a> &raquo;
+    <span class='title'><span class='object_link'><a href="../OpenID.html" title="OpenID (module)">OpenID</a></span></span>
+     &raquo; 
+    <span class="title">Yadis</span>
+  
+</div>
+
+        <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="../class_list.html">
+
+        <svg width="24" height="24">
+          <rect x="0" y="4" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="12" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="20" width="24" height="4" rx="1" ry="1"></rect>
+        </svg>
+    </a>
+  
+</div>
+        <div class="clear"></div>
+      </div>
+
+      <div id="content"><h1>Module: OpenID::Yadis
+  
+  
+  
+</h1>
+<div class="box_info">
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+  <dl>
+    <dt>Defined in:</dt>
+    <dd>lib/openid/yadis/xri.rb<span class="defines">,<br />
+  lib/openid/yadis/xrds.rb,<br /> lib/openid/yadis/accept.rb,<br /> lib/openid/yadis/xrires.rb,<br /> lib/openid/yadis/filters.rb,<br /> lib/openid/yadis/services.rb,<br /> lib/openid/yadis/constants.rb,<br /> lib/openid/yadis/discovery.rb,<br /> lib/openid/yadis/parsehtml.rb</span>
+</dd>
+  </dl>
+  
+</div>
+
+<h2>Defined Under Namespace</h2>
+<p class="children">
+  
+    
+      <strong class="modules">Modules:</strong> <span class='object_link'><a href="Yadis/XRI.html" title="OpenID::Yadis::XRI (module)">XRI</a></span>
+    
+  
+    
+      <strong class="classes">Classes:</strong> <span class='object_link'><a href="Yadis/BasicServiceEndpoint.html" title="OpenID::Yadis::BasicServiceEndpoint (class)">BasicServiceEndpoint</a></span>, <span class='object_link'><a href="Yadis/CompoundFilter.html" title="OpenID::Yadis::CompoundFilter (class)">CompoundFilter</a></span>, <span class='object_link'><a href="Yadis/DiscoveryResult.html" title="OpenID::Yadis::DiscoveryResult (class)">DiscoveryResult</a></span>, <span class='object_link'><a href="Yadis/TransformFilterMaker.html" title="OpenID::Yadis::TransformFilterMaker (class)">TransformFilterMaker</a></span>, <span class='object_link'><a href="Yadis/XRDSError.html" title="OpenID::Yadis::XRDSError (class)">XRDSError</a></span>, <span class='object_link'><a href="Yadis/XRDSFraud.html" title="OpenID::Yadis::XRDSFraud (class)">XRDSFraud</a></span>
+    
+  
+</p>
+
+  
+    <h2>
+      Constant Summary
+      <small><a href="#" class="constants_summary_toggle">collapse</a></small>
+    </h2>
+
+    <dl class="constants">
+      
+        <dt id="XRD_NS_2_0-constant" class="">XRD_NS_2_0 =
+          
+        </dt>
+        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>xri://$xrd*($v*2.0)</span><span class='tstring_end'>&quot;</span></span></pre></dd>
+      
+        <dt id="XRDS_NS-constant" class="">XRDS_NS =
+          
+        </dt>
+        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>xri://$xrds</span><span class='tstring_end'>&quot;</span></span></pre></dd>
+      
+        <dt id="XRDS_NAMESPACES-constant" class="">XRDS_NAMESPACES =
+          
+        </dt>
+        <dd><pre class="code"><span class='lbrace'>{</span>
+  <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>xrds</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='const'><span class='object_link'><a href="#XRDS_NS-constant" title="OpenID::Yadis::XRDS_NS (constant)">XRDS_NS</a></span></span><span class='comma'>,</span>
+  <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>xrd</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='const'><span class='object_link'><a href="#XRD_NS_2_0-constant" title="OpenID::Yadis::XRD_NS_2_0 (constant)">XRD_NS_2_0</a></span></span><span class='comma'>,</span>
+<span class='rbrace'>}</span></pre></dd>
+      
+        <dt id="YADIS_HEADER_NAME-constant" class="">YADIS_HEADER_NAME =
+          
+        </dt>
+        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>X-XRDS-Location</span><span class='tstring_end'>&quot;</span></span></pre></dd>
+      
+        <dt id="YADIS_CONTENT_TYPE-constant" class="">YADIS_CONTENT_TYPE =
+          
+        </dt>
+        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>application/xrds+xml</span><span class='tstring_end'>&quot;</span></span></pre></dd>
+      
+        <dt id="YADIS_ACCEPT_HEADER-constant" class="">YADIS_ACCEPT_HEADER =
+          <div class="docstring">
+  <div class="discussion">
+    <p>A value suitable for using as an accept header when performing<br />
+YADIS discovery, unless the application has special requirements</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+        </dt>
+        <dd><pre class="code"><span class='id identifier rubyid_generate_accept_header'>generate_accept_header</span><span class='lparen'>(</span>
+  <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>text/html</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='float'>0.3</span><span class='rbracket'>]</span><span class='comma'>,</span>
+  <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>application/xhtml+xml</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='float'>0.5</span><span class='rbracket'>]</span><span class='comma'>,</span>
+  <span class='lbracket'>[</span><span class='const'><span class='object_link'><a href="#YADIS_CONTENT_TYPE-constant" title="OpenID::Yadis::YADIS_CONTENT_TYPE (constant)">YADIS_CONTENT_TYPE</a></span></span><span class='comma'>,</span> <span class='float'>1.0</span><span class='rbracket'>]</span><span class='comma'>,</span>
+<span class='rparen'>)</span></pre></dd>
+      
+        <dt id="filter_type_error-classvariable" class="">@@filter_type_error =
+          <div class="docstring">
+  <div class="discussion">
+    <p>Exception raised when something is not able to be turned into a<br />
+filter</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+        </dt>
+        <dd><pre class="code"><span class='const'>TypeError</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span>
+  <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Expected a filter, an endpoint, a callable or a list of any of these.</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+<span class='rparen'>)</span></pre></dd>
+      
+    </dl>
+  
+
+
+
+
+
+
+
+  
+    <h2>
+      Class Method Summary
+      <small><a href="#" class="summary_toggle">collapse</a></small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#apply_filter-class_method" title="apply_filter (class method)">.<strong>apply_filter</strong>(normalized_uri, xrd_data, flt = nil)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#disable_entity_expansion-class_method" title="disable_entity_expansion (class method)">.<strong>disable_entity_expansion</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#discover-class_method" title="discover (class method)">.<strong>discover</strong>(uri)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Discover services for a given URI.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#each_service-class_method" title="each_service (class method)">.<strong>each_service</strong>(xrds_tree, &amp;block)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>aka iterServices in Python.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#expand_service-class_method" title="expand_service (class method)">.<strong>expand_service</strong>(service_element)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#generate_accept_header-class_method" title="generate_accept_header (class method)">.<strong>generate_accept_header</strong>(*elements)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Generate an accept header value.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#get_acceptable-class_method" title="get_acceptable (class method)">.<strong>get_acceptable</strong>(accept_header, have_types)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#get_canonical_id-class_method" title="get_canonical_id (class method)">.<strong>get_canonical_id</strong>(iname, xrd_tree)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#get_service_endpoints-class_method" title="get_service_endpoints (class method)">.<strong>get_service_endpoints</strong>(input_url, flt = nil)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#get_yadis_xrd-class_method" title="get_yadis_xrd (class method)">.<strong>get_yadis_xrd</strong>(xrds_tree)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#html_yadis_location-class_method" title="html_yadis_location (class method)">.<strong>html_yadis_location</strong>(html)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#is_xrds%3F-class_method" title="is_xrds? (class method)">.<strong>is_xrds?</strong>(xrds_tree)  &#x21d2; Boolean </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#make_filter-class_method" title="make_filter (class method)">.<strong>make_filter</strong>(parts)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Convert a filter-convertable thing into a filter.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#match_types-class_method" title="match_types (class method)">.<strong>match_types</strong>(accept_types, have_types)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#mk_compound_filter-class_method" title="mk_compound_filter (class method)">.<strong>mk_compound_filter</strong>(parts)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Create a filter out of a list of filter-like things.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#parse_accept_header-class_method" title="parse_accept_header (class method)">.<strong>parse_accept_header</strong>(value)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#parseXRDS-class_method" title="parseXRDS (class method)">.<strong>parseXRDS</strong>(text)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#prio_sort-class_method" title="prio_sort (class method)">.<strong>prio_sort</strong>(elements)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Sort a list of elements that have priority attributes.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#services-class_method" title="services (class method)">.<strong>services</strong>(xrds_tree)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#where_is_yadis%3F-class_method" title="where_is_yadis? (class method)">.<strong>where_is_yadis?</strong>(resp)  &#x21d2; Boolean </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Given a HTTPResponse, return the location of the Yadis document.</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+
+  <div id="class_method_details" class="method_details_list">
+    <h2>Class Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="apply_filter-class_method">
+  
+    .<strong>apply_filter</strong>(normalized_uri, xrd_data, flt = nil)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openid/yadis/services.rb', line 29</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_apply_filter'>apply_filter</span><span class='lparen'>(</span><span class='id identifier rubyid_normalized_uri'>normalized_uri</span><span class='comma'>,</span> <span class='id identifier rubyid_xrd_data'>xrd_data</span><span class='comma'>,</span> <span class='id identifier rubyid_flt'>flt</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
+  <span class='comment'># Generate an iterable of endpoint objects given this input data,
+</span>  <span class='comment'># presumably from the result of performing the Yadis protocol.
+</span>
+  <span class='id identifier rubyid_flt'>flt</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="" title="OpenID::Yadis (module)">Yadis</a></span></span><span class='period'>.</span><span class='id identifier rubyid_make_filter'><span class='object_link'><a href="#make_filter-class_method" title="OpenID::Yadis.make_filter (method)">make_filter</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_flt'>flt</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_et'>et</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="" title="OpenID::Yadis (module)">Yadis</a></span></span><span class='period'>.</span><span class='id identifier rubyid_parseXRDS'><span class='object_link'><a href="#parseXRDS-class_method" title="OpenID::Yadis.parseXRDS (method)">parseXRDS</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_xrd_data'>xrd_data</span><span class='rparen'>)</span>
+
+  <span class='id identifier rubyid_endpoints'>endpoints</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_each_service'>each_service</span><span class='lparen'>(</span><span class='id identifier rubyid_et'>et</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_service_element'>service_element</span><span class='op'>|</span>
+    <span class='id identifier rubyid_endpoints'>endpoints</span> <span class='op'>+=</span> <span class='id identifier rubyid_flt'>flt</span><span class='period'>.</span><span class='id identifier rubyid_get_service_endpoints'>get_service_endpoints</span><span class='lparen'>(</span><span class='id identifier rubyid_normalized_uri'>normalized_uri</span><span class='comma'>,</span> <span class='id identifier rubyid_service_element'>service_element</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+
+  <span class='id identifier rubyid_endpoints'>endpoints</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="disable_entity_expansion-class_method">
+  
+    .<strong>disable_entity_expansion</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+103
+104
+105
+106
+107
+108
+109</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openid/yadis/xrds.rb', line 103</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_disable_entity_expansion'>disable_entity_expansion</span>
+  <span class='id identifier rubyid__previous_'>_previous_</span> <span class='op'>=</span> <span class='const'>REXML</span><span class='op'>::</span><span class='const'>Document</span><span class='period'>.</span><span class='id identifier rubyid_entity_expansion_limit'>entity_expansion_limit</span>
+  <span class='const'>REXML</span><span class='op'>::</span><span class='const'>Document</span><span class='period'>.</span><span class='id identifier rubyid_entity_expansion_limit'>entity_expansion_limit</span> <span class='op'>=</span> <span class='int'>0</span>
+  <span class='kw'>yield</span>
+<span class='kw'>ensure</span>
+  <span class='const'>REXML</span><span class='op'>::</span><span class='const'>Document</span><span class='period'>.</span><span class='id identifier rubyid_entity_expansion_limit'>entity_expansion_limit</span> <span class='op'>=</span> <span class='id identifier rubyid__previous_'>_previous_</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="discover-class_method">
+  
+    .<strong>discover</strong>(uri)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Discover services for a given URI.</p>
+
+<p>uri: The identity URI as a well-formed http or https URI. The<br />
+well-formedness and the protocol are not checked, but the<br />
+results of this function are undefined if those properties do<br />
+not hold.</p>
+
+<p>returns a DiscoveryResult object</p>
+
+<p>Raises DiscoveryFailure when the HTTP response does not have<br />
+a 200 code.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openid/yadis/discovery.rb', line 70</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_discover'>discover</span><span class='lparen'>(</span><span class='id identifier rubyid_uri'>uri</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Yadis/DiscoveryResult.html" title="OpenID::Yadis::DiscoveryResult (class)">DiscoveryResult</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Yadis/DiscoveryResult.html#initialize-instance_method" title="OpenID::Yadis::DiscoveryResult#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_uri'>uri</span><span class='rparen'>)</span>
+  <span class='kw'>begin</span>
+    <span class='id identifier rubyid_resp'>resp</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../OpenID.html" title="OpenID (module)">OpenID</a></span></span><span class='period'>.</span><span class='id identifier rubyid_fetch'><span class='object_link'><a href="../OpenID.html#fetch-class_method" title="OpenID.fetch (method)">fetch</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_uri'>uri</span><span class='comma'>,</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='lbrace'>{</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Accept</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='const'><span class='object_link'><a href="#YADIS_ACCEPT_HEADER-constant" title="OpenID::Yadis::YADIS_ACCEPT_HEADER (constant)">YADIS_ACCEPT_HEADER</a></span></span><span class='rbrace'>}</span><span class='rparen'>)</span>
+  <span class='kw'>rescue</span> <span class='const'>Exception</span>
+    <span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="DiscoveryFailure.html" title="OpenID::DiscoveryFailure (class)">DiscoveryFailure</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="DiscoveryFailure.html#initialize-instance_method" title="OpenID::DiscoveryFailure#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Failed to fetch identity URL </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_uri'>uri</span><span class='embexpr_end'>}</span><span class='tstring_content'> : </span><span class='embexpr_beg'>#{</span><span class='gvar'>$!</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='gvar'>$!</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_resp'>resp</span><span class='period'>.</span><span class='id identifier rubyid_code'>code</span> <span class='op'>!=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>200</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>and</span> <span class='id identifier rubyid_resp'>resp</span><span class='period'>.</span><span class='id identifier rubyid_code'>code</span> <span class='op'>!=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>206</span><span class='tstring_end'>&quot;</span></span>
+    <span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="DiscoveryFailure.html" title="OpenID::DiscoveryFailure (class)">DiscoveryFailure</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="DiscoveryFailure.html#initialize-instance_method" title="OpenID::DiscoveryFailure#initialize (method)">new</a></span></span><span class='lparen'>(</span>
+      <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>HTTP Response status from identity URL host is not &quot;200&quot;.</span><span class='tstring_end'>&#39;</span></span> \
+        <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Got status </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_resp'>resp</span><span class='period'>.</span><span class='id identifier rubyid_code'>code</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_content'> for </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_resp'>resp</span><span class='period'>.</span><span class='id identifier rubyid_final_url'>final_url</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+      <span class='id identifier rubyid_resp'>resp</span><span class='comma'>,</span>
+    <span class='rparen'>)</span>
+  <span class='kw'>end</span>
+
+  <span class='comment'># Note the URL after following redirects
+</span>  <span class='id identifier rubyid_result'>result</span><span class='period'>.</span><span class='id identifier rubyid_normalized_uri'>normalized_uri</span> <span class='op'>=</span> <span class='id identifier rubyid_resp'>resp</span><span class='period'>.</span><span class='id identifier rubyid_final_url'>final_url</span>
+
+  <span class='comment'># Attempt to find out where to go to discover the document or if
+</span>  <span class='comment'># we already have it
+</span>  <span class='id identifier rubyid_result'>result</span><span class='period'>.</span><span class='id identifier rubyid_content_type'>content_type</span> <span class='op'>=</span> <span class='id identifier rubyid_resp'>resp</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>content-type</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+
+  <span class='id identifier rubyid_result'>result</span><span class='period'>.</span><span class='id identifier rubyid_xrds_uri'>xrds_uri</span> <span class='op'>=</span> <span class='id identifier rubyid_where_is_yadis?'>where_is_yadis?</span><span class='lparen'>(</span><span class='id identifier rubyid_resp'>resp</span><span class='rparen'>)</span>
+
+  <span class='kw'>if</span> <span class='id identifier rubyid_result'>result</span><span class='period'>.</span><span class='id identifier rubyid_xrds_uri'>xrds_uri</span> <span class='kw'>and</span> <span class='id identifier rubyid_result'>result</span><span class='period'>.</span><span class='id identifier rubyid_used_yadis_location?'>used_yadis_location?</span>
+    <span class='kw'>begin</span>
+      <span class='id identifier rubyid_resp'>resp</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../OpenID.html" title="OpenID (module)">OpenID</a></span></span><span class='period'>.</span><span class='id identifier rubyid_fetch'><span class='object_link'><a href="../OpenID.html#fetch-class_method" title="OpenID.fetch (method)">fetch</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_result'>result</span><span class='period'>.</span><span class='id identifier rubyid_xrds_uri'>xrds_uri</span><span class='rparen'>)</span>
+    <span class='kw'>rescue</span> <span class='const'>StandardError</span>
+      <span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="DiscoveryFailure.html" title="OpenID::DiscoveryFailure (class)">DiscoveryFailure</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="DiscoveryFailure.html#initialize-instance_method" title="OpenID::DiscoveryFailure#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Failed to fetch Yadis URL </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_result'>result</span><span class='period'>.</span><span class='id identifier rubyid_xrds_uri'>xrds_uri</span><span class='embexpr_end'>}</span><span class='tstring_content'> : </span><span class='embexpr_beg'>#{</span><span class='gvar'>$!</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='gvar'>$!</span><span class='rparen'>)</span>
+    <span class='kw'>end</span>
+    <span class='kw'>if</span> <span class='id identifier rubyid_resp'>resp</span><span class='period'>.</span><span class='id identifier rubyid_code'>code</span> <span class='op'>!=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>200</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>and</span> <span class='id identifier rubyid_resp'>resp</span><span class='period'>.</span><span class='id identifier rubyid_code'>code</span> <span class='op'>!=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>206</span><span class='tstring_end'>&quot;</span></span>
+      <span class='id identifier rubyid_exc'>exc</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="DiscoveryFailure.html" title="OpenID::DiscoveryFailure (class)">DiscoveryFailure</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="DiscoveryFailure.html#initialize-instance_method" title="OpenID::DiscoveryFailure#initialize (method)">new</a></span></span><span class='lparen'>(</span>
+        <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>HTTP Response status from Yadis host is not &quot;200&quot;. </span><span class='tstring_end'>&#39;</span></span> <span class='op'>+</span>
+                             <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Got status </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_resp'>resp</span><span class='period'>.</span><span class='id identifier rubyid_code'>code</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_content'> for </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_resp'>resp</span><span class='period'>.</span><span class='id identifier rubyid_final_url'>final_url</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+        <span class='id identifier rubyid_resp'>resp</span><span class='comma'>,</span>
+      <span class='rparen'>)</span>
+      <span class='id identifier rubyid_exc'>exc</span><span class='period'>.</span><span class='id identifier rubyid_identity_url'>identity_url</span> <span class='op'>=</span> <span class='id identifier rubyid_result'>result</span><span class='period'>.</span><span class='id identifier rubyid_normalized_uri'>normalized_uri</span>
+      <span class='id identifier rubyid_raise'>raise</span> <span class='id identifier rubyid_exc'>exc</span>
+    <span class='kw'>end</span>
+
+    <span class='id identifier rubyid_result'>result</span><span class='period'>.</span><span class='id identifier rubyid_content_type'>content_type</span> <span class='op'>=</span> <span class='id identifier rubyid_resp'>resp</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>content-type</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+  <span class='kw'>end</span>
+
+  <span class='id identifier rubyid_result'>result</span><span class='period'>.</span><span class='id identifier rubyid_response_text'>response_text</span> <span class='op'>=</span> <span class='id identifier rubyid_resp'>resp</span><span class='period'>.</span><span class='id identifier rubyid_body'>body</span>
+  <span class='id identifier rubyid_result'>result</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="each_service-class_method">
+  
+    .<strong>each_service</strong>(xrds_tree, &amp;block)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>aka iterServices in Python</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+130
+131
+132
+133</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openid/yadis/xrds.rb', line 130</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_each_service'>each_service</span><span class='lparen'>(</span><span class='id identifier rubyid_xrds_tree'>xrds_tree</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_xrd'>xrd</span> <span class='op'>=</span> <span class='id identifier rubyid_get_yadis_xrd'>get_yadis_xrd</span><span class='lparen'>(</span><span class='id identifier rubyid_xrds_tree'>xrds_tree</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_xrd'>xrd</span><span class='period'>.</span><span class='id identifier rubyid_each_element'>each_element</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Service</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="expand_service-class_method">
+  
+    .<strong>expand_service</strong>(service_element)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+143
+144
+145
+146
+147
+148
+149
+150
+151</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openid/yadis/xrds.rb', line 143</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_expand_service'>expand_service</span><span class='lparen'>(</span><span class='id identifier rubyid_service_element'>service_element</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_es'>es</span> <span class='op'>=</span> <span class='id identifier rubyid_service_element'>service_element</span><span class='period'>.</span><span class='id identifier rubyid_elements'>elements</span>
+  <span class='id identifier rubyid_uris'>uris</span> <span class='op'>=</span> <span class='id identifier rubyid_es'>es</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>URI</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_u'>u</span><span class='op'>|</span> <span class='rbrace'>}</span>
+  <span class='id identifier rubyid_uris'>uris</span> <span class='op'>=</span> <span class='id identifier rubyid_prio_sort'>prio_sort</span><span class='lparen'>(</span><span class='id identifier rubyid_uris'>uris</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_types'>types</span> <span class='op'>=</span> <span class='id identifier rubyid_es'>es</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Type/text()</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+  <span class='comment'># REXML::Text objects are not strings.
+</span>  <span class='id identifier rubyid_types'>types</span> <span class='op'>=</span> <span class='id identifier rubyid_types'>types</span><span class='period'>.</span><span class='id identifier rubyid_collect'>collect</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_t'>t</span><span class='op'>|</span> <span class='id identifier rubyid_t'>t</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span> <span class='rbrace'>}</span>
+  <span class='id identifier rubyid_uris'>uris</span><span class='period'>.</span><span class='id identifier rubyid_collect'>collect</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_uri'>uri</span><span class='op'>|</span> <span class='lbracket'>[</span><span class='id identifier rubyid_types'>types</span><span class='comma'>,</span> <span class='id identifier rubyid_uri'>uri</span><span class='period'>.</span><span class='id identifier rubyid_text'>text</span><span class='comma'>,</span> <span class='id identifier rubyid_service_element'>service_element</span><span class='rbracket'>]</span> <span class='rbrace'>}</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="generate_accept_header-class_method">
+  
+    .<strong>generate_accept_header</strong>(*elements)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Generate an accept header value</p>
+
+<p>[str or (str, float)] -&gt; str</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openid/yadis/accept.rb', line 6</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_generate_accept_header'>generate_accept_header</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_elements'>elements</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_parts'>parts</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_elements'>elements</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_element'>element</span><span class='op'>|</span>
+    <span class='kw'>if</span> <span class='id identifier rubyid_element'>element</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>String</span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_qs'>qs</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>1.0</span><span class='tstring_end'>&quot;</span></span>
+      <span class='id identifier rubyid_mtype'>mtype</span> <span class='op'>=</span> <span class='id identifier rubyid_element'>element</span>
+    <span class='kw'>else</span>
+      <span class='id identifier rubyid_mtype'>mtype</span><span class='comma'>,</span> <span class='id identifier rubyid_q'>q</span> <span class='op'>=</span> <span class='id identifier rubyid_element'>element</span>
+      <span class='id identifier rubyid_q'>q</span> <span class='op'>=</span> <span class='id identifier rubyid_q'>q</span><span class='period'>.</span><span class='id identifier rubyid_to_f'>to_f</span>
+      <span class='id identifier rubyid_raise'>raise</span> <span class='const'>ArgumentError</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Invalid preference factor: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_q'>q</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_q'>q</span> <span class='op'>&gt;</span> <span class='int'>1</span> <span class='kw'>or</span> <span class='id identifier rubyid_q'>q</span> <span class='op'>&lt;=</span> <span class='int'>0</span>
+
+      <span class='id identifier rubyid_qs'>qs</span> <span class='op'>=</span> <span class='id identifier rubyid_format'>format</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>%0.1f</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_q'>q</span><span class='rparen'>)</span>
+    <span class='kw'>end</span>
+
+    <span class='id identifier rubyid_parts'>parts</span> <span class='op'>&lt;&lt;</span> <span class='lbracket'>[</span><span class='id identifier rubyid_qs'>qs</span><span class='comma'>,</span> <span class='id identifier rubyid_mtype'>mtype</span><span class='rbracket'>]</span>
+  <span class='kw'>end</span>
+
+  <span class='id identifier rubyid_parts'>parts</span><span class='period'>.</span><span class='id identifier rubyid_sort!'>sort!</span>
+  <span class='id identifier rubyid_chunks'>chunks</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_parts'>parts</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_q'>q</span><span class='comma'>,</span> <span class='id identifier rubyid_mtype'>mtype</span><span class='op'>|</span>
+    <span class='id identifier rubyid_chunks'>chunks</span> <span class='op'>&lt;&lt;</span> <span class='kw'>if</span> <span class='id identifier rubyid_q'>q</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>1.0</span><span class='tstring_end'>&quot;</span></span>
+      <span class='id identifier rubyid_mtype'>mtype</span>
+    <span class='kw'>else</span>
+      <span class='id identifier rubyid_format'>format</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>%s; q=%s</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_mtype'>mtype</span><span class='comma'>,</span> <span class='id identifier rubyid_q'>q</span><span class='rparen'>)</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+
+  <span class='id identifier rubyid_chunks'>chunks</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>, </span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="get_acceptable-class_method">
+  
+    .<strong>get_acceptable</strong>(accept_header, have_types)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openid/yadis/accept.rb', line 127</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_get_acceptable'>get_acceptable</span><span class='lparen'>(</span><span class='id identifier rubyid_accept_header'>accept_header</span><span class='comma'>,</span> <span class='id identifier rubyid_have_types'>have_types</span><span class='rparen'>)</span>
+  <span class='comment'># Parse the accept header and return a list of available types
+</span>  <span class='comment'># in preferred order. If a type is unacceptable, it will not be
+</span>  <span class='comment'># in the resulting list.
+</span>  <span class='comment'>#
+</span>  <span class='comment'># This is a convenience wrapper around matchTypes and
+</span>  <span class='comment'># parse_accept_header
+</span>  <span class='comment'>#
+</span>  <span class='comment'># (str, [str]) -&gt; [str]
+</span>  <span class='id identifier rubyid_accepted'>accepted</span> <span class='op'>=</span> <span class='id identifier rubyid_parse_accept_header'>parse_accept_header</span><span class='lparen'>(</span><span class='id identifier rubyid_accept_header'>accept_header</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_preferred'>preferred</span> <span class='op'>=</span> <span class='id identifier rubyid_match_types'>match_types</span><span class='lparen'>(</span><span class='id identifier rubyid_accepted'>accepted</span><span class='comma'>,</span> <span class='id identifier rubyid_have_types'>have_types</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_preferred'>preferred</span><span class='period'>.</span><span class='id identifier rubyid_collect'>collect</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_mtype'>mtype</span><span class='comma'>,</span> <span class='id identifier rubyid__'>_</span><span class='op'>|</span> <span class='id identifier rubyid_mtype'>mtype</span> <span class='rbrace'>}</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="get_canonical_id-class_method">
+  
+    .<strong>get_canonical_id</strong>(iname, xrd_tree)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openid/yadis/xrds.rb', line 24</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_get_canonical_id'>get_canonical_id</span><span class='lparen'>(</span><span class='id identifier rubyid_iname'>iname</span><span class='comma'>,</span> <span class='id identifier rubyid_xrd_tree'>xrd_tree</span><span class='rparen'>)</span>
+  <span class='comment'># Return the CanonicalID from this XRDS document.
+</span>  <span class='comment'>#
+</span>  <span class='comment'># @param iname: the XRI being resolved.
+</span>  <span class='comment'># @type iname: unicode
+</span>  <span class='comment'>#
+</span>  <span class='comment'># @param xrd_tree: The XRDS output from the resolver.
+</span>  <span class='comment'>#
+</span>  <span class='comment'># @returns: The XRI CanonicalID or None.
+</span>  <span class='comment'># @returntype: unicode or None
+</span>
+  <span class='id identifier rubyid_xrd_list'>xrd_list</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+  <span class='const'>REXML</span><span class='op'>::</span><span class='const'>XPath</span><span class='period'>.</span><span class='id identifier rubyid_match'>match</span><span class='lparen'>(</span><span class='id identifier rubyid_xrd_tree'>xrd_tree</span><span class='period'>.</span><span class='id identifier rubyid_root'>root</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/xrds:XRDS/xrd:XRD</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="#XRDS_NAMESPACES-constant" title="OpenID::Yadis::XRDS_NAMESPACES (constant)">XRDS_NAMESPACES</a></span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_el'>el</span><span class='op'>|</span>
+    <span class='id identifier rubyid_xrd_list'>xrd_list</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_el'>el</span>
+  <span class='kw'>end</span>
+
+  <span class='id identifier rubyid_xrd_list'>xrd_list</span><span class='period'>.</span><span class='id identifier rubyid_reverse!'>reverse!</span>
+
+  <span class='id identifier rubyid_cid_elements'>cid_elements</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+
+  <span class='kw'>unless</span> <span class='id identifier rubyid_xrd_list'>xrd_list</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
+    <span class='id identifier rubyid_xrd_list'>xrd_list</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_elements'>elements</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_e'>e</span><span class='op'>|</span>
+      <span class='kw'>next</span> <span class='kw'>unless</span> <span class='id identifier rubyid_e'>e</span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='symbol'>:name</span><span class='rparen'>)</span>
+
+      <span class='id identifier rubyid_cid_elements'>cid_elements</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_e'>e</span> <span class='kw'>if</span> <span class='id identifier rubyid_e'>e</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>CanonicalID</span><span class='tstring_end'>&quot;</span></span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+
+  <span class='id identifier rubyid_cid_element'>cid_element</span> <span class='op'>=</span> <span class='id identifier rubyid_cid_elements'>cid_elements</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span>
+
+  <span class='kw'>return</span> <span class='kw'>unless</span> <span class='id identifier rubyid_cid_element'>cid_element</span>
+
+  <span class='id identifier rubyid_canonical_id'>canonical_id</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Yadis/XRI.html" title="OpenID::Yadis::XRI (module)">XRI</a></span></span><span class='period'>.</span><span class='id identifier rubyid_make_xri'><span class='object_link'><a href="Yadis/XRI.html#make_xri-class_method" title="OpenID::Yadis::XRI.make_xri (method)">make_xri</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_cid_element'>cid_element</span><span class='period'>.</span><span class='id identifier rubyid_text'>text</span><span class='rparen'>)</span>
+
+  <span class='id identifier rubyid_child_id'>child_id</span> <span class='op'>=</span> <span class='id identifier rubyid_canonical_id'>canonical_id</span><span class='period'>.</span><span class='id identifier rubyid_downcase'>downcase</span>
+
+  <span class='id identifier rubyid_xrd_list'>xrd_list</span><span class='lbracket'>[</span><span class='int'>1</span><span class='op'>..</span><span class='op'>-</span><span class='int'>1</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_xrd'>xrd</span><span class='op'>|</span>
+    <span class='id identifier rubyid_parent_sought'>parent_sought</span> <span class='op'>=</span> <span class='id identifier rubyid_child_id'>child_id</span><span class='lbracket'>[</span><span class='int'>0</span><span class='op'>...</span><span class='id identifier rubyid_child_id'>child_id</span><span class='period'>.</span><span class='id identifier rubyid_rindex'>rindex</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>!</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='rbracket'>]</span>
+
+    <span class='id identifier rubyid_parent'>parent</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Yadis/XRI.html" title="OpenID::Yadis::XRI (module)">XRI</a></span></span><span class='period'>.</span><span class='id identifier rubyid_make_xri'><span class='object_link'><a href="Yadis/XRI.html#make_xri-class_method" title="OpenID::Yadis::XRI.make_xri (method)">make_xri</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_xrd'>xrd</span><span class='period'>.</span><span class='id identifier rubyid_elements'>elements</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>CanonicalID</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_text'>text</span><span class='rparen'>)</span>
+
+    <span class='kw'>if</span> <span class='id identifier rubyid_parent_sought'>parent_sought</span> <span class='op'>!=</span> <span class='id identifier rubyid_parent'>parent</span><span class='period'>.</span><span class='id identifier rubyid_downcase'>downcase</span>
+      <span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="Yadis/XRDSFraud.html" title="OpenID::Yadis::XRDSFraud (class)">XRDSFraud</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_format'>format</span><span class='lparen'>(</span>
+        <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>%s can not come from %s</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+        <span class='id identifier rubyid_parent_sought'>parent_sought</span><span class='comma'>,</span>
+        <span class='id identifier rubyid_parent'>parent</span><span class='comma'>,</span>
+      <span class='rparen'>)</span><span class='rparen'>)</span>
+    <span class='kw'>end</span>
+
+    <span class='id identifier rubyid_child_id'>child_id</span> <span class='op'>=</span> <span class='id identifier rubyid_parent_sought'>parent_sought</span>
+  <span class='kw'>end</span>
+
+  <span class='id identifier rubyid_root'><span class='object_link'><a href="../top-level-namespace.html" title="Top Level Namespace (root)">root</a></span></span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Yadis/XRI.html" title="OpenID::Yadis::XRI (module)">XRI</a></span></span><span class='period'>.</span><span class='id identifier rubyid_root_authority'><span class='object_link'><a href="Yadis/XRI.html#root_authority-class_method" title="OpenID::Yadis::XRI.root_authority (method)">root_authority</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_iname'>iname</span><span class='rparen'>)</span>
+  <span class='kw'>unless</span> <span class='const'><span class='object_link'><a href="Yadis/XRI.html" title="OpenID::Yadis::XRI (module)">XRI</a></span></span><span class='period'>.</span><span class='id identifier rubyid_provider_is_authoritative'><span class='object_link'><a href="Yadis/XRI.html#provider_is_authoritative-class_method" title="OpenID::Yadis::XRI.provider_is_authoritative (method)">provider_is_authoritative</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_root'><span class='object_link'><a href="../top-level-namespace.html" title="Top Level Namespace (root)">root</a></span></span><span class='comma'>,</span> <span class='id identifier rubyid_child_id'>child_id</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="Yadis/XRDSFraud.html" title="OpenID::Yadis::XRDSFraud (class)">XRDSFraud</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_format'>format</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>%s can not come from root %s</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_child_id'>child_id</span><span class='comma'>,</span> <span class='id identifier rubyid_root'><span class='object_link'><a href="../top-level-namespace.html" title="Top Level Namespace (root)">root</a></span></span><span class='rparen'>)</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+
+  <span class='id identifier rubyid_canonical_id'>canonical_id</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="get_service_endpoints-class_method">
+  
+    .<strong>get_service_endpoints</strong>(input_url, flt = nil)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openid/yadis/services.rb', line 7</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_get_service_endpoints'>get_service_endpoints</span><span class='lparen'>(</span><span class='id identifier rubyid_input_url'>input_url</span><span class='comma'>,</span> <span class='id identifier rubyid_flt'>flt</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
+  <span class='comment'># Perform the Yadis protocol on the input URL and return an
+</span>  <span class='comment'># iterable of resulting endpoint objects.
+</span>  <span class='comment'>#
+</span>  <span class='comment'># @param flt: A filter object or something that is convertable
+</span>  <span class='comment'># to a filter object (using mkFilter) that will be used to
+</span>  <span class='comment'># generate endpoint objects. This defaults to generating
+</span>  <span class='comment'># BasicEndpoint objects.
+</span>  <span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="" title="OpenID::Yadis (module)">Yadis</a></span></span><span class='period'>.</span><span class='id identifier rubyid_discover'><span class='object_link'><a href="#discover-class_method" title="OpenID::Yadis.discover (method)">discover</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_input_url'>input_url</span><span class='rparen'>)</span>
+  <span class='kw'>begin</span>
+    <span class='id identifier rubyid_endpoints'>endpoints</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="" title="OpenID::Yadis (module)">Yadis</a></span></span><span class='period'>.</span><span class='id identifier rubyid_apply_filter'><span class='object_link'><a href="#apply_filter-class_method" title="OpenID::Yadis.apply_filter (method)">apply_filter</a></span></span><span class='lparen'>(</span>
+      <span class='id identifier rubyid_result'>result</span><span class='period'>.</span><span class='id identifier rubyid_normalized_uri'>normalized_uri</span><span class='comma'>,</span>
+      <span class='id identifier rubyid_result'>result</span><span class='period'>.</span><span class='id identifier rubyid_response_text'>response_text</span><span class='comma'>,</span>
+      <span class='id identifier rubyid_flt'>flt</span><span class='comma'>,</span>
+    <span class='rparen'>)</span>
+  <span class='kw'>rescue</span> <span class='const'><span class='object_link'><a href="Yadis/XRDSError.html" title="OpenID::Yadis::XRDSError (class)">XRDSError</a></span></span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_e'>e</span>
+    <span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="DiscoveryFailure.html" title="OpenID::DiscoveryFailure (class)">DiscoveryFailure</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="DiscoveryFailure.html#initialize-instance_method" title="OpenID::DiscoveryFailure#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_e'>e</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='comma'>,</span> <span class='kw'>nil</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+
+  <span class='lbracket'>[</span><span class='id identifier rubyid_result'>result</span><span class='period'>.</span><span class='id identifier rubyid_normalized_uri'>normalized_uri</span><span class='comma'>,</span> <span class='id identifier rubyid_endpoints'>endpoints</span><span class='rbracket'>]</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="get_yadis_xrd-class_method">
+  
+    .<strong>get_yadis_xrd</strong>(xrds_tree)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Raises:</p>
+<ul class="raise">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Yadis/XRDSError.html" title="OpenID::Yadis::XRDSError (class)">XRDSError</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openid/yadis/xrds.rb', line 118</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_get_yadis_xrd'>get_yadis_xrd</span><span class='lparen'>(</span><span class='id identifier rubyid_xrds_tree'>xrds_tree</span><span class='rparen'>)</span>
+  <span class='const'>REXML</span><span class='op'>::</span><span class='const'>XPath</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span><span class='lparen'>(</span>
+    <span class='id identifier rubyid_xrds_tree'>xrds_tree</span><span class='period'>.</span><span class='id identifier rubyid_root'>root</span><span class='comma'>,</span>
+    <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/xrds:XRDS/xrd:XRD[last()]</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+    <span class='const'><span class='object_link'><a href="#XRDS_NAMESPACES-constant" title="OpenID::Yadis::XRDS_NAMESPACES (constant)">XRDS_NAMESPACES</a></span></span><span class='comma'>,</span>
+  <span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_el'>el</span><span class='op'>|</span>
+    <span class='kw'>return</span> <span class='id identifier rubyid_el'>el</span>
+  <span class='kw'>end</span>
+  <span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="Yadis/XRDSError.html" title="OpenID::Yadis::XRDSError (class)">XRDSError</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>No XRD element found.</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="html_yadis_location-class_method">
+  
+    .<strong>html_yadis_location</strong>(html)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openid/yadis/parsehtml.rb', line 9</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_html_yadis_location'>html_yadis_location</span><span class='lparen'>(</span><span class='id identifier rubyid_html'>html</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_parser'>parser</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../HTMLTokenizer.html" title="HTMLTokenizer (class)">HTMLTokenizer</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../HTMLTokenizer.html#initialize-instance_method" title="HTMLTokenizer#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_html'>html</span><span class='rparen'>)</span>
+
+  <span class='comment'># to keep track of whether or not we are in the head element
+</span>  <span class='id identifier rubyid_in_head'>in_head</span> <span class='op'>=</span> <span class='kw'>false</span>
+
+  <span class='kw'>begin</span>
+    <span class='kw'>while</span> <span class='id identifier rubyid_el'>el</span> <span class='op'>=</span> <span class='id identifier rubyid_parser'>parser</span><span class='period'>.</span><span class='id identifier rubyid_getTag'>getTag</span><span class='lparen'>(</span>
+      <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>head</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+      <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/head</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+      <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>meta</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+      <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>body</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+      <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/body</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+      <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>html</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+      <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>script</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+    <span class='rparen'>)</span>
+
+      <span class='comment'># we are leaving head or have reached body, so we bail
+</span>      <span class='kw'>return</span> <span class='kw'>if</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/head</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>body</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/body</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_member?'>member?</span><span class='lparen'>(</span><span class='id identifier rubyid_el'>el</span><span class='period'>.</span><span class='id identifier rubyid_tag_name'>tag_name</span><span class='rparen'>)</span>
+
+      <span class='kw'>if</span> <span class='id identifier rubyid_el'>el</span><span class='period'>.</span><span class='id identifier rubyid_tag_name'>tag_name</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>head</span><span class='tstring_end'>&quot;</span></span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='lparen'>(</span><span class='id identifier rubyid_el'>el</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='lbracket'>[</span><span class='op'>-</span><span class='int'>2</span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+        <span class='id identifier rubyid_in_head'>in_head</span> <span class='op'>=</span> <span class='kw'>true</span> <span class='comment'># tag ends with a /: a short tag
+</span>      <span class='kw'>end</span>
+      <span class='kw'>next</span> <span class='kw'>unless</span> <span class='id identifier rubyid_in_head'>in_head</span>
+
+      <span class='kw'>if</span> <span class='id identifier rubyid_el'>el</span><span class='period'>.</span><span class='id identifier rubyid_tag_name'>tag_name</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>script</span><span class='tstring_end'>&quot;</span></span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='lparen'>(</span><span class='id identifier rubyid_el'>el</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='lbracket'>[</span><span class='op'>-</span><span class='int'>2</span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+        <span class='id identifier rubyid_parser'>parser</span><span class='period'>.</span><span class='id identifier rubyid_getTag'>getTag</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/script</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='comment'># tag ends with a /: a short tag
+</span>      <span class='kw'>end</span>
+
+      <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_el'>el</span><span class='period'>.</span><span class='id identifier rubyid_tag_name'>tag_name</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>html</span><span class='tstring_end'>&quot;</span></span>
+
+      <span class='kw'>next</span> <span class='kw'>unless</span> <span class='id identifier rubyid_el'>el</span><span class='period'>.</span><span class='id identifier rubyid_tag_name'>tag_name</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>meta</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>and</span> <span class='lparen'>(</span><span class='id identifier rubyid_equiv'>equiv</span> <span class='op'>=</span> <span class='id identifier rubyid_el'>el</span><span class='period'>.</span><span class='id identifier rubyid_attr_hash'>attr_hash</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>http-equiv</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='rparen'>)</span>
+      <span class='kw'>if</span> <span class='qwords_beg'>%w[</span><span class='tstring_content'>x-xrds-location</span><span class='words_sep'> </span><span class='tstring_content'>x-yadis-location</span><span class='tstring_end'>]</span></span><span class='period'>.</span><span class='id identifier rubyid_member?'>member?</span><span class='lparen'>(</span><span class='id identifier rubyid_equiv'>equiv</span><span class='period'>.</span><span class='id identifier rubyid_downcase'>downcase</span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span>
+          <span class='id identifier rubyid_el'>el</span><span class='period'>.</span><span class='id identifier rubyid_attr_hash'>attr_hash</span><span class='period'>.</span><span class='id identifier rubyid_member?'>member?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>content</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+        <span class='kw'>return</span> <span class='const'>CGI</span><span class='period'>.</span><span class='id identifier rubyid_unescapeHTML'>unescapeHTML</span><span class='lparen'>(</span><span class='id identifier rubyid_el'>el</span><span class='period'>.</span><span class='id identifier rubyid_attr_hash'>attr_hash</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>content</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='rparen'>)</span>
+      <span class='kw'>end</span>
+    <span class='kw'>end</span>
+  <span class='kw'>rescue</span> <span class='const'><span class='object_link'><a href="../HTMLTokenizerError.html" title="HTMLTokenizerError (class)">HTMLTokenizerError</a></span></span> <span class='comment'># just stop parsing if there&#39;s an error
+</span>  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="is_xrds?-class_method">
+  
+    .<strong>is_xrds?</strong>(xrds_tree)  &#x21d2; <tt>Boolean</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+111
+112
+113
+114
+115
+116</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openid/yadis/xrds.rb', line 111</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_is_xrds?'>is_xrds?</span><span class='lparen'>(</span><span class='id identifier rubyid_xrds_tree'>xrds_tree</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_xrds_root'>xrds_root</span> <span class='op'>=</span> <span class='id identifier rubyid_xrds_tree'>xrds_tree</span><span class='period'>.</span><span class='id identifier rubyid_root'>root</span>
+  <span class='lparen'>(</span><span class='op'>!</span><span class='id identifier rubyid_xrds_root'>xrds_root</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span> <span class='kw'>and</span>
+    <span class='id identifier rubyid_xrds_root'>xrds_root</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>XRDS</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>and</span>
+    <span class='id identifier rubyid_xrds_root'>xrds_root</span><span class='period'>.</span><span class='id identifier rubyid_namespace'>namespace</span> <span class='op'>==</span> <span class='const'><span class='object_link'><a href="#XRDS_NS-constant" title="OpenID::Yadis::XRDS_NS (constant)">XRDS_NS</a></span></span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="make_filter-class_method">
+  
+    .<strong>make_filter</strong>(parts)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Convert a filter-convertable thing into a filter</p>
+
+<p>parts should be a filter, an endpoint, a callable, or a list of<br />
+any of these.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+143
+144
+145
+146
+147
+148
+149
+150</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openid/yadis/filters.rb', line 143</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_make_filter'>make_filter</span><span class='lparen'>(</span><span class='id identifier rubyid_parts'>parts</span><span class='rparen'>)</span>
+  <span class='comment'># Convert the parts into a list, and pass to mk_compound_filter
+</span>  <span class='id identifier rubyid_parts'>parts</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='const'><span class='object_link'><a href="Yadis/BasicServiceEndpoint.html" title="OpenID::Yadis::BasicServiceEndpoint (class)">BasicServiceEndpoint</a></span></span><span class='rbracket'>]</span> <span class='kw'>if</span> <span class='id identifier rubyid_parts'>parts</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
+
+  <span class='kw'>return</span> <span class='id identifier rubyid_mk_compound_filter'>mk_compound_filter</span><span class='lparen'>(</span><span class='id identifier rubyid_parts'>parts</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_parts'>parts</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>Array</span><span class='rparen'>)</span>
+
+  <span class='id identifier rubyid_mk_compound_filter'>mk_compound_filter</span><span class='lparen'>(</span><span class='lbracket'>[</span><span class='id identifier rubyid_parts'>parts</span><span class='rbracket'>]</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="match_types-class_method">
+  
+    .<strong>match_types</strong>(accept_types, have_types)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openid/yadis/accept.rb', line 75</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_match_types'>match_types</span><span class='lparen'>(</span><span class='id identifier rubyid_accept_types'>accept_types</span><span class='comma'>,</span> <span class='id identifier rubyid_have_types'>have_types</span><span class='rparen'>)</span>
+  <span class='comment'># Given the result of parsing an Accept: header, and the
+</span>  <span class='comment'># available MIME types, return the acceptable types with their
+</span>  <span class='comment'># quality markdowns.
+</span>  <span class='comment'>#
+</span>  <span class='comment'># For example:
+</span>  <span class='comment'>#
+</span>  <span class='comment'># &gt;&gt;&gt; acceptable = parse_accept_header(&#39;text/html, text/plain; q=0.5&#39;)
+</span>  <span class='comment'># &gt;&gt;&gt; matchTypes(acceptable, [&#39;text/plain&#39;, &#39;text/html&#39;, &#39;image/jpeg&#39;])
+</span>  <span class='comment'># [(&#39;text/html&#39;, 1.0), (&#39;text/plain&#39;, 0.5)]
+</span>  <span class='comment'>#
+</span>  <span class='comment'># Type signature: ([(str, str, float)], [str]) -&gt; [(str, float)]
+</span>  <span class='id identifier rubyid_default'>default</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='id identifier rubyid_accept_types'>accept_types</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span> <span class='kw'>or</span> <span class='id identifier rubyid_accept_types'>accept_types</span> <span class='op'>==</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+    <span class='comment'># Accept all of them
+</span>    <span class='int'>1</span>
+  <span class='kw'>else</span>
+    <span class='int'>0</span>
+  <span class='kw'>end</span>
+
+  <span class='id identifier rubyid_match_main'>match_main</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
+  <span class='id identifier rubyid_match_sub'>match_sub</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
+  <span class='id identifier rubyid_accept_types'>accept_types</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_main'>main</span><span class='comma'>,</span> <span class='id identifier rubyid_sub'>sub</span><span class='comma'>,</span> <span class='id identifier rubyid_q'>q</span><span class='op'>|</span>
+    <span class='kw'>if</span> <span class='id identifier rubyid_main'>main</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>*</span><span class='tstring_end'>&quot;</span></span>
+      <span class='id identifier rubyid_default'>default</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='id identifier rubyid_default'>default</span><span class='comma'>,</span> <span class='id identifier rubyid_q'>q</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_max'>max</span>
+      <span class='kw'>next</span>
+    <span class='kw'>elsif</span> <span class='id identifier rubyid_sub'>sub</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>*</span><span class='tstring_end'>&quot;</span></span>
+      <span class='id identifier rubyid_match_main'>match_main</span><span class='lbracket'>[</span><span class='id identifier rubyid_main'>main</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='id identifier rubyid_match_main'>match_main</span><span class='period'>.</span><span class='id identifier rubyid_fetch'>fetch</span><span class='lparen'>(</span><span class='id identifier rubyid_main'>main</span><span class='comma'>,</span> <span class='int'>0</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_q'>q</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_max'>max</span>
+    <span class='kw'>else</span>
+      <span class='id identifier rubyid_match_sub'>match_sub</span><span class='lbracket'>[</span><span class='lbracket'>[</span><span class='id identifier rubyid_main'>main</span><span class='comma'>,</span> <span class='id identifier rubyid_sub'>sub</span><span class='rbracket'>]</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='id identifier rubyid_match_sub'>match_sub</span><span class='period'>.</span><span class='id identifier rubyid_fetch'>fetch</span><span class='lparen'>(</span><span class='lbracket'>[</span><span class='id identifier rubyid_main'>main</span><span class='comma'>,</span> <span class='id identifier rubyid_sub'>sub</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='int'>0</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_q'>q</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_max'>max</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+
+  <span class='id identifier rubyid_accepted_list'>accepted_list</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_order_maintainer'>order_maintainer</span> <span class='op'>=</span> <span class='int'>0</span>
+  <span class='id identifier rubyid_have_types'>have_types</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_mtype'>mtype</span><span class='op'>|</span>
+    <span class='id identifier rubyid_main'>main</span><span class='comma'>,</span> <span class='id identifier rubyid_sub'>sub</span> <span class='op'>=</span> <span class='id identifier rubyid_mtype'>mtype</span><span class='period'>.</span><span class='id identifier rubyid_split'>split</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='int'>2</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_q'>q</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='id identifier rubyid_match_sub'>match_sub</span><span class='period'>.</span><span class='id identifier rubyid_member?'>member?</span><span class='lparen'>(</span><span class='lbracket'>[</span><span class='id identifier rubyid_main'>main</span><span class='comma'>,</span> <span class='id identifier rubyid_sub'>sub</span><span class='rbracket'>]</span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_match_sub'>match_sub</span><span class='lbracket'>[</span><span class='lbracket'>[</span><span class='id identifier rubyid_main'>main</span><span class='comma'>,</span> <span class='id identifier rubyid_sub'>sub</span><span class='rbracket'>]</span><span class='rbracket'>]</span>
+    <span class='kw'>else</span>
+      <span class='id identifier rubyid_match_main'>match_main</span><span class='period'>.</span><span class='id identifier rubyid_fetch'>fetch</span><span class='lparen'>(</span><span class='id identifier rubyid_main'>main</span><span class='comma'>,</span> <span class='id identifier rubyid_default'>default</span><span class='rparen'>)</span>
+    <span class='kw'>end</span>
+
+    <span class='kw'>if</span> <span class='id identifier rubyid_q'>q</span> <span class='op'>!=</span> <span class='int'>0</span>
+      <span class='id identifier rubyid_accepted_list'>accepted_list</span> <span class='op'>&lt;&lt;</span> <span class='lbracket'>[</span><span class='int'>1</span> <span class='op'>-</span> <span class='id identifier rubyid_q'>q</span><span class='comma'>,</span> <span class='id identifier rubyid_order_maintainer'>order_maintainer</span><span class='comma'>,</span> <span class='id identifier rubyid_q'>q</span><span class='comma'>,</span> <span class='id identifier rubyid_mtype'>mtype</span><span class='rbracket'>]</span>
+      <span class='id identifier rubyid_order_maintainer'>order_maintainer</span> <span class='op'>+=</span> <span class='int'>1</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+
+  <span class='id identifier rubyid_accepted_list'>accepted_list</span><span class='period'>.</span><span class='id identifier rubyid_sort!'>sort!</span>
+  <span class='id identifier rubyid_accepted_list'>accepted_list</span><span class='period'>.</span><span class='id identifier rubyid_collect'>collect</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid__'>_</span><span class='comma'>,</span> <span class='id identifier rubyid__'>_</span><span class='comma'>,</span> <span class='id identifier rubyid_q'>q</span><span class='comma'>,</span> <span class='id identifier rubyid_mtype'>mtype</span><span class='op'>|</span> <span class='lbracket'>[</span><span class='id identifier rubyid_mtype'>mtype</span><span class='comma'>,</span> <span class='id identifier rubyid_q'>q</span><span class='rbracket'>]</span> <span class='rbrace'>}</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="mk_compound_filter-class_method">
+  
+    .<strong>mk_compound_filter</strong>(parts)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Create a filter out of a list of filter-like things</p>
+
+<p>Used by make_filter</p>
+
+<p>parts should be a list of things that can be passed to make_filter</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Raises:</p>
+<ul class="raise">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>TypeError</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openid/yadis/filters.rb', line 157</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_mk_compound_filter'>mk_compound_filter</span><span class='lparen'>(</span><span class='id identifier rubyid_parts'>parts</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_raise'>raise</span> <span class='const'>TypeError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_parts'>parts</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_content'> is not iterable</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>unless</span> <span class='id identifier rubyid_parts'>parts</span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='symbol'>:each</span><span class='rparen'>)</span>
+
+  <span class='comment'># Separate into a list of callables and a list of filter objects
+</span>  <span class='id identifier rubyid_transformers'>transformers</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_filters'>filters</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_parts'>parts</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_subfilter'>subfilter</span><span class='op'>|</span>
+    <span class='kw'>if</span> <span class='op'>!</span><span class='id identifier rubyid_subfilter'>subfilter</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>Array</span><span class='rparen'>)</span>
+      <span class='comment'># If it&#39;s not an iterable
+</span>      <span class='kw'>if</span> <span class='id identifier rubyid_subfilter'>subfilter</span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='symbol'>:get_service_endpoints</span><span class='rparen'>)</span>
+        <span class='comment'># It&#39;s a full filter
+</span>        <span class='id identifier rubyid_filters'>filters</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_subfilter'>subfilter</span>
+      <span class='kw'>elsif</span> <span class='id identifier rubyid_subfilter'>subfilter</span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='symbol'>:from_basic_service_endpoint</span><span class='rparen'>)</span>
+        <span class='comment'># It&#39;s an endpoint object, so put its endpoint conversion
+</span>        <span class='comment'># attribute into the list of endpoint transformers
+</span>        <span class='id identifier rubyid_transformers'>transformers</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_subfilter'>subfilter</span><span class='period'>.</span><span class='id identifier rubyid_method'>method</span><span class='lparen'>(</span><span class='symbol'>:from_basic_service_endpoint</span><span class='rparen'>)</span>
+      <span class='kw'>elsif</span> <span class='id identifier rubyid_subfilter'>subfilter</span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='symbol'>:call</span><span class='rparen'>)</span>
+        <span class='comment'># It&#39;s a proc, so add it to the list of endpoint
+</span>        <span class='comment'># transformers
+</span>        <span class='id identifier rubyid_transformers'>transformers</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_subfilter'>subfilter</span>
+      <span class='kw'>else</span>
+        <span class='id identifier rubyid_raise'>raise</span> <span class='cvar'>@@filter_type_error</span>
+      <span class='kw'>end</span>
+    <span class='kw'>else</span>
+      <span class='id identifier rubyid_filters'>filters</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_mk_compound_filter'>mk_compound_filter</span><span class='lparen'>(</span><span class='id identifier rubyid_subfilter'>subfilter</span><span class='rparen'>)</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+
+  <span class='id identifier rubyid_filters'>filters</span> <span class='op'>&lt;&lt;</span> <span class='const'><span class='object_link'><a href="Yadis/TransformFilterMaker.html" title="OpenID::Yadis::TransformFilterMaker (class)">TransformFilterMaker</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Yadis/TransformFilterMaker.html#initialize-instance_method" title="OpenID::Yadis::TransformFilterMaker#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_transformers'>transformers</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_transformers'>transformers</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span> <span class='op'>&gt;</span> <span class='int'>0</span>
+
+  <span class='kw'>return</span> <span class='id identifier rubyid_filters'>filters</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span> <span class='kw'>if</span> <span class='id identifier rubyid_filters'>filters</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span> <span class='op'>==</span> <span class='int'>1</span>
+
+  <span class='const'><span class='object_link'><a href="Yadis/CompoundFilter.html" title="OpenID::Yadis::CompoundFilter (class)">CompoundFilter</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Yadis/CompoundFilter.html#initialize-instance_method" title="OpenID::Yadis::CompoundFilter#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_filters'>filters</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="parse_accept_header-class_method">
+  
+    .<strong>parse_accept_header</strong>(value)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openid/yadis/accept.rb', line 36</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_parse_accept_header'>parse_accept_header</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>
+  <span class='comment'># Parse an accept header, ignoring any accept-extensions
+</span>  <span class='comment'>#
+</span>  <span class='comment'># returns a list of tuples containing main MIME type, MIME
+</span>  <span class='comment'># subtype, and quality markdown.
+</span>  <span class='comment'>#
+</span>  <span class='comment'># str -&gt; [(str, str, float)]
+</span>  <span class='id identifier rubyid_chunks'>chunks</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_split'>split</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>,</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='op'>-</span><span class='int'>1</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_collect'>collect</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_v'>v</span><span class='op'>|</span> <span class='id identifier rubyid_v'>v</span><span class='period'>.</span><span class='id identifier rubyid_strip'>strip</span> <span class='rbrace'>}</span>
+  <span class='id identifier rubyid_accept'>accept</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_chunks'>chunks</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_chunk'>chunk</span><span class='op'>|</span>
+    <span class='id identifier rubyid_parts'>parts</span> <span class='op'>=</span> <span class='id identifier rubyid_chunk'>chunk</span><span class='period'>.</span><span class='id identifier rubyid_split'>split</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>;</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='op'>-</span><span class='int'>1</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_collect'>collect</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_s'>s</span><span class='op'>|</span> <span class='id identifier rubyid_s'>s</span><span class='period'>.</span><span class='id identifier rubyid_strip'>strip</span> <span class='rbrace'>}</span>
+
+    <span class='id identifier rubyid_mtype'>mtype</span> <span class='op'>=</span> <span class='id identifier rubyid_parts'>parts</span><span class='period'>.</span><span class='id identifier rubyid_shift'>shift</span>
+    <span class='kw'>if</span> <span class='id identifier rubyid_mtype'>mtype</span><span class='period'>.</span><span class='id identifier rubyid_index'>index</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
+      <span class='comment'># This is not a MIME type, so ignore the bad data
+</span>      <span class='kw'>next</span>
+    <span class='kw'>end</span>
+
+    <span class='id identifier rubyid_main'>main</span><span class='comma'>,</span> <span class='id identifier rubyid_sub'>sub</span> <span class='op'>=</span> <span class='id identifier rubyid_mtype'>mtype</span><span class='period'>.</span><span class='id identifier rubyid_split'>split</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='int'>2</span><span class='rparen'>)</span>
+
+    <span class='id identifier rubyid_q'>q</span> <span class='op'>=</span> <span class='kw'>nil</span>
+    <span class='id identifier rubyid_parts'>parts</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_ext'>ext</span><span class='op'>|</span>
+      <span class='kw'>unless</span> <span class='id identifier rubyid_ext'>ext</span><span class='period'>.</span><span class='id identifier rubyid_index'>index</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>=</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
+        <span class='id identifier rubyid_k'>k</span><span class='comma'>,</span> <span class='id identifier rubyid_v'>v</span> <span class='op'>=</span> <span class='id identifier rubyid_ext'>ext</span><span class='period'>.</span><span class='id identifier rubyid_split'>split</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>=</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='int'>2</span><span class='rparen'>)</span>
+        <span class='id identifier rubyid_q'>q</span> <span class='op'>=</span> <span class='id identifier rubyid_v'>v</span><span class='period'>.</span><span class='id identifier rubyid_to_f'>to_f</span> <span class='kw'>if</span> <span class='id identifier rubyid_k'>k</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>q</span><span class='tstring_end'>&quot;</span></span>
+      <span class='kw'>end</span>
+    <span class='kw'>end</span>
+
+    <span class='id identifier rubyid_q'>q</span> <span class='op'>=</span> <span class='float'>1.0</span> <span class='kw'>if</span> <span class='id identifier rubyid_q'>q</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
+
+    <span class='id identifier rubyid_accept'>accept</span> <span class='op'>&lt;&lt;</span> <span class='lbracket'>[</span><span class='id identifier rubyid_q'>q</span><span class='comma'>,</span> <span class='id identifier rubyid_main'>main</span><span class='comma'>,</span> <span class='id identifier rubyid_sub'>sub</span><span class='rbracket'>]</span>
+  <span class='kw'>end</span>
+
+  <span class='id identifier rubyid_accept'>accept</span><span class='period'>.</span><span class='id identifier rubyid_sort!'>sort!</span>
+  <span class='id identifier rubyid_accept'>accept</span><span class='period'>.</span><span class='id identifier rubyid_reverse!'>reverse!</span>
+
+  <span class='id identifier rubyid_accept'>accept</span><span class='period'>.</span><span class='id identifier rubyid_collect'>collect</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_q'>q</span><span class='comma'>,</span> <span class='id identifier rubyid_main'>main</span><span class='comma'>,</span> <span class='id identifier rubyid_sub'>sub</span><span class='op'>|</span> <span class='lbracket'>[</span><span class='id identifier rubyid_main'>main</span><span class='comma'>,</span> <span class='id identifier rubyid_sub'>sub</span><span class='comma'>,</span> <span class='id identifier rubyid_q'>q</span><span class='rbracket'>]</span> <span class='rbrace'>}</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="parseXRDS-class_method">
+  
+    .<strong>parseXRDS</strong>(text)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openid/yadis/xrds.rb', line 87</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_parseXRDS'>parseXRDS</span><span class='lparen'>(</span><span class='id identifier rubyid_text'>text</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_disable_entity_expansion'>disable_entity_expansion</span> <span class='kw'>do</span>
+    <span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="Yadis/XRDSError.html" title="OpenID::Yadis::XRDSError (class)">XRDSError</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Not an XRDS document.</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_text'>text</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
+
+    <span class='kw'>begin</span>
+      <span class='id identifier rubyid_d'>d</span> <span class='op'>=</span> <span class='const'>REXML</span><span class='op'>::</span><span class='const'>Document</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_text'>text</span><span class='rparen'>)</span>
+    <span class='kw'>rescue</span> <span class='const'>RuntimeError</span>
+      <span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="Yadis/XRDSError.html" title="OpenID::Yadis::XRDSError (class)">XRDSError</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Not an XRDS document. Failed to parse XML.</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+    <span class='kw'>end</span>
+
+    <span class='kw'>return</span> <span class='id identifier rubyid_d'>d</span> <span class='kw'>if</span> <span class='id identifier rubyid_is_xrds?'>is_xrds?</span><span class='lparen'>(</span><span class='id identifier rubyid_d'>d</span><span class='rparen'>)</span>
+
+    <span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="Yadis/XRDSError.html" title="OpenID::Yadis::XRDSError (class)">XRDSError</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Not an XRDS document.</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="prio_sort-class_method">
+  
+    .<strong>prio_sort</strong>(elements)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Sort a list of elements that have priority attributes.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+154
+155
+156
+157
+158</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openid/yadis/xrds.rb', line 154</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_prio_sort'>prio_sort</span><span class='lparen'>(</span><span class='id identifier rubyid_elements'>elements</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_elements'>elements</span><span class='period'>.</span><span class='id identifier rubyid_sort'>sort</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_a'>a</span><span class='comma'>,</span> <span class='id identifier rubyid_b'>b</span><span class='op'>|</span>
+    <span class='id identifier rubyid_a'>a</span><span class='period'>.</span><span class='id identifier rubyid_attribute'>attribute</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>priority</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span> <span class='op'>&lt;=&gt;</span> <span class='id identifier rubyid_b'>b</span><span class='period'>.</span><span class='id identifier rubyid_attribute'>attribute</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>priority</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="services-class_method">
+  
+    .<strong>services</strong>(xrds_tree)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+135
+136
+137
+138
+139
+140
+141</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openid/yadis/xrds.rb', line 135</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_services'>services</span><span class='lparen'>(</span><span class='id identifier rubyid_xrds_tree'>xrds_tree</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_s'>s</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_each_service'>each_service</span><span class='lparen'>(</span><span class='id identifier rubyid_xrds_tree'>xrds_tree</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_service'>service</span><span class='op'>|</span>
+    <span class='id identifier rubyid_s'>s</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_service'>service</span>
+  <span class='kw'>end</span>
+  <span class='id identifier rubyid_s'>s</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="where_is_yadis?-class_method">
+  
+    .<strong>where_is_yadis?</strong>(resp)  &#x21d2; <tt>Boolean</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Given a HTTPResponse, return the location of the Yadis<br />
+document.</p>
+
+<p>May be the URL just retrieved, another URL, or None, if I<br />
+can’t find any.</p>
+
+<p>[non-blocking]</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openid/yadis/discovery.rb', line 124</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_where_is_yadis?'>where_is_yadis?</span><span class='lparen'>(</span><span class='id identifier rubyid_resp'>resp</span><span class='rparen'>)</span>
+  <span class='comment'># Attempt to find out where to go to discover the document or if
+</span>  <span class='comment'># we already have it
+</span>  <span class='id identifier rubyid_content_type'>content_type</span> <span class='op'>=</span> <span class='id identifier rubyid_resp'>resp</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>content-type</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+
+  <span class='comment'># According to the spec, the content-type header must be an
+</span>  <span class='comment'># exact match, or else we have to look for an indirection.
+</span>  <span class='kw'>if</span> <span class='op'>!</span><span class='id identifier rubyid_content_type'>content_type</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span> <span class='kw'>and</span> <span class='op'>!</span><span class='id identifier rubyid_content_type'>content_type</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span> <span class='kw'>and</span>
+      <span class='id identifier rubyid_content_type'>content_type</span><span class='period'>.</span><span class='id identifier rubyid_split'>split</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>;</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='int'>2</span><span class='rparen'>)</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_downcase'>downcase</span> <span class='op'>==</span> <span class='const'><span class='object_link'><a href="#YADIS_CONTENT_TYPE-constant" title="OpenID::Yadis::YADIS_CONTENT_TYPE (constant)">YADIS_CONTENT_TYPE</a></span></span>
+    <span class='kw'>return</span> <span class='id identifier rubyid_resp'>resp</span><span class='period'>.</span><span class='id identifier rubyid_final_url'>final_url</span>
+  <span class='kw'>else</span>
+    <span class='comment'># Try the header
+</span>    <span class='id identifier rubyid_yadis_loc'>yadis_loc</span> <span class='op'>=</span> <span class='id identifier rubyid_resp'>resp</span><span class='lbracket'>[</span><span class='const'><span class='object_link'><a href="#YADIS_HEADER_NAME-constant" title="OpenID::Yadis::YADIS_HEADER_NAME (constant)">YADIS_HEADER_NAME</a></span></span><span class='period'>.</span><span class='id identifier rubyid_downcase'>downcase</span><span class='rbracket'>]</span>
+
+    <span class='kw'>if</span> <span class='id identifier rubyid_yadis_loc'>yadis_loc</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
+      <span class='comment'># Parse as HTML if the header is missing.
+</span>      <span class='comment'>#
+</span>      <span class='comment'># XXX: do we want to do something with content-type, like
+</span>      <span class='comment'># have a whitelist or a blacklist (for detecting that it&#39;s
+</span>      <span class='comment'># HTML)?
+</span>      <span class='id identifier rubyid_yadis_loc'>yadis_loc</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="" title="OpenID::Yadis (module)">Yadis</a></span></span><span class='period'>.</span><span class='id identifier rubyid_html_yadis_location'><span class='object_link'><a href="#html_yadis_location-class_method" title="OpenID::Yadis.html_yadis_location (method)">html_yadis_location</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_resp'>resp</span><span class='period'>.</span><span class='id identifier rubyid_body'>body</span><span class='rparen'>)</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+
+  <span class='id identifier rubyid_yadis_loc'>yadis_loc</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+      <div id="footer">
+  Generated on Sun Jul  6 06:29:39 2025 by
+  <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.9.37 (ruby-3.4.4).
+</div>
+
+    </div>
+  </body>
+</html>

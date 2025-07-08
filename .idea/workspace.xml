@@ -4,10 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="93d48b1a-c179-44bf-b84b-ec878661df4e" name="Changes" comment="👷 Unsupported builds run on ubuntu-24.04">
+    <list default="true" id="93d48b1a-c179-44bf-b84b-ec878661df4e" name="Changes" comment="➕ cgi dependency for GHA">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Gemfile" beforeDir="false" afterPath="$PROJECT_DIR$/Gemfile" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Gemfile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Gemfile.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gemfiles/modular/x_std_libs/r3/libs.gemfile" beforeDir="false" afterPath="$PROJECT_DIR$/gemfiles/modular/x_std_libs/r3/libs.gemfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gemfiles/modular/x_std_libs/r3/set-1.gemfile" beforeDir="false" afterPath="$PROJECT_DIR$/gemfiles/modular/x_std_libs/r3/set-1.gemfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gemfiles/modular/x_std_libs/r3/set-2.gemfile" beforeDir="false" afterPath="$PROJECT_DIR$/gemfiles/modular/x_std_libs/r3/set-2.gemfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gemfiles/modular/x_std_libs/vHEAD.gemfile" beforeDir="false" afterPath="$PROJECT_DIR$/gemfiles/modular/x_std_libs/vHEAD.gemfile" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,7 +26,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="main" />
+        <entry key="$PROJECT_DIR$" value="next" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -43,12 +46,12 @@
               <option name="branches">
                 <list>
                   <RecentBranch>
-                    <option name="branchName" value="main" />
-                    <option name="lastUsedInstant" value="1750882899" />
+                    <option name="branchName" value="next" />
+                    <option name="lastUsedInstant" value="1751482378" />
                   </RecentBranch>
                   <RecentBranch>
-                    <option name="branchName" value="next" />
-                    <option name="lastUsedInstant" value="1750882889" />
+                    <option name="branchName" value="main" />
+                    <option name="lastUsedInstant" value="1751482182" />
                   </RecentBranch>
                 </list>
               </option>
@@ -74,36 +77,37 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;com.github.patou.gitmoji.display-icon&quot;: &quot;emoji&quot;,
-    &quot;com.github.patou.gitmoji.text-after-unicode&quot;: &quot; &quot;,
-    &quot;com.github.patou.gitmoji.use-unicode&quot;: &quot;true&quot;,
-    &quot;com.intellij.lang.ruby.rbs.tools.collection.workspace.sync.RbsCollectionUpdateProjectActivity#LAST_UPDATE_TIMESTAMP&quot;: &quot;1750881794541&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/pboling/src/ruby-openid/ruby-openid2&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;ruby.structure.view.model.defaults.configured&quot;: &quot;true&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;org.jetbrains.plugins.ruby.settings.RubyActiveModuleSdkConfigurable&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "com.github.patou.gitmoji.display-icon": "emoji",
+    "com.github.patou.gitmoji.text-after-unicode": " ",
+    "com.github.patou.gitmoji.use-unicode": "true",
+    "com.intellij.lang.ruby.rbs.tools.collection.workspace.sync.RbsCollectionUpdateProjectActivity#LAST_UPDATE_TIMESTAMP": "1751922175320",
+    "git-widget-placeholder": "#59 on next",
+    "junie.onboarding.icon.badge.shown": "true",
+    "last_opened_file_path": "/home/pboling/src/ruby-openid/ruby-openid2/gemfiles/modular/cgi/r3",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "ruby.structure.view.model.defaults.configured": "true",
+    "settings.editor.selected.configurable": "org.jetbrains.plugins.ruby.settings.RubyActiveModuleSdkConfigurable",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/gemfiles/modular/cgi/r3" />
+      <recent name="$PROJECT_DIR$/gemfiles/modular/cgi/r2" />
+      <recent name="$PROJECT_DIR$/.github/workflows" />
       <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/gemfiles/modular" />
-      <recent name="$PROJECT_DIR$/gemfiles/modular/x_std_libs/r3" />
-      <recent name="$PROJECT_DIR$/gemfiles/modular/x_std_libs/r2" />
-      <recent name="$PROJECT_DIR$/gemfiles/modular/net-http/r3" />
     </key>
   </component>
   <component name="RubyModuleManagerSettings">
@@ -122,6 +126,11 @@
       <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="ALTERN_SDK_NAME" VALUE="" />
       <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="myPassParentEnvs" VALUE="true" />
       <EXTENSION ID="BundlerRunConfigurationExtension" BUNDLE_MODE="AUTO" bundleExecEnabled="true" />
+      <EXTENSION ID="RubyCoverageRunConfigurationExtension" runner="rcov">
+        <COVERAGE_PATTERN ENABLED="true">
+          <PATTERN REGEXPS="/.rvm/" INCLUDED="false" />
+        </COVERAGE_PATTERN>
+      </EXTENSION>
       <EXTENSION ID="org.jetbrains.plugins.ruby.rails.run.RailsRunConfigurationExtension" SCRATCH_USE_RAILS_RUNNER="false" />
       <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="TEST_FILE_MASK" VALUE="**/*.feature" />
       <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="TEST_TEST_TYPE" VALUE="TEST_SCRIPT" />
@@ -150,6 +159,11 @@
       <RSPEC_RUN_CONFIG_SETTINGS_ID NAME="ALTERN_SDK_NAME" VALUE="" />
       <RSPEC_RUN_CONFIG_SETTINGS_ID NAME="myPassParentEnvs" VALUE="true" />
       <EXTENSION ID="BundlerRunConfigurationExtension" BUNDLE_MODE="AUTO" bundleExecEnabled="true" />
+      <EXTENSION ID="RubyCoverageRunConfigurationExtension" runner="rcov">
+        <COVERAGE_PATTERN ENABLED="true">
+          <PATTERN REGEXPS="/.rvm/" INCLUDED="false" />
+        </COVERAGE_PATTERN>
+      </EXTENSION>
       <EXTENSION ID="org.jetbrains.plugins.ruby.rails.run.RailsRunConfigurationExtension" SCRATCH_USE_RAILS_RUNNER="false" />
       <RSPEC_RUN_CONFIG_SETTINGS_ID NAME="TESTS_FOLDER_PATH" VALUE="" />
       <RSPEC_RUN_CONFIG_SETTINGS_ID NAME="TEST_SCRIPT_PATH" VALUE="" />
@@ -176,6 +190,11 @@
       <RACK_CONFIG_SETTINGS_ID NAME="ALTERN_SDK_NAME" VALUE="" />
       <RACK_CONFIG_SETTINGS_ID NAME="myPassParentEnvs" VALUE="true" />
       <EXTENSION ID="BundlerRunConfigurationExtension" BUNDLE_MODE="AUTO" bundleExecEnabled="true" />
+      <EXTENSION ID="RubyCoverageRunConfigurationExtension" runner="rcov">
+        <COVERAGE_PATTERN ENABLED="true">
+          <PATTERN REGEXPS="/.rvm/" INCLUDED="false" />
+        </COVERAGE_PATTERN>
+      </EXTENSION>
       <EXTENSION ID="org.jetbrains.plugins.ruby.rails.run.RailsRunConfigurationExtension" SCRATCH_USE_RAILS_RUNNER="false" />
       <RACK_CONFIG_SETTINGS_ID NAME="PORT" VALUE="9292" />
       <RACK_CONFIG_SETTINGS_ID NAME="IP" VALUE="127.0.0.1" />
@@ -192,6 +211,11 @@
       <RAKE_RUN_CONFIG_SETTINGS_ID NAME="ALTERN_SDK_NAME" VALUE="" />
       <RAKE_RUN_CONFIG_SETTINGS_ID NAME="myPassParentEnvs" VALUE="true" />
       <EXTENSION ID="BundlerRunConfigurationExtension" BUNDLE_MODE="AUTO" bundleExecEnabled="true" />
+      <EXTENSION ID="RubyCoverageRunConfigurationExtension" runner="rcov">
+        <COVERAGE_PATTERN ENABLED="true">
+          <PATTERN REGEXPS="/.rvm/" INCLUDED="false" />
+        </COVERAGE_PATTERN>
+      </EXTENSION>
       <EXTENSION ID="org.jetbrains.plugins.ruby.rails.run.RailsRunConfigurationExtension" SCRATCH_USE_RAILS_RUNNER="false" />
       <RAKE_RUN_CONFIG_SETTINGS_ID NAME="RAKE_TASK_NAME" VALUE="" />
       <RAKE_RUN_CONFIG_SETTINGS_ID NAME="RAKE_TASK_ARGS" VALUE="" />
@@ -209,6 +233,11 @@
       <RUBY_RUN_CONFIG NAME="ALTERN_SDK_NAME" VALUE="" />
       <RUBY_RUN_CONFIG NAME="myPassParentEnvs" VALUE="true" />
       <EXTENSION ID="BundlerRunConfigurationExtension" BUNDLE_MODE="AUTO" bundleExecEnabled="true" />
+      <EXTENSION ID="RubyCoverageRunConfigurationExtension" runner="rcov">
+        <COVERAGE_PATTERN ENABLED="true">
+          <PATTERN REGEXPS="/.rvm/" INCLUDED="false" />
+        </COVERAGE_PATTERN>
+      </EXTENSION>
       <EXTENSION ID="org.jetbrains.plugins.ruby.rails.run.RailsRunConfigurationExtension" SCRATCH_USE_RAILS_RUNNER="false" />
       <RUBY_RUN_CONFIG NAME="SCRIPT_PATH" VALUE="" />
       <RUBY_RUN_CONFIG NAME="SCRIPT_ARGS" VALUE="" />
@@ -222,6 +251,11 @@
       <RTEST_RUN_CONFIG_SETTINGS_ID NAME="ALTERN_SDK_NAME" VALUE="" />
       <RTEST_RUN_CONFIG_SETTINGS_ID NAME="myPassParentEnvs" VALUE="true" />
       <EXTENSION ID="BundlerRunConfigurationExtension" BUNDLE_MODE="AUTO" bundleExecEnabled="true" />
+      <EXTENSION ID="RubyCoverageRunConfigurationExtension" runner="rcov">
+        <COVERAGE_PATTERN ENABLED="true">
+          <PATTERN REGEXPS="/.rvm/" INCLUDED="false" />
+        </COVERAGE_PATTERN>
+      </EXTENSION>
       <EXTENSION ID="org.jetbrains.plugins.ruby.rails.run.RailsRunConfigurationExtension" SCRATCH_USE_RAILS_RUNNER="false" />
       <RTEST_RUN_CONFIG_SETTINGS_ID NAME="TESTS_FOLDER_PATH" VALUE="" />
       <RTEST_RUN_CONFIG_SETTINGS_ID NAME="TEST_SCRIPT_PATH" VALUE="" />
@@ -243,6 +277,9 @@
       </set>
     </attachedChunks>
   </component>
+  <component name="ShelveChangesManager">
+    <option name="remove_strategy" value="true" />
+  </component>
   <component name="SpringUtil" SPRING_PRE_LOADER_OPTION="true" RAKE_SPRING_PRE_LOADER_OPTION="true" RAILS_SPRING_PRE_LOADER_OPTION="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -261,7 +298,13 @@
       <workItem from="1750788731058" duration="10783000" />
       <workItem from="1750880414712" duration="229000" />
       <workItem from="1750881399375" duration="319000" />
-      <workItem from="1750881735892" duration="5172000" />
+      <workItem from="1750881735892" duration="12158000" />
+      <workItem from="1751057451302" duration="1039000" />
+      <workItem from="1751491611711" duration="114000" />
+      <workItem from="1751491802864" duration="31000" />
+      <workItem from="1751491844385" duration="11053000" />
+      <workItem from="1751695793007" duration="35667000" />
+      <workItem from="1751922114665" duration="13246000" />
     </task>
     <task id="LOCAL-00001" summary="🙈 modernize .gitignore">
       <option name="closed" value="true" />
@@ -359,7 +402,119 @@
       <option name="project" value="LOCAL" />
       <updated>1750887693512</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="➕ cgi&#10;&#10;- Ruby 3.5 may remove cgi from std lib&#10;- See: https://bugs.ruby-lang.org/issues/21258">
+      <option name="closed" value="true" />
+      <created>1750889541434</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1750889541434</updated>
+    </task>
+    <task id="LOCAL-00014" summary="🐛 Handle newly parsed, but still insane, URIs">
+      <option name="closed" value="true" />
+      <created>1751522939381</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1751522939381</updated>
+    </task>
+    <task id="LOCAL-00015" summary="🧑‍💻 IDE settings for RubyMine">
+      <option name="closed" value="true" />
+      <created>1751702276051</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1751702276051</updated>
+    </task>
+    <task id="LOCAL-00016" summary="💚 Improve CI">
+      <option name="closed" value="true" />
+      <created>1751755398483</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1751755398483</updated>
+    </task>
+    <task id="LOCAL-00017" summary="💚 More CI fixes and linting">
+      <option name="closed" value="true" />
+      <created>1751783355910</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1751783355910</updated>
+    </task>
+    <task id="LOCAL-00018" summary="💚 More CI fixes and linting">
+      <option name="closed" value="true" />
+      <created>1751783465351</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1751783465351</updated>
+    </task>
+    <task id="LOCAL-00019" summary="💚 More CI fixes">
+      <option name="closed" value="true" />
+      <created>1751899321897</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1751899321897</updated>
+    </task>
+    <task id="LOCAL-00020" summary="💚 Temp Switch to pboling/rexml&#10;&#10;- https://github.com/ruby/rexml/issues/260&#10;- https://github.com/ruby/rexml/pull/261">
+      <option name="closed" value="true" />
+      <created>1751927555291</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1751927555291</updated>
+    </task>
+    <task id="LOCAL-00021" summary="💚 Skip every step if indicated&#10;&#10;- https://github.com/actions/runner/issues/662&#10;- https://github.com/actions/toolkit/issues/146">
+      <option name="closed" value="true" />
+      <created>1751929813651</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1751929813651</updated>
+    </task>
+    <task id="LOCAL-00022" summary="💚 Skip every step if indicated&#10;&#10;- https://github.com/actions/runner/issues/662&#10;- https://github.com/actions/toolkit/issues/146">
+      <option name="closed" value="true" />
+      <created>1751930233429</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1751930233429</updated>
+    </task>
+    <task id="LOCAL-00023" summary="💚 Skip every step if indicated&#10;&#10;- https://github.com/actions/runner/issues/662&#10;- https://github.com/actions/toolkit/issues/146">
+      <option name="closed" value="true" />
+      <created>1751930237754</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1751930237754</updated>
+    </task>
+    <task id="LOCAL-00024" summary="💚 Create Document instead of Element">
+      <option name="closed" value="true" />
+      <created>1751932116027</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1751932116027</updated>
+    </task>
+    <task id="LOCAL-00025" summary="🚨 Linting">
+      <option name="closed" value="true" />
+      <created>1751932896950</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1751932896950</updated>
+    </task>
+    <task id="LOCAL-00026" summary="➕ cgi dependency for GHA">
+      <option name="closed" value="true" />
+      <created>1751934916185</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1751934916185</updated>
+    </task>
+    <option name="localTasksCounter" value="27" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -376,7 +531,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="main" />
+                        <option value="next" />
                       </list>
                     </value>
                   </entry>
@@ -399,7 +554,18 @@
     <MESSAGE value=" Linting&#10;&#10;- Remove commonmarker" />
     <MESSAGE value=" More Linting" />
     <MESSAGE value=" Unsupported builds run on ubuntu-24.04" />
-    <option name="LAST_COMMIT_MESSAGE" value=" Unsupported builds run on ubuntu-24.04" />
+    <MESSAGE value="➕ cgi&#10;&#10;- Ruby 3.5 may remove cgi from std lib&#10;- See: https://bugs.ruby-lang.org/issues/21258" />
+    <MESSAGE value=" Handle newly parsed, but still insane, URIs" />
+    <MESSAGE value="‍ IDE settings for RubyMine" />
+    <MESSAGE value=" Improve CI" />
+    <MESSAGE value=" More CI fixes and linting" />
+    <MESSAGE value=" More CI fixes" />
+    <MESSAGE value=" Temp Switch to pboling/rexml&#10;&#10;- https://github.com/ruby/rexml/issues/260&#10;- https://github.com/ruby/rexml/pull/261" />
+    <MESSAGE value=" Skip every step if indicated&#10;&#10;- https://github.com/actions/runner/issues/662&#10;- https://github.com/actions/toolkit/issues/146" />
+    <MESSAGE value=" Create Document instead of Element" />
+    <MESSAGE value=" Linting" />
+    <MESSAGE value="➕ cgi dependency for GHA" />
+    <option name="LAST_COMMIT_MESSAGE" value="➕ cgi dependency for GHA" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

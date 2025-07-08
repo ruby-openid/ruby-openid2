@@ -1,4 +1,7 @@
-name: Supported Ruby Matrix
+name: MRI (Supported)
+
+permissions:
+  contents: read
 
 env:
   K_SOUP_COV_DO: false
@@ -7,6 +10,7 @@ on:
   push:
     branches:
       - 'main'
+      - "*-stable"
     tags:
       - '!*' # Do not execute on tags
   pull_request:
@@ -14,9 +18,6 @@ on:
       - '*'
   # Allow manually triggering the workflow.
   workflow_dispatch:
-
-permissions:
-  contents: read
 
 # Cancels all previous workflow runs for the same branch that have not yet completed.
 concurrency:
@@ -26,32 +27,57 @@ concurrency:
 
 jobs:
   test:
-    name: Specs - Ruby ${{ matrix.ruby }}${{ matrix.name_extra || '' }}
-    if: "!contains(github.event.commits[0].message, '[ci skip]') && !contains(github.event.commits[0].message, '[skip ci]')"
-    env: # $BUNDLE_GEMFILE must be set at the job level, so it is set for all steps
-      BUNDLE_GEMFILE: ${{ github.workspace }}/gemfiles/${{ matrix.gemfile }}.gemfile
+    name: Tests ${{ matrix.ruby }} ${{ matrix.appraisal_name }}${{ matrix.name_extra || '' }}
+    if: ${{ !contains(github.event.commits[0].message, '[ci skip]') && !contains(github.event.commits[0].message, '[skip ci]') }}
     runs-on: ubuntu-latest
+    continue-on-error: ${{ matrix.experimental || endsWith(matrix.ruby, 'head') }}
+    env: # $BUNDLE_GEMFILE - set at job level, so applies to all steps
+      BUNDLE_GEMFILE: ${{ github.workspace }}/${{ matrix.gemfile }}.gemfile
     strategy:
       matrix:
         include:
-          - ruby: "3.3"
+          # Ruby 3.1
+          - ruby: "3.1"
+            appraisal_name: "r3-set-2"
+            exec_cmd: "rake test"
+            gemfile: "Appraisal.root"
             rubygems: latest
             bundler: latest
-            gemfile: vanilla
+
+          # Ruby 3.2
           - ruby: "3.2"
+            appraisal_name: "r3-set-1"
+            exec_cmd: "rake test"
+            gemfile: "Appraisal.root"
             rubygems: latest
             bundler: latest
-            gemfile: vanilla
-          #- Ruby 3.1 tests are run by coverage.yml
+
+          # Ruby 3.3
+          - ruby: "3.3"
+            appraisal_name: "r3"
+            exec_cmd: "rake test"
+            gemfile: "Appraisal.root"
+            rubygems: latest
+            bundler: latest
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
       - name: Setup Ruby & RubyGems
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: "${{ matrix.ruby }}"
-          rubygems: "${{ matrix.rubygems }}"
-          bundler: "${{ matrix.bundler }}"
-          bundler-cache: true # runs 'bundle install' and caches installed gems automatically
-      - name: Run tests
-        run: bundle exec rake test
+          ruby-version: ${{ matrix.ruby }}
+          rubygems: ${{ matrix.rubygems }}
+          bundler: ${{ matrix.bundler }}
+          bundler-cache: false
+
+      # Raw `bundle` will use the BUNDLE_GEMFILE set to matrix.gemfile (i.e. Appraisal.root)
+      # We need to do this first to get appraisal installed.
+      # NOTE: This does not use the main Gemfile at all.
+      - name: Install Root Appraisal
+        run: bundle
+      - name: Appraisal for ${{ matrix.ruby }}@${{ matrix.appraisal_name }}
+        run: bundle exec appraisal ${{ matrix.appraisal_name }} bundle
+      - name: Run ${{ matrix.exec_cmd }} on ${{ matrix.ruby }}@${{ matrix.appraisal_name }}
+        run: bundle exec appraisal ${{ matrix.appraisal_name }} bundle exec ${{ matrix.exec_cmd }}

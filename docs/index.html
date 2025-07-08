@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  File: README
+  
+    &mdash; Documentation by YARD 0.9.37
+  
+</title>
+
+  <link rel="stylesheet" href="css/style.css" type="text/css" />
+
+  <link rel="stylesheet" href="css/common.css" type="text/css" />
+
+<script type="text/javascript">
+  pathId = "README";
+  relpath = '';
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div class="nav_wrap">
+      <iframe id="nav" src="class_list.html?1"></iframe>
+      <div id="resizer"></div>
+    </div>
+
+    <div id="main" tabindex="-1">
+      <div id="header">
+        <div id="menu">
+  
+    <a href="_index.html">Index</a> &raquo; 
+    <span class="title">File: README</span>
+  
+</div>
+
+        <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="class_list.html">
+
+        <svg width="24" height="24">
+          <rect x="0" y="4" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="12" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="20" width="24" height="4" rx="1" ry="1"></rect>
+        </svg>
+    </a>
+  
+</div>
+        <div class="clear"></div>
+      </div>
+
+      <div id="content"><div id='filecontents'><h1 id="ruby-openid">Ruby OpenID</h1>
+
+<p><a href="https://rubygems.org/gems/ruby-openid2"><img src="https://img.shields.io/gem/v/ruby-openid2.svg" alt="Version"></a><br>
+<a href="https://github.com/oauth-xx/ruby-openid2"><img src="https://img.shields.io/gem/rd/ruby-openid2.svg" alt="Downloads Today"></a><br>
+<a href="https://github.com/oauth-xx/ruby-openid2/actions/workflows/supported.yml"><img src="https://github.com/oauth-xx/ruby-openid2/actions/workflows/supported.yml/badge.svg" alt="CI Supported Build"></a><br>
+<a href="https://github.com/oauth-xx/ruby-openid2/actions/workflows/unsupported.yml"><img src="https://github.com/oauth-xx/ruby-openid2/actions/workflows/unsupported.yml/badge.svg" alt="CI Unsupported Build"></a><br>
+<a href="https://github.com/oauth-xx/ruby-openid2/actions/workflows/style.yml"><img src="https://github.com/oauth-xx/ruby-openid2/actions/workflows/style.yml/badge.svg" alt="CI Style Build"></a><br>
+<a href="https://github.com/oauth-xx/ruby-openid2/actions/workflows/coverage.yml"><img src="https://github.com/oauth-xx/ruby-openid2/actions/workflows/coverage.yml/badge.svg" alt="CI Coverage Build"></a><br>
+<a href="https://github.com/oauth-xx/ruby-openid2/actions/workflows/heads.yml"><img src="https://github.com/oauth-xx/ruby-openid2/actions/workflows/heads.yml/badge.svg" alt="CI Heads Build"></a></p>
+
+<hr>
+
+<p><a href="https://liberapay.com/pboling/donate"><img src="https://img.shields.io/liberapay/goal/pboling.svg?logo=liberapay" alt="Liberapay Goal Progress"></a> <a href="https://github.com/sponsors/pboling"><img src="https://img.shields.io/badge/Sponsor_Me!-pboling.svg?style=social&amp;logo=github" alt="Sponsor Me on Github"></a> <a href="https://www.buymeacoffee.com/pboling"><img src="https://img.shields.io/badge/buy_me_a_coffee-%E2%9C%93-yellow.svg?style=flat" alt="Buy me a coffee"></a> <a href="https://polar.sh/pboling"><img src="https://img.shields.io/badge/polar-donate-yellow.svg" alt="Donate on Polar"></a> <a href="https://ko-fi.com/O5O86SNP4"><img src="https://img.shields.io/badge/a_more_different_coffee-%E2%9C%93-yellow.svg" alt="Donate to my FLOSS or refugee efforts at ko-fi.com"></a> <a href="https://patreon.com/galtzo"><img src="https://img.shields.io/badge/patreon-donate-yellow.svg" alt="Donate to my FLOSS or refugee efforts using Patreon"></a></p>
+
+<p>A Ruby library for verifying and serving OpenID identities.</p>
+
+<h2 id="features">Features</h2>
+
+<ul>
+  <li>Easy to use API for verifying OpenID identites - OpenID::Consumer</li>
+  <li>Support for serving OpenID identites - OpenID::Server</li>
+  <li>Does not depend on underlying web framework</li>
+  <li>Supports multiple storage mechanisms (Filesystem, ActiveRecord, Memory)</li>
+  <li>Example code to help you get started, including:
+    <ul>
+      <li>Ruby on Rails based consumer and server</li>
+      <li>OpenIDLoginGenerator for quickly getting creating a rails app that uses<br>
+OpenID for authentication</li>
+      <li>ActiveRecordOpenIDStore plugin</li>
+    </ul>
+  </li>
+  <li>Comprehensive test suite</li>
+  <li>Supports both OpenID 1 and OpenID 2 transparently</li>
+</ul>
+
+<h2 id="installation">Installation</h2>
+
+<p>Install the gem and add to the application’s Gemfile by executing:</p>
+
+<pre class="code ruby"><code class="ruby">$ bundle add ruby-openid2
+</code></pre>
+
+<p>If bundler is not being used to manage dependencies, install the gem by executing:</p>
+
+<pre class="code ruby"><code class="ruby">$ gem install ruby-openid2
+</code></pre>
+
+<h3 id="note-about-the-deprecation-of-stdlib-gems-logger-rexml-net-http-and-uri">Note about the deprecation of stdlib gems <code>logger</code>, <code>rexml</code>, <code>net-http</code>, and <code>uri</code>
+</h3>
+
+<p>Versions 3.0.x were released with hard dependencies on the new stand alone gem replacements<br>
+for the old stdlib gems.</p>
+
+<p>This made it impossible for downstream libraries to make the choice to stay on the old stdlib gems.</p>
+
+<p>As a result, starting with version 3.1.0, they will not be direct dependencies.</p>
+
+<p>See <a href="https://github.com/rubygems/rubygems/issues/7178#issuecomment-2372558363">this discussion</a> for more information.</p>
+
+<h2 id="getting-started">Getting Started</h2>
+
+<p>The best way to start is to look at the rails_openid example.<br>
+You can run it with:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_cd'>cd</span> <span class='id identifier rubyid_examples'>examples</span><span class='op'>/</span><span class='id identifier rubyid_rails_openid'>rails_openid</span>
+<span class='id identifier rubyid_script'>script</span><span class='op'>/</span><span class='id identifier rubyid_server'>server</span>
+</code></pre>
+
+<p>If you are writing an OpenID Relying Party, a good place to start is:<br>
+<code>examples/rails_openid/app/controllers/consumer_controller.rb</code></p>
+
+<p>And if you are writing an OpenID provider:<br>
+<code>examples/rails_openid/app/controllers/server_controller.rb</code></p>
+
+<p>The library code is quite well documented, so don’t be squeamish, and<br>
+look at the library itself if there’s anything you don’t understand in<br>
+the examples.</p>
+
+<h2 id="general-info">General Info</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Primary Namespace</th>
+      <th>OpenID</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>gem name</td>
+      <td><a href="https://rubygems.org/gems/ruby-openid2">ruby-openid2</a></td>
+    </tr>
+    <tr>
+      <td>code triage</td>
+      <td><a href="https://www.codetriage.com/oauth-xx/ruby-openid2"><img src="https://www.codetriage.com/oauth-xx/ruby-openid2/badges/users.svg" alt="Open Source Helpers"></a></td>
+    </tr>
+    <tr>
+      <td>documentation</td>
+      <td>
+<a href="https://github.com/oauth-xx/rack-openid2">on Github.com</a>,  <a href="https://rubydoc.info/github/oauth-xx/rack-openid2">on rubydoc.info</a>
+</td>
+    </tr>
+    <tr>
+      <td>expert support</td>
+      <td><a href="https://www.codementor.io/peterboling?utm_source=github&amp;utm_medium=button&amp;utm_term=peterboling&amp;utm_campaign=github"><img src="https://cdn.codementor.io/badges/get_help_github.svg" alt="Get help on Codementor"></a></td>
+    </tr>
+    <tr>
+      <td>
+<code>...</code> 💖</td>
+      <td>
+<a href="https://liberapay.com/pboling/donate"><img src="https://img.shields.io/liberapay/goal/pboling.svg?logo=liberapay" alt="Liberapay Patrons"></a> <a href="https://github.com/sponsors/pboling"><img src="https://img.shields.io/badge/Sponsor_Me!-pboling.svg?style=social&amp;logo=github" alt="Sponsor Me"></a> <a href="http://www.linkedin.com/in/peterboling"><img src="https://img.shields.io/badge/PeterBoling-blue?style=plastic&amp;logo=linkedin" alt="Follow Me on LinkedIn"></a> <a href="https://angel.co/u/peter-boling"><img src="https://img.shields.io/badge/peter--boling-orange?style=plastic&amp;logo=wellfound" alt="Find Me on WellFound:"></a> <a href="https://www.crunchbase.com/person/peter-boling"><img src="https://img.shields.io/badge/peter--boling-purple?style=plastic&amp;logo=crunchbase" alt="Find Me on CrunchBase"></a> <a href="https://linktr.ee/galtzo"><img src="https://img.shields.io/badge/galtzo-purple?style=plastic&amp;logo=linktree" alt="My LinkTree"></a> <a href="https://ruby.social/@galtzo"><img src="https://img.shields.io/mastodon/follow/109447111526622197?domain=https%3A%2F%2Fruby.social&amp;style=plastic&amp;logo=mastodon&amp;label=Ruby%20%40galtzo" alt="Follow Me on Ruby.Social"></a> <a href="http://twitter.com/galtzo"><img src="https://img.shields.io/twitter/follow/galtzo.svg?style=social&amp;label=Follow%20%40galtzo" alt="Tweet @ Peter"></a> <a href="https://coderwall.com/Peter%20Boling">💻</a> <a href="https://about.me/peter.boling">🌏</a>
+</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- 7️⃣ spread 💖 -->
+
+<!-- Maintainer Contact Links -->
+
+<h2 id="community">Community</h2>
+
+<p>Discussion regarding the Ruby OpenID library and other JanRain OpenID<br>
+libraries takes place on the <a href="http://openid.net/developers/dev-mailing-lists/">OpenID mailing list</a>.</p>
+
+<p>Please join this list to discuss, ask implementation questions, report<br>
+bugs, etc. Also check out the openid channel on the freenode IRC<br>
+network.</p>
+
+<h2 id="-contributing">🤝 Contributing</h2>
+
+<p>See <a href="file.CONTRIBUTING.html" title="CONTRIBUTING.md">CONTRIBUTING.md</a></p>
+
+<h2 id="-contributors">🌈 Contributors</h2>
+
+<p><a href="https://github.com/oauth-xx/ruby-openid2/graphs/contributors"><img src="https://contrib.rocks/image?repo=oauth-xx/ruby-openid2" alt="Contributors"></a></p>
+
+<p>Made with <a href="https://contrib.rocks">contributors-img</a>.</p>
+
+<h2 id="-code-of-conduct">🪇 Code of Conduct</h2>
+
+<p>Everyone interacting in this project’s codebases, issue trackers,<br>
+chat rooms and mailing lists is expected to follow the <a href="file.CODE_OF_CONDUCT.html" title="code of conduct">code of conduct</a>.</p>
+
+<h2 id="-versioning">📌 Versioning</h2>
+
+<p>This Library adheres to <a href="http://semver.org/">Semantic Versioning 2.0.0</a>.<br>
+Violations of this scheme should be reported as bugs.<br>
+Specifically, if a minor or patch version is released that breaks backward compatibility,<br>
+a new version should be immediately released that restores compatibility.<br>
+Breaking changes to the public API will only be introduced with new major versions.</p>
+
+<p>To get a better understanding of how SemVer is intended to work over a project’s lifetime,<br>
+read this article from the creator of SemVer:</p>
+
+<ul>
+  <li><a href="https://tom.preston-werner.com/2022/05/23/major-version-numbers-are-not-sacred.html">“Major Version Numbers are Not Sacred”</a></li>
+</ul>
+
+<p>As a result of this policy, you can (and should) specify a dependency on these libraries using<br>
+the <a href="http://guides.rubygems.org/patterns/#pessimistic-version-constraint">Pessimistic Version Constraint</a> with two digits of precision.</p>
+
+<p>For example:</p>
+
+<pre class="code language-ruby"><code class="language-ruby">spec.add_dependency(&quot;ruby-openid2&quot;, &quot;~&gt; 3.0&quot;)
+</code></pre>
+
+<p>See <a href="file.CHANGELOG.html" title="CHANGELOG.md">CHANGELOG.md</a> for list of releases.</p>
+
+<h3 id="-copyright">© Copyright</h3>
+
+<ul>
+  <li>Copyright (c) 2006-2012 JanRain, Inc.</li>
+  <li>Copyright (c) 2024 <a href="http://www.peterboling.com">Peter H. Boling</a> of <a href="http://www.railsbling.com">Rails Bling</a>
+</li>
+</ul>
+
+<h2 id="-license">📄 License</h2>
+
+<p>Apache Software License.  For more information see the LICENSE file.</p>
+
+<h2 id="-one-more-thing">🤑 One more thing</h2>
+
+<p>You made it to the bottom of the page,<br>
+so perhaps you’ll indulge me for another 20 seconds.<br>
+I maintain many dozens of gems, including this one,<br>
+because I want Ruby to be a great place for people to solve problems, big and small.<br>
+Please consider supporting my efforts via the giant yellow link below,<br>
+or one of the others at the head of this README.</p>
+
+<p><a href="https://www.buymeacoffee.com/pboling"><img src="https://img.buymeacoffee.com/button-api/?text=Buy%20me%20a%20latte&amp;emoji=&amp;slug=pboling&amp;button_colour=FFDD00&amp;font_colour=000000&amp;font_family=Cookie&amp;outline_colour=000000&amp;coffee_colour=ffffff" alt="Buy me a latte"></a></p>
+
+</div></div>
+
+      <div id="footer">
+  Generated on Sun Jul  6 06:29:39 2025 by
+  <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.9.37 (ruby-3.4.4).
+</div>
+
+    </div>
+  </body>
+</html>

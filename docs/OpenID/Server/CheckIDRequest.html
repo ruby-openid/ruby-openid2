@@ -1,0 +1,2008 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  Class: OpenID::Server::CheckIDRequest
+  
+    &mdash; Documentation by YARD 0.9.37
+  
+</title>
+
+  <link rel="stylesheet" href="../../css/style.css" type="text/css" />
+
+  <link rel="stylesheet" href="../../css/common.css" type="text/css" />
+
+<script type="text/javascript">
+  pathId = "OpenID::Server::CheckIDRequest";
+  relpath = '../../';
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="../../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div class="nav_wrap">
+      <iframe id="nav" src="../../class_list.html?1"></iframe>
+      <div id="resizer"></div>
+    </div>
+
+    <div id="main" tabindex="-1">
+      <div id="header">
+        <div id="menu">
+  
+    <a href="../../_index.html">Index (C)</a> &raquo;
+    <span class='title'><span class='object_link'><a href="../../OpenID.html" title="OpenID (module)">OpenID</a></span></span> &raquo; <span class='title'><span class='object_link'><a href="../Server.html" title="OpenID::Server (module)">Server</a></span></span>
+     &raquo; 
+    <span class="title">CheckIDRequest</span>
+  
+</div>
+
+        <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="../../class_list.html">
+
+        <svg width="24" height="24">
+          <rect x="0" y="4" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="12" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="20" width="24" height="4" rx="1" ry="1"></rect>
+        </svg>
+    </a>
+  
+</div>
+        <div class="clear"></div>
+      </div>
+
+      <div id="content"><h1>Class: OpenID::Server::CheckIDRequest
+  
+  
+  
+</h1>
+<div class="box_info">
+  
+  <dl>
+    <dt>Inherits:</dt>
+    <dd>
+      <span class="inheritName"><span class='object_link'><a href="OpenIDRequest.html" title="OpenID::Server::OpenIDRequest (class)">OpenIDRequest</a></span></span>
+      
+        <ul class="fullTree">
+          <li>Object</li>
+          
+            <li class="next"><span class='object_link'><a href="OpenIDRequest.html" title="OpenID::Server::OpenIDRequest (class)">OpenIDRequest</a></span></li>
+          
+            <li class="next">OpenID::Server::CheckIDRequest</li>
+          
+        </ul>
+        <a href="#" class="inheritanceTree">show all</a>
+      
+    </dd>
+  </dl>
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+  <dl>
+    <dt>Defined in:</dt>
+    <dd>lib/openid/server.rb</dd>
+  </dl>
+  
+</div>
+
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    <p>A request to confirm the identity of a user.</p>
+
+<p>This class handles requests for openid modes<br />
++checkid_immediate+ and +checkid_setup+ .</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+
+
+
+  <h2>Instance Attribute Summary <small><a href="#" class="summary_toggle">collapse</a></small></h2>
+  <ul class="summary">
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#assoc_handle-instance_method" title="#assoc_handle (instance method)">#<strong>assoc_handle</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Provided in smart mode requests, a handle for a previously established association.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#claimed_id-instance_method" title="#claimed_id (instance method)">#<strong>claimed_id</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>The claimed identifier.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#identity-instance_method" title="#identity (instance method)">#<strong>identity</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>The OP-local identifier being checked.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#immediate-instance_method" title="#immediate (instance method)">#<strong>immediate</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Is this an immediate-mode request?.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#mode-instance_method" title="#mode (instance method)">#<strong>mode</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>mode:: +checkid_immediate+ or +checkid_setup+.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#op_endpoint-instance_method" title="#op_endpoint (instance method)">#<strong>op_endpoint</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns the value of attribute op_endpoint.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#return_to-instance_method" title="#return_to (instance method)">#<strong>return_to</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>The URL to send the user agent back to to reply to this request.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#trust_root-instance_method" title="#trust_root (instance method)">#<strong>trust_root</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>This URL identifies the party making the request, and the user will use that to make her decision about what answer she trusts them to have.</p>
+</div></span>
+  
+</li>
+
+    
+  </ul>
+
+
+
+  
+  
+  <h3 class="inherited">Attributes inherited from <span class='object_link'><a href="OpenIDRequest.html" title="OpenID::Server::OpenIDRequest (class)">OpenIDRequest</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="OpenIDRequest.html#message-instance_method" title="OpenID::Server::OpenIDRequest#message (method)">#message</a></span></p>
+
+
+  
+    <h2>
+      Class Method Summary
+      <small><a href="#" class="summary_toggle">collapse</a></small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#from_message-class_method" title="from_message (class method)">.<strong>from_message</strong>(message, op_endpoint)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Construct me from an OpenID message.</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+    <h2>
+      Instance Method Summary
+      <small><a href="#" class="summary_toggle">collapse</a></small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#answer-instance_method" title="#answer (instance method)">#<strong>answer</strong>(allow, server_url = nil, identity = nil, claimed_id = nil)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Respond to this request.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#cancel_url-instance_method" title="#cancel_url (instance method)">#<strong>cancel_url</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#encode_to_url-instance_method" title="#encode_to_url (instance method)">#<strong>encode_to_url</strong>(server_url)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#id_select-instance_method" title="#id_select (instance method)">#<strong>id_select</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Is the identifier to be selected by the IDP?.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(identity, return_to, op_endpoint, trust_root = nil, immediate = false, assoc_handle = nil, claimed_id = nil)  &#x21d2; CheckIDRequest </a>
+    
+
+    
+  </span>
+  
+  
+    <span class="note title constructor">constructor</span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>These parameters are assigned directly as attributes, see the #CheckIDRequest class documentation for their descriptions.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#return_to_verified-instance_method" title="#return_to_verified (instance method)">#<strong>return_to_verified</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Does the relying party publish the return_to URL for this response under the realm? It is up to the provider to set a policy for what kinds of realms should be allowed.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#to_s-instance_method" title="#to_s (instance method)">#<strong>to_s</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#trust_root_valid-instance_method" title="#trust_root_valid (instance method)">#<strong>trust_root_valid</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Is my return_to under my trust_root?.</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods inherited from <span class='object_link'><a href="OpenIDRequest.html" title="OpenID::Server::OpenIDRequest (class)">OpenIDRequest</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="OpenIDRequest.html#namespace-instance_method" title="OpenID::Server::OpenIDRequest#namespace (method)">#namespace</a></span></p>
+<div id="constructor_details" class="method_details_list">
+  <h2>Constructor Details</h2>
+  
+    <div class="method_details first">
+  <h3 class="signature first" id="initialize-instance_method">
+  
+    #<strong>initialize</strong>(identity, return_to, op_endpoint, trust_root = nil, immediate = false, assoc_handle = nil, claimed_id = nil)  &#x21d2; <tt><span class='object_link'><a href="" title="OpenID::Server::CheckIDRequest (class)">CheckIDRequest</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>These parameters are assigned directly as attributes,<br />
+see the #CheckIDRequest class documentation for their<br />
+descriptions.</p>
+
+<p>Raises #MalformedReturnURL when the +return_to+ URL is not<br />
+a URL.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Raises:</p>
+<ul class="raise">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="UntrustedReturnURL.html" title="OpenID::Server::UntrustedReturnURL (class)">UntrustedReturnURL</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+469
+470
+471
+472
+473
+474
+475
+476
+477
+478
+479
+480
+481
+482
+483
+484
+485
+486
+487
+488
+489
+490
+491
+492
+493
+494
+495</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openid/server.rb', line 469</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_identity'>identity</span><span class='comma'>,</span> <span class='id identifier rubyid_return_to'>return_to</span><span class='comma'>,</span> <span class='id identifier rubyid_op_endpoint'>op_endpoint</span><span class='comma'>,</span> <span class='id identifier rubyid_trust_root'>trust_root</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span>
+  <span class='id identifier rubyid_immediate'>immediate</span> <span class='op'>=</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='id identifier rubyid_assoc_handle'>assoc_handle</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_claimed_id'>claimed_id</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
+  <span class='ivar'>@assoc_handle</span> <span class='op'>=</span> <span class='id identifier rubyid_assoc_handle'>assoc_handle</span>
+  <span class='ivar'>@identity</span> <span class='op'>=</span> <span class='id identifier rubyid_identity'>identity</span>
+  <span class='ivar'>@claimed_id</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='id identifier rubyid_claimed_id'>claimed_id</span> <span class='kw'>or</span> <span class='id identifier rubyid_identity'>identity</span><span class='rparen'>)</span>
+  <span class='ivar'>@return_to</span> <span class='op'>=</span> <span class='id identifier rubyid_return_to'>return_to</span>
+  <span class='ivar'>@trust_root</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='id identifier rubyid_trust_root'>trust_root</span> <span class='kw'>or</span> <span class='id identifier rubyid_return_to'>return_to</span><span class='rparen'>)</span>
+  <span class='ivar'>@op_endpoint</span> <span class='op'>=</span> <span class='id identifier rubyid_op_endpoint'>op_endpoint</span>
+  <span class='ivar'>@message</span> <span class='op'>=</span> <span class='kw'>nil</span>
+
+  <span class='kw'>if</span> <span class='id identifier rubyid_immediate'>immediate</span>
+    <span class='ivar'>@immediate</span> <span class='op'>=</span> <span class='kw'>true</span>
+    <span class='ivar'>@mode</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>checkid_immediate</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>else</span>
+    <span class='ivar'>@immediate</span> <span class='op'>=</span> <span class='kw'>false</span>
+    <span class='ivar'>@mode</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>checkid_setup</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>end</span>
+
+  <span class='kw'>if</span> <span class='ivar'>@return_to</span> <span class='kw'>and</span>
+      <span class='op'>!</span><span class='const'><span class='object_link'><a href="../TrustRoot.html" title="OpenID::TrustRoot (module)">TrustRoot</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../TrustRoot/TrustRoot.html" title="OpenID::TrustRoot::TrustRoot (class)">TrustRoot</a></span></span><span class='period'>.</span><span class='id identifier rubyid_parse'><span class='object_link'><a href="../TrustRoot/TrustRoot.html#parse-class_method" title="OpenID::TrustRoot::TrustRoot.parse (method)">parse</a></span></span><span class='lparen'>(</span><span class='ivar'>@return_to</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="MalformedReturnURL.html" title="OpenID::Server::MalformedReturnURL (class)">MalformedReturnURL</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="MalformedReturnURL.html#initialize-instance_method" title="OpenID::Server::MalformedReturnURL#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='kw'>nil</span><span class='comma'>,</span> <span class='ivar'>@return_to</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+
+  <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_trust_root_valid'>trust_root_valid</span>
+
+  <span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="UntrustedReturnURL.html" title="OpenID::Server::UntrustedReturnURL (class)">UntrustedReturnURL</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="UntrustedReturnURL.html#initialize-instance_method" title="OpenID::Server::UntrustedReturnURL#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='kw'>nil</span><span class='comma'>,</span> <span class='ivar'>@return_to</span><span class='comma'>,</span> <span class='ivar'>@trust_root</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+  
+</div>
+
+  <div id="instance_attr_details" class="attr_details">
+    <h2>Instance Attribute Details</h2>
+    
+      
+      <span id="assoc_handle=-instance_method"></span>
+      <div class="method_details first">
+  <h3 class="signature first" id="assoc_handle-instance_method">
+  
+    #<strong>assoc_handle</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Provided in smart mode requests, a handle for a previously<br />
+established association.  nil for dumb mode requests.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+437
+438
+439</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openid/server.rb', line 437</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_assoc_handle'>assoc_handle</span>
+  <span class='ivar'>@assoc_handle</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id="claimed_id=-instance_method"></span>
+      <div class="method_details ">
+  <h3 class="signature " id="claimed_id-instance_method">
+  
+    #<strong>claimed_id</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>The claimed identifier.  Not present in OpenID 1.x<br />
+messages.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+451
+452
+453</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openid/server.rb', line 451</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_claimed_id'>claimed_id</span>
+  <span class='ivar'>@claimed_id</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id="identity=-instance_method"></span>
+      <div class="method_details ">
+  <h3 class="signature " id="identity-instance_method">
+  
+    #<strong>identity</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>The OP-local identifier being checked.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+447
+448
+449</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openid/server.rb', line 447</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_identity'>identity</span>
+  <span class='ivar'>@identity</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id="immediate=-instance_method"></span>
+      <div class="method_details ">
+  <h3 class="signature " id="immediate-instance_method">
+  
+    #<strong>immediate</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Is this an immediate-mode request?</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+440
+441
+442</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openid/server.rb', line 440</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_immediate'>immediate</span>
+  <span class='ivar'>@immediate</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id="mode=-instance_method"></span>
+      <div class="method_details ">
+  <h3 class="signature " id="mode-instance_method">
+  
+    #<strong>mode</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>mode:: +checkid_immediate+ or +checkid_setup+</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+459
+460
+461</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openid/server.rb', line 459</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_mode'>mode</span>
+  <span class='ivar'>@mode</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id="op_endpoint=-instance_method"></span>
+      <div class="method_details ">
+  <h3 class="signature " id="op_endpoint-instance_method">
+  
+    #<strong>op_endpoint</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns the value of attribute op_endpoint.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+461
+462
+463</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openid/server.rb', line 461</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_op_endpoint'>op_endpoint</span>
+  <span class='ivar'>@op_endpoint</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id="return_to=-instance_method"></span>
+      <div class="method_details ">
+  <h3 class="signature " id="return_to-instance_method">
+  
+    #<strong>return_to</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>The URL to send the user agent back to to reply to this<br />
+request.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+444
+445
+446</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openid/server.rb', line 444</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_return_to'>return_to</span>
+  <span class='ivar'>@return_to</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id="trust_root=-instance_method"></span>
+      <div class="method_details ">
+  <h3 class="signature " id="trust_root-instance_method">
+  
+    #<strong>trust_root</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>This URL identifies the party making the request, and the user<br />
+will use that to make her decision about what answer she<br />
+trusts them to have. Referred to as “realm” in OpenID 2.0.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+456
+457
+458</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openid/server.rb', line 456</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_trust_root'>trust_root</span>
+  <span class='ivar'>@trust_root</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+
+  <div id="class_method_details" class="method_details_list">
+    <h2>Class Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="from_message-class_method">
+  
+    .<strong>from_message</strong>(message, op_endpoint)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Construct me from an OpenID message.</p>
+
+<p>message:: An OpenID checkid_* request Message</p>
+
+<p>op_endpoint:: The endpoint URL of the server that this<br />
+              message was sent to.</p>
+
+<p>Raises:<br />
+ProtocolError:: When not all required parameters are present<br />
+                in the message.</p>
+
+<p>MalformedReturnURL:: When the +return_to+ URL is not a URL.</p>
+
+<p>UntrustedReturnURL:: When the +return_to+ URL is<br />
+                     outside the +trust_root+.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Raises:</p>
+<ul class="raise">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="UntrustedReturnURL.html" title="OpenID::Server::UntrustedReturnURL (class)">UntrustedReturnURL</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+512
+513
+514
+515
+516
+517
+518
+519
+520
+521
+522
+523
+524
+525
+526
+527
+528
+529
+530
+531
+532
+533
+534
+535
+536
+537
+538
+539
+540
+541
+542
+543
+544
+545
+546
+547
+548
+549
+550
+551
+552
+553
+554
+555
+556
+557
+558
+559
+560
+561
+562
+563
+564
+565
+566
+567
+568
+569
+570
+571
+572
+573
+574
+575
+576
+577
+578
+579
+580
+581
+582
+583
+584
+585
+586
+587
+588
+589
+590</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openid/server.rb', line 512</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_from_message'>from_message</span><span class='lparen'>(</span><span class='id identifier rubyid_message'>message</span><span class='comma'>,</span> <span class='id identifier rubyid_op_endpoint'>op_endpoint</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_obj'>obj</span> <span class='op'>=</span> <span class='id identifier rubyid_allocate'>allocate</span>
+  <span class='id identifier rubyid_obj'>obj</span><span class='period'>.</span><span class='id identifier rubyid_message'>message</span> <span class='op'>=</span> <span class='id identifier rubyid_message'>message</span>
+  <span class='id identifier rubyid_obj'>obj</span><span class='period'>.</span><span class='id identifier rubyid_op_endpoint'>op_endpoint</span> <span class='op'>=</span> <span class='id identifier rubyid_op_endpoint'>op_endpoint</span>
+  <span class='id identifier rubyid_mode'>mode</span> <span class='op'>=</span> <span class='id identifier rubyid_message'>message</span><span class='period'>.</span><span class='id identifier rubyid_get_arg'>get_arg</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../../OpenID.html#OPENID_NS-constant" title="OpenID::OPENID_NS (constant)">OPENID_NS</a></span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>mode</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_mode'>mode</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>checkid_immediate</span><span class='tstring_end'>&quot;</span></span>
+    <span class='id identifier rubyid_obj'>obj</span><span class='period'>.</span><span class='id identifier rubyid_immediate'>immediate</span> <span class='op'>=</span> <span class='kw'>true</span>
+    <span class='id identifier rubyid_obj'>obj</span><span class='period'>.</span><span class='id identifier rubyid_mode'>mode</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>checkid_immediate</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>else</span>
+    <span class='id identifier rubyid_obj'>obj</span><span class='period'>.</span><span class='id identifier rubyid_immediate'>immediate</span> <span class='op'>=</span> <span class='kw'>false</span>
+    <span class='id identifier rubyid_obj'>obj</span><span class='period'>.</span><span class='id identifier rubyid_mode'>mode</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>checkid_setup</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>end</span>
+
+  <span class='id identifier rubyid_obj'>obj</span><span class='period'>.</span><span class='id identifier rubyid_return_to'>return_to</span> <span class='op'>=</span> <span class='id identifier rubyid_message'>message</span><span class='period'>.</span><span class='id identifier rubyid_get_arg'>get_arg</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../../OpenID.html#OPENID_NS-constant" title="OpenID::OPENID_NS (constant)">OPENID_NS</a></span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>return_to</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_message'>message</span><span class='period'>.</span><span class='id identifier rubyid_is_openid1'>is_openid1</span> <span class='kw'>and</span> <span class='op'>!</span><span class='id identifier rubyid_obj'>obj</span><span class='period'>.</span><span class='id identifier rubyid_return_to'>return_to</span>
+    <span class='id identifier rubyid_msg'>msg</span> <span class='op'>=</span> <span class='id identifier rubyid_format'>format</span><span class='lparen'>(</span>
+      <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Missing required field &#39;return_to&#39; from %s</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+      <span class='id identifier rubyid_message'>message</span><span class='comma'>,</span>
+    <span class='rparen'>)</span>
+    <span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="ProtocolError.html" title="OpenID::Server::ProtocolError (class)">ProtocolError</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="ProtocolError.html#initialize-instance_method" title="OpenID::Server::ProtocolError#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_message'>message</span><span class='comma'>,</span> <span class='id identifier rubyid_msg'>msg</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+
+  <span class='id identifier rubyid_obj'>obj</span><span class='period'>.</span><span class='id identifier rubyid_identity'>identity</span> <span class='op'>=</span> <span class='id identifier rubyid_message'>message</span><span class='period'>.</span><span class='id identifier rubyid_get_arg'>get_arg</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../../OpenID.html#OPENID_NS-constant" title="OpenID::OPENID_NS (constant)">OPENID_NS</a></span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>identity</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_obj'>obj</span><span class='period'>.</span><span class='id identifier rubyid_claimed_id'>claimed_id</span> <span class='op'>=</span> <span class='id identifier rubyid_message'>message</span><span class='period'>.</span><span class='id identifier rubyid_get_arg'>get_arg</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../../OpenID.html#OPENID_NS-constant" title="OpenID::OPENID_NS (constant)">OPENID_NS</a></span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>claimed_id</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_message'>message</span><span class='period'>.</span><span class='id identifier rubyid_is_openid1'>is_openid1</span>
+    <span class='kw'>unless</span> <span class='id identifier rubyid_obj'>obj</span><span class='period'>.</span><span class='id identifier rubyid_identity'>identity</span>
+      <span class='id identifier rubyid_s'>s</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>OpenID 1 message did not contain openid.identity</span><span class='tstring_end'>&quot;</span></span>
+      <span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="ProtocolError.html" title="OpenID::Server::ProtocolError (class)">ProtocolError</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="ProtocolError.html#initialize-instance_method" title="OpenID::Server::ProtocolError#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_message'>message</span><span class='comma'>,</span> <span class='id identifier rubyid_s'>s</span><span class='rparen'>)</span>
+    <span class='kw'>end</span>
+  <span class='kw'>elsif</span> <span class='id identifier rubyid_obj'>obj</span><span class='period'>.</span><span class='id identifier rubyid_identity'>identity</span> <span class='kw'>and</span> <span class='op'>!</span><span class='id identifier rubyid_obj'>obj</span><span class='period'>.</span><span class='id identifier rubyid_claimed_id'>claimed_id</span>
+    <span class='id identifier rubyid_s'>s</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>OpenID 2.0 message contained openid.identity but not </span><span class='tstring_end'>&quot;</span></span> <span class='op'>+</span>
+           <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>claimed_id</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="ProtocolError.html" title="OpenID::Server::ProtocolError (class)">ProtocolError</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="ProtocolError.html#initialize-instance_method" title="OpenID::Server::ProtocolError#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_message'>message</span><span class='comma'>,</span> <span class='id identifier rubyid_s'>s</span><span class='rparen'>)</span>
+  <span class='kw'>elsif</span> <span class='id identifier rubyid_obj'>obj</span><span class='period'>.</span><span class='id identifier rubyid_claimed_id'>claimed_id</span> <span class='kw'>and</span> <span class='op'>!</span><span class='id identifier rubyid_obj'>obj</span><span class='period'>.</span><span class='id identifier rubyid_identity'>identity</span>
+    <span class='id identifier rubyid_s'>s</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>OpenID 2.0 message contained openid.claimed_id but not </span><span class='tstring_end'>&quot;</span></span> <span class='op'>+</span>
+         <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>identity</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="ProtocolError.html" title="OpenID::Server::ProtocolError (class)">ProtocolError</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="ProtocolError.html#initialize-instance_method" title="OpenID::Server::ProtocolError#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_message'>message</span><span class='comma'>,</span> <span class='id identifier rubyid_s'>s</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+
+  <span class='comment'># There&#39;s a case for making self.trust_root be a TrustRoot
+</span>  <span class='comment'># here.  But if TrustRoot isn&#39;t currently part of the &quot;public&quot;
+</span>  <span class='comment'># API, I&#39;m not sure it&#39;s worth doing.
+</span>  <span class='id identifier rubyid_trust_root_param'>trust_root_param</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='id identifier rubyid_message'>message</span><span class='period'>.</span><span class='id identifier rubyid_is_openid1'>is_openid1</span>
+    <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>trust_root</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>else</span>
+    <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>realm</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>end</span>
+  <span class='id identifier rubyid_trust_root'>trust_root</span> <span class='op'>=</span> <span class='id identifier rubyid_message'>message</span><span class='period'>.</span><span class='id identifier rubyid_get_arg'>get_arg</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../../OpenID.html#OPENID_NS-constant" title="OpenID::OPENID_NS (constant)">OPENID_NS</a></span></span><span class='comma'>,</span> <span class='id identifier rubyid_trust_root_param'>trust_root_param</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_trust_root'>trust_root</span> <span class='op'>=</span> <span class='id identifier rubyid_obj'>obj</span><span class='period'>.</span><span class='id identifier rubyid_return_to'>return_to</span> <span class='kw'>if</span> <span class='id identifier rubyid_trust_root'>trust_root</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span> <span class='op'>||</span> <span class='id identifier rubyid_trust_root'>trust_root</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
+  <span class='id identifier rubyid_obj'>obj</span><span class='period'>.</span><span class='id identifier rubyid_trust_root'>trust_root</span> <span class='op'>=</span> <span class='id identifier rubyid_trust_root'>trust_root</span>
+
+  <span class='kw'>if</span> <span class='op'>!</span><span class='id identifier rubyid_message'>message</span><span class='period'>.</span><span class='id identifier rubyid_is_openid1'>is_openid1</span> <span class='kw'>and</span> <span class='op'>!</span><span class='id identifier rubyid_obj'>obj</span><span class='period'>.</span><span class='id identifier rubyid_return_to'>return_to</span> <span class='kw'>and</span> <span class='op'>!</span><span class='id identifier rubyid_obj'>obj</span><span class='period'>.</span><span class='id identifier rubyid_trust_root'>trust_root</span>
+    <span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="ProtocolError.html" title="OpenID::Server::ProtocolError (class)">ProtocolError</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="ProtocolError.html#initialize-instance_method" title="OpenID::Server::ProtocolError#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_message'>message</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>openid.realm required when </span><span class='tstring_end'>&quot;</span></span> <span class='op'>+</span>
+                            <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>openid.return_to absent</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+
+  <span class='id identifier rubyid_obj'>obj</span><span class='period'>.</span><span class='id identifier rubyid_assoc_handle'>assoc_handle</span> <span class='op'>=</span> <span class='id identifier rubyid_message'>message</span><span class='period'>.</span><span class='id identifier rubyid_get_arg'>get_arg</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../../OpenID.html#OPENID_NS-constant" title="OpenID::OPENID_NS (constant)">OPENID_NS</a></span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>assoc_handle</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+
+  <span class='comment'># Using TrustRoot.parse here is a bit misleading, as we&#39;re not
+</span>  <span class='comment'># parsing return_to as a trust root at all.  However, valid
+</span>  <span class='comment'># URLs are valid trust roots, so we can use this to get an
+</span>  <span class='comment'># idea if it is a valid URL.  Not all trust roots are valid
+</span>  <span class='comment'># return_to URLs, however (particularly ones with wildcards),
+</span>  <span class='comment'># so this is still a little sketchy.
+</span>  <span class='kw'>if</span> <span class='id identifier rubyid_obj'>obj</span><span class='period'>.</span><span class='id identifier rubyid_return_to'>return_to</span> <span class='kw'>and</span>
+      <span class='op'>!</span><span class='const'><span class='object_link'><a href="../TrustRoot.html" title="OpenID::TrustRoot (module)">TrustRoot</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../TrustRoot/TrustRoot.html" title="OpenID::TrustRoot::TrustRoot (class)">TrustRoot</a></span></span><span class='period'>.</span><span class='id identifier rubyid_parse'><span class='object_link'><a href="../TrustRoot/TrustRoot.html#parse-class_method" title="OpenID::TrustRoot::TrustRoot.parse (method)">parse</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_obj'>obj</span><span class='period'>.</span><span class='id identifier rubyid_return_to'>return_to</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="MalformedReturnURL.html" title="OpenID::Server::MalformedReturnURL (class)">MalformedReturnURL</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="MalformedReturnURL.html#initialize-instance_method" title="OpenID::Server::MalformedReturnURL#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_message'>message</span><span class='comma'>,</span> <span class='id identifier rubyid_obj'>obj</span><span class='period'>.</span><span class='id identifier rubyid_return_to'>return_to</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+
+  <span class='comment'># I first thought that checking to see if the return_to is
+</span>  <span class='comment'># within the trust_root is premature here, a
+</span>  <span class='comment'># logic-not-decoding thing.  But it was argued that this is
+</span>  <span class='comment'># really part of data validation.  A request with an invalid
+</span>  <span class='comment'># trust_root/return_to is broken regardless of application,
+</span>  <span class='comment'># right?
+</span>  <span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="UntrustedReturnURL.html" title="OpenID::Server::UntrustedReturnURL (class)">UntrustedReturnURL</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="UntrustedReturnURL.html#initialize-instance_method" title="OpenID::Server::UntrustedReturnURL#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_message'>message</span><span class='comma'>,</span> <span class='id identifier rubyid_obj'>obj</span><span class='period'>.</span><span class='id identifier rubyid_return_to'>return_to</span><span class='comma'>,</span> <span class='id identifier rubyid_obj'>obj</span><span class='period'>.</span><span class='id identifier rubyid_trust_root'>trust_root</span><span class='rparen'>)</span> <span class='kw'>unless</span> <span class='id identifier rubyid_obj'>obj</span><span class='period'>.</span><span class='id identifier rubyid_trust_root_valid'>trust_root_valid</span>
+
+  <span class='id identifier rubyid_obj'>obj</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="answer-instance_method">
+  
+    #<strong>answer</strong>(allow, server_url = nil, identity = nil, claimed_id = nil)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Respond to this request.</p>
+
+<p>allow:: Allow this user to claim this identity, and allow the<br />
+        consumer to have this information?</p>
+
+<p>server_url:: DEPRECATED.  Passing op_endpoint to the<br />
+             #Server constructor makes this optional.</p>
+
+<pre class="code ruby"><code class="ruby">         When an OpenID 1.x immediate mode request does
+         not succeed, it gets back a URL where the request
+         may be carried out in a not-so-immediate fashion.
+         Pass my URL in here (the fully qualified address
+         of this server&#39;s endpoint, i.e.
+         &lt;tt&gt;http://example.com/server&lt;/tt&gt;), and I will
+         use it as a base for the URL for a new request.
+
+         Optional for requests where
+         #CheckIDRequest.immediate is false or +allow+ is
+         true.
+</code></pre>
+
+<p>identity:: The OP-local identifier to answer with.  Only for use<br />
+           when the relying party requested identifier selection.</p>
+
+<p>claimed_id:: The claimed identifier to answer with,<br />
+             for use with identifier selection in the case where the<br />
+             claimed identifier and the OP-local identifier differ,<br />
+             i.e. when the claimed_id uses delegation.</p>
+
+<pre class="code ruby"><code class="ruby">         If +identity+ is provided but this is not,
+         +claimed_id+ will default to the value of +identity+.
+         When answering requests that did not ask for identifier
+         selection, the response +claimed_id+ will default to
+         that of the request.
+
+         This parameter is new in OpenID 2.0.
+</code></pre>
+
+<p>Returns an OpenIDResponse object containing a OpenID id_res message.</p>
+
+<p>Raises NoReturnToError if the return_to is missing.</p>
+
+<p>Version 2.0 deprecates +server_url+ and adds +claimed_id+.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Raises:</p>
+<ul class="raise">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="NoReturnToError.html" title="OpenID::Server::NoReturnToError (class)">NoReturnToError</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+671
+672
+673
+674
+675
+676
+677
+678
+679
+680
+681
+682
+683
+684
+685
+686
+687
+688
+689
+690
+691
+692
+693
+694
+695
+696
+697
+698
+699
+700
+701
+702
+703
+704
+705
+706
+707
+708
+709
+710
+711
+712
+713
+714
+715
+716
+717
+718
+719
+720
+721
+722
+723
+724
+725
+726
+727
+728
+729
+730
+731
+732
+733
+734
+735
+736
+737
+738
+739
+740
+741
+742
+743
+744
+745
+746
+747
+748
+749
+750
+751
+752
+753
+754
+755
+756
+757
+758
+759
+760
+761
+762
+763
+764
+765
+766
+767
+768
+769
+770
+771
+772
+773
+774
+775
+776
+777
+778
+779
+780
+781
+782
+783
+784</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openid/server.rb', line 671</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_answer'>answer</span><span class='lparen'>(</span><span class='id identifier rubyid_allow'>allow</span><span class='comma'>,</span> <span class='id identifier rubyid_server_url'>server_url</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_identity'>identity</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_claimed_id'>claimed_id</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="NoReturnToError.html" title="OpenID::Server::NoReturnToError (class)">NoReturnToError</a></span></span> <span class='kw'>unless</span> <span class='ivar'>@return_to</span>
+
+  <span class='kw'>unless</span> <span class='id identifier rubyid_server_url'>server_url</span>
+    <span class='kw'>if</span> <span class='ivar'>@message</span><span class='period'>.</span><span class='id identifier rubyid_is_openid2'>is_openid2</span> <span class='kw'>and</span> <span class='op'>!</span><span class='ivar'>@op_endpoint</span>
+      <span class='comment'># In other words, that warning I raised in
+</span>      <span class='comment'># Server.__init__?  You should pay attention to it now.
+</span>      <span class='id identifier rubyid_raise'>raise</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='embexpr_end'>}</span><span class='tstring_content'> should be constructed with </span><span class='tstring_end'>&quot;</span></span> \
+        <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>op_endpoint to respond to OpenID 2.0 </span><span class='tstring_end'>&quot;</span></span> \
+        <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>messages.</span><span class='tstring_end'>&quot;</span></span>
+    <span class='kw'>end</span>
+
+    <span class='id identifier rubyid_server_url'>server_url</span> <span class='op'>=</span> <span class='ivar'>@op_endpoint</span>
+  <span class='kw'>end</span>
+
+  <span class='id identifier rubyid_mode'>mode</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='id identifier rubyid_allow'>allow</span>
+    <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>id_res</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>elsif</span> <span class='ivar'>@message</span><span class='period'>.</span><span class='id identifier rubyid_is_openid1'>is_openid1</span>
+    <span class='kw'>if</span> <span class='ivar'>@immediate</span>
+      <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>id_res</span><span class='tstring_end'>&quot;</span></span>
+    <span class='kw'>else</span>
+      <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>cancel</span><span class='tstring_end'>&quot;</span></span>
+    <span class='kw'>end</span>
+  <span class='kw'>elsif</span> <span class='ivar'>@immediate</span>
+    <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>setup_needed</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>else</span>
+    <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>cancel</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>end</span>
+
+  <span class='id identifier rubyid_response'>response</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="OpenIDResponse.html" title="OpenID::Server::OpenIDResponse (class)">OpenIDResponse</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="OpenIDResponse.html#initialize-instance_method" title="OpenID::Server::OpenIDResponse#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='kw'>self</span><span class='rparen'>)</span>
+
+  <span class='kw'>if</span> <span class='id identifier rubyid_claimed_id'>claimed_id</span> <span class='kw'>and</span> <span class='ivar'>@message</span><span class='period'>.</span><span class='id identifier rubyid_is_openid1'>is_openid1</span>
+    <span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="VersionError.html" title="OpenID::Server::VersionError (class)">VersionError</a></span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>claimed_id is new in OpenID 2.0 and not </span><span class='tstring_end'>&quot;</span></span> \
+      <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>available for </span><span class='embexpr_beg'>#{</span><span class='ivar'>@message</span><span class='period'>.</span><span class='id identifier rubyid_get_openid_namespace'>get_openid_namespace</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>end</span>
+
+  <span class='id identifier rubyid_claimed_id'>claimed_id</span> <span class='op'>=</span> <span class='id identifier rubyid_identity'>identity</span> <span class='kw'>if</span> <span class='id identifier rubyid_identity'>identity</span> <span class='kw'>and</span> <span class='op'>!</span><span class='id identifier rubyid_claimed_id'>claimed_id</span>
+
+  <span class='kw'>if</span> <span class='id identifier rubyid_allow'>allow</span>
+    <span class='kw'>if</span> <span class='ivar'>@identity</span> <span class='op'>==</span> <span class='const'><span class='object_link'><a href="../../OpenID.html#IDENTIFIER_SELECT-constant" title="OpenID::IDENTIFIER_SELECT (constant)">IDENTIFIER_SELECT</a></span></span>
+      <span class='kw'>unless</span> <span class='id identifier rubyid_identity'>identity</span>
+        <span class='id identifier rubyid_raise'>raise</span> <span class='const'>ArgumentError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>This request uses IdP-driven </span><span class='tstring_end'>&quot;</span></span> \
+          <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>identifier selection.You must supply </span><span class='tstring_end'>&quot;</span></span> \
+          <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>an identifier in the response.</span><span class='tstring_end'>&quot;</span></span>
+      <span class='kw'>end</span>
+
+      <span class='id identifier rubyid_response_identity'>response_identity</span> <span class='op'>=</span> <span class='id identifier rubyid_identity'>identity</span>
+      <span class='id identifier rubyid_response_claimed_id'>response_claimed_id</span> <span class='op'>=</span> <span class='id identifier rubyid_claimed_id'>claimed_id</span>
+
+    <span class='kw'>elsif</span> <span class='ivar'>@identity</span>
+      <span class='kw'>if</span> <span class='id identifier rubyid_identity'>identity</span> <span class='kw'>and</span> <span class='lparen'>(</span><span class='ivar'>@identity</span> <span class='op'>!=</span> <span class='id identifier rubyid_identity'>identity</span><span class='rparen'>)</span>
+        <span class='id identifier rubyid_raise'>raise</span> <span class='const'>ArgumentError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Request was for identity </span><span class='embexpr_beg'>#{</span><span class='ivar'>@identity</span><span class='embexpr_end'>}</span><span class='tstring_content'>, </span><span class='tstring_end'>&quot;</span></span> \
+          <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>cannot reply with identity </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_identity'>identity</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+      <span class='kw'>end</span>
+
+      <span class='id identifier rubyid_response_identity'>response_identity</span> <span class='op'>=</span> <span class='ivar'>@identity</span>
+      <span class='id identifier rubyid_response_claimed_id'>response_claimed_id</span> <span class='op'>=</span> <span class='ivar'>@claimed_id</span>
+    <span class='kw'>else</span>
+      <span class='kw'>if</span> <span class='id identifier rubyid_identity'>identity</span>
+        <span class='id identifier rubyid_raise'>raise</span> <span class='const'>ArgumentError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>This request specified no identity </span><span class='tstring_end'>&quot;</span></span> \
+          <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>and you supplied </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_identity'>identity</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+      <span class='kw'>end</span>
+      <span class='id identifier rubyid_response_identity'>response_identity</span> <span class='op'>=</span> <span class='kw'>nil</span>
+    <span class='kw'>end</span>
+
+    <span class='kw'>if</span> <span class='ivar'>@message</span><span class='period'>.</span><span class='id identifier rubyid_is_openid1'>is_openid1</span> <span class='kw'>and</span> <span class='op'>!</span><span class='id identifier rubyid_response_identity'>response_identity</span>
+      <span class='id identifier rubyid_raise'>raise</span> <span class='const'>ArgumentError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Request was an OpenID 1 request, so </span><span class='tstring_end'>&quot;</span></span> \
+        <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>response must include an identifier.</span><span class='tstring_end'>&quot;</span></span>
+    <span class='kw'>end</span>
+
+    <span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_fields'>fields</span><span class='period'>.</span><span class='id identifier rubyid_update_args'>update_args</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../../OpenID.html#OPENID_NS-constant" title="OpenID::OPENID_NS (constant)">OPENID_NS</a></span></span><span class='comma'>,</span> <span class='lbrace'>{</span>
+      <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>mode</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_mode'>mode</span><span class='comma'>,</span>
+      <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>op_endpoint</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_server_url'>server_url</span><span class='comma'>,</span>
+      <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>return_to</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='ivar'>@return_to</span><span class='comma'>,</span>
+      <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>response_nonce</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='const'><span class='object_link'><a href="../Nonce.html" title="OpenID::Nonce (module)">Nonce</a></span></span><span class='period'>.</span><span class='id identifier rubyid_mk_nonce'><span class='object_link'><a href="../Nonce.html#mk_nonce-class_method" title="OpenID::Nonce.mk_nonce (method)">mk_nonce</a></span></span><span class='comma'>,</span>
+    <span class='rbrace'>}</span><span class='rparen'>)</span>
+
+    <span class='kw'>if</span> <span class='id identifier rubyid_response_identity'>response_identity</span>
+      <span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_fields'>fields</span><span class='period'>.</span><span class='id identifier rubyid_set_arg'>set_arg</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../../OpenID.html#OPENID_NS-constant" title="OpenID::OPENID_NS (constant)">OPENID_NS</a></span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>identity</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_response_identity'>response_identity</span><span class='rparen'>)</span>
+      <span class='kw'>if</span> <span class='ivar'>@message</span><span class='period'>.</span><span class='id identifier rubyid_is_openid2'>is_openid2</span>
+        <span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_fields'>fields</span><span class='period'>.</span><span class='id identifier rubyid_set_arg'>set_arg</span><span class='lparen'>(</span>
+          <span class='const'><span class='object_link'><a href="../../OpenID.html#OPENID_NS-constant" title="OpenID::OPENID_NS (constant)">OPENID_NS</a></span></span><span class='comma'>,</span>
+          <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>claimed_id</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+          <span class='id identifier rubyid_response_claimed_id'>response_claimed_id</span><span class='comma'>,</span>
+        <span class='rparen'>)</span>
+      <span class='kw'>end</span>
+    <span class='kw'>end</span>
+  <span class='kw'>else</span>
+    <span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_fields'>fields</span><span class='period'>.</span><span class='id identifier rubyid_set_arg'>set_arg</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../../OpenID.html#OPENID_NS-constant" title="OpenID::OPENID_NS (constant)">OPENID_NS</a></span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>mode</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_mode'>mode</span><span class='rparen'>)</span>
+    <span class='kw'>if</span> <span class='ivar'>@immediate</span>
+      <span class='kw'>if</span> <span class='ivar'>@message</span><span class='period'>.</span><span class='id identifier rubyid_is_openid1'>is_openid1</span> <span class='kw'>and</span> <span class='op'>!</span><span class='id identifier rubyid_server_url'>server_url</span>
+        <span class='id identifier rubyid_raise'>raise</span> <span class='const'>ArgumentError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>setup_url is required for allow=false </span><span class='tstring_end'>&quot;</span></span> \
+          <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>in OpenID 1.x immediate mode.</span><span class='tstring_end'>&quot;</span></span>
+      <span class='kw'>end</span>
+
+      <span class='comment'># Make a new request just like me, but with
+</span>      <span class='comment'># immediate=false.
+</span>      <span class='id identifier rubyid_setup_request'>setup_request</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span>
+        <span class='ivar'>@identity</span><span class='comma'>,</span>
+        <span class='ivar'>@return_to</span><span class='comma'>,</span>
+        <span class='ivar'>@op_endpoint</span><span class='comma'>,</span>
+        <span class='ivar'>@trust_root</span><span class='comma'>,</span>
+        <span class='kw'>false</span><span class='comma'>,</span>
+        <span class='ivar'>@assoc_handle</span><span class='comma'>,</span>
+        <span class='ivar'>@claimed_id</span><span class='comma'>,</span>
+      <span class='rparen'>)</span>
+      <span class='id identifier rubyid_setup_request'>setup_request</span><span class='period'>.</span><span class='id identifier rubyid_message'>message</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Message.html" title="OpenID::Message (class)">Message</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../Message.html#initialize-instance_method" title="OpenID::Message#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='ivar'>@message</span><span class='period'>.</span><span class='id identifier rubyid_get_openid_namespace'>get_openid_namespace</span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_setup_url'>setup_url</span> <span class='op'>=</span> <span class='id identifier rubyid_setup_request'>setup_request</span><span class='period'>.</span><span class='id identifier rubyid_encode_to_url'>encode_to_url</span><span class='lparen'>(</span><span class='id identifier rubyid_server_url'>server_url</span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_fields'>fields</span><span class='period'>.</span><span class='id identifier rubyid_set_arg'>set_arg</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../../OpenID.html#OPENID_NS-constant" title="OpenID::OPENID_NS (constant)">OPENID_NS</a></span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>user_setup_url</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_setup_url'>setup_url</span><span class='rparen'>)</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+
+  <span class='id identifier rubyid_response'>response</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="cancel_url-instance_method">
+  
+    #<strong>cancel_url</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Raises:</p>
+<ul class="raise">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="NoReturnToError.html" title="OpenID::Server::NoReturnToError (class)">NoReturnToError</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+819
+820
+821
+822
+823
+824
+825
+826
+827
+828
+829
+830
+831
+832
+833
+834
+835
+836
+837
+838
+839
+840</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openid/server.rb', line 819</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_cancel_url'>cancel_url</span>
+  <span class='comment'># Get the URL to cancel this request.
+</span>  <span class='comment'>#
+</span>  <span class='comment'># Useful for creating a &quot;Cancel&quot; button on a web form so that
+</span>  <span class='comment'># operation can be carried out directly without another trip
+</span>  <span class='comment'># through the server.
+</span>  <span class='comment'>#
+</span>  <span class='comment'># (Except you may want to make another trip through the
+</span>  <span class='comment'># server so that it knows that the user did make a decision.)
+</span>  <span class='comment'>#
+</span>  <span class='comment'># Returns a URL as a string.
+</span>  <span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="NoReturnToError.html" title="OpenID::Server::NoReturnToError (class)">NoReturnToError</a></span></span> <span class='kw'>unless</span> <span class='ivar'>@return_to</span>
+
+  <span class='kw'>if</span> <span class='ivar'>@immediate</span>
+    <span class='id identifier rubyid_raise'>raise</span> <span class='const'>ArgumentError</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Cancel is not an appropriate response to </span><span class='tstring_end'>&quot;</span></span> <span class='op'>+</span>
+                            <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>immediate mode requests.</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+
+  <span class='id identifier rubyid_response'>response</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Message.html" title="OpenID::Message (class)">Message</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../Message.html#initialize-instance_method" title="OpenID::Message#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='ivar'>@message</span><span class='period'>.</span><span class='id identifier rubyid_get_openid_namespace'>get_openid_namespace</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_set_arg'>set_arg</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../../OpenID.html#OPENID_NS-constant" title="OpenID::OPENID_NS (constant)">OPENID_NS</a></span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>mode</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>cancel</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_to_url'>to_url</span><span class='lparen'>(</span><span class='ivar'>@return_to</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="encode_to_url-instance_method">
+  
+    #<strong>encode_to_url</strong>(server_url)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Raises:</p>
+<ul class="raise">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="NoReturnToError.html" title="OpenID::Server::NoReturnToError (class)">NoReturnToError</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+786
+787
+788
+789
+790
+791
+792
+793
+794
+795
+796
+797
+798
+799
+800
+801
+802
+803
+804
+805
+806
+807
+808
+809
+810
+811
+812
+813
+814
+815
+816
+817</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openid/server.rb', line 786</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_encode_to_url'>encode_to_url</span><span class='lparen'>(</span><span class='id identifier rubyid_server_url'>server_url</span><span class='rparen'>)</span>
+  <span class='comment'># Encode this request as a URL to GET.
+</span>  <span class='comment'>#
+</span>  <span class='comment'># server_url:: The URL of the OpenID server to make this
+</span>  <span class='comment'>#              request of.
+</span>  <span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="NoReturnToError.html" title="OpenID::Server::NoReturnToError (class)">NoReturnToError</a></span></span> <span class='kw'>unless</span> <span class='ivar'>@return_to</span>
+
+  <span class='comment'># Imported from the alternate reality where these classes are
+</span>  <span class='comment'># used in both the client and server code, so Requests are
+</span>  <span class='comment'># Encodable too.  That&#39;s right, code imported from alternate
+</span>  <span class='comment'># realities all for the love of you, id_res/user_setup_url.
+</span>  <span class='id identifier rubyid_q'>q</span> <span class='op'>=</span> <span class='lbrace'>{</span>
+    <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>mode</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='ivar'>@mode</span><span class='comma'>,</span>
+    <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>identity</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='ivar'>@identity</span><span class='comma'>,</span>
+    <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>claimed_id</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='ivar'>@claimed_id</span><span class='comma'>,</span>
+    <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>return_to</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='ivar'>@return_to</span><span class='comma'>,</span>
+  <span class='rbrace'>}</span>
+
+  <span class='kw'>if</span> <span class='ivar'>@trust_root</span>
+    <span class='kw'>if</span> <span class='ivar'>@message</span><span class='period'>.</span><span class='id identifier rubyid_is_openid1'>is_openid1</span>
+      <span class='id identifier rubyid_q'>q</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>trust_root</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='ivar'>@trust_root</span>
+    <span class='kw'>else</span>
+      <span class='id identifier rubyid_q'>q</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>realm</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='ivar'>@trust_root</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+
+  <span class='id identifier rubyid_q'>q</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>assoc_handle</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='ivar'>@assoc_handle</span> <span class='kw'>if</span> <span class='ivar'>@assoc_handle</span>
+
+  <span class='id identifier rubyid_response'>response</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Message.html" title="OpenID::Message (class)">Message</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../Message.html#initialize-instance_method" title="OpenID::Message#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='ivar'>@message</span><span class='period'>.</span><span class='id identifier rubyid_get_openid_namespace'>get_openid_namespace</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_update_args'>update_args</span><span class='lparen'>(</span><span class='ivar'>@message</span><span class='period'>.</span><span class='id identifier rubyid_get_openid_namespace'>get_openid_namespace</span><span class='comma'>,</span> <span class='id identifier rubyid_q'>q</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_to_url'>to_url</span><span class='lparen'>(</span><span class='id identifier rubyid_server_url'>server_url</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="id_select-instance_method">
+  
+    #<strong>id_select</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Is the identifier to be selected by the IDP?</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+593
+594
+595
+596</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openid/server.rb', line 593</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_id_select'>id_select</span>
+  <span class='comment'># So IDPs don&#39;t have to import the constant
+</span>  <span class='ivar'>@identity</span> <span class='op'>==</span> <span class='const'><span class='object_link'><a href="../../OpenID.html#IDENTIFIER_SELECT-constant" title="OpenID::IDENTIFIER_SELECT (constant)">IDENTIFIER_SELECT</a></span></span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="return_to_verified-instance_method">
+  
+    #<strong>return_to_verified</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Does the relying party publish the return_to URL for this<br />
+response under the realm? It is up to the provider to set a<br />
+policy for what kinds of realms should be allowed. This<br />
+return_to URL verification reduces vulnerability to<br />
+data-theft attacks based on open proxies,<br />
+corss-site-scripting, or open redirectors.</p>
+
+<p>This check should only be performed after making sure that<br />
+the return_to URL matches the realm.</p>
+
+<p>Raises DiscoveryFailure if the realm<br />
+URL does not support Yadis discovery (and so does not<br />
+support the verification process).</p>
+
+<p>Returns true if the realm publishes a document with the<br />
+return_to URL listed</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+626
+627
+628</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openid/server.rb', line 626</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_return_to_verified'>return_to_verified</span>
+  <span class='const'><span class='object_link'><a href="../TrustRoot.html" title="OpenID::TrustRoot (module)">TrustRoot</a></span></span><span class='period'>.</span><span class='id identifier rubyid_verify_return_to'><span class='object_link'><a href="../TrustRoot.html#verify_return_to-class_method" title="OpenID::TrustRoot.verify_return_to (method)">verify_return_to</a></span></span><span class='lparen'>(</span><span class='ivar'>@trust_root</span><span class='comma'>,</span> <span class='ivar'>@return_to</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="to_s-instance_method">
+  
+    #<strong>to_s</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+842
+843
+844
+845
+846
+847
+848
+849
+850
+851</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openid/server.rb', line 842</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_to_s'>to_s</span>
+  <span class='id identifier rubyid_format'>format</span><span class='lparen'>(</span>
+    <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&lt;%s id:%s im:%s tr:%s ah:%s&gt;</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+    <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='comma'>,</span>
+    <span class='ivar'>@identity</span><span class='comma'>,</span>
+    <span class='ivar'>@immediate</span><span class='comma'>,</span>
+    <span class='ivar'>@trust_root</span><span class='comma'>,</span>
+    <span class='ivar'>@assoc_handle</span><span class='comma'>,</span>
+  <span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="trust_root_valid-instance_method">
+  
+    #<strong>trust_root_valid</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Is my return_to under my trust_root?</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Raises:</p>
+<ul class="raise">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="MalformedTrustRoot.html" title="OpenID::Server::MalformedTrustRoot (class)">MalformedTrustRoot</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+599
+600
+601
+602
+603
+604
+605
+606
+607
+608</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openid/server.rb', line 599</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_trust_root_valid'>trust_root_valid</span>
+  <span class='kw'>return</span> <span class='kw'>true</span> <span class='kw'>unless</span> <span class='ivar'>@trust_root</span>
+
+  <span class='id identifier rubyid_tr'>tr</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../TrustRoot.html" title="OpenID::TrustRoot (module)">TrustRoot</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../TrustRoot/TrustRoot.html" title="OpenID::TrustRoot::TrustRoot (class)">TrustRoot</a></span></span><span class='period'>.</span><span class='id identifier rubyid_parse'><span class='object_link'><a href="../TrustRoot/TrustRoot.html#parse-class_method" title="OpenID::TrustRoot::TrustRoot.parse (method)">parse</a></span></span><span class='lparen'>(</span><span class='ivar'>@trust_root</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="MalformedTrustRoot.html" title="OpenID::Server::MalformedTrustRoot (class)">MalformedTrustRoot</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="ProtocolError.html#initialize-instance_method" title="OpenID::Server::ProtocolError#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='ivar'>@message</span><span class='comma'>,</span> <span class='ivar'>@trust_root</span><span class='rparen'>)</span> <span class='kw'>unless</span> <span class='id identifier rubyid_tr'>tr</span>
+
+  <span class='kw'>return</span> <span class='id identifier rubyid_tr'>tr</span><span class='period'>.</span><span class='id identifier rubyid_validate_url'>validate_url</span><span class='lparen'>(</span><span class='ivar'>@return_to</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='ivar'>@return_to</span>
+
+  <span class='kw'>true</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+      <div id="footer">
+  Generated on Sun Jul  6 06:29:40 2025 by
+  <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.9.37 (ruby-3.4.4).
+</div>
+
+    </div>
+  </body>
+</html>

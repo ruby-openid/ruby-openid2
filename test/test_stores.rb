@@ -60,7 +60,7 @@ module OpenID
       end
 
       def test_store
-        assoc = _gen_assoc(issued = 0)
+        assoc = _gen_assoc(0)
 
         # Make sure that a missing association returns no result
         _check_retrieve(server_url)
@@ -92,7 +92,7 @@ module OpenID
         @store.store_association(server_url, assoc)
 
         # More recent and expires after assoc
-        assoc2 = _gen_assoc(issued = 1)
+        assoc2 = _gen_assoc(1)
         @store.store_association(server_url, assoc2)
 
         # After storing an association with a different handle, but the
@@ -109,7 +109,7 @@ module OpenID
         # More recent, and expires earlier than assoc2 or assoc. Make sure
         # that we're picking the one with the latest issued date and not
         # taking into account the expiration.
-        assoc3 = _gen_assoc(issued = 2, 100)
+        assoc3 = _gen_assoc(2, 100)
         @store.store_association(server_url, assoc3)
 
         _check_retrieve(server_url, nil, assoc3)

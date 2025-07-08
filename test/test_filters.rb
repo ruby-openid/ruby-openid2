@@ -44,23 +44,24 @@ module OpenID
   end
 
   class TransformFilterMakerTest < Minitest::Test
-    def make_service_element(types, uris)
-      service = REXML::Element.new("Service")
+    def make_service_document(types, uris)
+      document = REXML::Document.new
+      element = document.add_element("Service")
       types.each do |type_text|
-        service.add_element("Type").text = type_text
+        element.add_element("Type").text = type_text
       end
       uris.each do |uri_text|
-        service.add_element("URI").text = uri_text
+        element.add_element("URI").text = uri_text
       end
-      service
+      document
     end
 
     def test_get_service_endpoints
       yadis_url = "http://yad.is/"
       uri = "http://uri/"
       type_uris = ["urn:type1", "urn:type2"]
-      element = make_service_element(type_uris, [uri])
-
+      document = make_service_document(type_uris, [uri])
+      element = document.root
       filters = [proc do |endpoint|
                    endpoint if endpoint.service_element == element
                  end]

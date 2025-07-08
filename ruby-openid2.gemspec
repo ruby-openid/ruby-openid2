@@ -17,7 +17,7 @@ Gem::Specification.new do |spec|
   spec.homepage = "https://github.com/oauth-xx/#{spec.name}"
   spec.summary = "A library for consuming and serving OpenID identities."
 
-  # Specify which files should be added to the gem when it is released.
+  # Specify which files are part of each release.
   spec.files = Dir[
     # Splats (alphabetical)
     "lib/**/*.rb",
@@ -45,18 +45,21 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency("version_gem", "~> 1.1", ">= 1.1.4")
 
-  spec.add_development_dependency("minitest", ">= 5", "< 6") # Use assert_nil if expecting nil
-  spec.add_development_dependency("rake", ">= 13")
-  spec.add_development_dependency("webrick", "~> 1.8")
+  # Release Tasks
+  spec.add_development_dependency("stone_checksums", "~> 1.0")
+
+  # Development Tasks
+  spec.add_development_dependency("rake", "~> 13.0")                          # ruby >= 2.2
 
   # Coverage
-  spec.add_development_dependency("kettle-soup-cover", "~> 1.0", ">= 1.0.2")
+  spec.add_development_dependency("kettle-soup-cover", "~> 1.0", ">= 1.0.9")
 
-  # Linting
-  spec.add_development_dependency("rubocop-lts", "~> 18.2", ">= 18.2.1")
-  spec.add_development_dependency("rubocop-minitest", "~> 0.36")
-  spec.add_development_dependency("rubocop-packaging", "~> 0.5", ">= 0.5.2")
-  spec.add_development_dependency("standard", "~> 1.37") # v1.37 is last to support Ruby < 3
+  # Debugging
+  spec.add_development_dependency("require_bench", "~> 1.0", ">= 1.0.4")
+
+  # Testing
+  spec.add_development_dependency("minitest", ">= 5", "< 6") # Use assert_nil if expecting nil
+  spec.add_development_dependency("webrick", "~> 1.8")
 
   # Documentation
   spec.add_development_dependency("yard", "~> 0.9", ">= 0.9.37")

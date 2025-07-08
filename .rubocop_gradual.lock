@@ -124,7 +124,7 @@
     [31, 9, 38, "Style/SafeNavigation: Use safe navigation (`&.`) instead of checking if an object exists before calling the method.", 710955324],
     [48, 9, 46, "Style/SafeNavigation: Use safe navigation (`&.`) instead of checking if an object exists before calling the method.", 4279840451]
   ],
-  "lib/openid/cryptutil.rb:2346731593": [
+  "lib/openid/cryptutil.rb:3720292873": [
     [32, 5, 68, "Style/ClassMethodsDefinitions: Use `class << self` to define a class method.", 33433268],
     [37, 5, 59, "Style/ClassMethodsDefinitions: Use `class << self` to define a class method.", 2498740062],
     [41, 5, 171, "Style/ClassMethodsDefinitions: Use `class << self` to define a class method.", 216141853],
@@ -186,7 +186,7 @@
   "lib/openid/extensions/ui.rb:4031156278": [
     [32, 7, 203, "Style/ClassMethodsDefinitions: Use `class << self` to define a class method.", 1254387091]
   ],
-  "lib/openid/fetchers.rb:1654343316": [
+  "lib/openid/fetchers.rb:2267326178": [
     [10, 72, 1, "Style/LineEndConcatenation: Use `\\` instead of `+` to concatenate multiline strings.", 177550],
     [94, 3, 160, "Style/ClassMethodsDefinitions: Use `class << self` to define a class method.", 407779678],
     [99, 3, 88, "Style/ClassMethodsDefinitions: Use `class << self` to define a class method.", 834352859],
@@ -236,58 +236,57 @@
     [514, 7, 6, "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.", 3498751916],
     [519, 7, 5, "Style/InfiniteLoop: Use `Kernel#loop` for infinite loops.", 191284826]
   ],
-  "lib/openid/server.rb:4282974231": [
+  "lib/openid/server.rb:473866080": [
     [83, 7, 1000, "Style/ClassMethodsDefinitions: Use `class << self` to define a class method.", 1001267496],
     [98, 30, 2, "Style/AndOr: Use `||` instead of `or`.", 5861240],
-    [138, 9, 2, "Lint/UselessAssignment: Useless assignment to variable - `ih`.", 5861156],
-    [185, 7, 60, "Style/ClassMethodsDefinitions: Use `class << self` to define a class method.", 2656680418],
-    [221, 7, 1343, "Style/ClassMethodsDefinitions: Use `class << self` to define a class method.", 1294135598],
-    [224, 25, 3, "Style/AndOr: Use `&&` instead of `and`.", 193409806],
-    [224, 37, 2, "Style/AndOr: Use `||` instead of `or`.", 5861240],
-    [225, 22, 3, "Style/AndOr: Use `&&` instead of `and`.", 193409806],
-    [236, 57, 1, "Style/LineEndConcatenation: Use `\\` instead of `+` to concatenate multiline strings.", 177550],
-    [243, 23, 2, "Style/AndOr: Use `||` instead of `or`.", 5861240],
-    [256, 49, 1, "Style/LineEndConcatenation: Use `\\` instead of `+` to concatenate multiline strings.", 177550],
-    [322, 7, 1680, "Style/ClassMethodsDefinitions: Use `class << self` to define a class method.", 4078258898],
-    [326, 72, 1, "Style/LineEndConcatenation: Use `\\` instead of `+` to concatenate multiline strings.", 177550],
-    [396, 57, 3, "Style/AndOr: Use `&&` instead of `and`.", 193409806],
-    [489, 23, 3, "Style/AndOr: Use `&&` instead of `and`.", 193409806],
-    [514, 7, 3187, "Style/ClassMethodsDefinitions: Use `class << self` to define a class method.", 1191617789],
-    [528, 31, 3, "Style/AndOr: Use `&&` instead of `and`.", 193409806],
-    [543, 28, 3, "Style/AndOr: Use `&&` instead of `and`.", 193409806],
-    [544, 72, 1, "Style/LineEndConcatenation: Use `\\` instead of `+` to concatenate multiline strings.", 177550],
-    [547, 30, 3, "Style/AndOr: Use `&&` instead of `and`.", 193409806],
-    [548, 74, 1, "Style/LineEndConcatenation: Use `\\` instead of `+` to concatenate multiline strings.", 177550],
-    [565, 32, 3, "Style/AndOr: Use `&&` instead of `and`.", 193409806],
-    [565, 51, 3, "Style/AndOr: Use `&&` instead of `and`.", 193409806],
-    [566, 74, 1, "Style/LineEndConcatenation: Use `\\` instead of `+` to concatenate multiline strings.", 177550],
-    [578, 26, 3, "Style/AndOr: Use `&&` instead of `and`.", 193409806],
-    [677, 34, 3, "Style/AndOr: Use `&&` instead of `and`.", 193409806],
-    [704, 23, 3, "Style/AndOr: Use `&&` instead of `and`.", 193409806],
-    [709, 43, 3, "Style/AndOr: Use `&&` instead of `and`.", 193409806],
-    [723, 25, 3, "Style/AndOr: Use `&&` instead of `and`.", 193409806],
-    [738, 34, 3, "Style/AndOr: Use `&&` instead of `and`.", 193409806],
-    [763, 36, 3, "Style/AndOr: Use `&&` instead of `and`.", 193409806],
-    [835, 79, 1, "Style/LineEndConcatenation: Use `\\` instead of `+` to concatenate multiline strings.", 177550],
-    [926, 31, 3, "Style/AndOr: Use `&&` instead of `and`.", 193409806],
-    [1010, 7, 52, "Style/ClassMethodsDefinitions: Use `class << self` to define a class method.", 2152933968],
-    [1014, 7, 48, "Style/ClassMethodsDefinitions: Use `class << self` to define a class method.", 90040144],
-    [1033, 61, 1, "Style/LineEndConcatenation: Use `\\` instead of `+` to concatenate multiline strings.", 177550],
-    [1071, 21, 2, "Style/AndOr: Use `||` instead of `or`.", 5861240],
-    [1077, 22, 3, "Style/AndOr: Use `&&` instead of `and`.", 193409806],
-    [1135, 18, 3, "Style/AndOr: Use `&&` instead of `and`.", 193409806],
-    [1171, 7, 17, "Naming/VariableName: Use snake_case for variable names.", 1925358418],
-    [1228, 39, 3, "Style/AndOr: Use `&&` instead of `and`.", 193409806],
-    [1273, 30, 2, "Style/AndOr: Use `||` instead of `or`.", 5861240],
-    [1318, 7, 16, "Naming/VariableName: Use snake_case for variable names.", 3054764905],
-    [1319, 7, 14, "Naming/VariableName: Use snake_case for variable names.", 683624799],
-    [1320, 7, 14, "Naming/VariableName: Use snake_case for variable names.", 2473038197],
-    [1388, 58, 1, "Style/LineEndConcatenation: Use `\\` instead of `+` to concatenate multiline strings.", 177550],
-    [1425, 27, 9, "Lint/InheritException: Inherit from `RuntimeError` instead of `Exception`.", 3513723378],
-    [1491, 41, 3, "Style/AndOr: Use `&&` instead of `and`.", 193409806],
-    [1513, 26, 9, "Lint/InheritException: Inherit from `RuntimeError` instead of `Exception`.", 3513723378],
-    [1518, 29, 9, "Lint/InheritException: Inherit from `RuntimeError` instead of `Exception`.", 3513723378],
-    [1524, 27, 9, "Lint/InheritException: Inherit from `RuntimeError` instead of `Exception`.", 3513723378]
+    [183, 7, 60, "Style/ClassMethodsDefinitions: Use `class << self` to define a class method.", 2656680418],
+    [219, 7, 1343, "Style/ClassMethodsDefinitions: Use `class << self` to define a class method.", 1294135598],
+    [222, 25, 3, "Style/AndOr: Use `&&` instead of `and`.", 193409806],
+    [222, 37, 2, "Style/AndOr: Use `||` instead of `or`.", 5861240],
+    [223, 22, 3, "Style/AndOr: Use `&&` instead of `and`.", 193409806],
+    [234, 57, 1, "Style/LineEndConcatenation: Use `\\` instead of `+` to concatenate multiline strings.", 177550],
+    [241, 23, 2, "Style/AndOr: Use `||` instead of `or`.", 5861240],
+    [254, 49, 1, "Style/LineEndConcatenation: Use `\\` instead of `+` to concatenate multiline strings.", 177550],
+    [320, 7, 1680, "Style/ClassMethodsDefinitions: Use `class << self` to define a class method.", 4078258898],
+    [324, 72, 1, "Style/LineEndConcatenation: Use `\\` instead of `+` to concatenate multiline strings.", 177550],
+    [394, 57, 3, "Style/AndOr: Use `&&` instead of `and`.", 193409806],
+    [487, 23, 3, "Style/AndOr: Use `&&` instead of `and`.", 193409806],
+    [512, 7, 3187, "Style/ClassMethodsDefinitions: Use `class << self` to define a class method.", 1191617789],
+    [526, 31, 3, "Style/AndOr: Use `&&` instead of `and`.", 193409806],
+    [541, 28, 3, "Style/AndOr: Use `&&` instead of `and`.", 193409806],
+    [542, 72, 1, "Style/LineEndConcatenation: Use `\\` instead of `+` to concatenate multiline strings.", 177550],
+    [545, 30, 3, "Style/AndOr: Use `&&` instead of `and`.", 193409806],
+    [546, 74, 1, "Style/LineEndConcatenation: Use `\\` instead of `+` to concatenate multiline strings.", 177550],
+    [563, 32, 3, "Style/AndOr: Use `&&` instead of `and`.", 193409806],
+    [563, 51, 3, "Style/AndOr: Use `&&` instead of `and`.", 193409806],
+    [564, 74, 1, "Style/LineEndConcatenation: Use `\\` instead of `+` to concatenate multiline strings.", 177550],
+    [576, 26, 3, "Style/AndOr: Use `&&` instead of `and`.", 193409806],
+    [675, 34, 3, "Style/AndOr: Use `&&` instead of `and`.", 193409806],
+    [702, 23, 3, "Style/AndOr: Use `&&` instead of `and`.", 193409806],
+    [707, 43, 3, "Style/AndOr: Use `&&` instead of `and`.", 193409806],
+    [721, 25, 3, "Style/AndOr: Use `&&` instead of `and`.", 193409806],
+    [736, 34, 3, "Style/AndOr: Use `&&` instead of `and`.", 193409806],
+    [761, 36, 3, "Style/AndOr: Use `&&` instead of `and`.", 193409806],
+    [833, 79, 1, "Style/LineEndConcatenation: Use `\\` instead of `+` to concatenate multiline strings.", 177550],
+    [924, 31, 3, "Style/AndOr: Use `&&` instead of `and`.", 193409806],
+    [1008, 7, 52, "Style/ClassMethodsDefinitions: Use `class << self` to define a class method.", 2152933968],
+    [1012, 7, 48, "Style/ClassMethodsDefinitions: Use `class << self` to define a class method.", 90040144],
+    [1031, 61, 1, "Style/LineEndConcatenation: Use `\\` instead of `+` to concatenate multiline strings.", 177550],
+    [1069, 21, 2, "Style/AndOr: Use `||` instead of `or`.", 5861240],
+    [1075, 22, 3, "Style/AndOr: Use `&&` instead of `and`.", 193409806],
+    [1133, 18, 3, "Style/AndOr: Use `&&` instead of `and`.", 193409806],
+    [1169, 7, 17, "Naming/VariableName: Use snake_case for variable names.", 1925358418],
+    [1226, 39, 3, "Style/AndOr: Use `&&` instead of `and`.", 193409806],
+    [1271, 30, 2, "Style/AndOr: Use `||` instead of `or`.", 5861240],
+    [1316, 7, 16, "Naming/VariableName: Use snake_case for variable names.", 3054764905],
+    [1317, 7, 14, "Naming/VariableName: Use snake_case for variable names.", 683624799],
+    [1318, 7, 14, "Naming/VariableName: Use snake_case for variable names.", 2473038197],
+    [1386, 58, 1, "Style/LineEndConcatenation: Use `\\` instead of `+` to concatenate multiline strings.", 177550],
+    [1423, 27, 9, "Lint/InheritException: Inherit from `RuntimeError` instead of `Exception`.", 3513723378],
+    [1489, 41, 3, "Style/AndOr: Use `&&` instead of `and`.", 193409806],
+    [1511, 26, 9, "Lint/InheritException: Inherit from `RuntimeError` instead of `Exception`.", 3513723378],
+    [1516, 29, 9, "Lint/InheritException: Inherit from `RuntimeError` instead of `Exception`.", 3513723378],
+    [1522, 27, 9, "Lint/InheritException: Inherit from `RuntimeError` instead of `Exception`.", 3513723378]
   ],
   "lib/openid/store/filesystem.rb:2056729715": [
     [14, 7, 18, "Naming/VariableName: Use snake_case for variable names.", 2080787395],
@@ -304,7 +303,7 @@
     [57, 8, 33, "Style/ComparableBetween: Prefer `stamp.between?(past, future)` over logical comparison.", 3964739741],
     [61, 5, 248, "Style/ClassMethodsDefinitions: Use `class << self` to define a class method.", 3471362715]
   ],
-  "lib/openid/trustroot.rb:63371331": [
+  "lib/openid/trustroot.rb:2070037305": [
     [8, 39, 9, "Lint/InheritException: Inherit from `RuntimeError` instead of `Exception`.", 3513723378],
     [16, 65, 1, "Style/LineEndConcatenation: Use `\\` instead of `+` to concatenate multiline strings.", 177550],
     [22, 25, 2692, "Metrics/CollectionLiteralLength: Avoid hard coding large quantities of data in code. Prefer reading the data from an external source.", 3538197388],
@@ -317,17 +316,12 @@
     [382, 53, 5, "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.", 235583841],
     [386, 86, 2, "Style/AndOr: Use `||` instead of `or`.", 5861240],
     [403, 65, 1, "Style/LineEndConcatenation: Use `\\` instead of `+` to concatenate multiline strings.", 177550],
-    [413, 7, 232, "Style/ClassMethodsDefinitions: Use `class << self` to define a class method.", 1348763082],
-    [426, 7, 532, "Style/ClassMethodsDefinitions: Use `class << self` to define a class method.", 3105728993],
-    [453, 7, 826, "Style/ClassMethodsDefinitions: Use `class << self` to define a class method.", 2732688631],
-    [462, 22, 3, "Style/AndOr: Use `&&` instead of `and`.", 193409806],
-    [475, 24, 3, "Style/AndOr: Use `&&` instead of `and`.", 193409806],
-    [482, 7, 172, "Style/ClassMethodsDefinitions: Use `class << self` to define a class method.", 1035216957],
-    [491, 7, 120, "Style/ClassMethodsDefinitions: Use `class << self` to define a class method.", 2760771742],
-    [511, 29, 3, "Style/AndOr: Use `&&` instead of `and`.", 193409806],
-    [545, 42, 3, "Style/AndOr: Use `&&` instead of `and`.", 193409806],
-    [567, 29, 3, "Style/AndOr: Use `&&` instead of `and`.", 193409806],
-    [568, 42, 3, "Style/AndOr: Use `&&` instead of `and`.", 193409806]
+    [462, 24, 3, "Style/AndOr: Use `&&` instead of `and`.", 193409806],
+    [475, 26, 3, "Style/AndOr: Use `&&` instead of `and`.", 193409806],
+    [512, 29, 3, "Style/AndOr: Use `&&` instead of `and`.", 193409806],
+    [554, 42, 3, "Style/AndOr: Use `&&` instead of `and`.", 193409806],
+    [576, 29, 3, "Style/AndOr: Use `&&` instead of `and`.", 193409806],
+    [577, 42, 3, "Style/AndOr: Use `&&` instead of `and`.", 193409806]
   ],
   "lib/openid/urinorm.rb:2923360867": [
     [8, 5, 757, "Style/ClassMethodsDefinitions: Use `class << self` to define a class method.", 3673026505],
@@ -368,15 +362,13 @@
     [131, 29, 3, "Style/AndOr: Use `&&` instead of `and`.", 193409806],
     [131, 59, 3, "Style/AndOr: Use `&&` instead of `and`.", 193409806]
   ],
-  "lib/openid/yadis/filters.rb:3219868769": [
+  "lib/openid/yadis/filters.rb:1581603627": [
     [41, 7, 73, "Style/ClassMethodsDefinitions: Use `class << self` to define a class method.", 2334760220],
-    [143, 5, 253, "Style/ClassMethodsDefinitions: Use `class << self` to define a class method.", 178241044],
-    [157, 5, 1242, "Style/ClassMethodsDefinitions: Use `class << self` to define a class method.", 4135749621]
+    [142, 5, 253, "Style/ClassMethodsDefinitions: Use `class << self` to define a class method.", 178241044],
+    [156, 5, 1242, "Style/ClassMethodsDefinitions: Use `class << self` to define a class method.", 4135749621]
   ],
-  "lib/openid/yadis/htmltokenizer.rb:676400695": [
+  "lib/openid/yadis/htmltokenizer.rb:770607703": [
     [50, 3, 36, "Style/ClassMethodsDefinitions: Use `class << self` to define a class method.", 2915883728],
-    [75, 38, 14, "Style/RedundantParentheses: Don't use parentheses around a method argument.", 487935625],
-    [82, 36, 14, "Style/RedundantParentheses: Don't use parentheses around a method argument.", 487935625],
     [121, 29, 3, "Style/AndOr: Use `&&` instead of `and`.", 193409806],
     [122, 36, 2, "Style/AndOr: Use `||` instead of `or`.", 5861240],
     [144, 37, 3, "Style/AndOr: Use `&&` instead of `and`.", 193409806],
@@ -464,14 +456,14 @@
     [805, 9, 26, "Minitest/RefuteFalse: Prefer using `refute(msg.error_message)`.", 3132408732],
     [816, 9, 23, "Minitest/RefuteFalse: Prefer using `refute(msg.succeeded?)`.", 527737196]
   ],
-  "test/test_checkid_request.rb:2885544617": [
+  "test/test_checkid_request.rb:2184278495": [
     [301, 13, 35, "Naming/ClassAndModuleCamelCase: Use CamelCase for classes and modules.", 4259957932]
   ],
   "test/test_dh.rb:2043081656": [
     [11, 5, 81, "Style/ClassMethodsDefinitions: Use `class << self` to define a class method.", 1962538541],
     [93, 7, 33, "Minitest/RefuteFalse: Prefer using `refute(dh.using_default_values?)`.", 3432763311]
   ],
-  "test/test_discover.rb:1968388399": [
+  "test/test_discover.rb:1073684670": [
     [89, 20, 9, "Lint/InheritException: Inherit from `RuntimeError` instead of `Exception`.", 3513723378],
     [177, 9, 19, "Minitest/RefuteFalse: Prefer using `refute(claimed_id)`.", 1240093182],
     [178, 9, 17, "Minitest/RefuteFalse: Prefer using `refute(local_id)`.", 900303800],
@@ -480,23 +472,20 @@
     [181, 9, 23, "Minitest/RefuteFalse: Prefer using `refute(s.get_local_id)`.", 579848844],
     [182, 9, 29, "Minitest/RefuteFalse: Prefer using `refute(s.compatibility_mode)`.", 4108014984],
     [196, 9, 91, "Minitest/RefuteFalse: Prefer using `refute(s.used_yadis, \"Expected to use old-style discovery\")`.", 3971431990],
-    [264, 7, 8, "Lint/UselessAssignment: Useless assignment to variable - `services`.", 907487467],
-    [593, 19, 3, "Style/AndOr: Use `&&` instead of `and`.", 193409806],
-    [594, 77, 1, "Style/LineEndConcatenation: Use `\\` instead of `+` to concatenate multiline strings.", 177550],
-    [730, 7, 55, "Minitest/RefuteFalse: Prefer using `refute(services.empty?, \"Expected services, got zero\")`.", 3799265795],
-    [777, 7, 35, "Minitest/RefuteFalse: Prefer using `refute(@endpoint.is_op_identifier)`.", 873861676],
+    [599, 19, 3, "Style/AndOr: Use `&&` instead of `and`.", 193409806],
+    [600, 77, 1, "Style/LineEndConcatenation: Use `\\` instead of `+` to concatenate multiline strings.", 177550],
+    [736, 7, 55, "Minitest/RefuteFalse: Prefer using `refute(services.empty?, \"Expected services, got zero\")`.", 3799265795],
     [783, 7, 35, "Minitest/RefuteFalse: Prefer using `refute(@endpoint.is_op_identifier)`.", 873861676],
     [789, 7, 35, "Minitest/RefuteFalse: Prefer using `refute(@endpoint.is_op_identifier)`.", 873861676],
     [795, 7, 35, "Minitest/RefuteFalse: Prefer using `refute(@endpoint.is_op_identifier)`.", 873861676],
-    [810, 7, 35, "Minitest/RefuteFalse: Prefer using `refute(@endpoint.is_op_identifier)`.", 873861676],
-    [840, 7, 37, "Minitest/RefuteFalse: Prefer using `refute(@endpoint.compatibility_mode)`.", 1374481464],
-    [857, 7, 11, "Naming/VariableName: Use snake_case for variable names.", 2215990581],
-    [859, 7, 11, "Naming/VariableName: Use snake_case for variable names.", 2215974520],
-    [863, 52, 11, "Naming/VariableName: Use snake_case for variable names.", 2215974520],
-    [864, 54, 11, "Naming/VariableName: Use snake_case for variable names.", 2215990581],
-    [888, 11, 101, "Minitest/AssertWithExpectedArgument: Did you mean to use `assert_equal(@endpoint.supports_type(t), format(\"Must support %s\", t))`?", 56176058],
-    [893, 11, 107, "Minitest/AssertWithExpectedArgument: Did you mean to use `assert_equal(!@endpoint.supports_type(t), format(\"Shouldn't support %s\", t))`?", 954251792],
-    [893, 11, 107, "Minitest/RefuteFalse: Prefer using `refute(@endpoint.supports_type(t), format(\"Shouldn't support %s\", t))`.", 954251792]
+    [801, 7, 35, "Minitest/RefuteFalse: Prefer using `refute(@endpoint.is_op_identifier)`.", 873861676],
+    [816, 7, 35, "Minitest/RefuteFalse: Prefer using `refute(@endpoint.is_op_identifier)`.", 873861676],
+    [846, 7, 37, "Minitest/RefuteFalse: Prefer using `refute(@endpoint.compatibility_mode)`.", 1374481464],
+    [863, 7, 11, "Naming/VariableName: Use snake_case for variable names.", 2215990581],
+    [865, 7, 11, "Naming/VariableName: Use snake_case for variable names.", 2215974520],
+    [869, 52, 11, "Naming/VariableName: Use snake_case for variable names.", 2215974520],
+    [870, 54, 11, "Naming/VariableName: Use snake_case for variable names.", 2215990581],
+    [899, 11, 107, "Minitest/RefuteFalse: Prefer using `refute(@endpoint.supports_type(t), format(\"Shouldn't support %s\", t))`.", 954251792]
   ],
   "test/test_discovery_manager.rb:1377548080": [
     [38, 7, 38, "Minitest/RefuteFalse: Prefer using `refute(@disco_services.for_url?(nil))`.", 603865808],
@@ -510,16 +499,13 @@
   "test/test_extension.rb:620029381": [
     [47, 7, 55, "Minitest/RefuteFalse: Prefer using `refute(namespaces.implicit?(DummyExtension::TEST_URI))`.", 1478049918]
   ],
-  "test/test_fetchers.rb:3563767116": [
+  "test/test_fetchers.rb:4226905917": [
     [160, 22, 10, "ThreadSafety/NewThread: Avoid starting new threads.", 3411682361],
-    [251, 27, 4, "Lint/UselessAssignment: Useless assignment to variable - `body`.", 2087730517],
-    [251, 39, 7, "Lint/UselessAssignment: Useless assignment to variable - `headers`.", 643017641],
-    [251, 54, 14, "Lint/UselessAssignment: Useless assignment to variable - `redirect_limit`.", 3383958005],
     [291, 5, 901, "Style/For: Prefer `each` over `for`.", 316016311]
   ],
-  "test/test_filters.rb:3444445650": [
+  "test/test_filters.rb:3790324670": [
     [15, 5, 932, "Minitest/MultipleAssertions: Test case has too many assertions [8/3].", 4216474825],
-    [238, 5, 776, "Minitest/MultipleAssertions: Test case has too many assertions [5/3].", 2440747337]
+    [239, 5, 776, "Minitest/MultipleAssertions: Test case has too many assertions [5/3].", 2440747337]
   ],
   "test/test_idres.rb:2896214861": [
     [119, 9, 1622, "Minitest/MultipleAssertions: Test case has too many assertions [5/3].", 2912808174],
@@ -533,8 +519,6 @@
   "test/test_linkparse.rb:2695875339": [
     [20, 29, 3, "Style/AndOr: Use `&&` instead of `and`.", 193409806],
     [32, 24, 3, "Style/AndOr: Use `&&` instead of `and`.", 193409806],
-    [57, 21, 39, "Minitest/AssertWithExpectedArgument: Did you mean to use `assert_equal(attr_cmp(c[0], c[1]), c.inspect)`?", 4229811215],
-    [58, 20, 40, "Minitest/AssertWithExpectedArgument: Did you mean to use `assert_equal(!attr_cmp(c[0], c[1]), c.inspect)`?", 4265199310],
     [58, 20, 40, "Minitest/RefuteFalse: Prefer using `refute(attr_cmp(c[0], c[1]), c.inspect)`.", 4265199310],
     [99, 54, 3, "Style/AndOr: Use `&&` instead of `and`.", 193409806],
     [99, 76, 3, "Style/AndOr: Use `&&` instead of `and`.", 193409806]
@@ -571,7 +555,7 @@
     [1292, 9, 44, "Minitest/RefuteFalse: Prefer using `refute(nsm.member?(uripat % i))`.", 154326771],
     [1296, 25, 6, "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.", 3498751916]
   ],
-  "test/test_openid_yadis.rb:333763544": [
+  "test/test_openid_yadis.rb:299727403": [
     [21, 3, 70, "Style/ClassMethodsDefinitions: Use `class << self` to define a class method.", 2241541269],
     [25, 3, 727, "Style/ClassMethodsDefinitions: Use `class << self` to define a class method.", 435754601],
     [28, 5, 125, "Style/SafeNavigation: Use safe navigation (`&.`) instead of checking if an object exists before calling the method.", 290464717],
@@ -582,7 +566,7 @@
     [21, 9, 39, "Minitest/RefuteFalse: Prefer using `refute(reserved_values.member?(found))`.", 2704632914],
     [35, 9, 20, "Naming/ClassAndModuleCamelCase: Use CamelCase for classes and modules.", 1514831161]
   ],
-  "test/test_server.rb:2816717222": [
+  "test/test_server.rb:138849656": [
     [151, 7, 24, "Minitest/RefuteFalse: Prefer using `refute(e.has_return_to)`.", 2657654983],
     [222, 9, 36, "Minitest/RefuteFalse: Prefer using `refute(e.to_s.index(\"values\").nil?)`.", 657105768],
     [242, 7, 31, "Minitest/AssertTruthy: Prefer using `assert(r.immediate)`.", 1416352194],
@@ -591,11 +575,8 @@
     [334, 7, 32, "Minitest/RefuteFalse: Prefer using `refute(r.immediate)`.", 960207049],
     [354, 7, 32, "Minitest/RefuteFalse: Prefer using `refute(r.immediate)`.", 960207049],
     [387, 7, 32, "Minitest/RefuteFalse: Prefer using `refute(r.immediate)`.", 960207049],
-    [479, 9, 32, "Minitest/AssertWithExpectedArgument: Did you mean to use `assert_equal(e.openid_message, e.to_s)`?", 1858530896],
     [761, 7, 32, "Minitest/RefuteFalse: Prefer using `refute(response.render_as_form)`.", 25000324],
-    [817, 7, 48, "Minitest/AssertWithExpectedArgument: Did you mean to use `assert_equal(/ foo=\"bar\"/ =~ form_markup, form_markup)`?", 1957089571],
     [865, 7, 32, "Minitest/RefuteFalse: Prefer using `refute(response.render_as_form)`.", 25000324],
-    [896, 7, 179, "Minitest/AssertWithExpectedArgument: Did you mean to use `assert_equal(location.start_with?(request.return_to), format(\n          \"%s does not start with %s\",\n          location,\n          request.return_to,\n        ))`?", 12042927],
     [1103, 7, 37, "Minitest/RefuteFalse: Prefer using `refute(query.has_key?(\"openid.sig\"))`.", 3540209093],
     [1147, 7, 34, "Minitest/RefuteFalse: Prefer using `refute(@request.trust_root_valid)`.", 2061673596],
     [1193, 7, 5, "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.", 236623619],
@@ -604,43 +585,36 @@
     [1208, 7, 77, "Lint/RescueException: Avoid rescuing the `Exception` class. Perhaps you meant to rescue `StandardError`?", 4198858813],
     [1213, 7, 11, "Naming/VariableName: Use snake_case for variable names.", 548879287],
     [1224, 20, 11, "Naming/VariableName: Use snake_case for variable names.", 548879287],
-    [1559, 7, 45, "Minitest/AssertWithExpectedArgument: Did you mean to use `assert_equal(!usu.index(expected_substr).nil?, usu)`?", 681836848],
     [1559, 7, 45, "Minitest/RefuteFalse: Prefer using `refute(usu.index(expected_substr).nil?, usu)`.", 681836848],
-    [1703, 7, 8, "Naming/VariableName: Use snake_case for variable names.", 3407076265],
-    [1782, 7, 1, "Lint/UselessAssignment: Useless assignment to variable - `r`.", 177623],
-    [1838, 7, 28, "Minitest/RefuteFalse: Prefer using `refute(rfg.call(\"mac_key\"))`.", 3386342814],
-    [1867, 7, 28, "Minitest/RefuteFalse: Prefer using `refute(rfg.call(\"mac_key\"))`.", 3386342814],
-    [1951, 7, 48, "Performance/RedundantMerge: Use `openid2_args[\"openid.ns\"] = OPENID2_NS` instead of `openid2_args.merge!({\"openid.ns\" => OPENID2_NS})`.", 2569663590],
-    [1990, 58, 1, "Style/LineEndConcatenation: Use `\\` instead of `+` to concatenate multiline strings.", 177550],
-    [1997, 7, 63, "Minitest/AssertWithExpectedArgument: Did you mean to use `assert_equal((0 <= difference and difference <= slop), error_message)`?", 3963220444],
-    [1997, 14, 40, "Style/RedundantParentheses: Don't use parentheses around a method argument.", 1279484383],
-    [1997, 15, 38, "Style/ComparableBetween: Prefer `difference.between?(0, slop)` over logical comparison.", 194910910],
-    [2016, 7, 33, "Minitest/RefuteFalse: Prefer using `refute(rfg.call(\"session_type\"))`.", 996256384],
-    [2017, 7, 32, "Minitest/RefuteFalse: Prefer using `refute(rfg.call(\"enc_mac_key\"))`.", 934428137],
-    [2018, 7, 37, "Minitest/RefuteFalse: Prefer using `refute(rfg.call(\"dh_server_public\"))`.", 3667761681],
-    [2034, 7, 36, "Minitest/RefuteFalse: Prefer using `refute(@request.message.is_openid1)`.", 3154563632],
-    [2052, 7, 32, "Minitest/RefuteFalse: Prefer using `refute(rfg.call(\"enc_mac_key\"))`.", 934428137],
-    [2053, 7, 37, "Minitest/RefuteFalse: Prefer using `refute(rfg.call(\"dh_server_public\"))`.", 3667761681],
-    [2071, 7, 33, "Minitest/RefuteFalse: Prefer using `refute(rfg.call(\"session_type\"))`.", 996256384],
-    [2072, 7, 32, "Minitest/RefuteFalse: Prefer using `refute(rfg.call(\"enc_mac_key\"))`.", 934428137],
-    [2073, 7, 37, "Minitest/RefuteFalse: Prefer using `refute(rfg.call(\"dh_server_public\"))`.", 3667761681],
-    [2125, 26, 9, "Lint/InheritException: Inherit from `RuntimeError` instead of `Exception`.", 3513723378],
-    [2176, 7, 145, "Minitest/AssertWithExpectedArgument: Did you mean to use `assert_equal(response.fields.has_key?(OPENID_NS, \"assoc_handle\"), format(\"No assoc_handle here: %s\", response.fields.inspect))`?", 3688376219],
-    [2202, 7, 60, "Minitest/RefuteFalse: Prefer using `refute(response.fields.has_key?(OPENID_NS, \"assoc_handle\"))`.", 2854410038],
-    [2203, 7, 58, "Minitest/RefuteFalse: Prefer using `refute(response.fields.has_key?(OPENID_NS, \"assoc_type\"))`.", 2681756964],
-    [2204, 7, 60, "Minitest/RefuteFalse: Prefer using `refute(response.fields.has_key?(OPENID_NS, \"session_type\"))`.", 877733463],
-    [2224, 7, 60, "Minitest/RefuteFalse: Prefer using `refute(response.fields.has_key?(OPENID_NS, \"assoc_handle\"))`.", 2854410038],
-    [2242, 70, 1, "Style/LineEndConcatenation: Use `\\` instead of `+` to concatenate multiline strings.", 177550],
-    [2243, 72, 1, "Style/LineEndConcatenation: Use `\\` instead of `+` to concatenate multiline strings.", 177550],
-    [2432, 7, 129, "Minitest/RefuteFalse: Prefer using `refute(@store.get_association(@_normal_key, assoc_handle), \"expired association is still retrievable.\")`.", 966024235],
-    [2439, 7, 63, "Minitest/RefuteFalse: Prefer using `refute(@store.get_association(@_normal_key, new_assoc_handle))`.", 2711960116],
-    [2475, 7, 63, "Minitest/RefuteFalse: Prefer using `refute(@store.get_association(@_normal_key, new_assoc_handle))`.", 2711960116],
-    [2519, 7, 17, "Minitest/RefuteFalse: Prefer using `refute(verified)`.", 111313281],
-    [2535, 7, 17, "Minitest/RefuteFalse: Prefer using `refute(verified)`.", 111313281],
-    [2558, 7, 17, "Minitest/RefuteFalse: Prefer using `refute(verified)`.", 111313281],
-    [2576, 7, 14, "Minitest/RefuteFalse: Prefer using `refute(assoc)`.", 168107178],
-    [2632, 34, 39, "Style/RedundantParentheses: Don't use parentheses around a method argument.", 4220592576],
-    [2658, 9, 14, "Minitest/RefuteFalse: Prefer using `refute(assoc)`.", 168107178]
+    [1708, 7, 8, "Naming/VariableName: Use snake_case for variable names.", 3407076265],
+    [1843, 7, 28, "Minitest/RefuteFalse: Prefer using `refute(rfg.call(\"mac_key\"))`.", 3386342814],
+    [1872, 7, 28, "Minitest/RefuteFalse: Prefer using `refute(rfg.call(\"mac_key\"))`.", 3386342814],
+    [1956, 7, 48, "Performance/RedundantMerge: Use `openid2_args[\"openid.ns\"] = OPENID2_NS` instead of `openid2_args.merge!({\"openid.ns\" => OPENID2_NS})`.", 2569663590],
+    [1995, 58, 1, "Style/LineEndConcatenation: Use `\\` instead of `+` to concatenate multiline strings.", 177550],
+    [2021, 7, 33, "Minitest/RefuteFalse: Prefer using `refute(rfg.call(\"session_type\"))`.", 996256384],
+    [2022, 7, 32, "Minitest/RefuteFalse: Prefer using `refute(rfg.call(\"enc_mac_key\"))`.", 934428137],
+    [2023, 7, 37, "Minitest/RefuteFalse: Prefer using `refute(rfg.call(\"dh_server_public\"))`.", 3667761681],
+    [2039, 7, 36, "Minitest/RefuteFalse: Prefer using `refute(@request.message.is_openid1)`.", 3154563632],
+    [2057, 7, 32, "Minitest/RefuteFalse: Prefer using `refute(rfg.call(\"enc_mac_key\"))`.", 934428137],
+    [2058, 7, 37, "Minitest/RefuteFalse: Prefer using `refute(rfg.call(\"dh_server_public\"))`.", 3667761681],
+    [2076, 7, 33, "Minitest/RefuteFalse: Prefer using `refute(rfg.call(\"session_type\"))`.", 996256384],
+    [2077, 7, 32, "Minitest/RefuteFalse: Prefer using `refute(rfg.call(\"enc_mac_key\"))`.", 934428137],
+    [2078, 7, 37, "Minitest/RefuteFalse: Prefer using `refute(rfg.call(\"dh_server_public\"))`.", 3667761681],
+    [2130, 26, 9, "Lint/InheritException: Inherit from `RuntimeError` instead of `Exception`.", 3513723378],
+    [2207, 7, 60, "Minitest/RefuteFalse: Prefer using `refute(response.fields.has_key?(OPENID_NS, \"assoc_handle\"))`.", 2854410038],
+    [2208, 7, 58, "Minitest/RefuteFalse: Prefer using `refute(response.fields.has_key?(OPENID_NS, \"assoc_type\"))`.", 2681756964],
+    [2209, 7, 60, "Minitest/RefuteFalse: Prefer using `refute(response.fields.has_key?(OPENID_NS, \"session_type\"))`.", 877733463],
+    [2229, 7, 60, "Minitest/RefuteFalse: Prefer using `refute(response.fields.has_key?(OPENID_NS, \"assoc_handle\"))`.", 2854410038],
+    [2247, 70, 1, "Style/LineEndConcatenation: Use `\\` instead of `+` to concatenate multiline strings.", 177550],
+    [2248, 72, 1, "Style/LineEndConcatenation: Use `\\` instead of `+` to concatenate multiline strings.", 177550],
+    [2437, 7, 129, "Minitest/RefuteFalse: Prefer using `refute(@store.get_association(@_normal_key, assoc_handle), \"expired association is still retrievable.\")`.", 966024235],
+    [2444, 7, 63, "Minitest/RefuteFalse: Prefer using `refute(@store.get_association(@_normal_key, new_assoc_handle))`.", 2711960116],
+    [2480, 7, 63, "Minitest/RefuteFalse: Prefer using `refute(@store.get_association(@_normal_key, new_assoc_handle))`.", 2711960116],
+    [2524, 7, 17, "Minitest/RefuteFalse: Prefer using `refute(verified)`.", 111313281],
+    [2540, 7, 17, "Minitest/RefuteFalse: Prefer using `refute(verified)`.", 111313281],
+    [2563, 7, 17, "Minitest/RefuteFalse: Prefer using `refute(verified)`.", 111313281],
+    [2581, 7, 14, "Minitest/RefuteFalse: Prefer using `refute(assoc)`.", 168107178],
+    [2663, 9, 14, "Minitest/RefuteFalse: Prefer using `refute(assoc)`.", 168107178]
   ],
   "test/test_sreg.rb:3389295916": [
     [40, 11, 40, "Minitest/RefuteFalse: Prefer using `refute(OpenID.supports_sreg?(endpoint))`.", 1330659053],
@@ -654,10 +628,7 @@
     [417, 9, 1096, "Minitest/MultipleAssertions: Test case has too many assertions [6/3].", 1076119837],
     [477, 9, 325, "Minitest/MultipleAssertions: Test case has too many assertions [4/3].", 311804901]
   ],
-  "test/test_stores.rb:4255321139": [
-    [63, 28, 6, "Lint/UselessAssignment: Useless assignment to variable - `issued`.", 1645597496],
-    [95, 29, 6, "Lint/UselessAssignment: Useless assignment to variable - `issued`.", 1645597496],
-    [112, 29, 6, "Lint/UselessAssignment: Useless assignment to variable - `issued`.", 1645597496],
+  "test/test_stores.rb:3487978803": [
     [154, 9, 11, "Naming/VariableName: Use snake_case for variable names.", 3460325807],
     [155, 9, 11, "Naming/VariableName: Use snake_case for variable names.", 3460325804],
     [156, 9, 13, "Naming/VariableName: Use snake_case for variable names.", 2369298702],
@@ -668,19 +639,6 @@
     [163, 52, 11, "Naming/VariableName: Use snake_case for variable names.", 3460325804],
     [229, 9, 77, "Minitest/RefuteFalse: Prefer using `refute(@store.use_nonce(server_url, ts, salt), \"recent_nonce after cleanup\")`.", 3891537003]
   ],
-  "test/test_trustroot.rb:849667934": [
-    [15, 7, 16, "Minitest/RefuteFalse: Prefer using `refute(tr.nil?)`.", 3450525467],
-    [17, 7, 81, "Minitest/AssertWithExpectedArgument: Did you mean to use `assert_equal(OpenID::TrustRoot::TrustRoot.check_sanity(case_), [case_, desc].join(\" \"))`?", 916980427],
-    [19, 7, 42, "Minitest/AssertWithExpectedArgument: Did you mean to use `assert_equal(!tr.sane?, [case_, desc].join(\" \"))`?", 3255143832],
-    [19, 7, 42, "Minitest/RefuteFalse: Prefer using `refute(tr.sane?, [case_, desc].join(\" \"))`.", 3255143832],
-    [20, 7, 82, "Minitest/AssertWithExpectedArgument: Did you mean to use `assert_equal(!OpenID::TrustRoot::TrustRoot.check_sanity(case_), [case_, desc].join(\" \"))`?", 2997549066],
-    [20, 7, 82, "Minitest/RefuteFalse: Prefer using `refute(OpenID::TrustRoot::TrustRoot.check_sanity(case_), [case_, desc].join(\" \"))`.", 2997549066],
-    [30, 7, 49, "Minitest/AssertWithExpectedArgument: Did you mean to use `assert_equal(actual_match, [trust_root, url].join(\" \"))`?", 2242211977],
-    [33, 7, 80, "Minitest/AssertWithExpectedArgument: Did you mean to use `assert_equal(!actual_match, [expected_match, actual_match, trust_root, url].join(\" \"))`?", 3810436984],
-    [33, 7, 80, "Minitest/RefuteFalse: Prefer using `refute(actual_match, [expected_match, actual_match, trust_root, url].join(\" \"))`.", 3810436984],
-    [34, 7, 64, "Minitest/RefuteFalse: Prefer using `refute(OpenID::TrustRoot::TrustRoot.check_url(trust_root, url))`.", 1484346761],
-    [64, 31, 21, "Style/RedundantParentheses: Don't use parentheses around a method argument.", 1548726946]
-  ],
   "test/test_ui.rb:1535314081": [
     [26, 9, 29, "Minitest/AssertTruthy: Prefer using `assert(req2.icon)`.", 591024350],
     [39, 9, 29, "Minitest/AssertTruthy: Prefer using `assert(@req.icon)`.", 1633148460],
@@ -690,19 +648,15 @@
   "test/test_urinorm.rb:1533719597": [
     [26, 11, 12, "Minitest/UselessAssertion: Useless assertion detected.", 2511510896]
   ],
-  "test/test_xrds.rb:784263724": [
+  "test/test_xrds.rb:4155580428": [
     [52, 9, 41, "Minitest/RefuteFalse: Prefer using `refute(Yadis.is_xrds?(isnt))`.", 2709875658],
-    [139, 9, 5, "Lint/UselessAssignment: Useless assignment to variable - `types`. Use `_` or `_types` as a variable name to indicate that it won't be used.", 182678350],
-    [139, 21, 14, "Lint/UselessAssignment: Useless assignment to variable - `result_element`. Use `_` or `_result_element` as a variable name to indicate that it won't be used.", 1272947533],
-    [142, 9, 5, "Lint/UselessAssignment: Useless assignment to variable - `types`. Use `_` or `_types` as a variable name to indicate that it won't be used.", 182678350],
-    [142, 21, 14, "Lint/UselessAssignment: Useless assignment to variable - `result_element`. Use `_` or `_result_element` as a variable name to indicate that it won't be used.", 1272947533],
     [151, 9, 56, "Style/SafeNavigation: Use safe navigation (`&.`) instead of checking if an object exists before calling the method.", 2495284533]
   ],
-  "test/test_yadis_discovery.rb:1756797249": [
+  "test/test_yadis_discovery.rb:248127710": [
     [22, 5, 437, "Style/ClassMethodsDefinitions: Use `class << self` to define a class method.", 1189860280],
     [49, 9, 5, "Style/InfiniteLoop: Use `Kernel#loop` for infinite loops.", 191284826],
     [134, 46, 3, "Style/AndOr: Use `&&` instead of `and`.", 193409806],
-    [220, 9, 23, "Minitest/RefuteFalse: Prefer using `refute(result.is_xrds)`.", 462657144]
+    [224, 9, 23, "Minitest/RefuteFalse: Prefer using `refute(result.is_xrds)`.", 462657144]
   ],
   "test/testutil.rb:797384289": [
     [128, 5, 262, "Style/ClassMethodsDefinitions: Use `class << self` to define a class method.", 1720821532]

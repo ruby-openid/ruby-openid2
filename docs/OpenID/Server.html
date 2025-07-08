@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  Module: OpenID::Server
+  
+    &mdash; Documentation by YARD 0.9.37
+  
+</title>
+
+  <link rel="stylesheet" href="../css/style.css" type="text/css" />
+
+  <link rel="stylesheet" href="../css/common.css" type="text/css" />
+
+<script type="text/javascript">
+  pathId = "OpenID::Server";
+  relpath = '../';
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div class="nav_wrap">
+      <iframe id="nav" src="../class_list.html?1"></iframe>
+      <div id="resizer"></div>
+    </div>
+
+    <div id="main" tabindex="-1">
+      <div id="header">
+        <div id="menu">
+  
+    <a href="../_index.html">Index (S)</a> &raquo;
+    <span class='title'><span class='object_link'><a href="../OpenID.html" title="OpenID (module)">OpenID</a></span></span>
+     &raquo; 
+    <span class="title">Server</span>
+  
+</div>
+
+        <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="../class_list.html">
+
+        <svg width="24" height="24">
+          <rect x="0" y="4" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="12" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="20" width="24" height="4" rx="1" ry="1"></rect>
+        </svg>
+    </a>
+  
+</div>
+        <div class="clear"></div>
+      </div>
+
+      <div id="content"><h1>Module: OpenID::Server
+  
+  
+  
+</h1>
+<div class="box_info">
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+  <dl>
+    <dt>Defined in:</dt>
+    <dd>lib/openid/server.rb</dd>
+  </dl>
+  
+</div>
+
+<h2>Defined Under Namespace</h2>
+<p class="children">
+  
+    
+  
+    
+      <strong class="classes">Classes:</strong> <span class='object_link'><a href="Server/AlreadySigned.html" title="OpenID::Server::AlreadySigned (class)">AlreadySigned</a></span>, <span class='object_link'><a href="Server/AssociateRequest.html" title="OpenID::Server::AssociateRequest (class)">AssociateRequest</a></span>, <span class='object_link'><a href="Server/BaseServerSession.html" title="OpenID::Server::BaseServerSession (class)">BaseServerSession</a></span>, <span class='object_link'><a href="Server/CheckAuthRequest.html" title="OpenID::Server::CheckAuthRequest (class)">CheckAuthRequest</a></span>, <span class='object_link'><a href="Server/CheckIDRequest.html" title="OpenID::Server::CheckIDRequest (class)">CheckIDRequest</a></span>, <span class='object_link'><a href="Server/Decoder.html" title="OpenID::Server::Decoder (class)">Decoder</a></span>, <span class='object_link'><a href="Server/DiffieHellmanSHA1ServerSession.html" title="OpenID::Server::DiffieHellmanSHA1ServerSession (class)">DiffieHellmanSHA1ServerSession</a></span>, <span class='object_link'><a href="Server/DiffieHellmanSHA256ServerSession.html" title="OpenID::Server::DiffieHellmanSHA256ServerSession (class)">DiffieHellmanSHA256ServerSession</a></span>, <span class='object_link'><a href="Server/Encoder.html" title="OpenID::Server::Encoder (class)">Encoder</a></span>, <span class='object_link'><a href="Server/EncodingError.html" title="OpenID::Server::EncodingError (class)">EncodingError</a></span>, <span class='object_link'><a href="Server/MalformedReturnURL.html" title="OpenID::Server::MalformedReturnURL (class)">MalformedReturnURL</a></span>, <span class='object_link'><a href="Server/MalformedTrustRoot.html" title="OpenID::Server::MalformedTrustRoot (class)">MalformedTrustRoot</a></span>, <span class='object_link'><a href="Server/NoReturnToError.html" title="OpenID::Server::NoReturnToError (class)">NoReturnToError</a></span>, <span class='object_link'><a href="Server/OpenIDRequest.html" title="OpenID::Server::OpenIDRequest (class)">OpenIDRequest</a></span>, <span class='object_link'><a href="Server/OpenIDResponse.html" title="OpenID::Server::OpenIDResponse (class)">OpenIDResponse</a></span>, <span class='object_link'><a href="Server/PlainTextServerSession.html" title="OpenID::Server::PlainTextServerSession (class)">PlainTextServerSession</a></span>, <span class='object_link'><a href="Server/ProtocolError.html" title="OpenID::Server::ProtocolError (class)">ProtocolError</a></span>, <span class='object_link'><a href="Server/Server.html" title="OpenID::Server::Server (class)">Server</a></span>, <span class='object_link'><a href="Server/Signatory.html" title="OpenID::Server::Signatory (class)">Signatory</a></span>, <span class='object_link'><a href="Server/SigningEncoder.html" title="OpenID::Server::SigningEncoder (class)">SigningEncoder</a></span>, <span class='object_link'><a href="Server/UntrustedReturnURL.html" title="OpenID::Server::UntrustedReturnURL (class)">UntrustedReturnURL</a></span>, <span class='object_link'><a href="Server/VersionError.html" title="OpenID::Server::VersionError (class)">VersionError</a></span>, <span class='object_link'><a href="Server/WebResponse.html" title="OpenID::Server::WebResponse (class)">WebResponse</a></span>
+    
+  
+</p>
+
+  
+    <h2>
+      Constant Summary
+      <small><a href="#" class="constants_summary_toggle">collapse</a></small>
+    </h2>
+
+    <dl class="constants">
+      
+        <dt id="HTTP_OK-constant" class="">HTTP_OK =
+          
+        </dt>
+        <dd><pre class="code"><span class='int'>200</span></pre></dd>
+      
+        <dt id="HTTP_REDIRECT-constant" class="">HTTP_REDIRECT =
+          
+        </dt>
+        <dd><pre class="code"><span class='int'>302</span></pre></dd>
+      
+        <dt id="HTTP_ERROR-constant" class="">HTTP_ERROR =
+          
+        </dt>
+        <dd><pre class="code"><span class='int'>400</span></pre></dd>
+      
+        <dt id="BROWSER_REQUEST_MODES-constant" class="">BROWSER_REQUEST_MODES =
+          
+        </dt>
+        <dd><pre class="code"><span class='qwords_beg'>%w[</span><span class='tstring_content'>checkid_setup</span><span class='words_sep'> </span><span class='tstring_content'>checkid_immediate</span><span class='tstring_end'>]</span></span></pre></dd>
+      
+        <dt id="ENCODE_KVFORM-constant" class="">ENCODE_KVFORM =
+          
+        </dt>
+        <dd><pre class="code"><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>kvform</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_freeze'>freeze</span></pre></dd>
+      
+        <dt id="ENCODE_URL-constant" class="">ENCODE_URL =
+          
+        </dt>
+        <dd><pre class="code"><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>URL/redirect</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_freeze'>freeze</span></pre></dd>
+      
+        <dt id="ENCODE_HTML_FORM-constant" class="">ENCODE_HTML_FORM =
+          
+        </dt>
+        <dd><pre class="code"><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>HTML form</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_freeze'>freeze</span></pre></dd>
+      
+        <dt id="UNUSED-constant" class="">UNUSED =
+          
+        </dt>
+        <dd><pre class="code"><span class='kw'>nil</span></pre></dd>
+      
+    </dl>
+  
+
+
+
+
+
+
+
+
+
+</div>
+
+      <div id="footer">
+  Generated on Sun Jul  6 06:29:39 2025 by
+  <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.9.37 (ruby-3.4.4).
+</div>
+
+    </div>
+  </body>
+</html>

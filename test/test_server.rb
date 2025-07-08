@@ -1586,11 +1586,16 @@ module OpenID
       @request.message = message
 
       @request.instance_variables.each do |var|
-        assert_equal(
-          @request.instance_variable_get(var),
-          rebuilt_request.instance_variable_get(var),
-          var,
-        )
+        ivar = @request.instance_variable_get(var)
+        if ivar.nil?
+          assert_nil(rebuilt_request.instance_variable_get(var), var)
+        else
+          assert_equal(
+            ivar,
+            rebuilt_request.instance_variable_get(var),
+            var,
+          )
+        end
       end
     end
 
@@ -1779,7 +1784,7 @@ module OpenID
       # In this implementation, the assoc_handle is only valid once.
       # And nonces are a signed component of the message, so they can't
       # be used with another handle without breaking the sig.
-      r = @request.answer(@signatory)
+      @request.answer(@signatory)
       r = @request.answer(@signatory)
 
       assert_equal(
@@ -1994,7 +1999,7 @@ module OpenID
         expires_in,
       )
 
-      assert((0 <= difference and difference <= slop), error_message)
+      assert((0 <= difference) && (difference <= slop), error_message)
     end
 
     def test_plaintext
@@ -2629,7 +2634,7 @@ module OpenID
       )
 
       silence_logging do
-        @store.store_association(((dumb and @_dumb_key) or @_normal_key), assoc)
+        @store.store_association((dumb && @_dumb_key) || @_normal_key, assoc)
       end
 
       assoc_handle

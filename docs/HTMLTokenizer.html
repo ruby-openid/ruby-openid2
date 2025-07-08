@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  Class: HTMLTokenizer
+  
+    &mdash; Documentation by YARD 0.9.37
+  
+</title>
+
+  <link rel="stylesheet" href="css/style.css" type="text/css" />
+
+  <link rel="stylesheet" href="css/common.css" type="text/css" />
+
+<script type="text/javascript">
+  pathId = "HTMLTokenizer";
+  relpath = '';
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div class="nav_wrap">
+      <iframe id="nav" src="class_list.html?1"></iframe>
+      <div id="resizer"></div>
+    </div>
+
+    <div id="main" tabindex="-1">
+      <div id="header">
+        <div id="menu">
+  
+    <a href="_index.html">Index (H)</a> &raquo;
+    
+    
+    <span class="title">HTMLTokenizer</span>
+  
+</div>
+
+        <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="class_list.html">
+
+        <svg width="24" height="24">
+          <rect x="0" y="4" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="12" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="20" width="24" height="4" rx="1" ry="1"></rect>
+        </svg>
+    </a>
+  
+</div>
+        <div class="clear"></div>
+      </div>
+
+      <div id="content"><h1>Class: HTMLTokenizer
+  
+  
+  
+</h1>
+<div class="box_info">
+  
+  <dl>
+    <dt>Inherits:</dt>
+    <dd>
+      <span class="inheritName">Object</span>
+      
+        <ul class="fullTree">
+          <li>Object</li>
+          
+            <li class="next">HTMLTokenizer</li>
+          
+        </ul>
+        <a href="#" class="inheritanceTree">show all</a>
+      
+    </dd>
+  </dl>
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+  <dl>
+    <dt>Defined in:</dt>
+    <dd>lib/openid/yadis/htmltokenizer.rb</dd>
+  </dl>
+  
+</div>
+
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    <p>A class to tokenize HTML.</p>
+
+<p>Example:</p>
+
+<p>page = “&lt;HTML&gt;</p>
+<head>
+  <TITLE>This is the title</TITLE>
+  </head>
+<p><!-- Here comes the <a href=\"missing.link\">blah</a>
+   comment body
+    --></p>
+<body>
+     <h1>This is the header</h1>
+     <p>
+       This is the paragraph, it contains
+       &lt;a href=\"link.html\"&gt;links&lt;/a&gt;,
+       &lt;img src=\"blah.gif\" optional alt='images
+       are
+       really cool'&gt;.  Ok, here is some more text and
+       &lt;A href=\"http://another.link.com/\" target=\"_blank\"&gt;another link&lt;/A&gt;.
+     </p>
+   </body>
+<p>&lt;/HTML&gt;<br />
+   “<br />
+   toke = HTMLTokenizer.new(page)</p>
+
+<p>assert(“&lt;h1&gt;” == toke.getTag(“h1”, “h2”, “h3”).to_s.downcase)<br />
+   assert(HTMLTag.new(“&lt;a href="link.html"&gt;”) == toke.getTag(“IMG”, “A”))<br />
+   assert(“links” == toke.getTrimmedText)<br />
+   assert(toke.getTag(“IMG”, “A”).attr_hash[‘optional’])<br />
+   assert(“_blank” == toke.getTag(“IMG”, “A”).attr_hash[‘target’])</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+  
+    <h2>
+      Constant Summary
+      <small><a href="#" class="constants_summary_toggle">collapse</a></small>
+    </h2>
+
+    <dl class="constants">
+      
+        <dt id="version-classvariable" class="">@@version =
+          
+        </dt>
+        <dd><pre class="code"><span class='float'>1.0</span></pre></dd>
+      
+    </dl>
+  
+
+
+
+
+  <h2>Instance Attribute Summary <small><a href="#" class="summary_toggle">collapse</a></small></h2>
+  <ul class="summary">
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#page-instance_method" title="#page (instance method)">#<strong>page</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns the value of attribute page.</p>
+</div></span>
+  
+</li>
+
+    
+  </ul>
+
+
+
+
+  
+    <h2>
+      Class Method Summary
+      <small><a href="#" class="summary_toggle">collapse</a></small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#version-class_method" title="version (class method)">.<strong>version</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Get version of HTMLTokenizer lib.</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+    <h2>
+      Instance Method Summary
+      <small><a href="#" class="summary_toggle">collapse</a></small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#getNextToken-instance_method" title="#getNextToken (instance method)">#<strong>getNextToken</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Get the next token, returns an instance of * HTMLText * HTMLToken * HTMLTag.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#getTag-instance_method" title="#getTag (instance method)">#<strong>getTag</strong>(*sought_tags)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Get a tag from the specified set of desired tags.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#getText-instance_method" title="#getText (instance method)">#<strong>getText</strong>(until_tag = nil)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Get all the text between the current position and the next tag (if specified) or a specific later tag.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#getTrimmedText-instance_method" title="#getTrimmedText (instance method)">#<strong>getTrimmedText</strong>(until_tag = nil)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Like getText, but squeeze all whitespace, getting rid of leading and trailing whitespace, and squeezing multiple spaces into a single space.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(content)  &#x21d2; HTMLTokenizer </a>
+    
+
+    
+  </span>
+  
+  
+    <span class="note title constructor">constructor</span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Create a new tokenizer, based on the content, used as a string.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#peekNextToken-instance_method" title="#peekNextToken (instance method)">#<strong>peekNextToken</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Look at the next token, but don’t actually grab it.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#reset-instance_method" title="#reset (instance method)">#<strong>reset</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Reset the parser, setting the current position back at the stop.</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+<div id="constructor_details" class="method_details_list">
+  <h2>Constructor Details</h2>
+  
+    <div class="method_details first">
+  <h3 class="signature first" id="initialize-instance_method">
+  
+    #<strong>initialize</strong>(content)  &#x21d2; <tt><span class='object_link'><a href="" title="HTMLTokenizer (class)">HTMLTokenizer</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Create a new tokenizer, based on the content, used as a string.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+57
+58
+59
+60</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openid/yadis/htmltokenizer.rb', line 57</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_content'>content</span><span class='rparen'>)</span>
+  <span class='ivar'>@page</span> <span class='op'>=</span> <span class='id identifier rubyid_content'>content</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
+  <span class='ivar'>@cur_pos</span> <span class='op'>=</span> <span class='int'>0</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+  
+</div>
+
+  <div id="instance_attr_details" class="attr_details">
+    <h2>Instance Attribute Details</h2>
+    
+      
+      <span id=""></span>
+      <div class="method_details first">
+  <h3 class="signature first" id="page-instance_method">
+  
+    #<strong>page</strong>  &#x21d2; <tt>Object</tt>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns the value of attribute page.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+54
+55
+56</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openid/yadis/htmltokenizer.rb', line 54</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_page'>page</span>
+  <span class='ivar'>@page</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+
+  <div id="class_method_details" class="method_details_list">
+    <h2>Class Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="version-class_method">
+  
+    .<strong>version</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Get version of HTMLTokenizer lib</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+50
+51
+52</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openid/yadis/htmltokenizer.rb', line 50</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_version'>version</span>
+  <span class='cvar'>@@version</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="getNextToken-instance_method">
+  
+    #<strong>getNextToken</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Get the next token, returns an instance of</p>
+<ul>
+  <li>HTMLText</li>
+  <li>HTMLToken</li>
+  <li>HTMLTag</li>
+</ul>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openid/yadis/htmltokenizer.rb', line 101</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_getNextToken'>getNextToken</span>
+  <span class='id identifier rubyid_token'>token</span> <span class='op'>=</span> <span class='id identifier rubyid_peekNextToken'>peekNextToken</span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_token'>token</span>
+    <span class='comment'># @page = @page[token.raw.length .. -1]
+</span>    <span class='comment'># @page.slice!(0, token.raw.length)
+</span>    <span class='ivar'>@cur_pos</span> <span class='op'>+=</span> <span class='id identifier rubyid_token'>token</span><span class='period'>.</span><span class='id identifier rubyid_raw'>raw</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span>
+  <span class='kw'>end</span>
+  <span class='comment'># p token
+</span>  <span class='comment'># print token.raw
+</span>  <span class='id identifier rubyid_token'>token</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="getTag-instance_method">
+  
+    #<strong>getTag</strong>(*sought_tags)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Get a tag from the specified set of desired tags.<br />
+For example:<br />
+<tt>foo =  toke.getTag(“h1”, “h2”, “h3”)</tt><br />
+Will return the next header tag encountered.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openid/yadis/htmltokenizer.rb', line 117</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_getTag'>getTag</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_sought_tags'>sought_tags</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_sought_tags'>sought_tags</span><span class='period'>.</span><span class='id identifier rubyid_collect!'>collect!</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_elm'>elm</span><span class='op'>|</span> <span class='id identifier rubyid_elm'>elm</span><span class='period'>.</span><span class='id identifier rubyid_downcase'>downcase</span> <span class='rbrace'>}</span>
+
+  <span class='kw'>while</span> <span class='lparen'>(</span><span class='id identifier rubyid_tag'>tag</span> <span class='op'>=</span> <span class='id identifier rubyid_getNextToken'>getNextToken</span><span class='rparen'>)</span>
+    <span class='kw'>if</span> <span class='id identifier rubyid_tag'>tag</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="HTMLTag.html" title="HTMLTag (class)">HTMLTag</a></span></span><span class='rparen'>)</span> <span class='kw'>and</span>
+        <span class='lparen'>(</span><span class='int'>0</span> <span class='op'>==</span> <span class='id identifier rubyid_sought_tags'>sought_tags</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span> <span class='kw'>or</span> <span class='id identifier rubyid_sought_tags'>sought_tags</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_tag'>tag</span><span class='period'>.</span><span class='id identifier rubyid_tag_name'>tag_name</span><span class='rparen'>)</span><span class='rparen'>)</span>
+      <span class='kw'>break</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+  <span class='id identifier rubyid_tag'>tag</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="getText-instance_method">
+  
+    #<strong>getText</strong>(until_tag = nil)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Get all the text between the current position and the next tag<br />
+(if specified) or a specific later tag</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openid/yadis/htmltokenizer.rb', line 131</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_getText'>getText</span><span class='lparen'>(</span><span class='id identifier rubyid_until_tag'>until_tag</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_until_tag'>until_tag</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
+    <span class='kw'>if</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&lt;</span><span class='tstring_end'>&quot;</span></span> <span class='op'>==</span> <span class='ivar'>@page</span><span class='lbracket'>[</span><span class='ivar'>@cur_pos</span><span class='rbracket'>]</span>
+      <span class='comment'># Next token is a tag, not text
+</span>      <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span>
+    <span class='kw'>else</span>
+      <span class='comment'># Next token is text
+</span>      <span class='id identifier rubyid_getNextToken'>getNextToken</span><span class='period'>.</span><span class='id identifier rubyid_text'>text</span>
+    <span class='kw'>end</span>
+  <span class='kw'>else</span>
+    <span class='id identifier rubyid_ret_str'>ret_str</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span>
+
+    <span class='kw'>while</span> <span class='lparen'>(</span><span class='id identifier rubyid_tag'>tag</span> <span class='op'>=</span> <span class='id identifier rubyid_peekNextToken'>peekNextToken</span><span class='rparen'>)</span>
+      <span class='kw'>break</span> <span class='kw'>if</span> <span class='id identifier rubyid_tag'>tag</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="HTMLTag.html" title="HTMLTag (class)">HTMLTag</a></span></span><span class='rparen'>)</span> <span class='kw'>and</span> <span class='id identifier rubyid_tag'>tag</span><span class='period'>.</span><span class='id identifier rubyid_tag_name'>tag_name</span> <span class='op'>==</span> <span class='id identifier rubyid_until_tag'>until_tag</span>
+
+      <span class='id identifier rubyid_ret_str'>ret_str</span> <span class='op'>&lt;&lt;</span> <span class='lparen'>(</span><span class='id identifier rubyid_tag'>tag</span><span class='period'>.</span><span class='id identifier rubyid_text'>text</span> <span class='op'>+</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'> </span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span> <span class='op'>!=</span> <span class='id identifier rubyid_tag'>tag</span><span class='period'>.</span><span class='id identifier rubyid_text'>text</span>
+      <span class='id identifier rubyid_getNextToken'>getNextToken</span>
+    <span class='kw'>end</span>
+
+    <span class='id identifier rubyid_ret_str'>ret_str</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="getTrimmedText-instance_method">
+  
+    #<strong>getTrimmedText</strong>(until_tag = nil)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Like getText, but squeeze all whitespace, getting rid of<br />
+leading and trailing whitespace, and squeezing multiple<br />
+spaces into a single space.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+157
+158
+159</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openid/yadis/htmltokenizer.rb', line 157</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_getTrimmedText'>getTrimmedText</span><span class='lparen'>(</span><span class='id identifier rubyid_until_tag'>until_tag</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_getText'>getText</span><span class='lparen'>(</span><span class='id identifier rubyid_until_tag'>until_tag</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_strip'>strip</span><span class='period'>.</span><span class='id identifier rubyid_gsub'>gsub</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>\s+</span><span class='regexp_end'>/m</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'> </span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="peekNextToken-instance_method">
+  
+    #<strong>peekNextToken</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Look at the next token, but don’t actually grab it</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openid/yadis/htmltokenizer.rb', line 68</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_peekNextToken'>peekNextToken</span>
+  <span class='kw'>return</span> <span class='kw'>if</span> <span class='ivar'>@cur_pos</span> <span class='op'>==</span> <span class='ivar'>@page</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span>
+
+  <span class='kw'>if</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&lt;</span><span class='tstring_end'>&quot;</span></span> <span class='op'>==</span> <span class='ivar'>@page</span><span class='lbracket'>[</span><span class='ivar'>@cur_pos</span><span class='rbracket'>]</span>
+    <span class='comment'># Next token is a tag of some kind
+</span>    <span class='kw'>if</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>!--</span><span class='tstring_end'>&quot;</span></span> <span class='op'>==</span> <span class='ivar'>@page</span><span class='lbracket'>[</span><span class='lparen'>(</span><span class='ivar'>@cur_pos</span> <span class='op'>+</span> <span class='int'>1</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='int'>3</span><span class='rbracket'>]</span>
+      <span class='comment'># Token is a comment
+</span>      <span class='id identifier rubyid_tag_end'>tag_end</span> <span class='op'>=</span> <span class='ivar'>@page</span><span class='period'>.</span><span class='id identifier rubyid_index'>index</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--&gt;</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='ivar'>@cur_pos</span> <span class='op'>+</span> <span class='int'>1</span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="HTMLTokenizerError.html" title="HTMLTokenizerError (class)">HTMLTokenizerError</a></span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>No end found to started comment:\n</span><span class='embexpr_beg'>#{</span><span class='ivar'>@page</span><span class='lbracket'>[</span><span class='ivar'>@cur_pos</span><span class='comma'>,</span> <span class='int'>80</span><span class='rbracket'>]</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_tag_end'>tag_end</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
+
+      <span class='comment'># p @page[@cur_pos .. (tag_end+2)]
+</span>      <span class='const'><span class='object_link'><a href="HTMLComment.html" title="HTMLComment (class)">HTMLComment</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="HTMLComment.html#initialize-instance_method" title="HTMLComment#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='ivar'>@page</span><span class='lbracket'>[</span><span class='ivar'>@cur_pos</span><span class='op'>..</span><span class='lparen'>(</span><span class='id identifier rubyid_tag_end'>tag_end</span> <span class='op'>+</span> <span class='int'>2</span><span class='rparen'>)</span><span class='rbracket'>]</span><span class='rparen'>)</span>
+    <span class='kw'>else</span>
+      <span class='comment'># Token is a html tag
+</span>      <span class='id identifier rubyid_tag_end'>tag_end</span> <span class='op'>=</span> <span class='ivar'>@page</span><span class='period'>.</span><span class='id identifier rubyid_index'>index</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&gt;</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='ivar'>@cur_pos</span> <span class='op'>+</span> <span class='int'>1</span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="HTMLTokenizerError.html" title="HTMLTokenizerError (class)">HTMLTokenizerError</a></span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>No end found to started tag:\n</span><span class='embexpr_beg'>#{</span><span class='ivar'>@page</span><span class='lbracket'>[</span><span class='ivar'>@cur_pos</span><span class='comma'>,</span> <span class='int'>80</span><span class='rbracket'>]</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_tag_end'>tag_end</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
+
+      <span class='comment'># p @page[@cur_pos .. tag_end]
+</span>      <span class='const'><span class='object_link'><a href="HTMLTag.html" title="HTMLTag (class)">HTMLTag</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="HTMLTag.html#initialize-instance_method" title="HTMLTag#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='ivar'>@page</span><span class='lbracket'>[</span><span class='ivar'>@cur_pos</span><span class='op'>..</span><span class='id identifier rubyid_tag_end'>tag_end</span><span class='rbracket'>]</span><span class='rparen'>)</span>
+    <span class='kw'>end</span>
+  <span class='kw'>else</span>
+    <span class='comment'># Next token is text
+</span>    <span class='id identifier rubyid_text_end'>text_end</span> <span class='op'>=</span> <span class='ivar'>@page</span><span class='period'>.</span><span class='id identifier rubyid_index'>index</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&lt;</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='ivar'>@cur_pos</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_text_end'>text_end</span> <span class='op'>=</span> <span class='id identifier rubyid_text_end'>text_end</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span> <span class='op'>?</span> <span class='op'>-</span><span class='int'>1</span> <span class='op'>:</span> <span class='lparen'>(</span><span class='id identifier rubyid_text_end'>text_end</span> <span class='op'>-</span> <span class='int'>1</span><span class='rparen'>)</span>
+    <span class='comment'># p @page[@cur_pos .. text_end]
+</span>    <span class='const'><span class='object_link'><a href="HTMLText.html" title="HTMLText (class)">HTMLText</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="HTMLToken.html#initialize-instance_method" title="HTMLToken#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='ivar'>@page</span><span class='lbracket'>[</span><span class='ivar'>@cur_pos</span><span class='op'>..</span><span class='id identifier rubyid_text_end'>text_end</span><span class='rbracket'>]</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="reset-instance_method">
+  
+    #<strong>reset</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Reset the parser, setting the current position back at the stop</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+63
+64
+65</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openid/yadis/htmltokenizer.rb', line 63</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_reset'>reset</span>
+  <span class='ivar'>@cur_pos</span> <span class='op'>=</span> <span class='int'>0</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+      <div id="footer">
+  Generated on Sun Jul  6 06:29:41 2025 by
+  <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.9.37 (ruby-3.4.4).
+</div>
+
+    </div>
+  </body>
+</html>
