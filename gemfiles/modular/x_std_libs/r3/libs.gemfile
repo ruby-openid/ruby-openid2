@@ -3,6 +3,7 @@
 #   make it difficult to build on GA CI with Ruby 2.7 and bundler v2.4.22.
 # See: https://github.com/rubygems/rubygems/issues/7178#issuecomment-2372558363
 #      https://github.com/ruby-openid/ruby-openid2/commit/bf0d6f38d92055b30ba4656234f1064f61abc403
+eval_gemfile "../../cgi/r3/v0.5.gemfile"
 eval_gemfile "../../logger/r3/v1.7.gemfile"
 eval_gemfile "../../net-http/r3/v0.6.gemfile"
 eval_gemfile "../../rexml/r3/v3.4.gemfile"

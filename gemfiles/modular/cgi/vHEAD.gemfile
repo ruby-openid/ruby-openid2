@@ -1,2 +1,4 @@
-# Ruby >= 2.5 (dependency of omniauth)
-gem "logger", github: "ruby/logger", branch: "master"
+# Ruby 3.5 may remove cgi from std lib
+# See: https://bugs.ruby-lang.org/issues/21258
+# Ruby >= 2.5
+gem "cgi", github: "ruby/cgi", branch: "master"
