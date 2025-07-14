@@ -6,6 +6,7 @@ permissions:
   id-token: write
 
 env:
+  COVERAGE: true
   K_SOUP_COV_MIN_BRANCH: 85
   K_SOUP_COV_MIN_LINE: 91
   K_SOUP_COV_MIN_HARD: true

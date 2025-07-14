@@ -5,12 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="93d48b1a-c179-44bf-b84b-ec878661df4e" name="Changes" comment="➕ cgi dependency for GHA">
+      <change beforePath="$PROJECT_DIR$/.github/workflows/coverage.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/coverage.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Appraisal.root.gemfile" beforeDir="false" afterPath="$PROJECT_DIR$/Appraisal.root.gemfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Gemfile" beforeDir="false" afterPath="$PROJECT_DIR$/Gemfile" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Gemfile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Gemfile.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gemfiles/modular/x_std_libs/r3/libs.gemfile" beforeDir="false" afterPath="$PROJECT_DIR$/gemfiles/modular/x_std_libs/r3/libs.gemfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gemfiles/modular/x_std_libs/r3/set-1.gemfile" beforeDir="false" afterPath="$PROJECT_DIR$/gemfiles/modular/x_std_libs/r3/set-1.gemfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gemfiles/modular/x_std_libs/r3/set-2.gemfile" beforeDir="false" afterPath="$PROJECT_DIR$/gemfiles/modular/x_std_libs/r3/set-2.gemfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gemfiles/modular/x_std_libs/vHEAD.gemfile" beforeDir="false" afterPath="$PROJECT_DIR$/gemfiles/modular/x_std_libs/vHEAD.gemfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gemfiles/modular/coverage.gemfile" beforeDir="false" afterPath="$PROJECT_DIR$/gemfiles/modular/coverage.gemfile" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,7 +47,7 @@
                 <list>
                   <RecentBranch>
                     <option name="branchName" value="next" />
-                    <option name="lastUsedInstant" value="1751482378" />
+                    <option name="lastUsedInstant" value="1752524936" />
                   </RecentBranch>
                   <RecentBranch>
                     <option name="branchName" value="main" />
@@ -88,7 +88,7 @@
     "com.github.patou.gitmoji.text-after-unicode": " ",
     "com.github.patou.gitmoji.use-unicode": "true",
     "com.intellij.lang.ruby.rbs.tools.collection.workspace.sync.RbsCollectionUpdateProjectActivity#LAST_UPDATE_TIMESTAMP": "1751922175320",
-    "git-widget-placeholder": "#59 on next",
+    "git-widget-placeholder": "next",
     "junie.onboarding.icon.badge.shown": "true",
     "last_opened_file_path": "/home/pboling/src/ruby-openid/ruby-openid2/gemfiles/modular/cgi/r3",
     "node.js.detected.package.eslint": "true",
