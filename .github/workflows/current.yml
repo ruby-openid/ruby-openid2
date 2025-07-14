@@ -37,15 +37,15 @@ jobs:
     strategy:
       matrix:
         include:
-          # Ruby 3.4
-          - ruby: "3.4"
+          # Ruby <whichever version is current, e.g., 3.4 as of 2025-07-12>
+          - ruby: "ruby"
             appraisal_name: "r3"
             exec_cmd: "rake test"
             gemfile: "Appraisal.root"
             rubygems: latest
             bundler: latest
 
-          # truffleruby-24.1
+          # truffleruby <whichever version is current, e.g., 24.1 as of 2025-07-12>
           - ruby: "truffleruby"
             appraisal_name: "r3"
             exec_cmd: "rake test"
@@ -53,7 +53,7 @@ jobs:
             rubygems: default
             bundler: default
 
-          # jruby-10.0 (targets Ruby 3.4 compatibility)
+          # jruby <whichever version is current, e.g., 10.0 (targets Ruby 3.4 compatibility) as of 2025-07-12>
           - ruby: "jruby"
             appraisal_name: "r3"
             exec_cmd: "rake test"
@@ -75,7 +75,7 @@ jobs:
           bundler: ${{ matrix.bundler }}
           bundler-cache: false
 
-      # Raw `bundle` will use the BUNDLE_GEMFILE set to matrix.gemfile (i.e. Appraisal.root)
+      # Raw `bundle` will use the BUNDLE_GEMFILE set to matrix.gemfile (i.e., Appraisal.root)
       # We need to do this first to get appraisal installed.
       # NOTE: This does not use the main Gemfile at all.
       - name: Install Root Appraisal

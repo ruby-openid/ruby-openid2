@@ -14,4 +14,4 @@ source "https://rubygems.org"
 
 gemspec
 
-gem "appraisal", github: "pboling/appraisal", branch: "galtzo"
+gem "appraisal2", github: "appraisal-rb/appraisal2", branch: "main"

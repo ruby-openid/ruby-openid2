@@ -4,6 +4,3 @@
 
 # Coverage
 # All coverage gems are listed in gemspec dependencies.
-# But fix in the main branch (https://github.com/dashingrocket/simplecov-cobertura/pull/32)
-#   needed to prevent the circular require warning and stacktrace.
-gem "simplecov-cobertura", github: "dashingrocket/simplecov-cobertura", branch: "main"

@@ -6,10 +6,12 @@ permissions:
   id-token: write
 
 env:
+  COVERAGE: true
   K_SOUP_COV_MIN_BRANCH: 85
   K_SOUP_COV_MIN_LINE: 91
   K_SOUP_COV_MIN_HARD: true
-  K_SOUP_COV_FORMATTERS: "html,xml,rcov,lcov,json,tty"
+  # Removed HTML output, see: https://github.com/codecov/feedback/discussions/726#discussioncomment-13756707
+  K_SOUP_COV_FORMATTERS: "xml,rcov,lcov,json,tty"
   K_SOUP_COV_DO: true
   K_SOUP_COV_MULTI_FORMATTERS: true
   K_SOUP_COV_COMMAND_NAME: "Test Coverage"
@@ -94,6 +96,7 @@ jobs:
       # Build will fail here if coverage upload fails
       #   which will hopefully be noticed for the lack of code coverage comments
       - name: Upload coverage to CodeCov
+        if: ${{ !env.ACT }}
         uses: codecov/codecov-action@v5
         with:
           use_oidc: true

@@ -26,7 +26,7 @@ gemspec
 eval_gemfile "gemfiles/modular/debug.gemfile"
 
 ### Testing
-gem "appraisal", github: "pboling/appraisal", branch: "galtzo"
+gem "appraisal2", github: "appraisal-rb/appraisal2", branch: "main"
 
 # Only runs on the latest Ruby
 if current_ruby_version >= latest_ruby_version
