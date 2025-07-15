@@ -1,11 +1,27 @@
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at [https://github.com/oauth-xx/ruby-openid2][🚎src-main]
+Bug reports and pull requests are welcome on GitHub at [https://github.com/ruby-openid/ruby-openid2][🚎src-main]
 . This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to
 the [code of conduct][🤝conduct].
 
 To submit a patch, please fork the project and create a patch with tests.
 Once you're happy with it send a pull request.
+
+We [![Keep A Changelog][📗keep-changelog-img]][📗keep-changelog] so if you make changes, remember to update it.
+
+## You can help!
+
+Simply follow these instructions:
+
+1. Join the Discord: [![Live Chat on Discord][✉️discord-invite-img]][✉️discord-invite]
+2. Fork the repository
+3. Create your feature branch (`git checkout -b my-new-feature`)
+4. Make some fixes.
+5. Commit your changes (`git commit -am 'Added some feature'`)
+6. Push to the branch (`git push origin my-new-feature`)
+7. Make sure to add tests for it. This is important, so it doesn't break in a future release.
+8. Create new Pull Request.
+9. Announce it in channel for this org in the [Discord][✉️discord-invite]!
 
 ## Release
 
@@ -53,3 +69,5 @@ Made with [contributors-img][🖐contrib-rocks].
 [🔒️rubygems-security-guide]: https://guides.rubygems.org/security/#building-gems
 [🔒️rubygems-checksums-pr]: https://github.com/rubygems/guides/pull/325
 [🚎src-main]: https://github.com/oauth-xx/ruby-openid2
+[✉️discord-invite]: https://discord.gg/3qme4XHNKN
+[✉️discord-invite-img]: https://img.shields.io/discord/1373797679469170758?style=for-the-badge
