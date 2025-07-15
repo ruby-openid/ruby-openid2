@@ -21,7 +21,7 @@ Simply follow these instructions:
 6. Push to the branch (`git push origin my-new-feature`)
 7. Make sure to add tests for it. This is important, so it doesn't break in a future release.
 8. Create new Pull Request.
-9. Announce it in channel for this org in the [Discord][✉️discord-invite]!
+9. Announce it in the channel for this org in the [Discord][✉️discord-invite]!
 
 ## Release
 
