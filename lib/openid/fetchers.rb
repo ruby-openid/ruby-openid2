@@ -1,5 +1,6 @@
 # External dependencies
 require "net/http"
+require "uri"
 
 # This library
 require_relative "util"
@@ -238,8 +239,9 @@ module OpenID
             "Too many redirects, not fetching #{response["location"]}",
           )
         end
+        redirect_url = redirect_url(url, response["location"])
         begin
-          fetch(response["location"], body, headers, redirect_limit - 1)
+          fetch(redirect_url, body, headers, redirect_limit - 1)
         rescue HTTPRedirectLimitReached => e
           raise e
         rescue FetchingError => e
@@ -254,6 +256,17 @@ module OpenID
     end
 
     private
+
+    def redirect_url(current_url, location)
+      raise FetchingError, "Redirect missing Location header" if location.nil?
+
+      location = location.to_s
+      raise FetchingError, "Redirect Location is protocol-relative: #{location}" if location.start_with?("//")
+
+      URI.join(current_url.to_s, location).to_s
+    rescue URI::InvalidURIError => e
+      raise FetchingError, "Invalid redirect Location #{location.inspect}: #{e}"
+    end
 
     def setup_encoding(response)
       return unless defined?(Encoding.default_external)

@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 ### Changed
 ### Fixed
+- Hardened `OpenID::StandardFetcher` redirect handling by resolving relative
+  redirects explicitly and rejecting protocol-relative, missing, or invalid
+  redirect locations.
 ### Removed
 
 ## 3.1.1 - 2024-09-25

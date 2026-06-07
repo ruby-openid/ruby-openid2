@@ -74,6 +74,7 @@ class FetcherTestCase < Minitest::Test
       ["/302redirect", 200, "/success"],
       ["/303redirect", 200, "/success"],
       ["/307redirect", 200, "/success"],
+      ["/relative_redirect", 200, "/success"],
     ]
 
   def _redirect_with_code(code)
@@ -163,6 +164,13 @@ class FetcherTestCase < Minitest::Test
       @server.mount_proc("/302redirect", _redirect_with_code(302))
       @server.mount_proc("/303redirect", _redirect_with_code(303))
       @server.mount_proc("/307redirect", _redirect_with_code(307))
+      @server.mount_proc("/relative_redirect") do |_req, resp|
+        resp.status = 302
+        resp["Location"] = "/success"
+      end
+      @server.mount_proc("/missing_location_redirect") do |_req, resp|
+        resp.status = 302
+      end
       @server.mount_proc("/badreq", _respond_with_code(400))
       @server.mount_proc("/forbidden", _respond_with_code(403))
       @server.mount_proc("/notfound", _respond_with_code(404))
@@ -250,6 +258,28 @@ class FetcherTestCase < Minitest::Test
     assert_raises(OpenID::HTTPRedirectLimitReached) do
       @fetcher.fetch(uri, nil, nil, 0)
     end
+  end
+
+  def test_protocol_relative_redirect_location_rejected
+    error = assert_raises(OpenID::FetchingError) do
+      @fetcher.send(:redirect_url, URI.parse(_uri_build("/")), "//example.com/success")
+    end
+    assert_match("protocol-relative", error.message)
+  end
+
+  def test_missing_redirect_location_rejected
+    uri = _uri_build("/missing_location_redirect")
+    error = assert_raises(OpenID::FetchingError) do
+      @fetcher.fetch(uri)
+    end
+    assert_match("missing Location", error.message)
+  end
+
+  def test_invalid_redirect_location_rejected
+    error = assert_raises(OpenID::FetchingError) do
+      @fetcher.send(:redirect_url, URI.parse(_uri_build("/")), "http://[")
+    end
+    assert_match("Invalid redirect Location", error.message)
   end
 
   def test_utf8_page
