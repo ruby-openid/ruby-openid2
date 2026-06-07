@@ -74,7 +74,7 @@ class FetcherTestCase < Minitest::Test
       ["/302redirect", 200, "/success"],
       ["/303redirect", 200, "/success"],
       ["/307redirect", 200, "/success"],
-      ["/relative_redirect", 200, "/success"],
+      ["/relative_redirect", 200, "/success"]
     ]
 
   def _redirect_with_code(code)
@@ -156,7 +156,7 @@ class FetcherTestCase < Minitest::Test
     @server = WEBrick::HTTPServer.new(
       Port: 0,
       Logger: @weblog,
-      AccessLog: [],
+      AccessLog: []
     )
     @server_thread = Thread.new do
       @server.mount_proc("/success", _respond_with_code(200))
@@ -196,7 +196,7 @@ class FetcherTestCase < Minitest::Test
     u = URI::HTTP.build({
       host: "localhost",
       port: @server.config[:Port],
-      path: path,
+      path: path
     })
     u.to_s
   end
@@ -224,7 +224,7 @@ class FetcherTestCase < Minitest::Test
 
   def test_headers
     headers = {
-      @@test_header_name => @@test_header_value,
+      @@test_header_name => @@test_header_value
     }
     uri = _uri_build("/require_header")
     result = @fetcher.fetch(uri, nil, headers)
@@ -235,7 +235,7 @@ class FetcherTestCase < Minitest::Test
 
   def test_headers_after_redirect
     headers = {
-      @@test_header_name => @@test_header_value,
+      @@test_header_name => @@test_header_value
     }
     uri = _uri_build("/redirect_to_reqheader")
     result = @fetcher.fetch(uri, nil, headers)

@@ -160,7 +160,7 @@ module OpenID
           realm,
           return_to,
           immediate,
-          form_tag_attrs,
+          form_tag_attrs
         ))
       end
 

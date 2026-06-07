@@ -1,0 +1,98 @@
+{
+  "# Compat: Ruby >= 2.7\n# Test Matrix:": [
+    {
+      "file": "Appraisals",
+      "lines": [
+        104,
+        112,
+        120
+      ]
+    }
+  ],
+  "# Compat: Ruby >= 3.0\n# Test Matrix:": [
+    {
+      "file": "Appraisals",
+      "lines": [
+        138,
+        147
+      ]
+    }
+  ],
+  "# Test Matrix:\n#   - Ruby 2.7": [
+    {
+      "file": "Appraisals",
+      "lines": [
+        105,
+        113,
+        121
+      ]
+    }
+  ],
+  "- 63.08% documented\n### Added": [
+    {
+      "file": "CHANGELOG.md",
+      "lines": [
+        40,
+        66,
+        73
+      ]
+    }
+  ],
+  "appraisal: \"dep-heads\"\nexec_cmd: \"kettle-test\"": [
+    {
+      "file": ".github/workflows/dep-heads.yml",
+      "lines": [
+        44,
+        51,
+        58
+      ]
+    }
+  ],
+  "appraisal: \"head\"\nexec_cmd: \"kettle-test\"": [
+    {
+      "file": ".github/workflows/heads.yml",
+      "lines": [
+        43,
+        50,
+        57
+      ]
+    }
+  ],
+  "eval_gemfile \"modular/x_std_libs/r3/libs.gemfile\"\nremove_gem \"appraisal\" # only present because it must be in the gemfile because we target a git branch": [
+    {
+      "file": "Appraisals",
+      "lines": [
+        134,
+        164,
+        174,
+        182
+      ]
+    }
+  ],
+  "exec_cmd: \"kettle-test\"\nrubygems: default": [
+    {
+      "file": ".github/workflows/dep-heads.yml",
+      "lines": [
+        52,
+        59
+      ]
+    },
+    {
+      "file": ".github/workflows/heads.yml",
+      "lines": [
+        44,
+        51,
+        58
+      ]
+    }
+  ],
+  "schedule:\ninterval: \"daily\"": [
+    {
+      "file": ".github/dependabot.yml",
+      "lines": [
+        5,
+        12
+      ]
+    }
+  ]
+}

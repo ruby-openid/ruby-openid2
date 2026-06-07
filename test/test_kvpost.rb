@@ -26,7 +26,7 @@ module OpenID
     def test_400
       args = {
         "error" => "I ate too much cheese",
-        "error_code" => "sadness",
+        "error_code" => "sadness"
       }
       resp = mk_resp(400, args)
       begin
@@ -43,7 +43,7 @@ module OpenID
     def test_500
       args = {
         "error" => "I ate too much cheese",
-        "error_code" => "sadness",
+        "error_code" => "sadness"
       }
       resp = mk_resp(500, args)
       assert_raises(HTTPStatusError) do

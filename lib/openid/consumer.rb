@@ -227,7 +227,7 @@ module OpenID
         raise DiscoveryFailure.new(
           "No usable OpenID services were found " \
             "for #{openid_identifier.inspect}",
-          nil,
+          nil
         )
       else
         begin_without_discovery(service, anonymous)
@@ -344,7 +344,7 @@ module OpenID
         @store,
         service.server_url,
         service.compatibility_mode,
-        negotiator,
+        negotiator
       )
     end
 
@@ -356,7 +356,7 @@ module OpenID
       mode = message.get_arg(OPENID_NS, "mode", "<No mode set>")
       FailureResponse.new(
         last_requested_endpoint,
-        "Invalid openid.mode: #{mode}",
+        "Invalid openid.mode: #{mode}"
       )
     end
 
@@ -373,7 +373,7 @@ module OpenID
         last_requested_endpoint,
         error,
         contact,
-        reference,
+        reference
       )
     end
 
@@ -398,7 +398,7 @@ module OpenID
         SuccessResponse.new(
           idres.endpoint,
           message,
-          idres.signed_fields,
+          idres.signed_fields
         )
       end
     end

@@ -92,14 +92,14 @@ class TrustRootTest < Minitest::Test
       [["http://first/", "http://second/path/"], "http://second/?query=x", false],
 
       [["http://broken/"], "http://broken/", true],
-      [["http://first/", "http://second/"], "http://second/?query=x", true],
+      [["http://first/", "http://second/"], "http://second/?query=x", true]
     ]
 
     data.each do |case_|
       allowed_return_urls, return_to, expected_result = case_
       actual_result = OpenID::TrustRoot.return_to_matches(
         allowed_return_urls,
-        return_to,
+        return_to
       )
 
       assert_equal(expected_result, actual_result)
@@ -111,7 +111,7 @@ class TrustRootTest < Minitest::Test
       ["http://foo.com/path", "http://foo.com/path"],
       ["http://foo.com/path?foo=bar", "http://foo.com/path?foo=bar"],
       ["http://*.bogus.com/path", "http://www.bogus.com/path"],
-      ["http://*.bogus.com:122/path", "http://www.bogus.com:122/path"],
+      ["http://*.bogus.com:122/path", "http://www.bogus.com:122/path"]
     ]
 
     data.each do |case_|

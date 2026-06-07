@@ -53,7 +53,7 @@ module OpenID
         "1970-00-01T00:00:00Z",
         "1970.01-01T00:00:00Z",
         "Thu Sep  7 13:29:31 PDT 2006",
-        "monkeys",
+        "monkeys"
       ]
 
       cases.each do |c|
@@ -85,7 +85,7 @@ module OpenID
         ["1970-01-01T00:00:02Z", 1, 0, false],
 
         # malformed nonce string
-        ["monkeys", 0, 0, false],
+        ["monkeys", 0, 0, false]
       ]
 
       cases.each do |c|

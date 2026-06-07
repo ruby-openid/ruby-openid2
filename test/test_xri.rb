@@ -23,7 +23,7 @@ module OpenID
       def test_escaping_percents
         assert_equal(
           "@example/abc%252Fd/ef",
-          XRI.escape_for_iri("@example/abc%2Fd/ef"),
+          XRI.escape_for_iri("@example/abc%2Fd/ef")
         )
       end
 
@@ -31,17 +31,17 @@ module OpenID
         # no escapes
         assert_equal(
           "@example/foo/(@bar)",
-          XRI.escape_for_iri("@example/foo/(@bar)"),
+          XRI.escape_for_iri("@example/foo/(@bar)")
         )
         # escape slashes
         assert_equal(
           "@example/foo/(@bar%2Fbaz)",
-          XRI.escape_for_iri("@example/foo/(@bar/baz)"),
+          XRI.escape_for_iri("@example/foo/(@bar/baz)")
         )
         # escape query ? and fragment #
         assert_equal(
           "@example/foo/(@baz%3Fp=q%23r)?i=j#k",
-          XRI.escape_for_iri("@example/foo/(@baz?p=q#r)?i=j#k"),
+          XRI.escape_for_iri("@example/foo/(@baz?p=q#r)?i=j#k")
         )
       end
     end

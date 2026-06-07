@@ -33,7 +33,7 @@ module OpenID
       [false, "404_with_header", nil, nil],
       [false, "404_with_meta", nil, nil],
       [false, "201_server_response", nil, nil],
-      [false, "500_server_response", nil, nil],
+      [false, "500_server_response", nil, nil]
     ]
 
     @@example_xrds_file = "example-xrds.xml"
@@ -63,7 +63,7 @@ module OpenID
         ["URL_BASE/", base_url],
         ["<XRDS Content>", example_xrds],
         ["YADIS_HEADER", Yadis::YADIS_HEADER_NAME],
-        ["NAME", test_name],
+        ["NAME", test_name]
       ]
 
       mapping.each do |k, v|

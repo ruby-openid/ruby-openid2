@@ -54,14 +54,14 @@ module OpenID
 
         assert_equal(
           {"preferred_auth_policies" => "http://uri http://zig", "max_auth_age" => "789"},
-          @req.get_extension_args,
+          @req.get_extension_args
         )
       end
 
       def test_parse_extension_args
         args = {
           "preferred_auth_policies" => "http://foo http://bar",
-          "max_auth_age" => "9",
+          "max_auth_age" => "9"
         }
         @req.parse_extension_args(args)
 
@@ -83,9 +83,9 @@ module OpenID
           "ns.pape" => PAPE::NS_URI,
           "pape.preferred_auth_policies" => [
             PAPE::AUTH_MULTI_FACTOR,
-            PAPE::AUTH_PHISHING_RESISTANT,
+            PAPE::AUTH_PHISHING_RESISTANT
           ].join(" "),
-          "pape.max_auth_age" => "5476",
+          "pape.max_auth_age" => "5476"
         })
         oid_req = Server::OpenIDRequest.new
         oid_req.message = openid_req_msg
@@ -109,7 +109,7 @@ module OpenID
         @req.add_policy_uri(PAPE::AUTH_MULTI_FACTOR)
         pt = @req.preferred_types([
           PAPE::AUTH_MULTI_FACTOR,
-          PAPE::AUTH_MULTI_FACTOR_PHYSICAL,
+          PAPE::AUTH_MULTI_FACTOR_PHYSICAL
         ])
 
         assert_equal([PAPE::AUTH_MULTI_FACTOR], pt)
@@ -175,7 +175,7 @@ module OpenID
 
         assert_equal(
           {"auth_policies" => "http://uri http://zig", "auth_time" => "1983-11-05T12:30:24Z"},
-          @req.get_extension_args,
+          @req.get_extension_args
         )
         @req.nist_auth_level = 3
 
@@ -183,9 +183,9 @@ module OpenID
           {
             "auth_policies" => "http://uri http://zig",
             "auth_time" => "1983-11-05T12:30:24Z",
-            "nist_auth_level" => "3",
+            "nist_auth_level" => "3"
           },
-          @req.get_extension_args,
+          @req.get_extension_args
         )
       end
 
@@ -206,7 +206,7 @@ module OpenID
       def test_parse_extension_args
         args = {
           "auth_policies" => "http://foo http://bar",
-          "auth_time" => "1983-11-05T12:30:24Z",
+          "auth_time" => "1983-11-05T12:30:24Z"
         }
         @req.parse_extension_args(args)
 
@@ -224,7 +224,7 @@ module OpenID
       def test_parse_extension_args_strict_bogus1
         args = {
           "auth_policies" => "http://foo http://bar",
-          "auth_time" => "this one time",
+          "auth_time" => "this one time"
         }
         assert_raises(ArgumentError) do
           @req.parse_extension_args(args, true)
@@ -235,7 +235,7 @@ module OpenID
         args = {
           "auth_policies" => "http://foo http://bar",
           "auth_time" => "1983-11-05T12:30:24Z",
-          "nist_auth_level" => "some",
+          "nist_auth_level" => "some"
         }
         assert_raises(ArgumentError) do
           @req.parse_extension_args(args, true)
@@ -246,7 +246,7 @@ module OpenID
         args = {
           "auth_policies" => "http://foo http://bar",
           "auth_time" => "2007-10-11T05:25:18Z",
-          "nist_auth_level" => "0",
+          "nist_auth_level" => "0"
         }
         @req.parse_extension_args(args, true)
 
@@ -259,7 +259,7 @@ module OpenID
         args = {
           "auth_policies" => "http://foo http://bar",
           "auth_time" => "some time ago",
-          "nist_auth_level" => "some",
+          "nist_auth_level" => "some"
         }
         @req.parse_extension_args(args)
 
@@ -275,13 +275,13 @@ module OpenID
           "ns.pape" => PAPE::NS_URI,
           "pape.auth_policies" => [
             PAPE::AUTH_MULTI_FACTOR,
-            PAPE::AUTH_PHISHING_RESISTANT,
+            PAPE::AUTH_PHISHING_RESISTANT
           ].join(" "),
-          "pape.auth_time" => "1983-11-05T12:30:24Z",
+          "pape.auth_time" => "1983-11-05T12:30:24Z"
         })
         signed_stuff = {
           "auth_policies" => [PAPE::AUTH_MULTI_FACTOR, PAPE::AUTH_PHISHING_RESISTANT].join(" "),
-          "auth_time" => "1983-11-05T12:30:24Z",
+          "auth_time" => "1983-11-05T12:30:24Z"
         }
         oid_req = DummySuccessResponse.new(openid_req_msg, signed_stuff)
         req = PAPE::Response.from_success_response(oid_req)
@@ -297,9 +297,9 @@ module OpenID
           "ns.pape" => PAPE::NS_URI,
           "pape.auth_policies" => [
             PAPE::AUTH_MULTI_FACTOR,
-            PAPE::AUTH_PHISHING_RESISTANT,
+            PAPE::AUTH_PHISHING_RESISTANT
           ].join(" "),
-          "pape.auth_time" => "1983-11-05T12:30:24Z",
+          "pape.auth_time" => "1983-11-05T12:30:24Z"
         })
         signed_stuff = {}
         endpoint = OpenIDServiceEndpoint.new

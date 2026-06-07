@@ -21,15 +21,15 @@ class KVFormTests < Minitest::Test
       [
         "city:claremont\nstate:CA\n",
         {"city" => "claremont", "state" => "CA"},
-        0,
+        0
       ],
       [
         "is_valid:true\ninvalidate_handle:{HMAC-SHA1:2398410938412093}\n",
         {
           "is_valid" => "true",
-          "invalidate_handle" => "{HMAC-SHA1:2398410938412093}",
+          "invalidate_handle" => "{HMAC-SHA1:2398410938412093}"
         },
-        0,
+        0
       ],
 
       # Warnings from lines with no colon:
@@ -51,7 +51,7 @@ class KVFormTests < Minitest::Test
 
       # Warnings from missing trailing newline
       ["e^(i*pi)+1:0", {"e^(i*pi)+1" => "0"}, 1],
-      ["east:west\nnorth:south", {"east" => "west", "north" => "south"}, 1],
+      ["east:west\nnorth:south", {"east" => "west", "north" => "south"}, 1]
     ].each do |case_|
       _run_kvdictTest(case_)
     end
@@ -102,10 +102,10 @@ class KVFormTests < Minitest::Test
       [
         [
           [" openid ", " useful "],
-          [" a ", " b "],
+          [" a ", " b "]
         ],
         " openid : useful \n a : b \n",
-        8,
+        8
       ],
 
       # warnings about leading and trailing whitespace, but not about
@@ -113,13 +113,13 @@ class KVFormTests < Minitest::Test
       [
         [
           [" open id ", " use ful "],
-          [" a ", " b "],
+          [" a ", " b "]
         ],
         " open id : use ful \n a : b \n",
-        8,
+        8
       ],
 
-      [[%w[foo bar]], "foo:bar\n", 0],
+      [[%w[foo bar]], "foo:bar\n", 0]
     ].each do |case_|
       _run_kvseqTest(case_)
     end
@@ -166,7 +166,7 @@ class KVFormTests < Minitest::Test
       [%W[open\nid use\nful]],
       [["open:id", "useful"]],
       [["foo", "bar"], ["ba\n d", "seed"]],
-      [["foo", "bar"], ["bad:", "seed"]],
+      [["foo", "bar"], ["bad:", "seed"]]
     ].each do |case_|
       _run_kvexcTest(case_)
     end

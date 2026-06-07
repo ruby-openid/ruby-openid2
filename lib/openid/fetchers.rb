@@ -118,7 +118,7 @@ module OpenID
       proxy_uri.host,
       proxy_uri.port,
       proxy_uri.user,
-      proxy_uri.password,
+      proxy_uri.password
     )
   end
 
@@ -164,7 +164,7 @@ module OpenID
       unless conn.is_a?(Net::HTTP)
         raise format(
           "Expected Net::HTTP object from make_http; got %s",
-          conn.class,
+          conn.class
         ).to_s
       end
 
@@ -236,7 +236,7 @@ module OpenID
       when Net::HTTPRedirection
         if redirect_limit <= 0
           raise HTTPRedirectLimitReached.new(
-            "Too many redirects, not fetching #{response["location"]}",
+            "Too many redirects, not fetching #{response["location"]}"
           )
         end
         redirect_url = redirect_url(url, response["location"])

@@ -68,7 +68,7 @@ module OpenID
           assert_equal(
             ["OpenID::Consumer::DiscoveredServices::" \
               "OpenID::Consumer::"],
-            @session.keys.sort!,
+            @session.keys.sort!
           )
         end
 
@@ -145,7 +145,7 @@ module OpenID
           assert_equal(@claimed_id, result.return_to_args[cid_name])
           assert_equal(
             [cid_name, nonce_name].sort!,
-            result.return_to_args.keys.sort!,
+            result.return_to_args.keys.sort!
           )
         end
 
@@ -182,9 +182,9 @@ module OpenID
           response = @consumer.complete(
             {
               "openid.ns" => OPENID2_NS,
-              "openid.mode" => "bad",
+              "openid.mode" => "bad"
             },
-            nil,
+            nil
           )
 
           assert_equal(FAILURE, response.status)
@@ -221,7 +221,7 @@ module OpenID
           setup_url = "http://setup.url/"
           args = {
             "openid.user_setup_url" => setup_url,
-            "openid.mode" => "id_res",
+            "openid.mode" => "id_res"
           }
           response = @consumer.complete(args, nil)
 
@@ -235,7 +235,7 @@ module OpenID
           args = {
             "openid.mode" => "error",
             "openid.contact" => contact,
-            "openid.reference" => reference,
+            "openid.reference" => reference
           }
           response = @consumer.complete(args, nil)
 
@@ -253,7 +253,7 @@ module OpenID
 
         def test_idres_openid1
           args = {
-            "openid.mode" => "id_res",
+            "openid.mode" => "id_res"
           }
 
           endpoint = OpenIDServiceEndpoint.new

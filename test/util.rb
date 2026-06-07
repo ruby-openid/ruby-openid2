@@ -20,7 +20,7 @@ module OpenID
       assert_equal(
         regexes.length,
         log_lines.length,
-        [regexes, log_lines].inspect,
+        [regexes, log_lines].inspect
       )
       log_lines.zip(regexes) do |line, regex|
         assert_match(regex, line)

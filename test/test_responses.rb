@@ -22,7 +22,7 @@ module OpenID
             "unittest.one" => "1",
             "unittest.two" => "2",
             "sreg.nickname" => "j3h",
-            "return_to" => "return_to",
+            "return_to" => "return_to"
           }
           signed_list = q.keys.map { |k| "openid." + k }
           msg = Message.from_openid_args(q)
@@ -44,13 +44,13 @@ module OpenID
             "sreg.nickname" => "j3h",
             "sreg.dob" => "yesterday",
             "return_to" => "return_to",
-            "signed" => "sreg.nickname,unittest.one,sreg.dob",
+            "signed" => "sreg.nickname,unittest.one,sreg.dob"
           }
 
           signed_list = [
             "openid.sreg.nickname",
             "openid.unittest.one",
-            "openid.sreg.dob",
+            "openid.sreg.dob"
           ]
 
           msg = Message.from_openid_args(args)

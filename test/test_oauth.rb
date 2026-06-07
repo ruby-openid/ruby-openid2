@@ -70,7 +70,7 @@ module OpenID
           "ns" => OPENID2_NS,
           "ns.oauth" => OAuth::NS_URI,
           "oauth.consumer" => "CONSUMER",
-          "oauth.scope" => "http://sample.com/some_scope",
+          "oauth.scope" => "http://sample.com/some_scope"
         })
         oid_req = Server::OpenIDRequest.new
         oid_req.message = openid_req_msg
@@ -139,7 +139,7 @@ module OpenID
 
         assert_equal(
           {"request_token" => "REQUESTTOKEN", "scope" => "http://sample.com/some_scope"},
-          @req.get_extension_args,
+          @req.get_extension_args
         )
       end
 
@@ -164,11 +164,11 @@ module OpenID
           "ns" => OPENID2_NS,
           "ns.oauth" => OAuth::NS_URI,
           "oauth.request_token" => "REQUESTTOKEN",
-          "oauth.scope" => "http://sample.com/some_scope",
+          "oauth.scope" => "http://sample.com/some_scope"
         })
         signed_stuff = {
           "request_token" => "REQUESTTOKEN",
-          "scope" => "http://sample.com/some_scope",
+          "scope" => "http://sample.com/some_scope"
         }
         oid_req = DummySuccessResponse.new(openid_req_msg, signed_stuff)
         req = OAuth::Response.from_success_response(oid_req)
@@ -183,7 +183,7 @@ module OpenID
           "ns" => OPENID2_NS,
           "ns.oauth" => OAuth::NS_URI,
           "oauth.request_token" => "REQUESTTOKEN",
-          "oauth.scope" => "http://sample.com/some_scope",
+          "oauth.scope" => "http://sample.com/some_scope"
         })
         signed_stuff = {}
         endpoint = OpenIDServiceEndpoint.new
