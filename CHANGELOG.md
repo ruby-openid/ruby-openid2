@@ -28,6 +28,7 @@ Please file a bug if you notice a violation of semantic versioning.
 
 ### Fixed
 
+- Restored `docs/CNAME` so the generated documentation site keeps its custom domain.
 - Hardened `OpenID::StandardFetcher` redirect handling by resolving relative
   redirects explicitly and rejecting protocol-relative, missing, or invalid
   redirect locations.
