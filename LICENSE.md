@@ -50,4 +50,4 @@ If none of the above licenses fit your use case, please [contact us](mailto:flos
 - Copyright (c) 2019 Utkarsh Gupta
 - Copyright (c) 2019 Vadim Shaulski
 - Copyright (c) 2020 Randy Ebersole
-- Copyright (c) 2024-2026 Peter Boling
+- Copyright (c) 2024-2026 Peter H. Boling
