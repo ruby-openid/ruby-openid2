@@ -6,7 +6,7 @@
 # kettle-jem will then preserve content between those markers across template runs.
 # kettle-jem:unfreeze
 
-# ruby-openid2 Rakefile v7.0.0 - 2026-06-19
+# ruby-openid2 Rakefile v7.0.0 - 2026-06-21
 # Ruby 2.3 (Safe Navigation) or higher required
 #
 # See LICENSE.md for license information.
@@ -52,9 +52,9 @@
 # rake yard                                   # Generate YARD Documentation
 #
 
-# :nocov:
+# simplecov:disable
 require "bundler/gem_tasks" if !Dir[File.join(__dir__, "*.gemspec")].empty?
-# :nocov:
+# simplecov:enable
 
 # Define a base default task early so other files can enhance it.
 desc "Default tasks aggregator"
@@ -62,7 +62,7 @@ task :default do
   puts "Default task complete."
 end
 
-# :nocov:
+# simplecov:disable
 ### MONOREPO FAMILY TASKS
 if Dir.exist?(File.join(__dir__, "gems"))
   def family_gem_dirs
@@ -118,7 +118,7 @@ if Dir.exist?(File.join(__dir__, "gems"))
     end
   end
 end
-# :nocov:
+# simplecov:enable
 
 # External gems that define tasks - add here!
 begin
