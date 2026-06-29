@@ -32,7 +32,7 @@ module OpenID
 
       OPENID_2_0_TYPE,
       OPENID_1_1_TYPE,
-      OPENID_1_0_TYPE,
+      OPENID_1_0_TYPE
     ]
 
     # the verified identifier.
@@ -119,7 +119,7 @@ module OpenID
       # pathological configuration anyway, so I don't think I care.
       @local_id = OpenID.find_op_local_identifier(
         service_element,
-        @type_uris,
+        @type_uris
       )
       @claimed_id = yadis_url
     end
@@ -168,7 +168,7 @@ module OpenID
           endpoint.yadis_url,
           endpoint.uri,
           endpoint.type_uris,
-          endpoint.service_element,
+          endpoint.service_element
         )
       else
         openid_endpoint = nil
@@ -185,7 +185,7 @@ module OpenID
 
       discovery_types = [
         [OPENID_2_0_TYPE, "openid2.provider", "openid2.local_id"],
-        [OPENID_1_1_TYPE, "openid.server", "openid.delegate"],
+        [OPENID_1_1_TYPE, "openid.server", "openid.delegate"]
       ]
 
       link_attrs = OpenID.parse_link_attrs(html)
@@ -232,7 +232,7 @@ module OpenID
 
       meth.call(
         discovery_result.normalized_uri,
-        discovery_result.response_text,
+        discovery_result.response_text
       )
     end
 
@@ -257,7 +257,7 @@ module OpenID
         @claimed_id,
         @local_id,
         @canonical_id,
-        @used_yadis,
+        @used_yadis
       )
     end
   end
@@ -381,7 +381,7 @@ module OpenID
 
     openid_services = arrange_by_type(
       openid_services,
-      OpenIDServiceEndpoint::OPENID_TYPE_URIS,
+      OpenIDServiceEndpoint::OPENID_TYPE_URIS
     )
 
     if !op_services.empty?
@@ -473,7 +473,7 @@ module OpenID
       raise DiscoveryFailure.new(
         'HTTP Response status from identity URL host is not "200". ' \
           "Got status #{http_resp.code.inspect}",
-        http_resp,
+        http_resp
       )
     end
 

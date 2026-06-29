@@ -57,7 +57,7 @@ module OpenID
         def assert_openid_key_exists(msg, key)
           assert(
             msg.get_arg(OPENID_NS, key),
-            "#{key} not present in #{msg.get_args(OPENID_NS).inspect}",
+            "#{key} not present in #{msg.get_args(OPENID_NS).inspect}"
           )
         end
 
@@ -84,7 +84,7 @@ module OpenID
 
           assert_equal(
             preferred_namespace,
-            internal_message.get_openid_namespace,
+            internal_message.get_openid_namespace
           )
 
           assert_equal(preferred_namespace, msg.get_openid_namespace)
@@ -110,10 +110,10 @@ module OpenID
           @checkid_req.add_extension_arg("bag:", "color", "brown")
           @checkid_req.add_extension_arg("bag:", "material", "paper")
 
-          assert(@checkid_req.message.namespaces.member?("bag:"))
+          assert_includes(@checkid_req.message.namespaces, "bag:")
           assert_equal(
             {"color" => "brown", "material" => "paper"},
-            @checkid_req.message.get_args("bag:"),
+            @checkid_req.message.get_args("bag:")
           )
 
           msg = assert_log_matches("Generated checkid") do
@@ -283,7 +283,7 @@ module OpenID
           assert_has_required_fields(msg)
           assert_equal(
             IDENTIFIER_SELECT,
-            msg.get_arg(OPENID1_NS, "identity"),
+            msg.get_arg(OPENID1_NS, "identity")
           )
         end
       end

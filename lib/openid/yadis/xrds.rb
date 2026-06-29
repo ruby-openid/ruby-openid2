@@ -11,7 +11,7 @@ module OpenID
 
     XRDS_NAMESPACES = {
       "xrds" => XRDS_NS,
-      "xrd" => XRD_NS_2_0,
+      "xrd" => XRD_NS_2_0
     }
 
     class XRDSError < StandardError; end
@@ -66,7 +66,7 @@ module OpenID
           raise XRDSFraud.new(format(
             "%s can not come from %s",
             parent_sought,
-            parent,
+            parent
           ))
         end
 
@@ -119,7 +119,7 @@ module OpenID
       REXML::XPath.each(
         xrds_tree.root,
         "/xrds:XRDS/xrd:XRD[last()]",
-        XRDS_NAMESPACES,
+        XRDS_NAMESPACES
       ) do |el|
         return el
       end

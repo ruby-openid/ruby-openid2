@@ -440,14 +440,14 @@ module OpenID
           path = TrustRoot._build_path(
             parsed.path,
             parsed.query,
-            parsed.fragment,
+            parsed.fragment
           )
 
           [
             parsed.scheme || "",
             parsed.host || "",
             parsed.port || "",
-            path || "",
+            path || ""
           ]
         end
 

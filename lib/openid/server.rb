@@ -100,7 +100,7 @@ module OpenID
           msg = format(
             "%s request missing required parameter from message %s",
             obj.mode,
-            message,
+            message
           )
           raise ProtocolError.new(message, msg)
         end
@@ -147,7 +147,7 @@ module OpenID
           @assoc_handle,
           @sig,
           @signed,
-          ih,
+          ih
         )
       end
     end
@@ -233,8 +233,8 @@ module OpenID
             format(
               "If non-default modulus or generator is " +
                                   "supplied, both must be supplied. Missing %s",
-              missing,
-            ),
+              missing
+            )
           )
         end
 
@@ -253,8 +253,8 @@ module OpenID
             format(
               "Public key for DH-SHA1 session " +
                                   "not found in message %s",
-              message,
-            ),
+              message
+            )
           )
         end
 
@@ -267,11 +267,11 @@ module OpenID
         mac_key = @dh.xor_secret(
           @hash_func,
           @consumer_pubkey,
-          secret,
+          secret
         )
         {
           "dh_server_public" => CryptUtil.num_to_base64(@dh.public),
-          "enc_mac_key" => Util.to_base64(mac_key),
+          "enc_mac_key" => Util.to_base64(mac_key)
         }
       end
     end
@@ -301,7 +301,7 @@ module OpenID
       @@session_classes = {
         "no-encryption" => PlainTextServerSession,
         "DH-SHA1" => DiffieHellmanSHA1ServerSession,
-        "DH-SHA256" => DiffieHellmanSHA256ServerSession,
+        "DH-SHA256" => DiffieHellmanSHA256ServerSession
       }
 
       # Construct me.
@@ -331,7 +331,7 @@ module OpenID
           unless session_type
             raise ProtocolError.new(
               message,
-              "session_type missing from request",
+              "session_type missing from request"
             )
           end
         end
@@ -341,7 +341,7 @@ module OpenID
         unless session_class
           raise ProtocolError.new(
             message,
-            format("Unknown session type %s", session_type),
+            format("Unknown session type %s", session_type)
           )
         end
 
@@ -354,8 +354,8 @@ module OpenID
             format(
               "Error parsing %s session: %s",
               session_type,
-              e,
-            ),
+              e
+            )
           )
         end
 
@@ -364,7 +364,7 @@ module OpenID
           msg = format(
             "Session type %s does not support association type %s",
             session_type,
-            assoc_type,
+            assoc_type
           )
           raise ProtocolError.new(message, msg)
         end
@@ -385,11 +385,11 @@ module OpenID
         response.fields.update_args(OPENID_NS, {
           "expires_in" => format("%d", assoc.expires_in),
           "assoc_type" => @assoc_type,
-          "assoc_handle" => assoc.handle,
+          "assoc_handle" => assoc.handle
         })
         response.fields.update_args(
           OPENID_NS,
-          @session.answer(assoc.secret),
+          @session.answer(assoc.secret)
         )
         unless @session.session_type == "no-encryption" and
             @message.is_openid1
@@ -526,7 +526,7 @@ module OpenID
         if message.is_openid1 and !obj.return_to
           msg = format(
             "Missing required field 'return_to' from %s",
-            message,
+            message
           )
           raise ProtocolError.new(message, msg)
         end
@@ -742,7 +742,7 @@ module OpenID
             "mode" => mode,
             "op_endpoint" => server_url,
             "return_to" => @return_to,
-            "response_nonce" => Nonce.mk_nonce,
+            "response_nonce" => Nonce.mk_nonce
           })
 
           if response_identity
@@ -751,7 +751,7 @@ module OpenID
               response.fields.set_arg(
                 OPENID_NS,
                 "claimed_id",
-                response_claimed_id,
+                response_claimed_id
               )
             end
           end
@@ -772,7 +772,7 @@ module OpenID
               @trust_root,
               false,
               @assoc_handle,
-              @claimed_id,
+              @claimed_id
             )
             setup_request.message = Message.new(@message.get_openid_namespace)
             setup_url = setup_request.encode_to_url(server_url)
@@ -798,7 +798,7 @@ module OpenID
           "mode" => @mode,
           "identity" => @identity,
           "claimed_id" => @claimed_id,
-          "return_to" => @return_to,
+          "return_to" => @return_to
         }
 
         if @trust_root
@@ -846,7 +846,7 @@ module OpenID
           @identity,
           @immediate,
           @trust_root,
-          @assoc_handle,
+          @assoc_handle
         )
       end
     end
@@ -884,7 +884,7 @@ module OpenID
           "%s for %s: %s",
           self.class,
           @request.class,
-          @fields,
+          @fields
         )
       end
 
@@ -1031,19 +1031,19 @@ module OpenID
             "failed to get assoc with handle %s to verify " +
                                        "message %s",
             assoc_handle,
-            message,
+            message
           ))
           return false
         end
 
         begin
           valid = assoc.check_message_signature(message)
-        rescue StandardError => e
+        rescue => e
           Util.log(format(
             "Error in verifying %s with %s: %s",
             message,
             assoc,
-            e,
+            e
           ))
           return false
         end
@@ -1135,7 +1135,7 @@ module OpenID
             "requested %sdumb key %s is expired (by %s seconds)",
             (!dumb) ? "not-" : "",
             assoc_handle,
-            assoc.expires_in,
+            assoc.expires_in
           ))
           if check_expiration
             @store.remove_association(key, assoc_handle)
@@ -1178,20 +1178,20 @@ module OpenID
           wr = @@responseFactory.new(
             HTTP_OK,
             nil,
-            response.encode_to_kvform,
+            response.encode_to_kvform
           )
           wr.code = HTTP_ERROR if response.is_a?(Exception)
         elsif encode_as == ENCODE_URL
           location = response.encode_to_url
           wr = @@responseFactory.new(
             HTTP_REDIRECT,
-            {"location" => location},
+            {"location" => location}
           )
         elsif encode_as == ENCODE_HTML_FORM
           wr = @@responseFactory.new(
             HTTP_OK,
             nil,
-            response.to_form_markup,
+            response.to_form_markup
           )
         else
           # Can't encode this to a protocol message.  You should
@@ -1228,9 +1228,9 @@ module OpenID
             raise ArgumentError.new(
               format(
                 "Must have a store to sign this request: %s",
-                response,
+                response
               ),
-              response,
+              response
             )
           end
 
@@ -1249,7 +1249,7 @@ module OpenID
         "checkid_setup" => CheckIDRequest.method(:from_message),
         "checkid_immediate" => CheckIDRequest.method(:from_message),
         "check_authentication" => CheckAuthRequest.method(:from_message),
-        "associate" => AssociateRequest.method(:from_message),
+        "associate" => AssociateRequest.method(:from_message)
       }
 
       attr_accessor :server
@@ -1359,7 +1359,7 @@ module OpenID
           raise format(
             "%s has no handler for a request of mode %s.",
             self,
-            request.mode,
+            request.mode
           ).to_s
         end
 
@@ -1378,7 +1378,7 @@ module OpenID
         if @negotiator.allowed?(assoc_type, session_type)
           assoc = @signatory.create_association(
             false,
-            assoc_type,
+            assoc_type
           )
           request.answer(assoc)
         else
@@ -1386,13 +1386,13 @@ module OpenID
             "Association type %s is not supported with " +
                                         "session type %s",
             assoc_type,
-            session_type,
+            session_type
           )
           preferred_assoc_type, preferred_session_type = @negotiator.get_allowed_type
           request.answer_unsupported(
             message,
             preferred_assoc_type,
-            preferred_session_type,
+            preferred_session_type
           )
         end
       end
@@ -1547,7 +1547,7 @@ module OpenID
         format(
           "return_to %s not under trust_root %s",
           @return_to,
-          @trust_root,
+          @trust_root
         )
       end
     end

@@ -36,7 +36,7 @@ module OpenID
           "starting_url" => @starting_url,
           "yadis_url" => @yadis_url,
           "services" => services,
-          "current" => current_val,
+          "current" => current_val
         }
       end
 

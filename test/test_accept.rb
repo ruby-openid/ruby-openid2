@@ -104,7 +104,7 @@ module OpenID
         lnos << lno
         begin
           available = parseAvailable(avail_data)
-        rescue StandardError
+        rescue
           print("On line", lno)
           raise
         end
@@ -113,7 +113,7 @@ module OpenID
         lnos << lno
         begin
           expected = parseExpected(exp_data)
-        rescue StandardError
+        rescue
           print("On line", lno)
           raise
         end
@@ -128,7 +128,7 @@ module OpenID
 
         assert_equal(
           Yadis.get_acceptable(header, available),
-          expected.collect { |mtype, _| mtype },
+          expected.collect { |mtype, _| mtype }
         )
       end
     end
@@ -155,8 +155,8 @@ module OpenID
         # Test sorting of types by q value
         [
           [["middle", 0.5], ["min", 0.1], "max"],
-          "min; q=0.1, middle; q=0.5, max",
-        ],
+          "min; q=0.1, middle; q=0.5, max"
+        ]
 
       ].each do |input, expected_header|
         if expected_header.nil?
@@ -167,7 +167,7 @@ module OpenID
           assert_equal(
             expected_header,
             Yadis.generate_accept_header(*input),
-            [input, expected_header].inspect,
+            [input, expected_header].inspect
           )
         end
       end

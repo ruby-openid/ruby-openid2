@@ -112,6 +112,7 @@ module OpenID
 
     class FailureResponse
       include Response
+
       STATUS = FAILURE
 
       attr_reader :message, :contact, :reference
@@ -126,6 +127,7 @@ module OpenID
 
     class CancelResponse
       include Response
+
       STATUS = CANCEL
       def initialize(endpoint)
         @endpoint = endpoint
@@ -134,6 +136,7 @@ module OpenID
 
     class SetupNeededResponse
       include Response
+
       STATUS = SETUP_NEEDED
 
       attr_reader :setup_url

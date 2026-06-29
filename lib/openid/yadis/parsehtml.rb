@@ -20,7 +20,7 @@ module OpenID
           "body",
           "/body",
           "html",
-          "script",
+          "script"
         )
 
           # we are leaving head or have reached body, so we bail

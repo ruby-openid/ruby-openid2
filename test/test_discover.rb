@@ -45,10 +45,10 @@ module OpenID
             200,
             nil,
             {"x-xrds-location" => "http://xrds.missing/"},
-            "http://header.found/",
+            "http://header.found/"
           ),
-          HTTPResponse._from_raw_data(404, nil, {}, "http://xrds.missing/"),
-        ],
+          HTTPResponse._from_raw_data(404, nil, {}, "http://xrds.missing/")
+        ]
       ]
     end
 
@@ -100,7 +100,7 @@ module OpenID
         DidFetch.new,
         Exception.new,
         ArgumentError.new,
-        RuntimeError.new,
+        RuntimeError.new
       ]
     end
 
@@ -183,7 +183,7 @@ module OpenID
         assert(s.is_op_identifier)
         assert_equal(
           s.preferred_namespace,
-          OPENID_2_0_MESSAGE_NS,
+          OPENID_2_0_MESSAGE_NS
         )
       else
         assert_equal(claimed_id, s.claimed_id)
@@ -195,7 +195,7 @@ module OpenID
       else
         assert(
           !s.used_yadis,
-          "Expected to use old-style discovery",
+          "Expected to use old-style discovery"
         )
       end
 
@@ -203,7 +203,7 @@ module OpenID
         "1.1" => OPENID_1_1_TYPE,
         "1.0" => OPENID_1_0_TYPE,
         "2.0" => OPENID_2_0_TYPE,
-        "2.0 OP" => OPENID_IDP_2_0_TYPE,
+        "2.0 OP" => OPENID_IDP_2_0_TYPE
       }
 
       type_uris = types.collect { |t| openid_types[t] }
@@ -270,13 +270,13 @@ module OpenID
       _discover(
         "text/plain",
         "junk",
-        0,
+        0
       )
 
       services = _discover(
         "text/html",
         read_data_file("test_discover/openid_no_delegate.html", false),
-        1,
+        1
       )
 
       _checkService(
@@ -286,7 +286,7 @@ module OpenID
         @id_url,
         nil,
         ["1.1"],
-        false,
+        false
       )
     end
 
@@ -296,7 +296,7 @@ module OpenID
       services = _discover(
         "text/html",
         read_data_file("test_discover/malformed_meta_tag.html", false),
-        2,
+        2
       )
 
       _checkService(
@@ -306,7 +306,7 @@ module OpenID
         @id_url,
         nil,
         ["2.0"],
-        false,
+        false
       )
 
       _checkService(
@@ -316,7 +316,7 @@ module OpenID
         @id_url,
         nil,
         ["1.1"],
-        false,
+        false
       )
     end
 
@@ -324,7 +324,7 @@ module OpenID
       services = _discover(
         "text/html",
         read_data_file("test_discover/openid.html", false),
-        1,
+        1
       )
 
       _checkService(
@@ -334,7 +334,7 @@ module OpenID
         "http://smoker.myopenid.com/",
         nil,
         ["1.1"],
-        false,
+        false
       )
     end
 
@@ -360,7 +360,7 @@ module OpenID
         "http://smoker.myopenid.com/",
         nil,
         ["1.1"],
-        false,
+        false
       )
     end
 
@@ -368,7 +368,7 @@ module OpenID
       services = _discover(
         "text/html",
         read_data_file("test_discover/openid2.html", false),
-        1,
+        1
       )
 
       _checkService(
@@ -378,7 +378,7 @@ module OpenID
         "http://smoker.myopenid.com/",
         nil,
         ["2.0"],
-        false,
+        false
       )
     end
 
@@ -386,7 +386,7 @@ module OpenID
       services = _discover(
         "text/html",
         read_data_file("test_discover/openid_1_and_2.html", false),
-        2,
+        2
       )
 
       services.zip(["2.0", "1.1"]).each do |s, t|
@@ -397,7 +397,7 @@ module OpenID
           "http://smoker.myopenid.com/",
           nil,
           [t],
-          false,
+          false
         )
       end
     end
@@ -414,7 +414,7 @@ module OpenID
         "http://smoker.myopenid.com/",
         nil,
         ["1.1"],
-        false,
+        false
       )
     end
 
@@ -422,7 +422,7 @@ module OpenID
       _discover(
         "application/xrds+xml",
         read_data_file("test_discover/yadis_0entries.xml", false),
-        0,
+        0
       )
     end
 
@@ -432,13 +432,13 @@ module OpenID
       # "openid_and_yadis.html"
       @documents[@id_url + "xrds"] = [
         "application/xrds+xml",
-        read_data_file("test_discover/yadis_0entries.xml", false),
+        read_data_file("test_discover/yadis_0entries.xml", false)
       ]
 
       services = _discover(
         "text/html",
         read_data_file("test_discover/openid_and_yadis.html", false),
-        1,
+        1
       )
 
       _checkService(
@@ -448,7 +448,7 @@ module OpenID
         "http://smoker.myopenid.com/",
         nil,
         ["1.1"],
-        false,
+        false
       )
     end
 
@@ -456,7 +456,7 @@ module OpenID
       services = _discover(
         "application/xrds+xml",
         read_data_file("test_discover/yadis_no_delegate.xml", false),
-        1,
+        1
       )
 
       _checkService(
@@ -466,7 +466,7 @@ module OpenID
         @id_url,
         nil,
         ["1.0"],
-        true,
+        true
       )
     end
 
@@ -474,7 +474,7 @@ module OpenID
       services = _discover(
         "application/xrds+xml",
         read_data_file("test_discover/openid2_xrds_no_local_id.xml", false),
-        1,
+        1
       )
 
       _checkService(
@@ -484,7 +484,7 @@ module OpenID
         @id_url,
         nil,
         ["2.0"],
-        true,
+        true
       )
     end
 
@@ -492,7 +492,7 @@ module OpenID
       services = _discover(
         "application/xrds+xml",
         read_data_file("test_discover/openid2_xrds.xml", false),
-        1,
+        1
       )
 
       _checkService(
@@ -502,7 +502,7 @@ module OpenID
         "http://smoker.myopenid.com/",
         nil,
         ["2.0"],
-        true,
+        true
       )
     end
 
@@ -510,7 +510,7 @@ module OpenID
       services = _discover(
         "application/xrds+xml",
         read_data_file("test_discover/yadis_idp.xml", false),
-        1,
+        1
       )
 
       _checkService(
@@ -520,7 +520,7 @@ module OpenID
         nil,
         nil,
         ["2.0 OP"],
-        true,
+        true
       )
     end
 
@@ -529,7 +529,7 @@ module OpenID
       services = _discover(
         "application/xrds+xml",
         read_data_file("test_discover/yadis_idp_delegate.xml", false),
-        1,
+        1
       )
 
       _checkService(
@@ -539,7 +539,7 @@ module OpenID
         nil,
         nil,
         ["2.0 OP"],
-        true,
+        true
       )
     end
 
@@ -548,7 +548,7 @@ module OpenID
         _discover(
           "application/xrds+xml",
           read_data_file("test_discover/yadis_2_bad_local_id.xml", false),
-          1,
+          1
         )
       end
     end
@@ -557,7 +557,7 @@ module OpenID
       services = _discover(
         "application/xrds+xml",
         read_data_file("test_discover/openid_1_and_2_xrds.xml", false),
-        1,
+        1
       )
 
       _checkService(
@@ -567,7 +567,7 @@ module OpenID
         "http://smoker.myopenid.com/",
         nil,
         ["2.0", "1.1"],
-        true,
+        true
       )
     end
 
@@ -576,7 +576,7 @@ module OpenID
         _discover(
           "application/xrds+xml",
           read_data_file("test_discover/openid_1_and_2_xrds_bad_delegate.xml", false),
-          1,
+          1
         )
       end
     end
@@ -617,7 +617,7 @@ module OpenID
         status,
         body,
         {"content-type" => ctype},
-        url,
+        url
       )
     end
   end
@@ -634,12 +634,12 @@ module OpenID
       @documents = {
         "=smoker" => [
           "application/xrds+xml",
-          read_data_file("test_discover/yadis_2entries_delegate.xml", false),
+          read_data_file("test_discover/yadis_2entries_delegate.xml", false)
         ],
         "=smoker*bad" => [
           "application/xrds+xml",
-          read_data_file("test_discover/yadis_another_delegate.xml", false),
-        ],
+          read_data_file("test_discover/yadis_another_delegate.xml", false)
+        ]
       }
     end
 
@@ -654,7 +654,7 @@ module OpenID
         Yadis::XRI.make_xri("=!1000"),
         ["1.0"],
         true,
-        "=smoker",
+        "=smoker"
       )
 
       _checkService(
@@ -665,7 +665,7 @@ module OpenID
         Yadis::XRI.make_xri("=!1000"),
         ["1.0"],
         true,
-        "=smoker",
+        "=smoker"
       )
     end
 
@@ -680,7 +680,7 @@ module OpenID
         Yadis::XRI.make_xri("=!1000"),
         ["1.0"],
         true,
-        "=smoker",
+        "=smoker"
       )
 
       _checkService(
@@ -691,7 +691,7 @@ module OpenID
         Yadis::XRI.make_xri("=!1000"),
         ["1.0"],
         true,
-        "=smoker",
+        "=smoker"
       )
     end
 
@@ -725,8 +725,8 @@ module OpenID
       @documents = {
         "=smoker" => [
           "application/xrds+xml",
-          read_data_file("test_discover/yadis_2entries_idp.xml", false),
-        ],
+          read_data_file("test_discover/yadis_2entries_idp.xml", false)
+        ]
       }
     end
 
@@ -736,7 +736,7 @@ module OpenID
       assert(!services.empty?, "Expected services, got zero")
       assert_equal(
         "http://www.livejournal.com/openid/server.bml",
-        services[0].server_url,
+        services[0].server_url
       )
     end
   end
@@ -754,12 +754,12 @@ module OpenID
         [OPENID2_NS, [OPENID_IDP_2_0_TYPE]],
         [OPENID2_NS, [
           OPENID_2_0_TYPE,
-          OPENID_1_0_TYPE,
-        ],],
+          OPENID_1_0_TYPE
+        ]],
         [OPENID2_NS, [
           OPENID_1_0_TYPE,
-          OPENID_2_0_TYPE,
-        ],],
+          OPENID_2_0_TYPE
+        ]]
       ]
     end
 
@@ -810,7 +810,7 @@ module OpenID
     def test_multipleMissing
       @endpoint.type_uris = [
         OPENID_2_0_TYPE,
-        OPENID_1_0_TYPE,
+        OPENID_1_0_TYPE
       ]
 
       assert(!@endpoint.is_op_identifier)
@@ -820,7 +820,7 @@ module OpenID
       @endpoint.type_uris = [
         OPENID_2_0_TYPE,
         OPENID_1_0_TYPE,
-        OPENID_IDP_2_0_TYPE,
+        OPENID_IDP_2_0_TYPE
       ]
 
       assert(@endpoint.is_op_identifier)
@@ -888,17 +888,17 @@ module OpenID
         OPENID_1_1_TYPE,
         OPENID_1_0_TYPE,
         OPENID_2_0_TYPE,
-        OPENID_IDP_2_0_TYPE,
+        OPENID_IDP_2_0_TYPE
       ].each do |t|
         if types.member?(t)
           assert(
             @endpoint.supports_type(t),
-            format("Must support %s", t),
+            format("Must support %s", t)
           )
         else
           assert(
             !@endpoint.supports_type(t),
-            format("Shouldn't support %s", t),
+            format("Shouldn't support %s", t)
           )
         end
       end
@@ -917,7 +917,7 @@ module OpenID
       @endpoint.type_uris = [OPENID_IDP_2_0_TYPE]
       failUnlessSupportsOnly(
         OPENID_IDP_2_0_TYPE,
-        OPENID_2_0_TYPE,
+        OPENID_2_0_TYPE
       )
     end
 
@@ -934,11 +934,11 @@ module OpenID
     def test_multiple
       @endpoint.type_uris = [
         OPENID_1_1_TYPE,
-        OPENID_2_0_TYPE,
+        OPENID_2_0_TYPE
       ]
       failUnlessSupportsOnly(
         OPENID_1_1_TYPE,
-        OPENID_2_0_TYPE,
+        OPENID_2_0_TYPE
       )
     end
 
@@ -946,12 +946,12 @@ module OpenID
       @endpoint.type_uris = [
         OPENID_1_1_TYPE,
         OPENID_2_0_TYPE,
-        OPENID_IDP_2_0_TYPE,
+        OPENID_IDP_2_0_TYPE
       ]
       failUnlessSupportsOnly(
         OPENID_1_1_TYPE,
         OPENID_2_0_TYPE,
-        OPENID_IDP_2_0_TYPE,
+        OPENID_IDP_2_0_TYPE
       )
     end
   end

@@ -67,7 +67,7 @@ module OpenID
 
             File.rename(tmp, filename)
           end
-        rescue StandardError
+        rescue
           remove_if_present(tmp)
           raise
         end
@@ -107,7 +107,7 @@ module OpenID
 
         begin
           association = Association.deserialize(assoc_s)
-        rescue StandardError
+        rescue
           remove_if_present(filename)
           return
         end
@@ -180,7 +180,7 @@ module OpenID
           end
           begin
             association = OpenID::Association.deserialize(assoc_s)
-          rescue StandardError
+          rescue
             remove_if_present(af)
             next
           else

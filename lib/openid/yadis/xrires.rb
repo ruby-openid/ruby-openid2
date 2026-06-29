@@ -43,7 +43,7 @@ module OpenID
           url = query_url(xri)
           begin
             response = OpenID.fetch(url)
-          rescue StandardError
+          rescue
             raise XRIHTTPError, "Could not fetch #{xri}, #{$!}"
           end
           raise XRIHTTPError, "Could not fetch #{xri}" if response.nil?
@@ -72,7 +72,7 @@ module OpenID
 
         # rstrip question marks
         rstripped = url.dup
-        rstripped = rstripped[0...rstripped.length - 1] while rstripped[-1].chr == "?"
+        rstripped = rstripped[0...-1] while rstripped[-1].chr == "?"
 
         sep = if rstripped.index("?")
           "&"

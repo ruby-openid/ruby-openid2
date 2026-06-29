@@ -42,7 +42,7 @@ module OpenID
         Util.from_base64(secret64),
         Time.at(issued_s.to_i),
         lifetime_s.to_i,
-        assoc_type,
+        assoc_type
       )
     end
 
@@ -69,7 +69,7 @@ module OpenID
         secret: Util.to_base64(secret),
         issued: issued.to_i.to_s,
         lifetime: lifetime.to_i.to_s,
-        assoc_type: assoc_type,
+        assoc_type: assoc_type
       }
 
       Util.truthy_assert(data.length == FIELD_ORDER.length)
@@ -235,12 +235,12 @@ module OpenID
       %w[HMAC-SHA1 DH-SHA1],
       %w[HMAC-SHA1 no-encryption],
       %w[HMAC-SHA256 DH-SHA256],
-      %w[HMAC-SHA256 no-encryption],
+      %w[HMAC-SHA256 no-encryption]
     ])
 
   EncryptedNegotiator =
     AssociationNegotiator.new([
       %w[HMAC-SHA1 DH-SHA1],
-      %w[HMAC-SHA256 DH-SHA256],
+      %w[HMAC-SHA256 DH-SHA256]
     ])
 end

@@ -82,7 +82,7 @@ module OpenID
           "ns.ui" => UI::NS_URI,
           "ui.mode" => "popup",
           "ui.icon" => true,
-          "ui.lang" => "ja-JP",
+          "ui.lang" => "ja-JP"
         )
         oid_req = Server::OpenIDRequest.new
         oid_req.message = openid_req_msg

@@ -78,7 +78,7 @@ module OpenID
         raise DiscoveryFailure.new(
           'HTTP Response status from identity URL host is not "200".' \
             "Got status #{resp.code.inspect} for #{resp.final_url}",
-          resp,
+          resp
         )
       end
 
@@ -94,14 +94,14 @@ module OpenID
       if result.xrds_uri and result.used_yadis_location?
         begin
           resp = OpenID.fetch(result.xrds_uri)
-        rescue StandardError
+        rescue
           raise DiscoveryFailure.new("Failed to fetch Yadis URL #{result.xrds_uri} : #{$!}", $!)
         end
         if resp.code != "200" and resp.code != "206"
           exc = DiscoveryFailure.new(
             'HTTP Response status from Yadis host is not "200". ' +
                                  "Got status #{resp.code.inspect} for #{resp.final_url}",
-            resp,
+            resp
           )
           exc.identity_url = result.normalized_uri
           raise exc

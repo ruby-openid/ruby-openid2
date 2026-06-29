@@ -34,7 +34,7 @@ module OpenID
 
       assert_equal(
         %w[dh_consumer_public dh_modulus dh_gen].sort,
-        req.keys.sort,
+        req.keys.sort
       )
       assert_equal(dh.modulus, CryptUtil.base64_to_num(req["dh_modulus"]))
       assert_equal(dh.generator, CryptUtil.base64_to_num(req["dh_gen"]))
@@ -59,7 +59,7 @@ module OpenID
         @server_dh.xor_secret(
           session_cls.hashfunc,
           @consumer_dh.public,
-          @secret,
+          @secret
         )
 
       @enc_mac_key = Util.to_base64(enc_mac_key_unencoded)
@@ -115,6 +115,7 @@ module OpenID
 
   class TestConsumerOpenID1DHSHA1 < Minitest::Test
     include TestDiffieHellmanResponseParametersMixin
+
     class << self
       attr_reader :session_cls, :message_namespace
     end
@@ -125,6 +126,7 @@ module OpenID
 
   class TestConsumerOpenID2DHSHA1 < Minitest::Test
     include TestDiffieHellmanResponseParametersMixin
+
     class << self
       attr_reader :session_cls, :message_namespace
     end
@@ -135,6 +137,7 @@ module OpenID
 
   class TestConsumerOpenID2DHSHA256 < Minitest::Test
     include TestDiffieHellmanResponseParametersMixin
+
     class << self
       attr_reader :session_cls, :message_namespace
     end
@@ -176,7 +179,7 @@ module OpenID
       session, args = @assoc_manager.send(
         :create_associate_request,
         @assoc_type,
-        session_type,
+        session_type
       )
 
       assert_kind_of(Consumer::NoEncryptionSession, session)
@@ -185,8 +188,8 @@ module OpenID
           "ns" => OPENID2_NS,
           "session_type" => session_type,
           "mode" => "associate",
-          "assoc_type" => @assoc_type,
-        },
+          "assoc_type" => @assoc_type
+        }
       )
 
       assert_equal(expected, args)
@@ -198,16 +201,16 @@ module OpenID
       session, args = @assoc_manager.send(
         :create_associate_request,
         @assoc_type,
-        session_type,
+        session_type
       )
 
       assert_kind_of(Consumer::NoEncryptionSession, session)
       assert_equal(
         Message.from_openid_args({
           "mode" => "associate",
-          "assoc_type" => @assoc_type,
+          "assoc_type" => @assoc_type
         }),
-        args,
+        args
       )
     end
 
@@ -217,7 +220,7 @@ module OpenID
       session, args = @assoc_manager.send(
         :create_associate_request,
         @assoc_type,
-        session_type,
+        session_type
       )
 
       assert_kind_of(Consumer::DiffieHellmanSHA1Session, session)
@@ -232,7 +235,7 @@ module OpenID
       expected = Message.from_openid_args({
         "mode" => "associate",
         "session_type" => "DH-SHA1",
-        "assoc_type" => @assoc_type,
+        "assoc_type" => @assoc_type
       })
 
       assert_equal(expected, args)
@@ -254,7 +257,7 @@ module OpenID
         "0x00",
         "foosball",
         '1\n',
-        "100,000,000,000",
+        "100,000,000,000"
       ].each do |x|
         assert_raises(ProtocolError) { expires_in_msg(x) }
       end
@@ -289,6 +292,7 @@ module OpenID
 
   module NegotiationTestMixin
     include TestUtil
+
     def mk_message(args)
       args["ns"] = @openid_ns
       Message.from_openid_args(args)
@@ -301,7 +305,7 @@ module OpenID
         store,
         @server_url,
         compat,
-        negotiator,
+        negotiator
       )
       class << assoc_manager
         attr_accessor :responses
@@ -344,13 +348,13 @@ module OpenID
       msg = mk_message({
         "error" => "Unsupported type",
         "error_code" => "unsupported-type",
-        "session_type" => "new-session-type",
+        "session_type" => "new-session-type"
       })
 
       assert_log_matches(
         "Unsupported association type",
         "Server #{@server_url} responded with unsupported " \
-          "association session but did not supply a fallback.",
+          "association session but did not supply a fallback."
       ) do
         assert_nil(call_negotiate([msg]))
       end
@@ -362,13 +366,13 @@ module OpenID
       msg = mk_message({
         "error" => "Unsupported type",
         "error_code" => "unsupported-type",
-        "assoc_type" => "new-assoc-type",
+        "assoc_type" => "new-assoc-type"
       })
 
       assert_log_matches(
         "Unsupported association type",
         "Server #{@server_url} responded with unsupported " \
-          "association session but did not supply a fallback.",
+          "association session but did not supply a fallback."
       ) do
         assert_nil(call_negotiate([msg]))
       end
@@ -386,12 +390,12 @@ module OpenID
         "error" => "Unsupported type",
         "error_code" => "unsupported-type",
         "assoc_type" => "not-allowed",
-        "session_type" => "not-allowed",
+        "session_type" => "not-allowed"
       })
 
       assert_log_matches(
         "Unsupported association type",
-        "Server sent unsupported session/association type:",
+        "Server sent unsupported session/association type:"
       ) do
         assert_nil(call_negotiate([msg], negotiator))
       end
@@ -404,7 +408,7 @@ module OpenID
         "error" => "Unsupported type",
         "error_code" => "unsupported-type",
         "assoc_type" => "HMAC-SHA1",
-        "session_type" => "DH-SHA1",
+        "session_type" => "DH-SHA1"
       })
 
       assoc = Association.new("handle", "secret", Time.now, 10_000, "HMAC-SHA1")
@@ -421,12 +425,12 @@ module OpenID
         "error" => "Unsupported type",
         "error_code" => "unsupported-type",
         "assoc_type" => "HMAC-SHA1",
-        "session_type" => "DH-SHA1",
+        "session_type" => "DH-SHA1"
       })
 
       assert_log_matches(
         "Unsupported association type",
-        "Server #{@server_url} refused",
+        "Server #{@server_url} refused"
       ) do
         assert_nil(call_negotiate([msg, msg]))
       end
@@ -472,7 +476,7 @@ module OpenID
       msg = mk_message({
         "error" => "Unsupported type",
         "error_code" => "unsupported-type",
-        "session_type" => "new-session-type",
+        "session_type" => "new-session-type"
       })
 
       assert_log_matches("Server error when requesting an association") do
@@ -486,7 +490,7 @@ module OpenID
       msg = mk_message({
         "error" => "Unsupported type",
         "error_code" => "unsupported-type",
-        "assoc_type" => "new-assoc-type",
+        "assoc_type" => "new-assoc-type"
       })
 
       assert_log_matches("Server error when requesting an association") do
@@ -506,7 +510,7 @@ module OpenID
         "error" => "Unsupported type",
         "error_code" => "unsupported-type",
         "assoc_type" => "not-allowed",
-        "session_type" => "not-allowed",
+        "session_type" => "not-allowed"
       })
 
       assert_log_matches("Server error when requesting an association") do
@@ -521,7 +525,7 @@ module OpenID
         "error" => "Unsupported type",
         "error_code" => "unsupported-type",
         "assoc_type" => "HMAC-SHA1",
-        "session_type" => "DH-SHA1",
+        "session_type" => "DH-SHA1"
       })
 
       assoc = Association.new("handle", "secret", Time.now, 10_000, "HMAC-SHA1")
@@ -551,7 +555,7 @@ module OpenID
       "expires_in" => "1000",
       "assoc_handle" => "a handle",
       "assoc_type" => "a type",
-      "session_type" => "a session type",
+      "session_type" => "a session type"
     }
 
     def setup
@@ -638,7 +642,7 @@ module OpenID
       ["no-encryption", "DH-SHA1", OPENID2_NS],
       ["DH-SHA1", "DH-SHA256", OPENID1_NS],
       ["DH-SHA256", "DH-SHA1", OPENID1_NS],
-      ["no-encryption", "DH-SHA1", OPENID1_NS],
+      ["no-encryption", "DH-SHA1", OPENID1_NS]
     ].each do |req_type, resp_type, ns|
       test = -> { assert_session_mismatch(req_type, resp_type, ns) }
       name = "test_mismatch_req_#{req_type}_resp_#{resp_type}_#{ns}"
@@ -654,7 +658,7 @@ module OpenID
         "expires_in" => "1000",
         "assoc_handle" => "a handle",
         "assoc_type" => "HMAC-SHA1",
-        "mac_key" => "X" * 20,
+        "mac_key" => "X" * 20
       })
 
       # Should succeed
@@ -685,7 +689,7 @@ module OpenID
       assoc_manager = Consumer::AssociationManager.new(nil, SERVER_URL)
       actual_session_type = assoc_manager.send(
         :get_openid1_session_type,
-        message,
+        message
       )
       error_message = "Returned session type parameter #{session_type_value}" \
         "was expected to yield session type " \
@@ -699,7 +703,7 @@ module OpenID
       ["nil", "no-encryption", nil],
       ["empty", "no-encryption", ""],
       ["dh_sha1", "DH-SHA1", "DH-SHA1"],
-      ["dh_sha256", "DH-SHA256", "DH-SHA256"],
+      ["dh_sha256", "DH-SHA256", "DH-SHA256"]
     ].each do |name, expected, input|
       # Define a test method that will check what session type will be
       # used if the OpenID 1 response to an associate call sets the
@@ -736,7 +740,7 @@ module OpenID
           "assoc_handle" => @assoc_handle,
           "assoc_type" => @assoc_type,
           "session_type" => @session_type,
-          "ns" => OPENID2_NS,
+          "ns" => OPENID2_NS
         })
       assoc_session_cls = Class.new do
         class << self
@@ -766,7 +770,7 @@ module OpenID
       @assoc_manager.send(
         :extract_association,
         @assoc_response,
-        @assoc_session,
+        @assoc_session
       )
     end
 
@@ -808,7 +812,7 @@ module OpenID
       sess, = @assoc_manager.send(
         :create_associate_request,
         "HMAC-SHA1",
-        "DH-SHA1",
+        "DH-SHA1"
       )
 
       server_dh = DiffieHellman.new
@@ -817,7 +821,7 @@ module OpenID
       enc_mac_key = server_dh.xor_secret(
         CryptUtil.method(:sha1),
         cons_dh.public,
-        SECRET,
+        SECRET
       )
 
       server_resp = {
@@ -826,7 +830,7 @@ module OpenID
         "assoc_type" => "HMAC-SHA1",
         "assoc_handle" => "handle",
         "expires_in" => "1000",
-        "session_type" => "DH-SHA1",
+        "session_type" => "DH-SHA1"
       }
       server_resp["ns"] = OPENID2_NS if @assoc_manager.instance_variable_get(:@compatibility_mode)
       [sess, Message.from_openid_args(server_resp)]
@@ -875,7 +879,7 @@ module OpenID
         "secret",
         Time.now,
         10_000,
-        "HMAC-SHA1",
+        "HMAC-SHA1"
       )
     end
 
@@ -925,7 +929,7 @@ module OpenID
           result = @assoc_manager.send(
             :request_association,
             "HMAC-SHA1",
-            "no-encryption",
+            "no-encryption"
           )
 
           assert_nil(result)
@@ -948,7 +952,7 @@ module OpenID
         "session_type" => @session_type,
         "assoc_handle" => "kaboodle",
         "expires_in" => "1000",
-        "mac_key" => "X" * 20,
+        "mac_key" => "X" * 20
       })
     end
 

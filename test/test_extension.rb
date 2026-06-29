@@ -30,11 +30,11 @@ module OpenID
       assert(namespaces.implicit?(DummyExtension::TEST_URI))
       assert_equal(
         DummyExtension::TEST_URI,
-        namespaces.get_namespace_uri(DummyExtension::TEST_ALIAS),
+        namespaces.get_namespace_uri(DummyExtension::TEST_ALIAS)
       )
       assert_equal(
         DummyExtension::TEST_ALIAS,
-        namespaces.get_alias(DummyExtension::TEST_URI),
+        namespaces.get_alias(DummyExtension::TEST_URI)
       )
     end
 
@@ -47,11 +47,11 @@ module OpenID
       assert(!namespaces.implicit?(DummyExtension::TEST_URI))
       assert_equal(
         DummyExtension::TEST_URI,
-        namespaces.get_namespace_uri(DummyExtension::TEST_ALIAS),
+        namespaces.get_namespace_uri(DummyExtension::TEST_ALIAS)
       )
       assert_equal(
         DummyExtension::TEST_ALIAS,
-        namespaces.get_alias(DummyExtension::TEST_URI),
+        namespaces.get_alias(DummyExtension::TEST_URI)
       )
     end
   end

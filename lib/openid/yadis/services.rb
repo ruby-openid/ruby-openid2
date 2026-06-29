@@ -17,7 +17,7 @@ module OpenID
         endpoints = Yadis.apply_filter(
           result.normalized_uri,
           result.response_text,
-          flt,
+          flt
         )
       rescue XRDSError => e
         raise DiscoveryFailure.new(e.to_s, nil)

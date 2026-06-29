@@ -16,7 +16,7 @@ module OpenID
       @disco_services = Consumer::DiscoveredServices.new(
         @starting_url,
         @yadis_url,
-        @services.dup,
+        @services.dup
       )
     end
 
@@ -196,7 +196,7 @@ module OpenID
       disco2 = Consumer::DiscoveredServices.new(
         "http://not.this.url.com/",
         "http://other.yadis.url/",
-        ["one"],
+        ["one"]
       )
       @session[@key] = disco2
 
@@ -241,7 +241,7 @@ module OpenID
       invalid_disco = Consumer::DiscoveredServices.new(
         "http://not.mine.com/",
         "http://different.url.com/",
-        ["serv"],
+        ["serv"]
       )
 
       @session[@key] = valid_disco
@@ -262,7 +262,7 @@ module OpenID
 
     def test_session_key
       assert(@manager.session_key.end_with?(
-        @manager.instance_variable_get(:@session_key_suffix),
+        @manager.instance_variable_get(:@session_key_suffix)
       ))
     end
 

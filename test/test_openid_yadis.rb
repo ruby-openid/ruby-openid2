@@ -61,8 +61,8 @@ module OpenID
     [
       "https://server.url/",
       "http://server.url/",
-      "http://example.server.url/",
-    ],
+      "http://example.server.url/"
+    ]
   ]
 
   # Used for generating test data
@@ -79,14 +79,14 @@ module OpenID
   # official, but are just here for testing.
   EXT_TYPES = [
     "http://janrain.com/extension/blah",
-    "http://openid.net/sreg/1.0",
+    "http://openid.net/sreg/1.0"
   ]
 
   # Range of valid Delegate tag values for generating test data
   LOCAL_ID_OPTIONS = [
     nil,
     "http://vanity.domain/",
-    "https://somewhere/yadis/",
+    "https://somewhere/yadis/"
   ]
 
   class OpenIDYadisTest
@@ -102,7 +102,7 @@ module OpenID
       services = OpenID.mkService(
         @uris,
         @type_uris,
-        @local_id,
+        @local_id
       )
       @xrds = OpenID.mkXRDS(services)
     end

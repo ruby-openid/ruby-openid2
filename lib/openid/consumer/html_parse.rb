@@ -63,7 +63,7 @@ module OpenID
         "body",
         "/body",
         "html",
-        "/html",
+        "/html"
       )
 
         # we are leaving head or have reached body, so we bail

@@ -157,7 +157,7 @@ module OpenID
           e7 = new_uri(7),
           e1 = new_uri(1),
           e0 = new_uri(nil),
-          e2 = new_uri(2),
+          e2 = new_uri(2)
         ]
         sorted = Yadis.prio_sort(l)
 

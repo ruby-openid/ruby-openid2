@@ -20,7 +20,7 @@ module OpenID
         "secret",
         issued,
         lifetime,
-        "HMAC-SHA1",
+        "HMAC-SHA1"
       )
     end
 
@@ -67,7 +67,7 @@ module OpenID
         expires_in,
         @assoc.handle,
         @assoc.secret,
-        @assoc.assoc_type,
+        @assoc.assoc_type
       )
 
       # Allow one second of slop here for code execution time
@@ -84,12 +84,12 @@ module OpenID
     def test_sign_sha1
       pairs = [
         %w[key1 value1],
-        %w[key2 value2],
+        %w[key2 value2]
       ]
 
       [
         ["HMAC-SHA256", "\xfd\xaa\xfe;\xac\xfc*\x988\xad\x05d6-\xeaVy\xd5\xa5Z.<\xa9\xed\x18\x82\\$\x95x\x1c&"],
-        ["HMAC-SHA1", "\xe0\x1bv\x04\xf1G\xc0\xbb\x7f\x9a\x8b\xe9\xbc\xee}\\\xe5\xbb7*"],
+        ["HMAC-SHA1", "\xe0\x1bv\x04\xf1G\xc0\xbb\x7f\x9a\x8b\xe9\xbc\xee}\\\xe5\xbb7*"]
       ].each do |assoc_type, expected|
         assoc = Association.from_expires_in(3600, "handle", "very_secret", assoc_type)
         sig = assoc.sign(pairs)
@@ -107,7 +107,7 @@ module OpenID
         assert(signed_m.has_key?(OPENID_NS, "sig"))
         assert_equal(
           "assoc_handle,key1,key2,ns,signed",
-          signed_m.get_arg(OPENID_NS, "signed"),
+          signed_m.get_arg(OPENID_NS, "signed")
         )
       end
     end
@@ -117,7 +117,7 @@ module OpenID
         3600,
         "handle",
         "very_secret",
-        "HMAC-SHA1",
+        "HMAC-SHA1"
       )
       m = Message.new(OPENID2_NS)
       m.set_arg(OPENID_NS, "sig", "noise")
@@ -131,7 +131,7 @@ module OpenID
         3600,
         "handle",
         "very_secret",
-        "HMAC-SHA1",
+        "HMAC-SHA1"
       )
       m = Message.new(OPENID2_NS)
       m.set_arg(OPENID_NS, "signed", "fields")
@@ -145,7 +145,7 @@ module OpenID
         3600,
         "handle",
         "very_secret",
-        "HMAC-SHA1",
+        "HMAC-SHA1"
       )
       m = Message.new(OPENID2_NS)
       m.set_arg(OPENID_NS, "assoc_handle", "different")
@@ -167,23 +167,23 @@ module OpenID
         "mode" => "id_res",
         "identifier" => "=example",
         "signed" => "identifier,mode",
-        "sig" => "cephalopod",
+        "sig" => "cephalopod"
       })
       msg.update_args(BARE_NS, {"xey" => "value"})
       assoc = Association.from_expires_in(
         3600,
         "{sha1}",
         "very_secret",
-        "HMAC-SHA1",
+        "HMAC-SHA1"
       )
       pairs = assoc.make_pairs(msg)
 
       assert_equal(
         [
           ["identifier", "=example"],
-          ["mode", "id_res"],
+          ["mode", "id_res"]
         ],
-        pairs,
+        pairs
       )
     end
 
@@ -192,13 +192,13 @@ module OpenID
       m.update_args(OPENID2_NS, {
         "mode" => "id_res",
         "identifier" => "=example",
-        "sig" => "coyote",
+        "sig" => "coyote"
       })
       assoc = Association.from_expires_in(
         3600,
         "{sha1}",
         "very_secret",
-        "HMAC-SHA1",
+        "HMAC-SHA1"
       )
       assert_raises(ProtocolError) do
         assoc.check_message_signature(m)
@@ -210,13 +210,13 @@ module OpenID
       m.update_args(OPENID2_NS, {
         "mode" => "id_res",
         "identifier" => "=example",
-        "signed" => "mode",
+        "signed" => "mode"
       })
       assoc = Association.from_expires_in(
         3600,
         "{sha1}",
         "very_secret",
-        "HMAC-SHA1",
+        "HMAC-SHA1"
       )
       assert_raises(ProtocolError) do
         assoc.check_message_signature(m)
@@ -229,13 +229,13 @@ module OpenID
         "mode" => "id_res",
         "identifier" => "=example",
         "signed" => "mode",
-        "sig" => Util.to_base64("coyote"),
+        "sig" => Util.to_base64("coyote")
       })
       assoc = Association.from_expires_in(
         3600,
         "{sha1}",
         "very_secret",
-        "HMAC-SHA1",
+        "HMAC-SHA1"
       )
 
       assert(!assoc.check_message_signature(m))
@@ -247,13 +247,13 @@ module OpenID
         "mode" => "id_res",
         "identifier" => "=example",
         "signed" => "mode",
-        "sig" => Util.to_base64("coyote"),
+        "sig" => Util.to_base64("coyote")
       })
       assoc = Association.from_expires_in(
         3600,
         "{sha1}",
         "very_secret",
-        "HMAC-SHA1",
+        "HMAC-SHA1"
       )
       class << assoc
         # Override sign, because it's already tested elsewhere
@@ -318,7 +318,7 @@ module OpenID
     def test_default_negotiator
       assert_equal(
         %w[HMAC-SHA1 DH-SHA1],
-        DefaultNegotiator.get_allowed_type,
+        DefaultNegotiator.get_allowed_type
       )
       assert(DefaultNegotiator.allowed?("HMAC-SHA256", "no-encryption"))
     end
@@ -326,7 +326,7 @@ module OpenID
     def test_encrypted_negotiator
       assert_equal(
         %w[HMAC-SHA1 DH-SHA1],
-        EncryptedNegotiator.get_allowed_type,
+        EncryptedNegotiator.get_allowed_type
       )
       assert(!EncryptedNegotiator.allowed?("HMAC-SHA256", "no-encryption"))
     end

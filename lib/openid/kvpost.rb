@@ -18,7 +18,7 @@ module OpenID
       error_text = msg.get_arg(
         OPENID_NS,
         "error",
-        "<no error message supplied>",
+        "<no error message supplied>"
       )
       error_code = msg.get_arg(OPENID_NS, "error_code")
       new(error_text, error_code, msg)

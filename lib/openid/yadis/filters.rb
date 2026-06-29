@@ -132,7 +132,7 @@ module OpenID
     # Exception raised when something is not able to be turned into a
     # filter
     @@filter_type_error = TypeError.new(
-      "Expected a filter, an endpoint, a callable or a list of any of these.",
+      "Expected a filter, an endpoint, a callable or a list of any of these."
     )
 
     # Convert a filter-convertable thing into a filter

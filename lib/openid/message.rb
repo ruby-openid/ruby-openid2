@@ -473,7 +473,7 @@ module OpenID
       # per the spec.
       Util.truthy_assert(
         !OPENID_PROTOCOL_FIELDS.include?(desired_alias),
-        "#{desired_alias} is not an allowed namespace alias",
+        "#{desired_alias} is not an allowed namespace alias"
       )
 
       # check that there is not a namespace already defined for the
@@ -489,7 +489,7 @@ module OpenID
       if desired_alias.is_a?(String)
         Util.truthy_assert(
           desired_alias.index(".").nil?,
-          "#{desired_alias} must not contain a dot",
+          "#{desired_alias} must not contain a dot"
         )
       end
 

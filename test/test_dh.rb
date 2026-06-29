@@ -28,7 +28,7 @@ module OpenID
         ["x" * 10, NUL * 10, "x" * 10],
         ["\x01", "\x02", "\x03"],
         ["\xf0", "\x0f", "\xff"],
-        ["\xff", "\x0f", "\xf0"],
+        ["\xff", "\x0f", "\xf0"]
       ].each do |input1, input2, expected|
         actual = DiffieHellmanExposed.strxor_for_testing(input1, input2)
 
@@ -41,7 +41,7 @@ module OpenID
         ["", "a"],
         %w[foo ba],
         [NUL * 3, NUL * 4],
-        [255, 127].map { |h| (0..h).map { |i| i.chr }.join("") },
+        [255, 127].map { |h| (0..h).map { |i| i.chr }.join("") }
       ].each do |aa, bb|
         assert_raises(ArgumentError) do
           DiffieHellmanExposed.strxor(aa, bb)

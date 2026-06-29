@@ -18,7 +18,7 @@ module OpenID
         "fullname" => "Leonhard Euler",
         "email" => "president@whitehouse.gov",
         "dob" => "0000-00-00",
-        "language" => "en-us",
+        "language" => "en-us"
       }
 
       class SRegTest < Minitest::Test
@@ -148,7 +148,7 @@ module OpenID
         def test_openid1_sreg_ns_from_args
           args = {
             "sreg.optional" => "nickname",
-            "sreg.required" => "dob",
+            "sreg.required" => "dob"
           }
 
           m = Message.from_openid_args(args)
@@ -195,7 +195,7 @@ module OpenID
         def test_from_openid_request_ns_1_0
           message = Message.from_openid_args({
             "ns.sreg" => NS_URI_1_0,
-            "sreg.required" => "nickname",
+            "sreg.required" => "nickname"
           })
           openid_req = Server::OpenIDRequest.new
           openid_req.message = message
@@ -432,9 +432,9 @@ module OpenID
           assert_equal(
             {
               "optional" => "nickname,email",
-              "required" => "gender",
+              "required" => "gender"
             },
-            req.get_extension_args,
+            req.get_extension_args
           )
 
           req.request_field("dob", true)
@@ -442,9 +442,9 @@ module OpenID
           assert_equal(
             {
               "optional" => "nickname,email",
-              "required" => "gender,dob",
+              "required" => "gender,dob"
             },
-            req.get_extension_args,
+            req.get_extension_args
           )
 
           req.policy_url = "http://policy"
@@ -453,9 +453,9 @@ module OpenID
             {
               "optional" => "nickname,email",
               "required" => "gender,dob",
-              "policy_url" => "http://policy",
+              "policy_url" => "http://policy"
             },
-            req.get_extension_args,
+            req.get_extension_args
           )
         end
       end
@@ -487,7 +487,7 @@ module OpenID
 
         def test_from_success_response_signed
           message = Message.from_openid_args({
-            "sreg.nickname" => "The Mad Stork",
+            "sreg.nickname" => "The Mad Stork"
           })
           success_resp = DummySuccessResponse.new(message, {})
           sreg_resp = Response.from_success_response(success_resp)
@@ -498,14 +498,14 @@ module OpenID
         def test_from_success_response_unsigned
           message = Message.from_openid_args({
             "ns.sreg" => NS_URI,
-            "sreg.nickname" => "The Mad Stork",
+            "sreg.nickname" => "The Mad Stork"
           })
           success_resp = DummySuccessResponse.new(message, {})
           sreg_resp = Response.from_success_response(success_resp, false)
 
           assert_equal(
             {"nickname" => "The Mad Stork"},
-            sreg_resp.get_extension_args,
+            sreg_resp.get_extension_args
           )
         end
       end
@@ -538,9 +538,9 @@ module OpenID
             {
               "nickname" => "linusaur",
               "email" => "president@whitehouse.gov",
-              "fullname" => "Leonhard Euler",
+              "fullname" => "Leonhard Euler"
             },
-            sreg_data_resp,
+            sreg_data_resp
           )
         end
       end

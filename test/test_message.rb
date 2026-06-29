@@ -177,7 +177,7 @@ module OpenID
     def _test_update_args_ns(ns)
       updates = {
         "camper van beethoven" => "david l",
-        "magnolia electric, co" => "jason m",
+        "magnolia electric, co" => "jason m"
       }
 
       assert_empty(@m.get_args(ns))
@@ -283,7 +283,7 @@ module OpenID
     def setup
       @m = Message.from_post_args({
         "openid.mode" => "error",
-        "openid.error" => "unit test",
+        "openid.error" => "unit test"
       })
     end
 
@@ -291,7 +291,7 @@ module OpenID
       assert_equal(OPENID1_NS, @m.get_openid_namespace)
       assert_equal(
         OPENID1_NS,
-        @m.namespaces.get_namespace_uri(NULL_NAMESPACE),
+        @m.namespaces.get_namespace_uri(NULL_NAMESPACE)
       )
     end
 
@@ -310,8 +310,8 @@ module OpenID
           "openid.error" => "unit test",
           "openid.ns.invalid" => "http://invalid/",
           "openid.invalid.stuff" => "things",
-          "openid.invalid.stuff.blinky" => "powerplant",
-        },
+          "openid.invalid.stuff.blinky" => "powerplant"
+        }
       )
 
       assert_equal("http://invalid/", @m.get_aliased_arg("ns.invalid"))
@@ -329,9 +329,9 @@ module OpenID
       assert_equal(
         {
           "openid.mode" => "error",
-          "openid.error" => "unit test",
+          "openid.error" => "unit test"
         },
-        @m.to_post_args,
+        @m.to_post_args
       )
     end
 
@@ -347,9 +347,9 @@ module OpenID
           "openid.error" => "unit test",
           "openid.foos.ball" => "awesome",
           "xey" => "value",
-          "openid.ns.foos" => "http://invalid/",
+          "openid.ns.foos" => "http://invalid/"
         },
-        @m.to_post_args,
+        @m.to_post_args
       )
     end
 
@@ -357,23 +357,23 @@ module OpenID
       assert_equal(
         {
           "mode" => "error",
-          "error" => "unit test",
+          "error" => "unit test"
         },
-        @m.to_args,
+        @m.to_args
       )
     end
 
     def test_to_kvform
       assert_equal(
         "error:unit test\nmode:error\n",
-        @m.to_kvform,
+        @m.to_kvform
       )
     end
 
     def test_to_url_encoded
       assert_equal(
         "openid.error=unit+test&openid.mode=error",
-        @m.to_url_encoded,
+        @m.to_url_encoded
       )
     end
 
@@ -388,7 +388,7 @@ module OpenID
 
       assert_equal(
         {"openid.mode" => ["error"], "openid.error" => ["unit test"]},
-        CGI.parse(query),
+        CGI.parse(query)
       )
     end
 
@@ -463,7 +463,7 @@ module OpenID
     def test_get_args
       assert_equal(
         {"mode" => "error", "error" => "unit test"},
-        @m.get_args(OPENID_NS),
+        @m.get_args(OPENID_NS)
       )
     end
 
@@ -474,7 +474,7 @@ module OpenID
     def test_get_args_ns1
       assert_equal(
         {"mode" => "error", "error" => "unit test"},
-        @m.get_args(OPENID1_NS),
+        @m.get_args(OPENID1_NS)
       )
     end
 
@@ -490,7 +490,7 @@ module OpenID
       before = {} if before.nil?
       update_args = {
         "Camper van Beethoven" => "David Lowery",
-        "Magnolia Electric Co." => "Jason Molina",
+        "Magnolia Electric Co." => "Jason Molina"
       }
 
       assert_equal(before, @m.get_args(ns))
@@ -626,7 +626,7 @@ module OpenID
       @m = Message.from_post_args({
         "openid.mode" => "error",
         "openid.error" => "unit test",
-        "openid.ns" => OPENID1_NS,
+        "openid.ns" => OPENID1_NS
       })
     end
 
@@ -635,9 +635,9 @@ module OpenID
         {
           "openid.mode" => "error",
           "openid.error" => "unit test",
-          "openid.ns" => OPENID1_NS,
+          "openid.ns" => OPENID1_NS
         },
-        @m.to_post_args,
+        @m.to_post_args
       )
     end
 
@@ -654,9 +654,9 @@ module OpenID
           "openid.foos.ball" => "awesome",
           "xey" => "value",
           "openid.ns" => OPENID1_NS,
-          "openid.ns.foos" => "http://invalid/",
+          "openid.ns.foos" => "http://invalid/"
         },
-        @m.to_post_args,
+        @m.to_post_args
       )
     end
 
@@ -665,23 +665,23 @@ module OpenID
         {
           "mode" => "error",
           "error" => "unit test",
-          "ns" => OPENID1_NS,
+          "ns" => OPENID1_NS
         },
-        @m.to_args,
+        @m.to_args
       )
     end
 
     def test_to_kvform
       assert_equal(
         "error:unit test\nmode:error\nns:#{OPENID1_NS}\n",
-        @m.to_kvform,
+        @m.to_kvform
       )
     end
 
     def test_to_url_encoded
       assert_equal(
         "openid.error=unit+test&openid.mode=error&openid.ns=http%3A%2F%2Fopenid.net%2Fsignon%2F1.0",
-        @m.to_url_encoded,
+        @m.to_url_encoded
       )
     end
 
@@ -698,9 +698,9 @@ module OpenID
         {
           "openid.mode" => ["error"],
           "openid.error" => ["unit test"],
-          "openid.ns" => [OPENID1_NS],
+          "openid.ns" => [OPENID1_NS]
         },
-        CGI.parse(query),
+        CGI.parse(query)
       )
     end
   end
@@ -712,7 +712,7 @@ module OpenID
       @m = Message.from_post_args({
         "openid.mode" => "error",
         "openid.error" => "unit test",
-        "openid.ns" => OPENID2_NS,
+        "openid.ns" => OPENID2_NS
       })
       @m.set_arg(BARE_NS, "xey", "value")
     end
@@ -756,9 +756,9 @@ module OpenID
           "openid.mode" => "error",
           "openid.error" => "unit test",
           "openid.ns" => OPENID2_NS,
-          "xey" => "value",
+          "xey" => "value"
         },
-        @m.to_post_args,
+        @m.to_post_args
       )
     end
 
@@ -774,9 +774,9 @@ module OpenID
           "openid.ns" => OPENID2_NS,
           "openid.ns.foos" => invalid_ns,
           "openid.foos.ball" => "awesome",
-          "xey" => "value",
+          "xey" => "value"
         },
-        @m.to_post_args,
+        @m.to_post_args
       )
     end
 
@@ -787,9 +787,9 @@ module OpenID
         {
           "mode" => "error",
           "error" => "unit test",
-          "ns" => OPENID2_NS,
+          "ns" => OPENID2_NS
         },
-        @m.to_args,
+        @m.to_args
       )
     end
 
@@ -798,7 +798,7 @@ module OpenID
 
       assert_equal(
         "error:unit test\nmode:error\nns:#{OPENID2_NS}\n",
-        @m.to_kvform,
+        @m.to_kvform
       )
     end
 
@@ -807,7 +807,7 @@ module OpenID
         "openid.error=unit+test",
         "openid.mode=error",
         "openid.ns=#{CGI.escape(OPENID2_NS)}",
-        "xey=value",
+        "xey=value"
       ]
       # Hard to do this with string comparison since the mapping doesn't
       # preserve order.
@@ -900,33 +900,33 @@ module OpenID
     def test_get_args_openid
       assert_equal(
         {"mode" => "error", "error" => "unit test"},
-        @m.get_args(OPENID_NS),
+        @m.get_args(OPENID_NS)
       )
     end
 
     def test_get_args_bare
       assert_equal(
         {"xey" => "value"},
-        @m.get_args(BARE_NS),
+        @m.get_args(BARE_NS)
       )
     end
 
     def test_get_args_ns1
       assert_empty(
-        @m.get_args(OPENID1_NS),
+        @m.get_args(OPENID1_NS)
       )
     end
 
     def test_get_args_ns2
       assert_equal(
         {"mode" => "error", "error" => "unit test"},
-        @m.get_args(OPENID2_NS),
+        @m.get_args(OPENID2_NS)
       )
     end
 
     def test_get_args_ns3
       assert_empty(
-        @m.get_args("urn:loose seal"),
+        @m.get_args("urn:loose seal")
       )
     end
 
@@ -1001,7 +1001,7 @@ module OpenID
       fields.each do |f|
         args = {
           "openid.ns.#{f}" => "blah#{f}",
-          "openid.#{f}.foo" => "test#{f}",
+          "openid.#{f}.foo" => "test#{f}"
         }
 
         # .fromPostArgs covers .fromPostArgs, .fromOpenIDArgs,
@@ -1089,14 +1089,14 @@ module OpenID
         "openid.identity" => "http://bogus.example.invalid:port/",
         "openid.assoc_handle" => "FLUB",
         "openid.return_to" => "Neverland",
-        "openid.ax.value.fullname" => "Bob&Smith'",
+        "openid.ax.value.fullname" => "Bob&Smith'"
       }
 
       @action_url = "scheme://host:port/path?query"
 
       @form_tag_attrs = {
         "company" => "janrain",
-        "class" => "fancyCSS",
+        "class" => "fancyCSS"
       }
 
       @submit_text = "GO!"
@@ -1106,7 +1106,7 @@ module OpenID
       @required_form_attrs = {
         "accept-charset" => "UTF-8",
         "enctype" => "application/x-www-form-urlencoded",
-        "method" => "post",
+        "method" => "post"
       }
     end
 
@@ -1122,7 +1122,7 @@ module OpenID
         assert_equal(
           form.attributes[k],
           v,
-          "Expected '#{v}' for required form attribute '#{k}', got '#{form.attributes[k]}'",
+          "Expected '#{v}' for required form attribute '#{k}', got '#{form.attributes[k]}'"
         )
       end
 
@@ -1136,7 +1136,7 @@ module OpenID
         assert_equal(
           form.attributes[k],
           v,
-          "Form attribute '#{k}' should be '#{v}', found '#{form.attributes[k]}'",
+          "Form attribute '#{k}' should be '#{v}', found '#{form.attributes[k]}'"
         )
 
         # Check hidden fields against post args
@@ -1161,7 +1161,7 @@ module OpenID
               e.attributes["value"],
               value,
               "Expected value of hidden input '#{e.attributes["name"]}' " +
-              "to be '#{value}', got '#{e.attributes["value"]}'",
+              "to be '#{value}', got '#{e.attributes["value"]}'"
             )
             success = true
             break
@@ -1175,7 +1175,7 @@ module OpenID
             message_.to_post_args.keys,
             e.attributes["name"],
             "Form element for '#{e.attributes["name"]}' not in " +
-            "original message",
+            "original message"
           )
         end
 
@@ -1183,7 +1183,7 @@ module OpenID
         assert_equal(
           form.attributes["action"],
           action_url,
-          "Expected form 'action' to be '#{action_url}', got '#{form.attributes["action"]}'",
+          "Expected form 'action' to be '#{action_url}', got '#{form.attributes["action"]}'"
         )
 
         # Check submit text
@@ -1199,14 +1199,14 @@ module OpenID
         assert_equal(
           1,
           submits.length,
-          "Expected only one 'input' with type = 'submit', got #{submits.length}",
+          "Expected only one 'input' with type = 'submit', got #{submits.length}"
         )
 
         assert_equal(
           submits[0].attributes["value"],
           submit_text,
           "Expected submit value to be '#{submit_text}', " +
-          "got '#{submits[0].attributes["value"]}'",
+          "got '#{submits[0].attributes["value"]}'"
         )
       end
     end
@@ -1216,14 +1216,14 @@ module OpenID
       html = m.to_form_markup(
         @action_url,
         @form_tag_attrs,
-        @submit_text,
+        @submit_text
       )
       _checkForm(
         html,
         m,
         @action_url,
         @form_tag_attrs,
-        @submit_text,
+        @submit_text
       )
     end
 
@@ -1237,14 +1237,14 @@ module OpenID
       html = m.to_form_markup(
         @action_url,
         @form_tag_attrs,
-        @submit_text,
+        @submit_text
       )
       _checkForm(
         html,
         m,
         @action_url,
         @form_tag_attrs,
-        @submit_text,
+        @submit_text
       )
     end
 
@@ -1260,14 +1260,14 @@ module OpenID
       html = m.to_form_markup(
         @action_url,
         tag_attrs,
-        @submit_text,
+        @submit_text
       )
       _checkForm(
         html,
         m,
         @action_url,
         tag_attrs,
-        @submit_text,
+        @submit_text
       )
     end
   end

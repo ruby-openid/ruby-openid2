@@ -131,8 +131,11 @@ toolchain, and it may be higher than the gemspec runtime floor.
 They are created and updated with the commands:
 
 ```console
-bin/rake appraisal:update
+bin/rake appraisal:generate
 ```
+
+Use `bin/rake appraisal:update` when you intentionally need to resolve fresh
+appraisal locks.
 
 If you need to reset all gemfiles/*.gemfile.lock files:
 
@@ -198,7 +201,7 @@ Your picture could be here!
 
 Made with [contributors-img][🖐contrib-rocks].
 
-Also see GitLab Contributors: [https://gitlab.com/pboling/ruby-openid2/-/graphs/main][🚎contributors-gl]
+Also see GitLab Contributors: [https://gitlab.com/ruby-openid/ruby-openid2/-/graphs/main][🚎contributors-gl]
 
 ## For Maintainers
 
@@ -249,15 +252,15 @@ NOTE: To build without signing the gem set `SKIP_GEM_SIGNING` to any value in th
 14. Run `bundle exec rake release` which will create a git tag for the version,
     push git commits and tags, and push the `.gem` file to the gem host configured in the gemspec.
 
-[📜src-gl]: https://gitlab.com/pboling/ruby-openid2
-[📜src-cb]: https://codeberg.org/pboling/ruby-openid2
-[📜src-gh]: https://github.com/pboling/ruby-openid2
-[🧪build]: https://github.com/pboling/ruby-openid2/actions
-[🤝conduct]: https://github.com/pboling/ruby-openid2/blob/main/CODE_OF_CONDUCT.md
+[📜src-gl]: https://gitlab.com/ruby-openid/ruby-openid2
+[📜src-cb]: https://codeberg.org/ruby-openid/ruby-openid2
+[📜src-gh]: https://github.com/ruby-openid/ruby-openid2
+[🧪build]: https://github.com/ruby-openid/ruby-openid2/actions
+[🤝conduct]: https://github.com/ruby-openid/ruby-openid2/blob/main/CODE_OF_CONDUCT.md
 [🖐contrib-rocks]: https://contrib.rocks
-[🖐contributors]: https://github.com/pboling/ruby-openid2/graphs/contributors
-[🚎contributors-gl]: https://gitlab.com/pboling/ruby-openid2/-/graphs/main
-[🖐contributors-img]: https://contrib.rocks/image?repo=pboling/ruby-openid2
+[🖐contributors]: https://github.com/ruby-openid/ruby-openid2/graphs/contributors
+[🚎contributors-gl]: https://gitlab.com/ruby-openid/ruby-openid2/-/graphs/main
+[🖐contributors-img]: https://contrib.rocks/image?repo=ruby-openid/ruby-openid2
 [💎gem-coop]: https://gem.coop
 [🔒️rubygems-security-guide]: https://guides.rubygems.org/security/#building-gems
 [🔒️rubygems-checksums-pr]: https://github.com/rubygems/rubygems/pull/6022

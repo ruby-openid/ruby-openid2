@@ -194,7 +194,7 @@ module OpenID
           realm = message.get_arg(
             OPENID_NS,
             "realm",
-            message.get_arg(OPENID_NS, "return_to"),
+            message.get_arg(OPENID_NS, "return_to")
           )
           if realm.nil? or realm.empty?
             raise Error, "Cannot validate update_url #{req.update_url.inspect} against absent realm"

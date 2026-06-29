@@ -33,7 +33,7 @@ module OpenID
       HTTPResponse._from_raw_data(
         status,
         body,
-        headers,
+        headers
       )
     end
 
@@ -57,7 +57,7 @@ module OpenID
               404,
               "",
               {},
-              current_url,
+              current_url
             )
           end
 
@@ -82,7 +82,7 @@ module OpenID
         return HTTPResponse._from_raw_data(404, "", {}, uri) unless @count == 1
 
         headers = {
-          "X-XRDS-Location".downcase => "http://unittest/404",
+          "X-XRDS-Location".downcase => "http://unittest/404"
         }
         HTTPResponse._from_raw_data(200, "", headers, uri)
       end
@@ -118,7 +118,7 @@ module OpenID
           @input_name,
           @id_name,
           @result_name,
-          @success,
+          @success
         )
       end
 
@@ -143,7 +143,7 @@ module OpenID
           msg = format(
             "Identity URL mismatch: actual = %s, expected = %s",
             result.normalized_uri,
-            @expected.normalized_uri,
+            @expected.normalized_uri
           )
 
           @testcase.assert_equal(@expected.normalized_uri, result.normalized_uri, msg)
@@ -151,7 +151,7 @@ module OpenID
           msg = format(
             "Content mismatch: actual = %s, expected = %s",
             result.response_text,
-            @expected.response_text,
+            @expected.response_text
           )
 
           @testcase.assert_equal(@expected.response_text, result.response_text, msg)

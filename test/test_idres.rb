@@ -51,7 +51,7 @@ module OpenID
           [
             [],
             ["foo"],
-            %w[bar baz],
+            %w[bar baz]
           ].each do |signed_fields|
             test = lambda do
               msg = mkMsg(OPENID2_NS, OPENID2_FIELDS, signed_fields)
@@ -70,7 +70,7 @@ module OpenID
           [
             ["openid1", OPENID1_NS, OPENID1_FIELDS],
             ["openid1", OPENID11_NS, OPENID1_FIELDS],
-            ["openid2", OPENID2_NS, OPENID2_FIELDS],
+            ["openid2", OPENID2_NS, OPENID2_FIELDS]
           ].each_with_index do |(ver, ns, all_fields), i|
             all_fields.each do |field|
               test = lambda do
@@ -96,8 +96,8 @@ module OpenID
               "openid2",
               OPENID2_NS,
               OPENID2_FIELDS,
-              OPENID2_SIGNED,
-            ],
+              OPENID2_SIGNED
+            ]
           ].each_with_index do |(ver, ns, all_fields, signed_fields), i|
             signed_fields.each do |signed_field|
               test = lambda do
@@ -131,7 +131,7 @@ module OpenID
             "openid.response_nonce" => "2008-01-28T21:07:04Z99Q=",
             "openid.return_to" => "http://binkley.lan:8001/process?janrain_nonce=2008-01-28T21%3A07%3A02Z0tMIKx",
             "openid.sig" => "YJlWH4U6SroB1HoPkmEKx9AyGGg=",
-            "openid.signed" => "assoc_handle,identity,response_nonce,return_to,claimed_id,op_endpoint,pape.auth_time,ns.pape,pape.nist_auth_level,pape.auth_policies",
+            "openid.signed" => "assoc_handle,identity,response_nonce,return_to,claimed_id,op_endpoint,pape.auth_time,ns.pape,pape.nist_auth_level,pape.auth_policies"
           }
 
           assert_equal(args["openid.ns"], OPENID2_NS)
@@ -192,7 +192,7 @@ module OpenID
           check_return_to_args({
             "openid.mode" => "id_res",
             "openid.return_to" => "http://example.com/?foo=bar",
-            "foo" => "bar",
+            "foo" => "bar"
           })
         end
 
@@ -200,20 +200,20 @@ module OpenID
           assert_bad_args("Unexpected parameter", {
             "openid.mode" => "id_res",
             "openid.return_to" => "http://example.com/",
-            "foo" => "bar",
+            "foo" => "bar"
           })
         end
 
         def test_return_to_mismatch
           assert_bad_args("Message missing ret", {
             "openid.mode" => "id_res",
-            "openid.return_to" => "http://example.com/?foo=bar",
+            "openid.return_to" => "http://example.com/?foo=bar"
           })
 
           assert_bad_args("Parameter 'foo' val", {
             "openid.mode" => "id_res",
             "openid.return_to" => "http://example.com/?foo=bar",
-            "foo" => "foos",
+            "foo" => "foos"
           })
         end
       end
@@ -238,7 +238,7 @@ module OpenID
             "http://some.url/path_extra?foo=bar",
             # Query args differ
             "http://some.url/path?foo=bar2",
-            "http://some.url/path?foo2=bar",
+            "http://some.url/path?foo2=bar"
           ].each do |bad|
             m.set_arg(OPENID_NS, "return_to", bad)
             idres = IdResHandler.new(m, return_to)
@@ -258,7 +258,7 @@ module OpenID
             [base.sub("com", "COM"), {}],
             ["http://example.janrain.com:80/path", {}],
             ["http://example.janrain.com/p%61th", {}],
-            ["http://example.janrain.com/./path", {}],
+            ["http://example.janrain.com/./path", {}]
           ].each do |return_to, args|
             args["openid.return_to"] = return_to
             msg = Message.from_post_args(args)
@@ -293,7 +293,7 @@ module OpenID
             "openid.sig" => GOODSIG,
             "openid.assoc_handle" => @assoc.handle,
             "openid.signed" => "mode,identity,assoc_handle,signed",
-            "frobboz" => "banzit",
+            "frobboz" => "banzit"
           })
         end
 
@@ -441,7 +441,7 @@ module OpenID
 
         def setup
           @message = Message.from_openid_args({
-            "is_valid" => "true",
+            "is_valid" => "true"
           })
           @assoc = GoodAssoc.new
           @store = Store::Memory.new
@@ -489,7 +489,7 @@ module OpenID
           @message.set_arg(OPENID_NS, "invalidate_handle", "cheese")
           assert_log_matches(
             "Received 'invalidate_handle'",
-            'Unexpectedly got "invalidate_handle"',
+            'Unexpectedly got "invalidate_handle"'
           ) do
             call_process
           end
@@ -525,7 +525,7 @@ module OpenID
           [
             {},
             {"openid.ns" => OPENID1_NS},
-            {"openid.ns" => OPENID11_NS},
+            {"openid.ns" => OPENID11_NS}
           ].each do |args|
             call_check_nonce({"rp_nonce" => @nonce}.merge(args), true)
           end
@@ -535,7 +535,7 @@ module OpenID
           [
             {},
             {"openid.ns" => OPENID1_NS},
-            {"openid.ns" => OPENID11_NS},
+            {"openid.ns" => OPENID11_NS}
           ].each do |args|
             assert_protocol_error("Nonce missing") { call_check_nonce(args) }
           end
@@ -545,7 +545,7 @@ module OpenID
           assert_protocol_error("Nonce missing") do
             call_check_nonce({
               "rp_nonce" => @nonce,
-              "openid.ns" => OPENID2_NS,
+              "openid.ns" => OPENID2_NS
             })
           end
         end
@@ -554,9 +554,9 @@ module OpenID
           call_check_nonce(
             {
               "openid.response_nonce" => @nonce,
-              "openid.ns" => OPENID2_NS,
+              "openid.ns" => OPENID2_NS
             },
-            true,
+            true
           )
         end
 
@@ -564,7 +564,7 @@ module OpenID
           [
             {},
             {"openid.ns" => OPENID1_NS},
-            {"openid.ns" => OPENID11_NS},
+            {"openid.ns" => OPENID11_NS}
           ].each do |args|
             assert_protocol_error("Nonce missing") do
               call_check_nonce({"openid.response_nonce" => @nonce}.merge(args))
@@ -621,7 +621,7 @@ module OpenID
           assert_verify_protocol_error(
             "Missing required field: " \
               "<#{OPENID1_NS}>identity",
-            {},
+            {}
           )
         end
 
@@ -638,7 +638,7 @@ module OpenID
             @endpoint = nil
             resp_mesg = Message.from_openid_args({
               "ns" => openid1_ns,
-              "identity" => claimed_id,
+              "identity" => claimed_id
             })
 
             # Pass the OpenID 1 claimed_id this way since we're
@@ -681,8 +681,8 @@ module OpenID
             {
               "ns" => OPENID2_NS,
               "op_endpoint" => "Phone Home",
-              "identity" => "Jorge Lius Borges",
-            },
+              "identity" => "Jorge Lius Borges"
+            }
           )
         end
 
@@ -692,7 +692,7 @@ module OpenID
               call_verify({
                 "ns" => OPENID2_NS,
                 "op_endpoint" => "Phone Home",
-                "claimed_id" => "Manuel Noriega",
+                "claimed_id" => "Manuel Noriega"
               })
             end
           end
@@ -703,7 +703,7 @@ module OpenID
           result_endpoint = assert_log_matches do
             call_verify({
               "ns" => OPENID2_NS,
-              "op_endpoint" => op_endpoint,
+              "op_endpoint" => op_endpoint
             })
           end
           assert(result_endpoint.is_op_identifier)
@@ -720,7 +720,7 @@ module OpenID
               "ns" => OPENID2_NS,
               "identity" => "sour grapes",
               "claimed_id" => "monkeysoft",
-              "op_endpoint" => "Phone Home",
+              "op_endpoint" => "Phone Home"
             }) do |idres|
               idres.instance_def(:discover_and_verify) do |_claimed_id, _endpoints|
                 @endpoint = endpoint
@@ -739,13 +739,13 @@ module OpenID
 
           result = assert_log_matches(
             "Error attempting to use stored",
-            "Attempting discovery",
+            "Attempting discovery"
           ) do
             call_verify_modify({
               "ns" => OPENID2_NS,
               "identity" => "sour grapes",
               "claimed_id" => "monkeysoft",
-              "op_endpoint" => "Green Cheese",
+              "op_endpoint" => "Green Cheese"
             }) do |idres|
               idres.instance_def(:discover_and_verify) do |_claimed_id, _endpoints|
                 @endpoint = endpoint
@@ -797,7 +797,7 @@ module OpenID
               "ns" => OPENID2_NS,
               "identity" => @endpoint.local_id,
               "claimed_id" => @endpoint.claimed_id,
-              "op_endpoint" => @endpoint.server_url,
+              "op_endpoint" => @endpoint.server_url
             })
           end
           assert_same(result, @endpoint)
@@ -819,7 +819,7 @@ module OpenID
             "claimed_id" =>
                                            @endpoint.claimed_id,
             "op_endpoint" =>
-                                           @endpoint.server_url,
+                                           @endpoint.server_url
           })
 
           idres = IdResHandler.new(msg, nil, nil, @endpoint)
@@ -831,7 +831,7 @@ module OpenID
           end
           assert_log_matches(
             "Error attempting to use stored",
-            "Attempting discovery",
+            "Attempting discovery"
           ) do
             assert_protocol_error(text) do
               idres.send(:verify_discovery_results)
@@ -848,7 +848,7 @@ module OpenID
           result = assert_log_matches do
             call_verify({
               "ns" => OPENID1_NS,
-              "identity" => @endpoint.local_id,
+              "identity" => @endpoint.local_id
             })
           end
           assert_same(result, @endpoint)
@@ -864,12 +864,12 @@ module OpenID
 
           assert_log_matches(
             "Error attempting to use stored",
-            "Attempting discovery",
+            "Attempting discovery"
           ) do
             assert_raises(verified_error) do
               call_verify_modify({
                 "ns" => OPENID1_NS,
-                "identity" => @endpoint.local_id,
+                "identity" => @endpoint.local_id
               }) do |idres|
                 idres.instance_def(:discover_and_verify) do |_claimed_id, _endpoints|
                   raise verified_error
@@ -893,7 +893,7 @@ module OpenID
               "ns" => OPENID2_NS,
               "identity" => @endpoint.local_id,
               "claimed_id" => claimed_id_frag,
-              "op_endpoint" => @endpoint.server_url,
+              "op_endpoint" => @endpoint.server_url
             })
           end
 
@@ -954,19 +954,19 @@ module OpenID
             "op_endpoint" => endpoint.server_url,
             "response_nonce" => Nonce.mk_nonce,
             "signed" => signed_fields.join(","),
-            "sig" => GOODSIG,
+            "sig" => GOODSIG
           }
           msg = Message.from_openid_args(args)
           idres = OpenID::Consumer::IdResHandler.new(
             msg,
             return_to,
             store,
-            endpoint,
+            endpoint
           )
 
           assert_equal(
             idres.signed_fields,
-            signed_fields.map { |f| "openid." + f },
+            signed_fields.map { |f| "openid." + f }
           )
         end
       end
@@ -1009,7 +1009,7 @@ module OpenID
                 :verify_discovered_services,
                 "http://bogus.id/",
                 [],
-                [endpoint],
+                [endpoint]
               )
             end
           end

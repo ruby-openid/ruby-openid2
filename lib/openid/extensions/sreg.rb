@@ -13,7 +13,7 @@ module OpenID
       "postcode" => "Postal Code",
       "country" => "Country",
       "language" => "Language",
-      "timezone" => "Time Zone",
+      "timezone" => "Time Zone"
     }
 
     NS_URI_1_0 = "http://openid.net/sreg/1.0"

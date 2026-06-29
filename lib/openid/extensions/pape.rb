@@ -37,7 +37,7 @@ module OpenID
 
       def get_extension_args
         ns_args = {
-          "preferred_auth_policies" => @preferred_auth_policies.join(" "),
+          "preferred_auth_policies" => @preferred_auth_policies.join(" ")
         }
         ns_args["max_auth_age"] = @max_auth_age.to_s if @max_auth_age
         ns_args

@@ -39,7 +39,7 @@ module OpenID
         dh_server_public64 = response.get_arg(
           OPENID_NS,
           "dh_server_public",
-          NO_DEFAULT,
+          NO_DEFAULT
         )
         enc_mac_key64 = response.get_arg(OPENID_NS, "enc_mac_key", NO_DEFAULT)
         dh_server_public = CryptUtil.base64_to_num(dh_server_public64)
@@ -47,7 +47,7 @@ module OpenID
         @dh.xor_secret(
           self.class.hashfunc,
           dh_server_public,
-          enc_mac_key,
+          enc_mac_key
         )
       end
     end
@@ -217,7 +217,7 @@ module OpenID
         assoc_session = self.class.create_session(session_type)
         args = {
           "mode" => "associate",
-          "assoc_type" => assoc_type,
+          "assoc_type" => assoc_type
         }
 
         args["ns"] = OPENID2_NS unless @compatibility_mode
@@ -285,12 +285,12 @@ module OpenID
         assoc_type = assoc_response.get_arg(
           OPENID_NS,
           "assoc_type",
-          NO_DEFAULT,
+          NO_DEFAULT
         )
         assoc_handle = assoc_response.get_arg(
           OPENID_NS,
           "assoc_handle",
-          NO_DEFAULT,
+          NO_DEFAULT
         )
         expires_in = self.class.extract_expires_in(assoc_response)
 
@@ -301,7 +301,7 @@ module OpenID
           assoc_response.get_arg(
             OPENID2_NS,
             "session_type",
-            NO_DEFAULT,
+            NO_DEFAULT
           )
         end
 
@@ -346,7 +346,7 @@ module OpenID
           expires_in,
           assoc_handle,
           secret,
-          assoc_type,
+          assoc_type
         )
       end
     end

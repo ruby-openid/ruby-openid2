@@ -83,7 +83,7 @@ module OpenID
 
     def test_nil_filter
       # A transform filter with a single nil filter should return nil.
-      nil_filter = proc { |_endpoint| nil }
+      nil_filter = proc { |_endpoint| }
       t = Yadis::TransformFilterMaker.new([nil_filter])
       endpoint = "unused"
 
@@ -151,7 +151,7 @@ module OpenID
 
       subfilters = [
         BogusServiceEndpointExtractor.new(first),
-        BogusServiceEndpointExtractor.new(second),
+        BogusServiceEndpointExtractor.new(second)
       ]
 
       cf = Yadis::CompoundFilter.new(subfilters)
@@ -214,7 +214,7 @@ module OpenID
 
     def test_single_proc
       # Create a proc that just returns nil for any endpoint
-      p = proc { |_endpoint| nil }
+      p = proc { |_endpoint| }
       result = Yadis.mk_compound_filter([p])
 
       assert_kind_of(Yadis::TransformFilterMaker, result)
@@ -239,7 +239,7 @@ module OpenID
     def test_multiple_filters_different_type
       f1 = Yadis::TransformFilterMaker.new([])
       f2 = Yadis::BasicServiceEndpoint.new(nil, [], nil, nil)
-      f3 = proc { |_endpoint| nil }
+      f3 = proc { |_endpoint| }
 
       e = Yadis::BasicServiceEndpoint.new(nil, [], nil, nil)
       f4 = [e]

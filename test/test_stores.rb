@@ -37,7 +37,7 @@ module OpenID
           secret,
           Time.now + issued,
           lifetime,
-          "HMAC-SHA1",
+          "HMAC-SHA1"
         )
       end
 
@@ -260,6 +260,7 @@ module OpenID
     else
       class MemcacheStoreTestCase < Minitest::Test
         include StoreTestCase
+
         def setup
           store_uniq = OpenID::CryptUtil.random_string(6, "0123456789")
           store_namespace = "openid-store-#{store_uniq}:"

@@ -23,7 +23,7 @@ module OpenID
     ([#{BASE64_CHARS}]{2}==|
      [#{BASE64_CHARS}]{3}=)?
     \\Z",
-      Regexp::EXTENDED,
+      Regexp::EXTENDED
     )
 
     def self.truthy_assert(value, message = nil)

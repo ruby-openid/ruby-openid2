@@ -43,15 +43,15 @@ class LinkParseTestCase < Minitest::Test
       [{"foo" => "bar", "bam*" => "baz"}, {"foo" => "bar"}],
       [
         {"foo" => "bar", "bam*" => "baz", "tak" => "tal"},
-        {"foo" => "bar", "tak" => "tal"},
-      ],
+        {"foo" => "bar", "tak" => "tal"}
+      ]
     ]
     bad = [
       [{}, {"foo" => "bar"}],
       [{"foo" => "bar"}, {"bam" => "baz"}],
       [{"foo" => "bar"}, {}],
       [{"foo*" => "bar"}, {"foo*" => "bar"}],
-      [{"foo" => "bar", "tak" => "tal"}, {"foo" => "bar"}],
+      [{"foo" => "bar", "tak" => "tal"}, {"foo" => "bar"}]
     ]
 
     good.each { |c| assert(attr_cmp(c[0], c[1]), c.inspect) }
