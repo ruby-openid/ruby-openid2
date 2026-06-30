@@ -38,6 +38,8 @@ Please file a bug if you notice a violation of semantic versioning.
   redirects explicitly and rejecting protocol-relative, missing, or invalid
   redirect locations.
 
+- Package configured license files in gem release file lists.
+
 ### Security
 
 ## 3.1.1 - 2024-09-25
