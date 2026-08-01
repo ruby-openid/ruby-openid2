@@ -20,6 +20,8 @@ Please file a bug if you notice a violation of semantic versioning.
 
 ### Added
 
+- Improved Documentation
+
 - Added support for JRuby 10.1 and TruffleRuby 34.0.
 
 - kettle-jem-template-20260720-001 - READMEs can now display configured
@@ -35,29 +37,10 @@ Please file a bug if you notice a violation of semantic versioning.
   project's RubyForum tag as `mailing_list_uri`, and support docs link to the
   tagged RubyForum community alongside Discord.
 
-### Changed
-
-- Retemplated generated project metadata, support documentation, CI workflows,
-  binstubs, and development dependency floors with `kettle-jem` v7.0.0.
-
-- kettle-jem-template-20260716-002 - Gemspecs now ship fewer repository-only
-  files, reducing package noise for downstream packagers.
-- kettle-jem-template-20260720-002 - Development Gemfiles now use the released
-  `tree_sitter_language_pack` gem 1.13.3 or newer by default.
-- kettle-jem-template-20260725-002 - Version specs now use `anonymous_loader` to
-  cover `version.rb` without redefining constants, or are removed when version
-  specs are not managed for the project.
-- kettle-jem-template-20260728-001 - Generated Ruby workflows now use clearer
-  setup-ruby-flash planning and can prepare appraisal-only jobs without
-  installing the main Gemfile bundle.
-
-- Document the OpenID protocol library role and store configuration in the README.
-
-### Deprecated
-
-### Removed
-
 ### Fixed
+
+- Documentation typos
+- Documentation in Yard (on RubyDoc.info)
 
 - Restored `docs/CNAME` so the generated documentation site keeps its custom domain.
 - Hardened `OpenID::StandardFetcher` redirect handling by resolving relative
@@ -105,22 +88,23 @@ Please file a bug if you notice a violation of semantic versioning.
   relative to the gemspec directory, so release package contents stay correct
   even when the gemspec is loaded from another working directory.
 
-### Security
+### Changed
 
-## [3.1.1] - 2024-09-25
+- Retemplated generated project metadata, support documentation, CI workflows,
+  binstubs, and development dependency floors with `kettle-jem` v7.0.0.
 
-- COVERAGE:  91.81% -- 3520/3834 lines in 49 files
-- BRANCH COVERAGE:  87.03% -- 1074/1234 branches in 49 files
-- 63.08% documented
+- kettle-jem-template-20260716-002 - Gemspecs now ship fewer repository-only
+  files, reducing package noise for downstream packagers.
+- kettle-jem-template-20260720-002 - Development Gemfiles now use the released
+  `tree_sitter_language_pack` gem 1.13.3 or newer by default.
+- kettle-jem-template-20260725-002 - Version specs now use `anonymous_loader` to
+  cover `version.rb` without redefining constants, or are removed when version
+  specs are not managed for the project.
+- kettle-jem-template-20260728-001 - Generated Ruby workflows now use clearer
+  setup-ruby-flash planning and can prepare appraisal-only jobs without
+  installing the main Gemfile bundle.
 
-### Added
-
-- Improved Documentation
-
-### Fixed
-
-- Documentation typos
-- Documentation in Yard (on RubyDoc.info)
+- Document the OpenID protocol library role and store configuration in the README.
 
 ## [3.1.0] - 2024-09-24
 
