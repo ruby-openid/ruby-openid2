@@ -107,7 +107,7 @@ Please file a bug if you notice a violation of semantic versioning.
 
 ### Security
 
-## 3.1.1 - 2024-09-25
+## [3.1.1] - 2024-09-25
 
 - COVERAGE:  91.81% -- 3520/3834 lines in 49 files
 - BRANCH COVERAGE:  87.03% -- 1074/1234 branches in 49 files
@@ -122,7 +122,7 @@ Please file a bug if you notice a violation of semantic versioning.
 - Documentation typos
 - Documentation in Yard (on RubyDoc.info)
 
-## 3.1.0 - 2024-09-24
+## [3.1.0] - 2024-09-24
 
 - COVERAGE:  91.81% -- 3520/3834 lines in 49 files
 - BRANCH COVERAGE:  87.03% -- 1074/1234 branches in 49 files
@@ -136,14 +136,14 @@ Please file a bug if you notice a violation of semantic versioning.
   - Downstream code should add them explicitly to move away from the stdlib versions sooner than Ruby 3.5
   - Ref: https://github.com/rubygems/rubygems/issues/7178#issuecomment-2372558363
 
-## 3.0.3 - 2024-09-24
+## [3.0.3] - 2024-09-24
 
 ### Fixed
 
 - Add logger gem for Ruby 3.5 compatibility
 - Restrict minitest to < 6, because first we must use assert_nil if expecting nil
 
-## 3.0.2 - 2024-09-24
+## [3.0.2] - 2024-09-24
 
 - COVERAGE:  91.72% -- 3522/3840 lines in 49 files
 - BRANCH COVERAGE:  87.03% -- 1074/1234 branches in 49 files
@@ -153,7 +153,7 @@ Please file a bug if you notice a violation of semantic versioning.
 
 - Automatic loading via bundler
 
-## 3.0.1 - 2024-09-20
+## [3.0.1] - 2024-09-20
 
 - COVERAGE:  91.72% -- 3521/3839 lines in 48 files
 - BRANCH COVERAGE:  87.03% -- 1074/1234 branches in 48 files
@@ -173,7 +173,7 @@ Please file a bug if you notice a violation of semantic versioning.
   - `net-http` - removed from stdlib in Ruby 3.0
 - Copyright years in LICENSE.txt
 
-## 3.0.0 - 2024-09-04
+## [3.0.0] - 2024-09-04
 
 - 3839 relevant lines, 3521 lines covered and 318 lines missed. ( 91.72% )
 - 1234 total branches, 1073 branches covered and 161 branches missed. ( 86.95% )
@@ -186,16 +186,16 @@ Please file a bug if you notice a violation of semantic versioning.
 
 - Support for Ruby < 2.7
 
-## 2.9.2
+## [2.9.2]
 
 * Perform all checks before verifying endpoints.
   [#126](https://github.com/oauth-xx/ruby-openid2/pull/126)
 
-## 2.9.1
+## [2.9.1]
 
 * Updated CHANGELOG.md
 
-## 2.9.0
+## [2.9.0]
 
 * Remove deprecated `autorequire` from gemspec.
   [#123](https://github.com/oauth-xx/ruby-openid2/pull/123)
@@ -216,7 +216,7 @@ Please file a bug if you notice a violation of semantic versioning.
 * Simplify Bundler require; remove need for extra `:require`.
   [#112](https://github.com/oauth-xx/ruby-openid2/pull/112)
 
-## 2.8.0
+## [2.8.0]
 
 * Fix `admin/mkassoc` script.
   See https://github.com/oauth-xx/ruby-openid2/pull/103
@@ -234,7 +234,7 @@ Please file a bug if you notice a violation of semantic versioning.
   - https://github.com/oauth-xx/ruby-openid2/pull/108
   - https://github.com/oauth-xx/ruby-openid2/pull/107
 
-## 2.7.0
+## [2.7.0]
 
 * Use RFC 2396 compatible URI parser for trustroot - 7c84ec9ced3ccbdad575e02dbfa81e53b52f909e
   See https://github.com/oauth-xx/ruby-openid2/pull/85
@@ -242,7 +242,7 @@ Please file a bug if you notice a violation of semantic versioning.
   See https://github.com/oauth-xx/ruby-openid2/pull/84
 * Check if OpenSSL is loaded - 751e55820d958ee781f5abb466a576d83ddde6fd
 
-## 2.6.0
+## [2.6.0]
 
 * More safely build filenames - 1c4a90630b183e7572b8ab5f2e3a3e0c0fecd2c7
   See https://github.com/oauth-xx/ruby-openid2/pull/80
@@ -250,18 +250,18 @@ Please file a bug if you notice a violation of semantic versioning.
 * Handle boolean value to fix signature issue - d65076269b77754da7db6e4b189edeeb9201600d
   See https://github.com/oauth-xx/ruby-openid2/pull/76
 
-## 2.5.0
+## [2.5.0]
 
 * Revert json serialization - 8dc60e553369df2300ebb4b83a29618aff643c2c
   See https://github.com/oauth-xx/ruby-openid2/pull/73
 
-## 2.4.0
+## [2.4.0]
 
 * Allow expecting a parameter to be nil during return_to verification - 708e992ab3e6c26d478283fc11faa6a0a74bfec0
 * Serialize to objects that can be stored as json - db1d8f7b171a333dec4e861fe0fa53ac1d98b188
 * Fixed missing XRDS HTTP header in sample provider - dc15fa07fd59fdcf46d659cce34c6ef7a6768fde
 
-## 2.3.0
+## [2.3.0]
 
 * Deprecated Ruby 1.8 support - 0694bebc83de0313cfef73a5d0ffd9a293ae71a0
 * Fixed encoding errors in test suite - 7ac8e3978f9c733bd5ee8d6b742b515b5427ded2
@@ -272,26 +272,26 @@ Please file a bug if you notice a violation of semantic versioning.
 * Eliminating runtime warnings - #50 #56
 * Upgrade example Rails provider/consumer app to Rails 3 - #49
 
-## 2.2.3
+## [2.2.3]
 
 * Fixed 'invalid byte sequence in UTF-8' error in parse_link_attrs - 0f46921a97677b83b106366c805063105c5e9f20
 * Fixed license information in gemspec - f032e949e1ca9078ab7508d9629398ca2c36980a
 * Update starts/ends_with? to handle nil prefix - beee5e8d1dc24ad55725cfcc720eefba6bdbd279
 
-## 2.2.2
+## [2.2.2]
 
 * Limit fetching file size & disable XML entity expansion - be2bab5c21f04735045e071411b349afb790078f
 
   Avoid DoS attack to RPs using large XRDS / too many XML entity expansion in XRDS.
 
-## 2.2.1
+## [2.2.1]
 
 * Make bundle exec rake work - 2100f281172427d1557ebe76afbd24072a22d04f
 * State license in gemspec for automated tools / rubygems.org page - 2d5c3cd8f2476b28d60609822120c79d71919b7b
 * Use default-external encoding instead of ascii for badly encoded pages - a68d2591ac350459c874da10108e6ff5a8c08750
 * Colorize output and reveal tests that never ran - 4b0143f0a3b10060d5f52346954219bba3375039
 
-## 2.2.0
+## [2.2.0]
 
 * Bundler compatibility and bundler gem tasks - 72d551945f9577bf5d0e516c673c648791b0e795
 * register_namespace_alias for AX message - aeaf050d21aeb681a220758f1cc61b9086f73152
@@ -302,14 +302,6 @@ Please file a bug if you notice a violation of semantic versioning.
 * Fixed cleanup AR associations whose expiry is past, not upcoming - 2265179a6d5c8b51ccc741180db46b618dd3caf9
 * Fixed issue with Memcache store and Dalli - ef84bf73da9c99c67b0632252bf0349e2360cbc7
 * Improvements to ActiveRecordStore's gc rake task - 847e19bf60a6b8163c1e0d2e96dbd805c64e2880
-
-## [3.1.0] - 2024-09-24
-
-- TAG: [v3.1.0][3.1.0t]
-
-### Changed
-
-- Historical release notes are unavailable in this changelog.
 
 [Unreleased]: https://github.com/ruby-openid/ruby-openid2/compare/v3.1.0...HEAD
 [3.1.0]: https://github.com/ruby-openid/ruby-openid2/compare/bb24b85cb5b14f7742a620e1c046913aaca404c9...v3.1.0
