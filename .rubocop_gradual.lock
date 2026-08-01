@@ -20,7 +20,7 @@
     [271, 7, 3, "Lint/IneffectiveAccessModifier: `protected` (on line 154) does not make singleton methods protected. Use `protected` inside a `class << self` block instead.", 193404514],
     [310, 40, 3, "Style/AndOr: Use `&&` instead of `and`.", 193409806]
   ],
-  "lib/openid/consumer/discovery.rb:158738333": [
+  "lib/openid/consumer/discovery.rb:979722749": [
     [82, 50, 2, "Style/AndOr: Use `||` instead of `or`.", 5861240],
     [130, 25, 3, "Style/AndOr: Use `&&` instead of `and`.", 193409806],
     [165, 27, 3, "Style/AndOr: Use `&&` instead of `and`.", 193409806],
@@ -247,6 +247,9 @@
   ],
   "lib/openid/yadis/xrires.rb:2862132281": [
     [27, 40, 7, "Style/SlicingWithRange: Prefer `[6..]` over `[6..-1]`.", 1255610345]
+  ],
+  "spec/ruby/openid2/version_spec.rb:1676327080": [
+    [4, 1, 30, "RSpec/SpecFilePathFormat: Spec path should end with `open_id/version*_spec.rb`.", 628260338]
   ],
   "test/test_accept.rb:3820315150": [
     [35, 29, 2, "Style/AndOr: Use `||` instead of `or`.", 5861240]

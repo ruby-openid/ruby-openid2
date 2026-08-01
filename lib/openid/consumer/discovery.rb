@@ -92,9 +92,9 @@ module OpenID
       #
       # I consider C{/server} endpoints to implicitly support C{/signon}.
       (
-       @type_uris.member?(type_uri) or
-       (type_uri == OPENID_2_0_TYPE and is_op_identifier)
-     )
+        @type_uris.member?(type_uri) or
+        (type_uri == OPENID_2_0_TYPE and is_op_identifier)
+      )
     end
 
     def compatibility_mode

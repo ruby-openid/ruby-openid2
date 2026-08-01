@@ -3,8 +3,8 @@
 This project is made available under the following licenses.
 Choose the option that best fits your use case:
 
-- [Ruby](Ruby.md)
-- [Apache Software License 2.0](Apache Software License 2.0.md)
+- [Ruby](https://github.com/ruby-openid/ruby-openid2/blob/main/Ruby.md)
+- [Apache Software License 2.0](https://github.com/ruby-openid/ruby-openid2/blob/main/Apache Software License 2.0.md)
 
 If none of the above licenses fit your use case, please [contact us](mailto:floss@galtzo.com) to discuss a custom commercial license.
 
