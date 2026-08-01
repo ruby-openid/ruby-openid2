@@ -302,3 +302,15 @@ Please file a bug if you notice a violation of semantic versioning.
 * Fixed cleanup AR associations whose expiry is past, not upcoming - 2265179a6d5c8b51ccc741180db46b618dd3caf9
 * Fixed issue with Memcache store and Dalli - ef84bf73da9c99c67b0632252bf0349e2360cbc7
 * Improvements to ActiveRecordStore's gc rake task - 847e19bf60a6b8163c1e0d2e96dbd805c64e2880
+
+## [3.1.0] - 2024-09-24
+
+- TAG: [v3.1.0][3.1.0t]
+
+### Changed
+
+- Historical release notes are unavailable in this changelog.
+
+[Unreleased]: https://github.com/ruby-openid/ruby-openid2/compare/v3.1.0...HEAD
+[3.1.0]: https://github.com/ruby-openid/ruby-openid2/compare/bb24b85cb5b14f7742a620e1c046913aaca404c9...v3.1.0
+[3.1.0t]: https://github.com/ruby-openid/ruby-openid2/releases/tag/v3.1.0
