@@ -21,6 +21,14 @@ I've summarized my thoughts in [this blog post](https://dev.to/galtzo/hostile-ta
 
 ## 🌻 Synopsis <a href="https://discord.gg/3qme4XHNKN"><img alt="Galtzo FLOSS Logo by Aboling0, CC BY-SA 4.0" src="https://logos.galtzo.com/assets/images/galtzo-floss/avatar-128px.svg" width="8%" align="right"/></a> <a href="https://ruby-toolbox.com"><img alt="ruby-lang Logo, Yukihiro Matsumoto, Ruby Visual Identity Team, CC BY-SA 2.5" src="https://logos.galtzo.com/assets/images/ruby-lang/avatar-128px.svg" width="8%" align="right"/></a>
 
+ruby-openid2 is the protocol library behind the Ruby OpenID stack. It provides
+consumer and server APIs, discovery, association management, stores, and the
+SReg, Attribute Exchange, PAPE, OAuth, and UI extensions for OpenID 1.x/2.0.
+
+Use it directly when a framework adapter is not appropriate, or use
+`rack-openid2` and `open_id_authentication` for Rack and Rails integration.
+This project implements OpenID, not OpenID Connect (OIDC).
+
 ## 💡 Info you can shake a stick at
 
 | Tokens to Remember | [![Gem name][⛳️name-img]][⛳️gem-name] [![Gem namespace][⛳️namespace-img]][⛳️gem-namespace] |
@@ -118,6 +126,26 @@ gem install ruby-openid2
 ```
 
 ## ⚙️ Configuration
+
+Create an `OpenID::Consumer` for each request with a session-like object and a
+durable store. The session holds the in-progress authentication transaction;
+the store holds associations and nonces shared across requests.
+
+```ruby
+require "openid"
+require "openid/consumer"
+require "openid/store/filesystem"
+
+store = OpenID::Store::Filesystem.new("tmp/openid")
+consumer = OpenID::Consumer.new(session, store)
+```
+
+`OpenID::Store::Memory` is useful for tests and one long-running process, but
+it is not thread-safe or durable. Use `Filesystem`, `Memcache`, or a custom
+`OpenID::Store` implementation for deployments that need state shared across
+requests or processes. When serving as an OpenID provider, construct
+`OpenID::Server::Server` with the same kind of durable store and the public
+endpoint URL.
 
 ## 🔧 Basic Usage
 
