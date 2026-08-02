@@ -27,6 +27,7 @@ plugin "appraisal2-rubocop", require: "appraisal2/rubocop", optional: true
 #    - Matches what contributors and maintainers use locally for development
 #    - Broken workflow indicates that a new contributor will have a bad time
 #
+
 appraise "unlocked_deps" do
   # Seems to be an undeclared dependency of yard.
   # /opt/hostedtoolcache/Ruby/4.0.0/x64/lib/ruby/gems/4.0.0/gems/yard-0.9.38/lib/yard/parser/ruby/legacy/irb/slex.rb:13: warning: irb/notifier is found in irb, which is not part of the default gems since Ruby 4.0.0.
@@ -50,25 +51,14 @@ appraise "unlocked_deps" do
   eval_gemfile "modular/x_std_libs.gemfile"
 end
 
-# Used for head (nightly) releases of ruby, truffleruby, and jruby.
-# Split into discrete appraisals if one of them needs a dependency locked discretely.
 appraise "head" do
   eval_gemfile "modular/x_std_libs.gemfile"
 end
 
-# Used for current releases of ruby, truffleruby, and jruby.
-# Split into discrete appraisals if one of them needs a dependency locked discretely.
 appraise "current" do
   eval_gemfile "modular/x_std_libs.gemfile"
 end
 
-# HOW TO UPDATE APPRAISALS:
-#   BUNDLE_GEMFILE=Appraisal.root.gemfile bundle
-#   BUNDLE_GEMFILE=Appraisal.root.gemfile bundle exec appraisal update
-#   bundle exec rake rubocop_gradual:autocorrect
-
-# Used for HEAD (nightly) releases of ruby, truffleruby, and jruby.
-# Split into discrete appraisals if one of them needs a dependency locked discretely.
 appraise "dep-heads" do
   eval_gemfile "modular/runtime_heads.gemfile"
   remove_gem "appraisal" # only present because it must be in the gemfile because we target a git branch
@@ -101,52 +91,31 @@ appraise "ruby-3-4" do
   eval_gemfile "modular/x_std_libs/r3/libs.gemfile"
 end
 
-# Compat: Ruby >= 2.7
-# Test Matrix:
-#   - Ruby 2.7
 appraise "r2" do
   eval_gemfile "modular/x_std_libs/r2/libs.gemfile"
   remove_gem "appraisal" # only present because it must be in the gemfile because we target a git branch
 end
 
-# Compat: Ruby >= 2.7
-# Test Matrix:
-#   - Ruby 2.7
 appraise "r2-set-1" do
   eval_gemfile "modular/x_std_libs/r2/set-1.gemfile"
   remove_gem "appraisal" # only present because it must be in the gemfile because we target a git branch
 end
 
-# Compat: Ruby >= 2.7
-# Test Matrix:
-#   - Ruby 2.7
 appraise "r2-set-2" do
   eval_gemfile "modular/x_std_libs/r2/set-2.gemfile"
   remove_gem "appraisal" # only present because it must be in the gemfile because we target a git branch
 end
 
-# Compat: Ruby >= 3.0
-#   - Ruby 3.2
-#   - Ruby 3.3
-#   - Ruby 3.4
-#   - JRuby 10.0
 appraise "r3" do
   eval_gemfile "modular/x_std_libs/r3/libs.gemfile"
   remove_gem "appraisal" # only present because it must be in the gemfile because we target a git branch
 end
 
-# Compat: Ruby >= 3.0
-# Test Matrix:
-#   - Ruby 3.1
-#   - JRuby 9.4
 appraise "r3-set-1" do
   eval_gemfile "modular/x_std_libs/r3/set-1.gemfile"
   remove_gem "appraisal" # only present because it must be in the gemfile because we target a git branch
 end
 
-# Compat: Ruby >= 3.0
-# Test Matrix:
-#   - Ruby 3.0
 appraise "r3-set-2" do
   eval_gemfile "modular/x_std_libs/r3/set-2.gemfile"
   remove_gem "appraisal" # only present because it must be in the gemfile because we target a git branch
@@ -157,7 +126,6 @@ appraise "heads" do
   remove_gem "appraisal" # only present because it must be in the gemfile because we target a git branch
 end
 
-# Only run security audit on the latest version of Ruby
 appraise "audit" do
   eval_gemfile "modular/x_std_libs.gemfile"
   eval_gemfile "modular/audit.gemfile"
@@ -165,7 +133,6 @@ appraise "audit" do
   remove_gem "appraisal" # only present because it must be in the gemfile because we target a git branch
 end
 
-# Only run coverage on the latest version of Ruby
 appraise "coverage" do
   eval_gemfile "modular/coverage.gemfile"
   eval_gemfile "modular/optional.gemfile"
@@ -175,13 +142,13 @@ appraise "coverage" do
   remove_gem "appraisal" # only present because it must be in the gemfile because we target a git branch
 end
 
-# Only run linter on the latest version of Ruby (but, in support of the oldest supported Ruby version)
 appraise "style" do
   eval_gemfile "modular/style.gemfile"
   eval_gemfile "modular/x_std_libs.gemfile"
   eval_gemfile "modular/x_std_libs/r3/libs.gemfile"
   remove_gem "appraisal" # only present because it must be in the gemfile because we target a git branch
 end
+
 appraise "templating" do
   eval_gemfile "modular/templating.gemfile"
   eval_gemfile "modular/x_std_libs.gemfile"
