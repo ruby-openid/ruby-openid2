@@ -11,9 +11,9 @@ gem_version =
     # Loading Version into an anonymous module allows version.rb to get code coverage from SimpleCov!
     # See: https://github.com/simplecov-ruby/simplecov/issues/557#issuecomment-2630782358
     # See: https://github.com/panorama-ed/memo_wise/pull/397
-    Module.new.tap { |mod| Kernel.load("#{__dir__}/lib/ruby/openid2/version.rb", mod) }::OpenID::Version::VERSION
+    Module.new.tap { |mod| Kernel.load("#{__dir__}/lib/openid/version.rb", mod) }::OpenID::Version::VERSION
   else
-    require_relative "lib/ruby/openid2/version"
+    require_relative "lib/openid/version"
     OpenID::Version::VERSION
   end
 

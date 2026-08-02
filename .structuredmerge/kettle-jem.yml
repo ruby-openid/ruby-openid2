@@ -101,6 +101,8 @@ ruby:
 
 # RubyGems packaging/runtime shape.
 rubygems:
+  # The ruby-openid2 package preserves the OpenID implementation namespace.
+  entrypoint_require: openid
   # Published runtime Ruby floor used for generated gemspec metadata and README
   # compatibility text. Omit this to derive the value from the gemspec.
   min_ruby: "2.7.0"
