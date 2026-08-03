@@ -13,15 +13,9 @@
 # permissions and limitations under the License.
 
 # External Libraries
-require "version_gem"
-require_relative "openid/version"
 
 module OpenID
 end
 
 require_relative "openid/consumer"
 require_relative "openid/server"
-
-OpenID::Version.class_eval do
-  extend VersionGem::Basic
-end
