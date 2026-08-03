@@ -5,13 +5,42 @@ PATH
       version_gem (~> 1.1, >= 1.1.15)
 
 PATH
+  remote: /home/pboling/src/my/kettle-dev/kettle-dev
+  specs:
+    kettle-dev (2.5.17)
+      emoji_regex (>= 15.0)
+      kettle-gha-pins (~> 0.3, >= 0.3.5)
+      kettle-ndjson (~> 0.1, >= 0.1.10)
+      kettle-rb (~> 0.1, >= 0.1.8)
+      kettle-test (~> 2.0, >= 2.0.18)
+      ruby-progressbar (~> 1.13)
+      tty-progressbar (~> 0.18)
+
+PATH
+  remote: /home/pboling/src/my/kettle-dev/kettle-drift
+  specs:
+    kettle-drift (1.0.11)
+      version_gem (~> 1.1, >= 1.1.15)
+
+PATH
+  remote: /home/pboling/src/my/kettle-dev/kettle-soup-cover
+  specs:
+    kettle-soup-cover (3.0.9)
+      kettle-wash (~> 0.1, >= 0.1.3)
+      simplecov (>= 1.0)
+      simplecov-cobertura (>= 4.0)
+      simplecov-console (~> 0.9, >= 0.9.5)
+      simplecov-rcov (~> 0.3, >= 0.3.7)
+      simplecov_lcov_formatter (~> 0.9, >= 0.9.0)
+
+PATH
   remote: /home/pboling/src/my/structuredmerge/ruby/gems/ast-crispr-markdown-markly
   specs:
     ast-crispr-markdown-markly (7.1.0)
       ast-crispr (= 7.1.0)
       markdown-merge (= 7.1.0)
       markly-merge (= 7.1.0)
-      version_gem (~> 1.1, >= 1.1.14)
+      version_gem (~> 1.1, >= 1.1.15)
 
 PATH
   remote: /home/pboling/src/my/structuredmerge/ruby/gems/ast-crispr-ruby-prism
@@ -19,7 +48,7 @@ PATH
     ast-crispr-ruby-prism (7.1.0)
       ast-crispr (= 7.1.0)
       prism-merge (= 7.1.0)
-      version_gem (~> 1.1, >= 1.1.14)
+      version_gem (~> 1.1, >= 1.1.15)
 
 PATH
   remote: /home/pboling/src/my/structuredmerge/ruby/gems/ast-crispr
@@ -27,7 +56,7 @@ PATH
     ast-crispr (7.1.0)
       ast-merge (= 7.1.0)
       service_actor (~> 3.9)
-      version_gem (~> 1.1, >= 1.1.14)
+      version_gem (~> 1.1, >= 1.1.15)
 
 PATH
   remote: /home/pboling/src/my/structuredmerge/ruby/gems/ast-merge-git
@@ -35,7 +64,7 @@ PATH
     ast-merge-git (7.1.0)
       ast-merge (= 7.1.0)
       json-merge (= 7.1.0)
-      version_gem (~> 1.1, >= 1.1.14)
+      version_gem (~> 1.1, >= 1.1.15)
 
 PATH
   remote: /home/pboling/src/my/structuredmerge/ruby/gems/ast-merge
@@ -44,14 +73,14 @@ PATH
       benchmark
       token-resolver (~> 2.0, >= 2.0.4)
       tree_haver (= 7.1.0)
-      version_gem (~> 1.1, >= 1.1.14)
+      version_gem (~> 1.1, >= 1.1.15)
 
 PATH
   remote: /home/pboling/src/my/structuredmerge/ruby/gems/ast-template
   specs:
     ast-template (7.1.0)
       ast-merge (= 7.1.0)
-      version_gem (~> 1.1, >= 1.1.14)
+      version_gem (~> 1.1, >= 1.1.15)
 
 PATH
   remote: /home/pboling/src/my/structuredmerge/ruby/gems/bash-merge
@@ -59,14 +88,14 @@ PATH
     bash-merge (7.1.0)
       ast-merge (= 7.1.0)
       tree_haver (= 7.1.0)
-      version_gem (~> 1.1, >= 1.1.14)
+      version_gem (~> 1.1, >= 1.1.15)
 
 PATH
   remote: /home/pboling/src/my/structuredmerge/ruby/gems/binary-merge
   specs:
     binary-merge (7.1.0)
       tree_haver (= 7.1.0)
-      version_gem (~> 1.1, >= 1.1.14)
+      version_gem (~> 1.1, >= 1.1.15)
 
 PATH
   remote: /home/pboling/src/my/structuredmerge/ruby/gems/citrus-toml-merge
@@ -74,7 +103,7 @@ PATH
     citrus-toml-merge (7.1.0)
       toml-merge (= 7.1.0)
       toml-rb (~> 4.1)
-      version_gem (~> 1.1, >= 1.1.14)
+      version_gem (~> 1.1, >= 1.1.15)
 
 PATH
   remote: /home/pboling/src/my/structuredmerge/ruby/gems/commonmarker-merge
@@ -82,7 +111,7 @@ PATH
     commonmarker-merge (7.1.0)
       commonmarker (~> 2.2)
       markdown-merge (= 7.1.0)
-      version_gem (~> 1.1, >= 1.1.14)
+      version_gem (~> 1.1, >= 1.1.15)
 
 PATH
   remote: /home/pboling/src/my/structuredmerge/ruby/gems/dotenv-merge
@@ -91,7 +120,7 @@ PATH
       ast-merge (= 7.1.0)
       plain-merge (= 7.1.0)
       tree_haver (= 7.1.0)
-      version_gem (~> 1.1, >= 1.1.14)
+      version_gem (~> 1.1, >= 1.1.15)
 
 PATH
   remote: /home/pboling/src/my/structuredmerge/ruby/gems/go-merge
@@ -99,7 +128,7 @@ PATH
     go-merge (7.1.0)
       ast-merge (= 7.1.0)
       tree_haver (= 7.1.0)
-      version_gem (~> 1.1, >= 1.1.14)
+      version_gem (~> 1.1, >= 1.1.15)
 
 PATH
   remote: /home/pboling/src/my/structuredmerge/ruby/gems/json-merge
@@ -107,7 +136,7 @@ PATH
     json-merge (7.1.0)
       ast-merge (= 7.1.0)
       tree_haver (= 7.1.0)
-      version_gem (~> 1.1, >= 1.1.14)
+      version_gem (~> 1.1, >= 1.1.15)
 
 PATH
   remote: /home/pboling/src/my/structuredmerge/ruby/gems/kettle-jem
@@ -147,7 +176,7 @@ PATH
     kramdown-merge (7.1.0)
       kramdown (~> 2.5)
       markdown-merge (= 7.1.0)
-      version_gem (~> 1.1, >= 1.1.14)
+      version_gem (~> 1.1, >= 1.1.15)
 
 PATH
   remote: /home/pboling/src/my/structuredmerge/ruby/gems/markdown-merge
@@ -155,7 +184,7 @@ PATH
     markdown-merge (7.1.0)
       ast-merge (= 7.1.0)
       tree_haver (= 7.1.0)
-      version_gem (~> 1.1, >= 1.1.14)
+      version_gem (~> 1.1, >= 1.1.15)
 
 PATH
   remote: /home/pboling/src/my/structuredmerge/ruby/gems/markly-merge
@@ -163,7 +192,7 @@ PATH
     markly-merge (7.1.0)
       markdown-merge (= 7.1.0)
       markly (~> 0.9)
-      version_gem (~> 1.1, >= 1.1.14)
+      version_gem (~> 1.1, >= 1.1.15)
 
 PATH
   remote: /home/pboling/src/my/structuredmerge/ruby/gems/parslet-toml-merge
@@ -171,7 +200,7 @@ PATH
     parslet-toml-merge (7.1.0)
       toml (~> 0.3)
       toml-merge (= 7.1.0)
-      version_gem (~> 1.1, >= 1.1.14)
+      version_gem (~> 1.1, >= 1.1.15)
 
 PATH
   remote: /home/pboling/src/my/structuredmerge/ruby/gems/plain-merge
@@ -179,7 +208,7 @@ PATH
     plain-merge (7.1.0)
       ast-merge (= 7.1.0)
       tree_haver (= 7.1.0)
-      version_gem (~> 1.1, >= 1.1.14)
+      version_gem (~> 1.1, >= 1.1.15)
 
 PATH
   remote: /home/pboling/src/my/structuredmerge/ruby/gems/prism-merge
@@ -187,7 +216,7 @@ PATH
     prism-merge (7.1.0)
       prism (~> 1.6)
       ruby-merge (= 7.1.0)
-      version_gem (~> 1.1, >= 1.1.14)
+      version_gem (~> 1.1, >= 1.1.15)
 
 PATH
   remote: /home/pboling/src/my/structuredmerge/ruby/gems/psych-merge
@@ -195,7 +224,7 @@ PATH
     psych-merge (7.1.0)
       ast-merge (= 7.1.0)
       tree_haver (= 7.1.0)
-      version_gem (~> 1.1, >= 1.1.14)
+      version_gem (~> 1.1, >= 1.1.15)
       yaml-merge (= 7.1.0)
 
 PATH
@@ -205,7 +234,7 @@ PATH
       ast-merge (= 7.1.0)
       rbs (>= 3.10)
       tree_haver (= 7.1.0)
-      version_gem (~> 1.1, >= 1.1.14)
+      version_gem (~> 1.1, >= 1.1.15)
 
 PATH
   remote: /home/pboling/src/my/structuredmerge/ruby/gems/ruby-merge
@@ -213,7 +242,7 @@ PATH
     ruby-merge (7.1.0)
       ast-merge (= 7.1.0)
       tree_haver (= 7.1.0)
-      version_gem (~> 1.1, >= 1.1.14)
+      version_gem (~> 1.1, >= 1.1.15)
 
 PATH
   remote: /home/pboling/src/my/structuredmerge/ruby/gems/rust-merge
@@ -221,7 +250,7 @@ PATH
     rust-merge (7.1.0)
       ast-merge (= 7.1.0)
       tree_haver (= 7.1.0)
-      version_gem (~> 1.1, >= 1.1.14)
+      version_gem (~> 1.1, >= 1.1.15)
 
 PATH
   remote: /home/pboling/src/my/structuredmerge/ruby/gems/smorg-rb
@@ -235,7 +264,7 @@ PATH
       kettle-jem (= 7.1.0)
       markly-merge (= 7.1.0)
       plain-merge (= 7.1.0)
-      version_gem (~> 1.1, >= 1.1.14)
+      version_gem (~> 1.1, >= 1.1.15)
 
 PATH
   remote: /home/pboling/src/my/structuredmerge/ruby/gems/toml-merge
@@ -243,7 +272,7 @@ PATH
     toml-merge (7.1.0)
       ast-merge (= 7.1.0)
       tree_haver (= 7.1.0)
-      version_gem (~> 1.1, >= 1.1.14)
+      version_gem (~> 1.1, >= 1.1.15)
 
 PATH
   remote: /home/pboling/src/my/structuredmerge/ruby/gems/tree_haver
@@ -252,7 +281,7 @@ PATH
       citrus (~> 3.0)
       parslet (~> 2.0)
       tree_sitter_language_pack (>= 1.13.2, < 2.0)
-      version_gem (~> 1.1, >= 1.1.14)
+      version_gem (~> 1.1, >= 1.1.15)
 
 PATH
   remote: /home/pboling/src/my/structuredmerge/ruby/gems/typescript-merge
@@ -260,7 +289,7 @@ PATH
     typescript-merge (7.1.0)
       ast-merge (= 7.1.0)
       tree_haver (= 7.1.0)
-      version_gem (~> 1.1, >= 1.1.14)
+      version_gem (~> 1.1, >= 1.1.15)
 
 PATH
   remote: /home/pboling/src/my/structuredmerge/ruby/gems/yaml-merge
@@ -268,7 +297,7 @@ PATH
     yaml-merge (7.1.0)
       ast-merge (= 7.1.0)
       tree_haver (= 7.1.0)
-      version_gem (~> 1.1, >= 1.1.14)
+      version_gem (~> 1.1, >= 1.1.15)
 
 PATH
   remote: /home/pboling/src/my/structuredmerge/ruby/gems/zip-merge
@@ -276,7 +305,7 @@ PATH
     zip-merge (7.1.0)
       binary-merge (= 7.1.0)
       tree_haver (= 7.1.0)
-      version_gem (~> 1.1, >= 1.1.14)
+      version_gem (~> 1.1, >= 1.1.15)
 
 GEM
   remote: https://gem.coop/
@@ -372,17 +401,7 @@ GEM
       rdoc (>= 4.0.0)
       reline (>= 0.4.2)
     json (2.20.0)
-    kettle-dev (2.5.16)
-      emoji_regex (>= 15.0)
-      kettle-gha-pins (~> 0.3, >= 0.3.5)
-      kettle-ndjson (~> 0.1, >= 0.1.10)
-      kettle-rb (~> 0.1, >= 0.1.8)
-      kettle-test (~> 2.0, >= 2.0.18)
-      ruby-progressbar (~> 1.13)
-      tty-progressbar (~> 0.18)
-    kettle-drift (1.0.10)
-      version_gem (~> 1.1, >= 1.1.14)
-    kettle-family (1.2.22)
+    kettle-family (1.2.23)
       command_kit (~> 0.6)
       command_kit-completion (~> 0.1)
       kettle-dev (~> 2.3, >= 2.5.16)
@@ -396,14 +415,7 @@ GEM
     kettle-ndjson (0.1.10)
       version_gem (~> 1.1, >= 1.1.14)
     kettle-rb (0.1.8)
-    kettle-soup-cover (3.0.9)
-      kettle-wash (~> 0.1, >= 0.1.3)
-      simplecov (>= 1.0)
-      simplecov-cobertura (>= 4.0)
-      simplecov-console (~> 0.9, >= 0.9.5)
-      simplecov-rcov (~> 0.3, >= 0.3.7)
-      simplecov_lcov_formatter (~> 0.9, >= 0.9.0)
-    kettle-test (2.0.18)
+    kettle-test (2.0.19)
       appraisal2 (~> 3.0, >= 3.0.6)
       backports (~> 3.0)
       rspec (~> 3.0)
@@ -637,9 +649,9 @@ GEM
       delegate (~> 0.1)
       rspec (~> 3.0)
       timecop (>= 0.7, < 1)
-    token-resolver (2.0.7)
+    token-resolver (2.0.9)
       parslet (~> 2.0)
-      version_gem (~> 1.1, >= 1.1.14)
+      version_gem (~> 1.1, >= 1.1.15)
     toml (0.3.0)
       parslet (>= 1.8.0, < 3.0.0)
     toml-rb (4.2.1)
@@ -719,12 +731,12 @@ DEPENDENCIES
   go-merge!
   irb (~> 1.17)
   json-merge!
-  kettle-dev (~> 2.5, >= 2.5.16)
-  kettle-drift (~> 1.0, >= 1.0.10)
-  kettle-family (~> 1.2, >= 1.2.22)
+  kettle-dev (~> 2.5, >= 2.5.17, >= 0)!
+  kettle-drift!
+  kettle-family (~> 1.2, >= 1.2.23)
   kettle-jem!
-  kettle-soup-cover (~> 3.0, >= 3.0.8)
-  kettle-test (~> 2.0, >= 2.0.18)
+  kettle-soup-cover!
+  kettle-test (~> 2.0, >= 2.0.19)
   kramdown (~> 2.5, >= 2.5.2)
   kramdown-merge!
   kramdown-parser-gfm (~> 1.1)
@@ -732,7 +744,7 @@ DEPENDENCIES
   markly-merge!
   minitest (>= 5, < 6)
   mutex_m (~> 0.2)
-  nomono (~> 1.1, >= 1.1.3)
+  nomono (~> 1.1, >= 1.1.4)
   parslet-toml-merge!
   plain-merge!
   prism-merge!
@@ -765,7 +777,7 @@ DEPENDENCIES
   webrick (~> 1.9, ~> 1.8)
   yaml-converter (~> 0.2, >= 0.2.4)
   yaml-merge!
-  yard (~> 0.9, >= 0.9.45, >= 0.9.37)
+  yard (~> 0.9, >= 0.9.37)
   yard-fence (~> 0.9, >= 0.9.7)
   yard-junk (~> 0.1, >= 0.1.0)
   yard-lint (~> 1.10, >= 1.10.2)
