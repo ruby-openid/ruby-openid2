@@ -248,8 +248,8 @@
   "lib/openid/yadis/xrires.rb:2862132281": [
     [27, 40, 7, "Style/SlicingWithRange: Prefer `[6..]` over `[6..-1]`.", 1255610345]
   ],
-  "spec/openid/version_spec.rb:1772597672": [
-    [4, 1, 30, "RSpec/SpecFilePathFormat: Spec path should end with `open_id/version*_spec.rb`.", 628260338]
+  "spec/openid/version_spec.rb:3276189142": [
+    [5, 1, 30, "RSpec/SpecFilePathFormat: Spec path should end with `open_id/version*_spec.rb`.", 628260338]
   ],
   "test/test_accept.rb:3820315150": [
     [35, 29, 2, "Style/AndOr: Use `||` instead of `or`.", 5861240]
