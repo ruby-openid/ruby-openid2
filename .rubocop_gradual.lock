@@ -1,4 +1,7 @@
 {
+  "gemfiles/modular/templating.gemfile:3018447732": [
+    [14, 3, 47, "Bundler/DuplicatedGem: Gem `tree_sitter_language_pack` requirements already given on line 10 of the Gemfile.", 3843603197]
+  ],
   "lib/hmac/hmac.rb:2320987708": [
     [42, 7, 102, "Style/For: Prefer `each` over `for`.", 141019575]
   ],
@@ -248,7 +251,7 @@
   "lib/openid/yadis/xrires.rb:2862132281": [
     [27, 40, 7, "Style/SlicingWithRange: Prefer `[6..]` over `[6..-1]`.", 1255610345]
   ],
-  "spec/openid/version_spec.rb:3276189142": [
+  "spec/openid/version_spec.rb:2314101301": [
     [5, 1, 30, "RSpec/SpecFilePathFormat: Spec path should end with `open_id/version*_spec.rb`.", 628260338]
   ],
   "test/test_accept.rb:3820315150": [
