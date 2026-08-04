@@ -13,6 +13,7 @@
 # permissions and limitations under the License.
 
 # External Libraries
+require_relative "openid/version"
 
 module OpenID
 end
