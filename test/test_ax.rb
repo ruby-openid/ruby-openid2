@@ -271,7 +271,7 @@ module OpenID
         a = AttrInfo.new(uri)
         @msg.add(a)
 
-        assert_includes(@msg, uri)
+        assert_operator(@msg, :member?, uri)
       end
 
       def test_add_twice
@@ -352,7 +352,7 @@ module OpenID
         }
         @msg.parse_extension_args(args)
 
-        assert_includes(@msg, @type_a)
+        assert_operator(@msg, :member?, @type_a)
         assert_equal([@type_a], @msg.requested_types)
         ai = @msg.requested_attributes[@type_a]
 

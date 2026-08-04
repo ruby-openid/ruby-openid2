@@ -110,7 +110,7 @@ module OpenID
           @checkid_req.add_extension_arg("bag:", "color", "brown")
           @checkid_req.add_extension_arg("bag:", "material", "paper")
 
-          assert_includes(@checkid_req.message.namespaces, "bag:")
+          assert_operator(@checkid_req.message.namespaces, :member?, "bag:")
           assert_equal(
             {"color" => "brown", "material" => "paper"},
             @checkid_req.message.get_args("bag:")

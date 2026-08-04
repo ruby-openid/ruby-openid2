@@ -279,7 +279,7 @@
     [778, 5, 313, "Minitest/MultipleAssertions: Test case has too many assertions [5/3].", 1298333944],
     [843, 7, 17, "Minitest/RefuteFalse: Prefer using `refute(ret.nil?)`.", 1970104094]
   ],
-  "test/test_ax.rb:202191143": [
+  "test/test_ax.rb:2587225191": [
     [15, 15, 7, "ThreadSafety/MutableClassInstanceVariable: Freeze mutable objects assigned to class instance variables.", 480804425],
     [46, 7, 317, "Minitest/MultipleAssertions: Test case has too many assertions [5/3].", 2981613125],
     [53, 9, 35, "Minitest/RefuteFalse: Prefer using `refute(ainfo.required)`.", 2720445676],
@@ -287,7 +287,7 @@
     [270, 9, 26, "Minitest/RefuteFalse: Prefer using `refute(@msg.member?(uri))`.", 4033074256],
     [299, 30, 3, "Style/AndOr: Use `&&` instead of `and`.", 193409806],
     [300, 22, 7, "Style/SlicingWithRange: Prefer `[5..]` over `[5..-1]`.", 1292445706],
-    [347, 7, 558, "Minitest/MultipleAssertions: Test case has too many assertions [7/3].", 2180506076],
+    [347, 7, 568, "Minitest/MultipleAssertions: Test case has too many assertions [7/3].", 2180506076],
     [360, 9, 20, "Minitest/RefuteFalse: Prefer using `refute(ai.required)`.", 3437055720],
     [375, 9, 52, "Minitest/RefuteFalse: Prefer using `refute(@msg.requested_attributes[@type_a].required)`.", 2345955159],
     [794, 9, 26, "Minitest/RefuteFalse: Prefer using `refute(msg.error_message)`.", 3132408732],
@@ -295,7 +295,7 @@
     [805, 9, 26, "Minitest/RefuteFalse: Prefer using `refute(msg.error_message)`.", 3132408732],
     [816, 9, 23, "Minitest/RefuteFalse: Prefer using `refute(msg.succeeded?)`.", 527737196]
   ],
-  "test/test_checkid_request.rb:2543593411": [
+  "test/test_checkid_request.rb:2095842997": [
     [301, 13, 35, "Naming/ClassAndModuleCamelCase: Use CamelCase for classes and modules.", 4259957932]
   ],
   "test/test_dh.rb:1252250296": [
