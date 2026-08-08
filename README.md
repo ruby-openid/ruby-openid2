@@ -149,6 +149,22 @@ endpoint URL.
 
 ## 🔧 Basic Usage
 
+Create a consumer with a durable store, begin authentication with the
+provider URL, and redirect the user to the returned authentication URL:
+
+```ruby
+require "openid/consumer"
+require "openid/store/filesystem"
+
+store = OpenID::Store::Filesystem.new("tmp/openid")
+consumer = OpenID::Consumer.new(session, store)
+request = consumer.begin("https://provider.example/openid")
+redirect_to request.redirect_url("https://example.test/openid/callback")
+```
+
+On the callback request, pass the provider response back to the consumer and
+handle the resulting `OpenID::Consumer::Response` according to its status.
+
 ## 🔐 Security
 
 See [SECURITY.md][🔐security].
