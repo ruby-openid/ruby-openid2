@@ -48,7 +48,7 @@ This project implements OpenID, not OpenID Connect (OIDC).
 
 ### Compatibility
 
-Compatible with MRI Ruby 2.7.0+, and concordant releases of JRuby, and TruffleRuby.
+Compatible with MRI Ruby 2.7.0+, JRuby, and TruffleRuby.
 CI workflows and Appraisals are generated for MRI Ruby 2.7.0+.
 This test floor is configured by `ruby.test_minimum` in `.kettle-jem.yml` and
 may be higher than the gem's runtime compatibility floor when legacy Rubies are
@@ -87,7 +87,9 @@ The _amazing_ test matrix is powered by the kettle-dev stack.
 
 </details>
 
-### Enterprise Support [![Tidelift](https://tidelift.com/badges/package/rubygems/ruby-openid2)](https://tidelift.com/subscription/pkg/rubygems-ruby-openid2?utm_source=rubygems-ruby-openid2&utm_medium=referral&utm_campaign=readme)
+### Enterprise Support
+
+[![Tidelift](https://tidelift.com/badges/package/rubygems/ruby-openid2)](https://tidelift.com/subscription/pkg/rubygems-ruby-openid2?utm_source=rubygems-ruby-openid2&utm_medium=referral&utm_campaign=readme)
 
 Available as part of the Tidelift Subscription.
 
@@ -172,8 +174,7 @@ See [SECURITY.md][🔐security].
 ## 🤝 Contributing
 
 If you need some ideas of where to help, you could work on adding more code coverage,
-or if it is already 💯 (see [below](#code-coverage)) check [issues][🤝gh-issues] or [PRs][🤝gh-pulls],
-or use the gem and think about how it could be better.
+check [issues][🤝gh-issues] or [PRs][🤝gh-pulls], or use the gem and think about how it could be better.
 
 We [![Keep A Changelog][📗keep-changelog-img]][📗keep-changelog] so if you make changes, remember to update it.
 
@@ -208,19 +209,6 @@ chat rooms and mailing lists agrees to follow the [![Contributor Covenant 2.1][�
 Made with [contributors-img][🖐contrib-rocks].
 
 Also see GitLab Contributors: [https://gitlab.com/ruby-openid/ruby-openid2/-/graphs/main][🚎contributors-gl]
-
-<details markdown="1">
- <summary>⭐️ Star History</summary>
-
-<a href="https://star-history.com/ruby-openid/ruby-openid2&Date">
- <picture>
- <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=ruby-openid/ruby-openid2&type=Date&theme=dark" />
- <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=ruby-openid/ruby-openid2&type=Date" />
- <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=ruby-openid/ruby-openid2&type=Date" />
- </picture>
-</a>
-
-</details>
 
 ## 📌 Versioning
 
@@ -262,15 +250,11 @@ See [LICENSE.md][📄license] for the official copyright notice.
 <details markdown="1">
 <summary>Copyright holders</summary>
 
-- Copyright (c) 2005-2007 tailor
+- Copyright (c) 2005-2009 tailor
 - Copyright (c) 2006 Josh Hoyt
 - Copyright (c) 2007-2008 http://j3h.us/
 - Copyright (c) 2007-2008 Kevin Turner
-- Copyright (c) 2007-2008 tailor
-- Copyright (c) 2007-2009 tailor
 - Copyright (c) 2008-2010 Carl Howells
-- Copyright (c) 2008 tailor
-- Copyright (c) 2008 tailor
 - Copyright (c) 2010 dbloete
 - Copyright (c) 2010 Kouhei Sutou
 - Copyright (c) 2010 Lilli
@@ -281,15 +265,14 @@ See [LICENSE.md][📄license] for the official copyright notice.
 - Copyright (c) 2011 Tom Quackenbush
 - Copyright (c) 2012 Cal Heldenbrand
 - Copyright (c) 2012-2015 Dennis Reimann
-- Copyright (c) 2012 grosser
+- Copyright (c) 2012, 2014 grosser
 - Copyright (c) 2013 Akira Matsuda
 - Copyright (c) 2013 Kendall Buchanan
 - Copyright (c) 2013 Kenichi Kamiya
 - Copyright (c) 2013 Marcel M. Cary
 - Copyright (c) 2013 Mike Dillon
-- Copyright (c) 2013, 2019 Tobias Haagen Michaelsen
+- Copyright (c) 2013, 2018-2019 Tobias Haagen Michaelsen
 - Copyright (c) 2013 Zaid Zawaideh
-- Copyright (c) 2014 grosser
 - Copyright (c) 2014 Ken Dreyer
 - Copyright (c) 2014 ppretorius
 - Copyright (c) 2014 tsukasaoishi
@@ -297,7 +280,6 @@ See [LICENSE.md][📄license] for the official copyright notice.
 - Copyright (c) 2017 Kazuhiro Serizawa
 - Copyright (c) 2018 Abraham Sangha
 - Copyright (c) 2018 IanAtLooker
-- Copyright (c) 2018-2019 Tobias Haagen Michaelsen
 - Copyright (c) 2019 Olle Jonsson
 - Copyright (c) 2019 Utkarsh Gupta
 - Copyright (c) 2019 Vadim Shaulski
