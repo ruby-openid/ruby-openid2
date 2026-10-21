@@ -1,19 +1,6 @@
 {
-  "gemfiles/modular/coverage_local.gemfile:2661471746": [
-    [19, 27, 4, "Lint/LtsRuby/UnavailableMethod: Symbol#name is unavailable before Ruby 3.0.", 2087876002],
-    [37, 101, 4, "Lint/LtsRuby/UnavailableMethod: Symbol#name is unavailable before Ruby 3.0.", 2087876002],
-    [49, 31, 4, "Lint/LtsRuby/UnavailableMethod: Symbol#name is unavailable before Ruby 3.0.", 2087876002]
-  ],
-  "gemfiles/modular/documentation_local.gemfile:3227795705": [
-    [19, 27, 4, "Lint/LtsRuby/UnavailableMethod: Symbol#name is unavailable before Ruby 3.0.", 2087876002]
-  ],
-  "gemfiles/modular/style_local.gemfile:1902896522": [
-    [22, 27, 4, "Lint/LtsRuby/UnavailableMethod: Symbol#name is unavailable before Ruby 3.0.", 2087876002]
-  ],
-  "gemfiles/modular/templating_local.gemfile:1318235891": [
-    [20, 27, 4, "Lint/LtsRuby/UnavailableMethod: Symbol#name is unavailable before Ruby 3.0.", 2087876002],
-    [85, 101, 4, "Lint/LtsRuby/UnavailableMethod: Symbol#name is unavailable before Ruby 3.0.", 2087876002],
-    [97, 31, 4, "Lint/LtsRuby/UnavailableMethod: Symbol#name is unavailable before Ruby 3.0.", 2087876002]
+  "gemfiles/modular/style_local.gemfile:3010284027": [
+    [71, 23, 20, "Style/SafeNavigation: Use safe navigation (`&.`) instead of checking if an object exists before calling the method.", 1851388465]
   ],
   "lib/hmac/hmac.rb:2320987708": [
     [42, 7, 102, "Style/For: Prefer `each` over `for`.", 141019575]
@@ -22,7 +9,6 @@
     [149, 45, 2, "Style/AndOr: Use `||` instead of `or`.", 5861240],
     [155, 90, 3, "Style/AndOr: Use `&&` instead of `and`.", 193409806],
     [163, 25, 7, "Style/SlicingWithRange: Prefer `[7..]` over `[7..-1]`.", 1218774984],
-    [169, 63, 4, "Lint/LtsRuby/UnavailableMethod: Set#join is unavailable before Ruby 3.0.", 2088000679],
     [219, 7, 99, "Style/For: Prefer `each` over `for`.", 781032692]
   ],
   "lib/openid/consumer/associationmanager.rb:1394646289": [
@@ -32,7 +18,6 @@
     [69, 30, 15, "ThreadSafety/MutableClassInstanceVariable: Freeze mutable objects assigned to class instance variables.", 2986356738],
     [78, 23, 15, "ThreadSafety/MutableClassInstanceVariable: Freeze mutable objects assigned to class instance variables.", 1745937094],
     [79, 30, 25, "ThreadSafety/MutableClassInstanceVariable: Freeze mutable objects assigned to class instance variables.", 3501034513],
-    [159, 25, 10, "Lint/LtsRuby/UnavailableMethod: Socket::ResolutionError#error_code is unavailable before Ruby 3.4.", 1051624367],
     [159, 58, 2, "Style/AndOr: Use `||` instead of `or`.", 5861240],
     [176, 28, 2, "Style/AndOr: Use `||` instead of `or`.", 5861240],
     [271, 7, 3, "Lint/IneffectiveAccessModifier: `protected` (on line 154) does not make singleton methods protected. Use `protected` inside a `class << self` block instead.", 193404514],
@@ -45,7 +30,6 @@
     [165, 50, 3, "Style/AndOr: Use `&&` instead of `and`.", 193409806],
     [253, 44, 1, "Style/LineEndConcatenation: Use `\\` instead of `+` to concatenate multiline strings.", 177550],
     [282, 43, 2, "Style/AndOr: Use `||` instead of `or`.", 5861240],
-    [315, 25, 5, "Lint/LtsRuby/UnavailableMethod: MatchData#match is unavailable before Ruby 3.1.", 174531222],
     [472, 32, 3, "Style/AndOr: Use `&&` instead of `and`.", 193409806],
     [497, 28, 3, "Style/AndOr: Use `&&` instead of `and`.", 193409806]
   ],
@@ -71,12 +55,9 @@
   "lib/openid/dh.rb:3415820258": [
     [52, 5, 3, "Lint/IneffectiveAccessModifier: `private` (on line 45) does not make singleton methods private. Use `private_class_method` or `private` inside a `class << self` block instead.", 193404514],
     [54, 62, 1, "Style/LineEndConcatenation: Use `\\` instead of `+` to concatenate multiline strings.", 177550],
-    [63, 14, 4, "Lint/LtsRuby/UnavailableMethod: Set#join is unavailable before Ruby 3.0.", 2088000679],
     [70, 5, 3, "Lint/IneffectiveAccessModifier: `private` (on line 45) does not make singleton methods private. Use `private_class_method` or `private` inside a `class << self` block instead.", 193404514]
   ],
   "lib/openid/extensions/ax.rb:3931824426": [
-    [165, 40, 4, "Lint/LtsRuby/UnavailableMethod: Set#join is unavailable before Ruby 3.0.", 2088000679],
-    [166, 48, 4, "Lint/LtsRuby/UnavailableMethod: Set#join is unavailable before Ruby 3.0.", 2088000679],
     [188, 33, 2, "Style/AndOr: Use `||` instead of `or`.", 5861240],
     [199, 25, 2, "Style/AndOr: Use `||` instead of `or`.", 5861240],
     [220, 19, 7, "Style/SlicingWithRange: Prefer `[5..]` over `[5..-1]`.", 1292445706],
@@ -88,21 +69,17 @@
     [547, 58, 3, "Style/AndOr: Use `&&` instead of `and`.", 193409806]
   ],
   "lib/openid/extensions/pape.rb:2189790188": [
-    [40, 65, 4, "Lint/LtsRuby/UnavailableMethod: Set#join is unavailable before Ruby 3.0.", 2088000679],
     [63, 9, 121, "Style/SafeNavigation: Use safe navigation (`&.`) instead of checking if an object exists before calling the method.", 1451264569],
     [70, 26, 41, "Style/SafeNavigation: Use safe navigation (`&.`) instead of checking if an object exists before calling the method.", 986556649],
     [116, 66, 3, "Style/AndOr: Use `&&` instead of `and`.", 193409806],
     [128, 25, 3, "Style/AndOr: Use `&&` instead of `and`.", 193409806],
     [128, 45, 3, "Style/AndOr: Use `&&` instead of `and`.", 193409806],
-    [151, 26, 4, "Lint/LtsRuby/UnavailableMethod: Set#join is unavailable before Ruby 3.0.", 2088000679],
     [154, 25, 7, "Performance/RangeInclude: Use `Range#cover?` instead of `Range#member?`.", 1205904490]
   ],
   "lib/openid/extensions/sreg.rb:1019917795": [
     [126, 36, 2, "Style/AndOr: Use `||` instead of `or`.", 5861240],
     [135, 36, 2, "Style/AndOr: Use `||` instead of `or`.", 5861240],
-    [189, 67, 3, "Style/AndOr: Use `&&` instead of `and`.", 193409806],
-    [201, 38, 4, "Lint/LtsRuby/UnavailableMethod: Set#join is unavailable before Ruby 3.0.", 2088000679],
-    [202, 38, 4, "Lint/LtsRuby/UnavailableMethod: Set#join is unavailable before Ruby 3.0.", 2088000679]
+    [189, 67, 3, "Style/AndOr: Use `&&` instead of `and`.", 193409806]
   ],
   "lib/openid/fetchers.rb:2874777401": [
     [11, 72, 1, "Style/LineEndConcatenation: Use `\\` instead of `+` to concatenate multiline strings.", 177550],
@@ -117,8 +94,7 @@
     [273, 29, 1, "Lint/AssignmentInCondition: Wrap assignment in parentheses if intentional", 177560]
   ],
   "lib/openid/kvform.rb:3999429111": [
-    [2, 23, 9, "Lint/InheritException: Inherit from `RuntimeError` instead of `Exception`.", 3513723378],
-    [45, 13, 4, "Lint/LtsRuby/UnavailableMethod: Set#join is unavailable before Ruby 3.0.", 2088000679]
+    [2, 23, 9, "Lint/InheritException: Inherit from `RuntimeError` instead of `Exception`.", 3513723378]
   ],
   "lib/openid/kvpost.rb:1986335172": [
     [57, 5, 93, "Lint/RescueException: Avoid rescuing the `Exception` class. Perhaps you meant to rescue `StandardError`?", 2065347935]
@@ -191,20 +167,15 @@
   "lib/openid/store/filesystem.rb:120224944": [
     [14, 7, 18, "Naming/VariableName: Use snake_case for variable names.", 2080787395],
     [14, 95, 9, "Style/StringChars: Use `chars` instead of `split(\"\")`.", 3028920950],
-    [41, 59, 4, "Lint/LtsRuby/UnavailableMethod: Set#join is unavailable before Ruby 3.0.", 2088000679],
-    [136, 23, 3, "Style/AndOr: Use `&&` instead of `and`.", 193409806],
-    [218, 15, 4, "Lint/LtsRuby/UnavailableMethod: IO/SyntaxError#path is unavailable before Ruby 3.2.", 2088095368],
-    [232, 13, 4, "Lint/LtsRuby/UnavailableMethod: Set#join is unavailable before Ruby 3.0.", 2088000679]
+    [136, 23, 3, "Style/AndOr: Use `&&` instead of `and`.", 193409806]
   ],
   "lib/openid/store/memory.rb:2654988648": [
-    [26, 25, 21, "Style/RedundantSort: Use `max_by` instead of `sort_by...[-1]`.", 1987196289],
-    [40, 47, 4, "Lint/LtsRuby/UnavailableMethod: Set#join is unavailable before Ruby 3.0.", 2088000679]
+    [26, 25, 21, "Style/RedundantSort: Use `max_by` instead of `sort_by...[-1]`.", 1987196289]
   ],
   "lib/openid/store/nonce.rb:368349538": [
     [13, 5, 12, "Naming/VariableName: Use snake_case for variable names.", 2011612633],
     [21, 7, 5, "ThreadSafety/ClassInstanceVariable: Avoid class instance variables.", 214151279],
     [25, 7, 5, "ThreadSafety/ClassInstanceVariable: Avoid class instance variables.", 214151279],
-    [32, 48, 5, "Lint/LtsRuby/UnavailableMethod: MatchData#match is unavailable before Ruby 3.1.", 174531222],
     [37, 21, 18, "Style/SlicingWithRange: Prefer `[TIME_STR_LEN..]` over `[TIME_STR_LEN..-1]`.", 3191431288],
     [57, 8, 33, "Style/ComparableBetween: Prefer `stamp.between?(past, future)` over logical comparison.", 3964739741]
   ],
@@ -216,7 +187,6 @@
     [382, 53, 5, "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.", 235583841],
     [386, 86, 2, "Style/AndOr: Use `||` instead of `or`.", 5861240],
     [403, 65, 1, "Style/LineEndConcatenation: Use `\\` instead of `+` to concatenate multiline strings.", 177550],
-    [441, 20, 4, "Lint/LtsRuby/UnavailableMethod: IO/SyntaxError#path is unavailable before Ruby 3.2.", 2088095368],
     [462, 24, 3, "Style/AndOr: Use `&&` instead of `and`.", 193409806],
     [475, 26, 3, "Style/AndOr: Use `&&` instead of `and`.", 193409806],
     [512, 29, 3, "Style/AndOr: Use `&&` instead of `and`.", 193409806],
@@ -225,23 +195,18 @@
     [577, 42, 3, "Style/AndOr: Use `&&` instead of `and`.", 193409806]
   ],
   "lib/openid/urinorm.rb:2923360867": [
-    [22, 42, 4, "Lint/LtsRuby/UnavailableMethod: IO/SyntaxError#path is unavailable before Ruby 3.2.", 2088095368],
-    [23, 29, 4, "Lint/LtsRuby/UnavailableMethod: IO/SyntaxError#path is unavailable before Ruby 3.2.", 2088095368],
     [44, 22, 7, "Style/SlicingWithRange: Prefer `[3..]` over `[3..-1]`.", 1366107980],
     [46, 22, 7, "Style/SlicingWithRange: Prefer `[2..]` over `[2..-1]`.", 1402943341],
     [48, 22, 7, "Style/SlicingWithRange: Prefer `[2..]` over `[2..-1]`.", 1402943341],
     [52, 22, 7, "Style/SlicingWithRange: Prefer `[3..]` over `[3..-1]`.", 1366107980],
-    [65, 22, 7, "Style/SlicingWithRange: Prefer `[i..]` over `[i..-1]`.", 4275943254],
-    [69, 23, 4, "Lint/LtsRuby/UnavailableMethod: Set#join is unavailable before Ruby 3.0.", 2088000679]
+    [65, 22, 7, "Style/SlicingWithRange: Prefer `[i..]` over `[i..-1]`.", 4275943254]
   ],
   "lib/openid/util.rb:1761632023": [
     [7, 26, 9, "Lint/InheritException: Inherit from `RuntimeError` instead of `Exception`.", 3513723378],
-    [59, 9, 4, "Lint/LtsRuby/UnavailableMethod: Set#join is unavailable before Ruby 3.0.", 2088000679],
     [78, 27, 6, "Style/GlobalStdStream: Use `$stderr` instead of `STDERR`.", 3356712163]
   ],
   "lib/openid/yadis/accept.rb:4034517750": [
     [15, 79, 2, "Style/AndOr: Use `||` instead of `or`.", 5861240],
-    [33, 14, 4, "Lint/LtsRuby/UnavailableMethod: Set#join is unavailable before Ruby 3.0.", 2088000679],
     [87, 38, 2, "Style/AndOr: Use `||` instead of `or`.", 5861240]
   ],
   "lib/openid/yadis/discovery.rb:2846997721": [
@@ -274,29 +239,19 @@
     [40, 45, 3, "Style/AndOr: Use `&&` instead of `and`.", 193409806]
   ],
   "lib/openid/yadis/xrds.rb:2616563538": [
-    [48, 34, 4, "Lint/LtsRuby/UnavailableMethod: Symbol#name is unavailable before Ruby 3.0.", 2087876002],
     [60, 15, 7, "Style/SlicingWithRange: Prefer `[1..]` over `[1..-1]`.", 1439778702],
-    [104, 7, 10, "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.", 517067060],
-    [114, 19, 4, "Lint/LtsRuby/UnavailableMethod: Symbol#name is unavailable before Ruby 3.0.", 2087876002],
-    [156, 43, 3, "Lint/LtsRuby/UnavailableMethod: Set#<=> is unavailable before Ruby 3.0.", 193362234]
+    [104, 7, 10, "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.", 517067060]
   ],
   "lib/openid/yadis/xri.rb:2593964827": [
     [11, 29, 3, "Style/AndOr: Use `&&` instead of `and`.", 193409806],
     [12, 35, 3, "Style/AndOr: Use `&&` instead of `and`.", 193409806],
-    [13, 25, 5, "Lint/LtsRuby/UnavailableMethod: MatchData#match is unavailable before Ruby 3.1.", 174531222],
     [13, 42, 2, "Style/AndOr: Use `||` instead of `or`.", 5861240],
     [67, 18, 7, "Style/SlicingWithRange: Prefer `[6..]` over `[6..-1]`.", 1255610345]
   ],
   "lib/openid/yadis/xrires.rb:2862132281": [
-    [27, 40, 7, "Style/SlicingWithRange: Prefer `[6..]` over `[6..-1]`.", 1255610345],
-    [67, 11, 4, "Lint/LtsRuby/UnavailableMethod: Set#join is unavailable before Ruby 3.0.", 2088000679]
+    [27, 40, 7, "Style/SlicingWithRange: Prefer `[6..]` over `[6..-1]`.", 1255610345]
   ],
-  "ruby-openid2.gemspec:411082531": [
-    [54, 78, 4, "Lint/LtsRuby/UnavailableMethod: Symbol#name is unavailable before Ruby 3.0.", 2087876002],
-    [57, 71, 4, "Lint/LtsRuby/UnavailableMethod: Symbol#name is unavailable before Ruby 3.0.", 2087876002],
-    [96, 13, 4, "Lint/LtsRuby/UnavailableMethod: Symbol#name is unavailable before Ruby 3.0.", 2087876002]
-  ],
-  "spec/openid/version_spec.rb:2314101301": [
+  "spec/openid/version_spec.rb:1532657274": [
     [5, 1, 30, "RSpec/SpecFilePathFormat: Spec path should end with `open_id/version*_spec.rb`.", 628260338]
   ],
   "test/test_accept.rb:3820315150": [
@@ -328,7 +283,6 @@
     [15, 15, 7, "ThreadSafety/MutableClassInstanceVariable: Freeze mutable objects assigned to class instance variables.", 480804425],
     [46, 7, 317, "Minitest/MultipleAssertions: Test case has too many assertions [5/3].", 2981613125],
     [53, 9, 35, "Minitest/RefuteFalse: Prefer using `refute(ainfo.required)`.", 2720445676],
-    [95, 57, 4, "Lint/LtsRuby/UnavailableMethod: Set#join is unavailable before Ruby 3.0.", 2088000679],
     [257, 7, 255, "Minitest/MultipleAssertions: Test case has too many assertions [4/3].", 3054475557],
     [270, 9, 26, "Minitest/RefuteFalse: Prefer using `refute(@msg.member?(uri))`.", 4033074256],
     [299, 30, 3, "Style/AndOr: Use `&&` instead of `and`.", 193409806],
@@ -344,11 +298,7 @@
   "test/test_checkid_request.rb:2095842997": [
     [301, 13, 35, "Naming/ClassAndModuleCamelCase: Use CamelCase for classes and modules.", 4259957932]
   ],
-  "test/test_cryptutil.rb:403716491": [
-    [72, 25, 4, "Lint/LtsRuby/UnavailableMethod: Set#join is unavailable before Ruby 3.0.", 2088000679]
-  ],
   "test/test_dh.rb:1252250296": [
-    [44, 55, 4, "Lint/LtsRuby/UnavailableMethod: Set#join is unavailable before Ruby 3.0.", 2088000679],
     [93, 7, 33, "Minitest/RefuteFalse: Prefer using `refute(dh.using_default_values?)`.", 3432763311]
   ],
   "test/test_discover.rb:1646957714": [
@@ -360,7 +310,6 @@
     [181, 9, 23, "Minitest/RefuteFalse: Prefer using `refute(s.get_local_id)`.", 579848844],
     [182, 9, 29, "Minitest/RefuteFalse: Prefer using `refute(s.compatibility_mode)`.", 4108014984],
     [196, 9, 90, "Minitest/RefuteFalse: Prefer using `refute(s.used_yadis, \"Expected to use old-style discovery\")`.", 4285163162],
-    [596, 15, 4, "Lint/LtsRuby/UnavailableMethod: IO/SyntaxError#path is unavailable before Ruby 3.2.", 2088095368],
     [599, 19, 3, "Style/AndOr: Use `&&` instead of `and`.", 193409806],
     [600, 77, 1, "Style/LineEndConcatenation: Use `\\` instead of `+` to concatenate multiline strings.", 177550],
     [604, 16, 7, "Style/SlicingWithRange: Prefer `[1..]` over `[1..-1]`.", 1439778702],
@@ -391,16 +340,13 @@
   ],
   "test/test_fetchers.rb:3870533291": [
     [161, 22, 10, "ThreadSafety/NewThread: Avoid starting new threads.", 3411682361],
-    [210, 20, 4, "Lint/LtsRuby/UnavailableMethod: Set#join is unavailable before Ruby 3.0.", 2088000679],
-    [321, 5, 901, "Style/For: Prefer `each` over `for`.", 316016311],
-    [347, 33, 9, "Lint/LtsRuby/UnavailableMethod: Fiber#backtrace is unavailable before Ruby 3.0.", 2410411503]
+    [321, 5, 901, "Style/For: Prefer `each` over `for`.", 316016311]
   ],
   "test/test_filters.rb:1616124441": [
     [15, 5, 932, "Minitest/MultipleAssertions: Test case has too many assertions [8/3].", 4216474825],
     [239, 5, 772, "Minitest/MultipleAssertions: Test case has too many assertions [5/3].", 2350478530]
   ],
   "test/test_idres.rb:3257592429": [
-    [45, 58, 4, "Lint/LtsRuby/UnavailableMethod: Set#join is unavailable before Ruby 3.0.", 2088000679],
     [49, 9, 639, "Lint/UselessTimes: Useless call to `1.times` detected.", 3268406946],
     [69, 9, 763, "Lint/UselessTimes: Useless call to `1.times` detected.", 1636349805],
     [91, 9, 1080, "Lint/UselessTimes: Useless call to `1.times` detected.", 2434943693],
@@ -411,14 +357,10 @@
     [509, 15, 7, "ThreadSafety/ClassInstanceVariable: Avoid class instance variables.", 764524831],
     [510, 15, 8, "ThreadSafety/ClassInstanceVariable: Avoid class instance variables.", 2800675911],
     [701, 9, 426, "Minitest/MultipleAssertions: Test case has too many assertions [4/3].", 2205583380],
-    [858, 38, 9, "Lint/InheritException: Inherit from `RuntimeError` instead of `Exception`.", 3513723378],
-    [956, 39, 4, "Lint/LtsRuby/UnavailableMethod: Set#join is unavailable before Ruby 3.0.", 2088000679]
+    [858, 38, 9, "Lint/InheritException: Inherit from `RuntimeError` instead of `Exception`.", 3513723378]
   ],
   "test/test_kvform.rb:341235883": [
     [10, 1, 14, "Style/MixinUsage: `include` is used at the top level. Use inside `class` or `module`.", 692834240]
-  ],
-  "test/test_kvpost.rb:910485084": [
-    [36, 35, 10, "Lint/LtsRuby/UnavailableMethod: Socket::ResolutionError#error_code is unavailable before Ruby 3.4.", 1051624367]
   ],
   "test/test_linkparse.rb:223320871": [
     [20, 29, 3, "Style/AndOr: Use `&&` instead of `and`.", 193409806],
@@ -452,12 +394,10 @@
     [1076, 7, 34, "Minitest/RefuteFalse: Prefer using `refute(@m.is_openid1)`.", 4103735530],
     [1080, 7, 33, "Minitest/AssertTruthy: Prefer using `assert(@m.is_openid2)`.", 1385749250],
     [1145, 47, 3, "Style/AndOr: Use `&&` instead of `and`.", 193409806],
-    [1146, 16, 4, "Lint/LtsRuby/UnavailableMethod: Symbol#name is unavailable before Ruby 3.0.", 2087876002],
     [1146, 40, 3, "Style/AndOr: Use `&&` instead of `and`.", 193409806],
     [1163, 75, 1, "Style/LineEndConcatenation: Use `\\` instead of `+` to concatenate multiline strings.", 177550],
     [1177, 66, 1, "Style/LineEndConcatenation: Use `\\` instead of `+` to concatenate multiline strings.", 177550],
     [1192, 47, 3, "Style/AndOr: Use `&&` instead of `and`.", 193409806],
-    [1193, 16, 4, "Lint/LtsRuby/UnavailableMethod: Symbol#name is unavailable before Ruby 3.0.", 2087876002],
     [1193, 40, 3, "Style/AndOr: Use `&&` instead of `and`.", 193409806],
     [1208, 60, 1, "Style/LineEndConcatenation: Use `\\` instead of `+` to concatenate multiline strings.", 177550],
     [1279, 7, 6, "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.", 3498751916],
@@ -468,14 +408,7 @@
   ],
   "test/test_openid_yadis.rb:1256559719": [
     [28, 5, 125, "Style/SafeNavigation: Use safe navigation (`&.`) instead of checking if an object exists before calling the method.", 290464717],
-    [34, 5, 293, "Style/SafeNavigation: Use safe navigation (`&.`) instead of checking if an object exists before calling the method.", 3013004962],
-    [52, 12, 4, "Lint/LtsRuby/UnavailableMethod: Set#join is unavailable before Ruby 3.0.", 2088000679]
-  ],
-  "test/test_pape.rb:2991042207": [
-    [87, 13, 4, "Lint/LtsRuby/UnavailableMethod: Set#join is unavailable before Ruby 3.0.", 2088000679],
-    [279, 13, 4, "Lint/LtsRuby/UnavailableMethod: Set#join is unavailable before Ruby 3.0.", 2088000679],
-    [283, 87, 4, "Lint/LtsRuby/UnavailableMethod: Set#join is unavailable before Ruby 3.0.", 2088000679],
-    [301, 13, 4, "Lint/LtsRuby/UnavailableMethod: Set#join is unavailable before Ruby 3.0.", 2088000679]
+    [34, 5, 293, "Style/SafeNavigation: Use safe navigation (`&.`) instead of checking if an object exists before calling the method.", 3013004962]
   ],
   "test/test_parsehtml.rb:3808821728": [
     [21, 9, 39, "Minitest/RefuteFalse: Prefer using `refute(reserved_values.member?(found))`.", 2704632914],
@@ -557,14 +490,6 @@
     [163, 52, 11, "Naming/VariableName: Use snake_case for variable names.", 3460325804],
     [229, 9, 77, "Minitest/RefuteFalse: Prefer using `refute(@store.use_nonce(server_url, ts, salt), \"recent_nonce after cleanup\")`.", 3891537003]
   ],
-  "test/test_trustroot.rb:1351218246": [
-    [16, 50, 4, "Lint/LtsRuby/UnavailableMethod: Set#join is unavailable before Ruby 3.0.", 2088000679],
-    [17, 78, 4, "Lint/LtsRuby/UnavailableMethod: Set#join is unavailable before Ruby 3.0.", 2088000679],
-    [21, 54, 4, "Lint/LtsRuby/UnavailableMethod: Set#join is unavailable before Ruby 3.0.", 2088000679],
-    [22, 78, 4, "Lint/LtsRuby/UnavailableMethod: Set#join is unavailable before Ruby 3.0.", 2088000679],
-    [32, 46, 4, "Lint/LtsRuby/UnavailableMethod: Set#join is unavailable before Ruby 3.0.", 2088000679],
-    [35, 76, 4, "Lint/LtsRuby/UnavailableMethod: Set#join is unavailable before Ruby 3.0.", 2088000679]
-  ],
   "test/test_ui.rb:3669480685": [
     [26, 9, 29, "Minitest/AssertTruthy: Prefer using `assert(req2.icon)`.", 591024350],
     [39, 9, 29, "Minitest/AssertTruthy: Prefer using `assert(@req.icon)`.", 1633148460],
@@ -574,19 +499,12 @@
   "test/test_urinorm.rb:1533719597": [
     [26, 11, 12, "Minitest/UselessAssertion: Useless assertion detected.", 2511510896]
   ],
-  "test/test_util.rb:1807972986": [
-    [18, 41, 4, "Lint/LtsRuby/UnavailableMethod: Set#join is unavailable before Ruby 3.0.", 2088000679]
-  ],
   "test/test_xrds.rb:3863548704": [
     [52, 9, 41, "Minitest/RefuteFalse: Prefer using `refute(Yadis.is_xrds?(isnt))`.", 2709875658],
-    [66, 36, 4, "Lint/LtsRuby/UnavailableMethod: Symbol#name is unavailable before Ruby 3.0.", 2087876002],
-    [86, 37, 4, "Lint/LtsRuby/UnavailableMethod: Symbol#name is unavailable before Ruby 3.0.", 2087876002],
-    [106, 37, 4, "Lint/LtsRuby/UnavailableMethod: Symbol#name is unavailable before Ruby 3.0.", 2087876002],
     [151, 9, 56, "Style/SafeNavigation: Use safe navigation (`&.`) instead of checking if an object exists before calling the method.", 2495284533]
   ],
   "test/test_yadis_discovery.rb:3711580574": [
     [49, 9, 5, "Style/InfiniteLoop: Use `Kernel#loop` for infinite loops.", 191284826],
-    [52, 25, 4, "Lint/LtsRuby/UnavailableMethod: IO/SyntaxError#path is unavailable before Ruby 3.2.", 2088095368],
     [52, 29, 7, "Style/SlicingWithRange: Prefer `[1..]` over `[1..-1]`.", 1439778702],
     [84, 9, 83, "Lint/ShadowedArgument: Argument `headers` was shadowed by a local variable before it was used.", 3149639793],
     [134, 46, 3, "Style/AndOr: Use `&&` instead of `and`.", 193409806],
