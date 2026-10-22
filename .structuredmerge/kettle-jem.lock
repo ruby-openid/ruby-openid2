@@ -2,7 +2,7 @@
 version: 1
 template_state:
   version: 7.1.38
-  applied_at: '2026-10-21'
+  applied_at: '2026-10-22'
   changelog_replay:
     last_entry_key: kettle-jem-template-20260913-001
     last_entry_date: '2026-09-13'
@@ -70,6 +70,7 @@ template_state:
     - gemfiles/modular/templating.gemfile
     - gemfiles/modular/templating_local.gemfile
     - lib/ruby-openid2.rb
+    - ruby-openid2.gemspec
     - spec/openid/version_spec.rb
   checksums:
     ".aiignore.example": 48a5dfdd93afd1a15fdce39cc28ca9920263f00018b0968ab031fa744521e5ce
@@ -736,16 +737,10 @@ files:
   README.md:
     recipe: template_source_application_README_md
     action: write
-    dest_sha256: 15c94c6ff43ab46dc17ce130b75d688329ff536fe6786bfa975ed02c6afc5706
-    input_fingerprint: '0853259a02f3be61ef0c1f6fcc54f8eade449d88fb2e613d736c1ea650cab874'
+    dest_sha256: 14db03cabc0a71813fac4bbcc8f5a7e02d0ee96c92c39d8303c2996433445387
+    input_fingerprint: 9715d749e66dc33d09db94abfcc594a95830013f13fc725161a396cc9252281e
     template_sources:
     - README.md.example
-  REEK:
-    recipe: template_source_application_REEK
-    action: write
-    input_fingerprint: 716ddaf678c879dafafdbd5cc6233dcf5a5ca0a7be54f4956728beae646eaf1d
-    template_sources:
-    - REEK
   RUBOCOP.md:
     recipe: template_source_application_RUBOCOP_md
     action: write
@@ -1106,8 +1101,8 @@ files:
   ruby-openid2.gemspec:
     recipe: template_source_application_ruby_openid2_gemspec
     action: write
-    dest_sha256: 391c88c97214fcbbd689cd354f08d46799817407273dcb32b914206e3e22e49d
-    input_fingerprint: 3297fc2d766b3f96050d602be2dcefd68b00b468177bfb1c4646e4a7c23d2a45
+    dest_sha256: 5f567ec147f0e60949cf90a4cb3007c8634478d4544acd4714f858547c65bbfe
+    input_fingerprint: cff780f96653f1bcfe3cc3d9ba484e76f88df7ab9087b25ce68b6f490dea845b
     template_sources:
     - gem.gemspec.example
   sig/openid.rbs:

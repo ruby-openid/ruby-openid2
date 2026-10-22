@@ -23,8 +23,8 @@ Gem::Specification.new do |spec|
   spec.authors = ["tailor", "Josh Hoyt", "http://j3h.us/", "Kevin Turner", "Carl Howells", "dbloete", "Kouhei Sutou", "Lilli", "Mike Mell", "mcary", "nov matake", "Steven Davidovitz", "Tom Quackenbush", "Cal Heldenbrand", "Dennis Reimann", "grosser", "Akira Matsuda", "Kendall Buchanan", "Kenichi Kamiya", "Marcel M. Cary", "Mike Dillon", "Tobias Haagen Michaelsen", "Zaid Zawaideh", "Ken Dreyer", "ppretorius", "tsukasaoishi", "vivek", "Kazuhiro Serizawa", "Abraham Sangha", "IanAtLooker", "Olle Jonsson", "Utkarsh Gupta", "Vadim Shaulski", "Randy Ebersole", "Peter H. Boling"]
   spec.email = ["floss@galtzo.com"]
 
-  spec.summary = "💎 A library for consuming and serving OpenID identities."
-  spec.description = "💎 A library for consuming and serving OpenID identities."
+  spec.summary = "🪪 A library for consuming and serving OpenID identities."
+  spec.description = "🪪 A library for consuming and serving OpenID identities."
   spec.homepage = "https://github.com/ruby-openid/ruby-openid2"
   spec.licenses = ["Ruby", "Apache Software License 2.0"]
   spec.required_ruby_version = ">= 2.7.0"
